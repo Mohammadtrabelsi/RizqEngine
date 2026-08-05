@@ -50,12 +50,7 @@
                                             <a href="{{ route('units.edit', $unit) }}" class="btn btn-primary btn-sm">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <button id="delete" class="btn btn-danger btn-sm delete-confirm" onclick="
-                                                event.preventDefault();
-                                                if (confirm('Are you sure? It will delete the data permanently!')) {
-                                                document.getElementById('destroy{{ $unit->id }}').submit()
-                                                }
-                                                ">
+                                            <button id="delete" class="btn btn-danger btn-sm" data-confirm-delete="destroy{{ $unit->id }}">
                                                 <i class="bi bi-trash"></i>
                                                 <form id="destroy{{ $unit->id }}" class="d-none" action="{{ route('units.destroy', $unit) }}"
                                                       method="POST">

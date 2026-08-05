@@ -1,0 +1,12 @@
+{
+    "Go Home": "العودة إلى الرئيسية",
+    "Maybe, the CSRF token is missing.": "ربما رمز CSRF مفقود.",
+    "Oh no": "عذرًا",
+    "Page Expired": "انتهت صلاحية الصفحة",
+    "Page Not Found": "الصفحة غير موجودة",
+    "Server Error": "خطأ في الخادم",
+    "Something went wrong. Call the dev!!!": "حدث خطأ ما. اتصل بالمطور!!!",
+    "Sorry, the page you are looking for could not be found.": "عذرًا، الصفحة التي تبحث عنها غير موجودة.",
+    "Sorry, you don't have the permission to visit this page.": "عذرًا، ليس لديك الصلاحية لزيارة هذه الصفحة.",
+    "Unauthorized": "غير مصرح به"
+}
