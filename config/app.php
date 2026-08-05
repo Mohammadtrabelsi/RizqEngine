@@ -181,6 +181,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Available Locales
+    |--------------------------------------------------------------------------
+    |
+    | The locales your application supports, used to populate the language
+    | switcher and to validate the locale a user requests via the
+    | `lang.switch` route before it is stored in the session.
+    |
+    */
+
+    'available_locales' => [
+        'en' => ['native' => 'English', 'dir' => 'ltr'],
+        'fr' => ['native' => 'Français', 'dir' => 'ltr'],
+        'ar' => ['native' => 'العربية', 'dir' => 'rtl'],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-})->middleware('guest');
+    return view('front.index');
+})->name('front');
+
+Route::get('/lang/{locale}', 'LocaleController@switch')->name('lang.switch');
 
 Auth::routes(['register' => false]);
 
