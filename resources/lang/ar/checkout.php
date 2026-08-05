@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'action' => 'إجراء',
+    'bank-transfer' => 'تحويل بنكي',
+    'cash' => 'نقدًا',
+    'cheque' => 'شيك',
+    'close' => 'إغلاق',
+    'credit-card' => 'بطاقة ائتمان',
+    'customer' => 'العميل',
+    'discount' => 'الخصم',
+    'grand-total' => 'الإجمالي الكلي',
+    'note' => 'ملاحظة',
+    'order-tax' => 'ضريبة الطلب',
+    'other' => 'أخرى',
+    'payment-method' => 'طريقة الدفع',
+    'price' => 'السعر',
+    'product' => 'المنتج',
+    'quantity' => 'الكمية',
+    'received-amount' => 'المبلغ المستلم',
+    'search-select-products' => 'ابحث واختر المنتجات',
+    'select-customer' => 'اختر العميل',
+    'shipping' => 'الشحن',
+    'submit' => 'إرسال',
+    'total-products' => 'إجمالي المنتجات',
+];

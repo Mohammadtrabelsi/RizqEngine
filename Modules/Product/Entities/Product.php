@@ -9,6 +9,22 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property int $category_id
+ * @property string $product_name
+ * @property string|null $product_code
+ * @property string|null $product_barcode_symbology
+ * @property int $product_quantity
+ * @property float $product_cost
+ * @property float $product_price
+ * @property string|null $product_unit
+ * @property int $product_stock_alert
+ * @property int|null $product_order_tax
+ * @property int|null $product_tax_type
+ * @property string|null $product_note
+ * @property-read Category $category
+ */
 class Product extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;

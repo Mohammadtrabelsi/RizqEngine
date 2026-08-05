@@ -4,8 +4,16 @@ namespace Modules\Adjustment\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property string $date
+ * @property string $reference
+ * @property string|null $note
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, AdjustedProduct> $adjustedProducts
+ */
 class Adjustment extends Model
 {
     use HasFactory;
@@ -17,7 +25,7 @@ class Adjustment extends Model
         return Carbon::parse($value)->format('d M, Y');
     }
 
-    public function adjustedProducts()
+    public function adjustedProducts(): HasMany
     {
         return $this->hasMany(AdjustedProduct::class, 'adjustment_id', 'id');
     }

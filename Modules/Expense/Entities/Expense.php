@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $category_id
+ * @property string $date
+ * @property string $reference
+ * @property string|null $details
+ * @property float $amount
+ * @property-read ExpenseCategory $category
+ */
 class Expense extends Model
 {
     use HasFactory;
