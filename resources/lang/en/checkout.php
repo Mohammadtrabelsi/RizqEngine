@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'action' => 'Action',
+    'bank-transfer' => 'Bank-transfer',
+    'cash' => 'Cash',
+    'cheque' => 'Cheque',
+    'close' => 'Close',
+    'credit-card' => 'Credit-card',
+    'customer' => 'Customer',
+    'discount' => 'Discount',
+    'grand-total' => 'Grand-total',
+    'note' => 'Note',
+    'order-tax' => 'Order-tax',
+    'other' => 'Other',
+    'payment-method' => 'Payment-method',
+    'price' => 'Price',
+    'product' => 'Product',
+    'quantity' => 'Quantity',
+    'received-amount' => 'Received-amount',
+    'search-select-products' => 'Search-select-products',
+    'select-customer' => 'Select-customer',
+    'shipping' => 'Shipping',
+    'submit' => 'Submit',
+    'total-products' => 'Total-products',
+];
