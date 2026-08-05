@@ -3,7 +3,6 @@
 namespace Modules\People\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Modules\People\Entities\Customer;
 use Modules\People\Entities\Supplier;
 

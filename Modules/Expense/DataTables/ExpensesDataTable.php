@@ -5,14 +5,12 @@ namespace Modules\Expense\DataTables;
 use Modules\Expense\Entities\Expense;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class ExpensesDataTable extends DataTable
 {
-
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('amount', function ($data) {
@@ -23,11 +21,13 @@ class ExpensesDataTable extends DataTable
             });
     }
 
-    public function query(Expense $model) {
+    public function query(Expense $model)
+    {
         return $model->newQuery()->with('category');
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('expenses-table')
             ->columns($this->getColumns())
@@ -48,7 +48,8 @@ class ExpensesDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('date')
                 ->className('text-center align-middle'),
@@ -72,11 +73,12 @@ class ExpensesDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('created_at')
-                ->visible(false)
+                ->visible(false),
         ];
     }
 
-    protected function filename(): string {
-        return 'Expenses_' . date('YmdHis');
+    protected function filename(): string
+    {
+        return 'Expenses_'.date('YmdHis');
     }
 }

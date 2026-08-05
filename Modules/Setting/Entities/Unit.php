@@ -2,8 +2,9 @@
 
 namespace Modules\Setting\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Setting\Database\factories\UnitFactory;
 
 class Unit extends Model
 {
@@ -13,6 +14,6 @@ class Unit extends Model
 
     protected static function newFactory()
     {
-        return \Modules\Setting\Database\factories\UnitFactory::new();
+        return UnitFactory::new();
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Modules\Purchase\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
@@ -11,15 +11,18 @@ class Purchase extends Model
 
     protected $guarded = [];
 
-    public function purchaseDetails() {
+    public function purchaseDetails()
+    {
         return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');
     }
 
-    public function purchasePayments() {
+    public function purchasePayments()
+    {
         return $this->hasMany(PurchasePayment::class, 'purchase_id', 'id');
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         static::creating(function ($model) {
@@ -28,31 +31,38 @@ class Purchase extends Model
         });
     }
 
-    public function scopeCompleted($query) {
+    public function scopeCompleted($query)
+    {
         return $query->where('status', 'Completed');
     }
 
-    public function getShippingAmountAttribute($value) {
+    public function getShippingAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getPaidAmountAttribute($value) {
+    public function getPaidAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getTotalAmountAttribute($value) {
+    public function getTotalAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getDueAmountAttribute($value) {
+    public function getDueAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getTaxAmountAttribute($value) {
+    public function getTaxAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getDiscountAmountAttribute($value) {
+    public function getDiscountAmountAttribute($value)
+    {
         return $value / 100;
     }
 }

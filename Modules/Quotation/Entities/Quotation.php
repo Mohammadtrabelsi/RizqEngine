@@ -2,8 +2,8 @@
 
 namespace Modules\Quotation\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Modules\People\Entities\Customer;
 
@@ -13,15 +13,18 @@ class Quotation extends Model
 
     protected $guarded = [];
 
-    public function quotationDetails() {
+    public function quotationDetails()
+    {
         return $this->hasMany(QuotationDetails::class, 'quotation_id', 'id');
     }
 
-    public function customer() {
+    public function customer()
+    {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         static::creating(function ($model) {
@@ -30,31 +33,38 @@ class Quotation extends Model
         });
     }
 
-    public function getDateAttribute($value) {
+    public function getDateAttribute($value)
+    {
         return Carbon::parse($value)->format('d M, Y');
     }
 
-    public function getShippingAmountAttribute($value) {
+    public function getShippingAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getPaidAmountAttribute($value) {
+    public function getPaidAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getTotalAmountAttribute($value) {
+    public function getTotalAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getDueAmountAttribute($value) {
+    public function getDueAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getTaxAmountAttribute($value) {
+    public function getTaxAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getDiscountAmountAttribute($value) {
+    public function getDiscountAmountAttribute($value)
+    {
         return $value / 100;
     }
 }

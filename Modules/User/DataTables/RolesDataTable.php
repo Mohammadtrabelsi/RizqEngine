@@ -5,14 +5,12 @@ namespace Modules\User\DataTables;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class RolesDataTable extends DataTable
 {
-
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
@@ -20,19 +18,21 @@ class RolesDataTable extends DataTable
             })
             ->addColumn('permissions', function ($data) {
                 return view('user::roles.partials.permissions', [
-                    'data' => $data
+                    'data' => $data,
                 ]);
             });
 
     }
 
-    public function query(Role $model) {
+    public function query(Role $model)
+    {
         return $model->newQuery()->with(['permissions' => function ($query) {
             $query->select('name')->take(10)->get();
         }])->where('name', '!=', 'Super Admin');
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('roles-table')
             ->columns($this->getColumns())
@@ -53,7 +53,8 @@ class RolesDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('id')
                 ->addClass('text-center')
@@ -75,11 +76,12 @@ class RolesDataTable extends DataTable
                 ->addClass('align-middle'),
 
             Column::make('created_at')
-                ->visible(false)
+                ->visible(false),
         ];
     }
 
-    protected function filename(): string {
-        return 'Roles_' . date('YmdHis');
+    protected function filename(): string
+    {
+        return 'Roles_'.date('YmdHis');
     }
 }

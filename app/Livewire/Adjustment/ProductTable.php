@@ -2,19 +2,18 @@
 
 namespace App\Livewire\Adjustment;
 
-use Illuminate\Support\Collection;
 use Livewire\Component;
-use Modules\Product\Entities\Product;
 
 class ProductTable extends Component
 {
-
     protected $listeners = ['productSelected'];
 
     public $products;
+
     public $hasAdjustments;
 
-    public function mount($adjustedProducts = null) {
+    public function mount($adjustedProducts = null)
+    {
         $this->products = [];
 
         if ($adjustedProducts) {
@@ -25,11 +24,13 @@ class ProductTable extends Component
         }
     }
 
-    public function render() {
+    public function render()
+    {
         return view('livewire.adjustment.product-table');
     }
 
-    public function productSelected($product) {
+    public function productSelected($product)
+    {
         switch ($this->hasAdjustments) {
             case true:
                 if (in_array($product, array_map(function ($adjustment) {
@@ -50,7 +51,8 @@ class ProductTable extends Component
         array_push($this->products, $product);
     }
 
-    public function removeProduct($key) {
+    public function removeProduct($key)
+    {
         unset($this->products[$key]);
     }
 }

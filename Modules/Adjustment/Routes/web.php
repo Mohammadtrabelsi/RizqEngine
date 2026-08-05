@@ -12,6 +12,6 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    //Product Adjustment
+    // Product Adjustment
     Route::resource('adjustments', 'AdjustmentController');
 });

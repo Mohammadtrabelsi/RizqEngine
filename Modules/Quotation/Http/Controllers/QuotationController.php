@@ -3,7 +3,6 @@
 namespace Modules\Quotation\Http\Controllers;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -17,15 +16,15 @@ use Modules\Quotation\Http\Requests\UpdateQuotationRequest;
 
 class QuotationController extends Controller
 {
-
-    public function index(QuotationsDataTable $dataTable) {
+    public function index(QuotationsDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_quotations'), 403);
 
         return $dataTable->render('quotation::index');
     }
 
-
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_quotations'), 403);
 
         Cart::instance('quotation')->destroy();
@@ -33,8 +32,8 @@ class QuotationController extends Controller
         return view('quotation::create');
     }
 
-
-    public function store(StoreQuotationRequest $request) {
+    public function store(StoreQuotationRequest $request)
+    {
         DB::transaction(function () use ($request) {
             $quotation = Quotation::create([
                 'date' => $request->date,
@@ -74,8 +73,8 @@ class QuotationController extends Controller
         return redirect()->route('quotations.index');
     }
 
-
-    public function show(Quotation $quotation) {
+    public function show(Quotation $quotation)
+    {
         abort_if(Gate::denies('show_quotations'), 403);
 
         $customer = Customer::findOrFail($quotation->customer_id);
@@ -83,8 +82,8 @@ class QuotationController extends Controller
         return view('quotation::show', compact('quotation', 'customer'));
     }
 
-
-    public function edit(Quotation $quotation) {
+    public function edit(Quotation $quotation)
+    {
         abort_if(Gate::denies('edit_quotations'), 403);
 
         $quotation_details = $quotation->quotationDetails;
@@ -95,28 +94,28 @@ class QuotationController extends Controller
 
         foreach ($quotation_details as $quotation_detail) {
             $cart->add([
-                'id'      => $quotation_detail->product_id,
-                'name'    => $quotation_detail->product_name,
-                'qty'     => $quotation_detail->quantity,
-                'price'   => $quotation_detail->price,
-                'weight'  => 1,
+                'id' => $quotation_detail->product_id,
+                'name' => $quotation_detail->product_name,
+                'qty' => $quotation_detail->quantity,
+                'price' => $quotation_detail->price,
+                'weight' => 1,
                 'options' => [
                     'product_discount' => $quotation_detail->product_discount_amount,
                     'product_discount_type' => $quotation_detail->product_discount_type,
-                    'sub_total'   => $quotation_detail->sub_total,
-                    'code'        => $quotation_detail->product_code,
-                    'stock'       => Product::findOrFail($quotation_detail->product_id)->product_quantity,
+                    'sub_total' => $quotation_detail->sub_total,
+                    'code' => $quotation_detail->product_code,
+                    'stock' => Product::findOrFail($quotation_detail->product_id)->product_quantity,
                     'product_tax' => $quotation_detail->product_tax_amount,
-                    'unit_price'  => $quotation_detail->unit_price
-                ]
+                    'unit_price' => $quotation_detail->unit_price,
+                ],
             ]);
         }
 
         return view('quotation::edit', compact('quotation'));
     }
 
-
-    public function update(UpdateQuotationRequest $request, Quotation $quotation) {
+    public function update(UpdateQuotationRequest $request, Quotation $quotation)
+    {
         DB::transaction(function () use ($request, $quotation) {
             foreach ($quotation->quotationDetails as $quotation_detail) {
                 $quotation_detail->delete();
@@ -161,8 +160,8 @@ class QuotationController extends Controller
         return redirect()->route('quotations.index');
     }
 
-
-    public function destroy(Quotation $quotation) {
+    public function destroy(Quotation $quotation)
+    {
         abort_if(Gate::denies('delete_quotations'), 403);
 
         $quotation->delete();

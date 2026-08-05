@@ -1,5 +1,8 @@
 <?php
 
+use Modules\People\Entities\Supplier;
+use Modules\Purchase\Entities\Purchase;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,23 +16,23 @@
 
 Route::group(['middleware' => 'auth'], function () {
 
-    //Generate PDF
+    // Generate PDF
     Route::get('/purchases/pdf/{id}', function ($id) {
-        $purchase = \Modules\Purchase\Entities\Purchase::findOrFail($id);
-        $supplier = \Modules\People\Entities\Supplier::findOrFail($purchase->supplier_id);
+        $purchase = Purchase::findOrFail($id);
+        $supplier = Supplier::findOrFail($purchase->supplier_id);
 
-        $pdf = \PDF::loadView('purchase::print', [
+        $pdf = PDF::loadView('purchase::print', [
             'purchase' => $purchase,
             'supplier' => $supplier,
         ])->setPaper('a4');
 
-        return $pdf->stream('purchase-'. $purchase->reference .'.pdf');
+        return $pdf->stream('purchase-'.$purchase->reference.'.pdf');
     })->name('purchases.pdf');
 
-    //Sales
+    // Sales
     Route::resource('purchases', 'PurchaseController');
 
-    //Payments
+    // Payments
     Route::get('/purchase-payments/{purchase_id}', 'PurchasePaymentsController@index')->name('purchase-payments.index');
     Route::get('/purchase-payments/{purchase_id}/create', 'PurchasePaymentsController@create')->name('purchase-payments.create');
     Route::post('/purchase-payments/store', 'PurchasePaymentsController@store')->name('purchase-payments.store');

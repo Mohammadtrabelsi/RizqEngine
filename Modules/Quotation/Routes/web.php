@@ -1,5 +1,8 @@
 <?php
 
+use Modules\People\Entities\Customer;
+use Modules\Quotation\Entities\Quotation;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,25 +15,25 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    //Generate PDF
+    // Generate PDF
     Route::get('/quotations/pdf/{id}', function ($id) {
-        $quotation = \Modules\Quotation\Entities\Quotation::findOrFail($id);
-        $customer = \Modules\People\Entities\Customer::findOrFail($quotation->customer_id);
+        $quotation = Quotation::findOrFail($id);
+        $customer = Customer::findOrFail($quotation->customer_id);
 
-        $pdf = \PDF::loadView('quotation::print', [
+        $pdf = PDF::loadView('quotation::print', [
             'quotation' => $quotation,
             'customer' => $customer,
         ])->setPaper('a4');
 
-        return $pdf->stream('quotation-'. $quotation->reference .'.pdf');
+        return $pdf->stream('quotation-'.$quotation->reference.'.pdf');
     })->name('quotations.pdf');
 
-    //Send Quotation Mail
+    // Send Quotation Mail
     Route::get('/quotation/mail/{quotation}', 'SendQuotationEmailController')->name('quotation.email');
 
-    //Sales Form Quotation
+    // Sales Form Quotation
     Route::get('/quotation-sales/{quotation}', 'QuotationSalesController')->name('quotation-sales.create');
 
-    //quotations
+    // quotations
     Route::resource('quotations', 'QuotationController');
 });

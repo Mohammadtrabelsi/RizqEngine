@@ -1,7 +1,9 @@
 <?php
+
 namespace Modules\People\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\People\Entities\Customer;
 
 class CustomerFactory extends Factory
 {
@@ -10,7 +12,7 @@ class CustomerFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\People\Entities\Customer::class;
+    protected $model = Customer::class;
 
     /**
      * Define the model's default state.
@@ -25,8 +27,7 @@ class CustomerFactory extends Factory
             'customer_phone' => $this->faker->phoneNumber(),
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
-            'address' => $this->faker->streetAddress()
+            'address' => $this->faker->streetAddress(),
         ];
     }
 }
-

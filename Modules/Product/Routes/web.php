@@ -7,11 +7,10 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    //Print Barcode
+    // Print Barcode
     Route::get('/products/print-barcode', 'BarcodeController@printBarcode')->name('barcode.print');
-    //Product
+    // Product
     Route::resource('products', 'ProductController');
-    //Product Category
+    // Product Category
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
-

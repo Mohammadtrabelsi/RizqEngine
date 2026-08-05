@@ -2,19 +2,18 @@
 
 namespace Modules\Sale\Http\Controllers;
 
-use Modules\Sale\DataTables\SalePaymentsDataTable;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Sale\DataTables\SalePaymentsDataTable;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SalePayment;
 
 class SalePaymentsController extends Controller
 {
-
-    public function index($sale_id, SalePaymentsDataTable $dataTable) {
+    public function index($sale_id, SalePaymentsDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
@@ -22,8 +21,8 @@ class SalePaymentsController extends Controller
         return $dataTable->render('sale::payments.index', compact('sale'));
     }
 
-
-    public function create($sale_id) {
+    public function create($sale_id)
+    {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
@@ -31,8 +30,8 @@ class SalePaymentsController extends Controller
         return view('sale::payments.create', compact('sale'));
     }
 
-
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $request->validate([
@@ -41,7 +40,7 @@ class SalePaymentsController extends Controller
             'amount' => 'required|numeric',
             'note' => 'nullable|string|max:1000',
             'sale_id' => 'required',
-            'payment_method' => 'required|string|max:255'
+            'payment_method' => 'required|string|max:255',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -51,7 +50,7 @@ class SalePaymentsController extends Controller
                 'amount' => $request->amount,
                 'note' => $request->note,
                 'sale_id' => $request->sale_id,
-                'payment_method' => $request->payment_method
+                'payment_method' => $request->payment_method,
             ]);
 
             $sale = Sale::findOrFail($request->sale_id);
@@ -69,7 +68,7 @@ class SalePaymentsController extends Controller
             $sale->update([
                 'paid_amount' => ($sale->paid_amount + $request->amount) * 100,
                 'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status
+                'payment_status' => $payment_status,
             ]);
         });
 
@@ -78,8 +77,8 @@ class SalePaymentsController extends Controller
         return redirect()->route('sales.index');
     }
 
-
-    public function edit($sale_id, SalePayment $salePayment) {
+    public function edit($sale_id, SalePayment $salePayment)
+    {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
@@ -87,8 +86,8 @@ class SalePaymentsController extends Controller
         return view('sale::payments.edit', compact('salePayment', 'sale'));
     }
 
-
-    public function update(Request $request, SalePayment $salePayment) {
+    public function update(Request $request, SalePayment $salePayment)
+    {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $request->validate([
@@ -97,7 +96,7 @@ class SalePaymentsController extends Controller
             'amount' => 'required|numeric',
             'note' => 'nullable|string|max:1000',
             'sale_id' => 'required',
-            'payment_method' => 'required|string|max:255'
+            'payment_method' => 'required|string|max:255',
         ]);
 
         DB::transaction(function () use ($request, $salePayment) {
@@ -116,7 +115,7 @@ class SalePaymentsController extends Controller
             $sale->update([
                 'paid_amount' => (($sale->paid_amount - $salePayment->amount) + $request->amount) * 100,
                 'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status
+                'payment_status' => $payment_status,
             ]);
 
             $salePayment->update([
@@ -125,7 +124,7 @@ class SalePaymentsController extends Controller
                 'amount' => $request->amount,
                 'note' => $request->note,
                 'sale_id' => $request->sale_id,
-                'payment_method' => $request->payment_method
+                'payment_method' => $request->payment_method,
             ]);
         });
 
@@ -134,8 +133,8 @@ class SalePaymentsController extends Controller
         return redirect()->route('sales.index');
     }
 
-
-    public function destroy(SalePayment $salePayment) {
+    public function destroy(SalePayment $salePayment)
+    {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $salePayment->delete();

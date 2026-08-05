@@ -2,8 +2,8 @@
 
 namespace Modules\Expense\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class Expense extends Model
@@ -12,11 +12,13 @@ class Expense extends Model
 
     protected $guarded = [];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(ExpenseCategory::class, 'category_id', 'id');
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         static::creating(function ($model) {
@@ -25,15 +27,18 @@ class Expense extends Model
         });
     }
 
-    public function getDateAttribute($value) {
+    public function getDateAttribute($value)
+    {
         return Carbon::parse($value)->format('d M, Y');
     }
 
-    public function setAmountAttribute($value) {
+    public function setAmountAttribute($value)
+    {
         $this->attributes['amount'] = ($value * 100);
     }
 
-    public function getAmountAttribute($value) {
-        return ($value / 100);
+    public function getAmountAttribute($value)
+    {
+        return $value / 100;
     }
 }

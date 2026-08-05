@@ -13,9 +13,9 @@
 
 Route::group(['middleware' => 'auth'], function () {
 
-    //Mail Settings
+    // Mail Settings
     Route::patch('/settings/smtp', 'SettingController@updateSmtp')->name('settings.smtp.update');
-    //General Settings
+    // General Settings
     Route::get('/settings', 'SettingController@index')->name('settings.index');
     Route::patch('/settings', 'SettingController@update')->name('settings.update');
     // Units

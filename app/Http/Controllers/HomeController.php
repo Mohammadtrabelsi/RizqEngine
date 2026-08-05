@@ -16,8 +16,8 @@ use Modules\SalesReturn\Entities\SaleReturnPayment;
 
 class HomeController extends Controller
 {
-
-    public function index() {
+    public function index()
+    {
         $sales = Sale::completed()->sum('total_amount');
         $sale_returns = SaleReturn::completed()->sum('total_amount');
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
@@ -25,7 +25,7 @@ class HomeController extends Controller
 
         foreach (Sale::completed()->with('saleDetails')->get() as $sale) {
             foreach ($sale->saleDetails as $saleDetail) {
-                if (!is_null($saleDetail->product)) {
+                if (! is_null($saleDetail->product)) {
                     $product_costs += $saleDetail->product->product_cost * $saleDetail->quantity;
                 }
             }
@@ -35,37 +35,37 @@ class HomeController extends Controller
         $profit = $revenue - $product_costs;
 
         return view('home', [
-            'revenue'          => $revenue,
-            'sale_returns'     => $sale_returns / 100,
+            'revenue' => $revenue,
+            'sale_returns' => $sale_returns / 100,
             'purchase_returns' => $purchase_returns / 100,
-            'profit'           => $profit
+            'profit' => $profit,
         ]);
     }
 
-
-    public function currentMonthChart() {
-        abort_if(!request()->ajax(), 404);
+    public function currentMonthChart()
+    {
+        abort_if(! request()->ajax(), 404);
 
         $currentMonthSales = Sale::where('status', 'Completed')->whereMonth('date', date('m'))
-                ->whereYear('date', date('Y'))
-                ->sum('total_amount') / 100;
+            ->whereYear('date', date('Y'))
+            ->sum('total_amount') / 100;
         $currentMonthPurchases = Purchase::where('status', 'Completed')->whereMonth('date', date('m'))
-                ->whereYear('date', date('Y'))
-                ->sum('total_amount') / 100;
+            ->whereYear('date', date('Y'))
+            ->sum('total_amount') / 100;
         $currentMonthExpenses = Expense::whereMonth('date', date('m'))
-                ->whereYear('date', date('Y'))
-                ->sum('amount') / 100;
+            ->whereYear('date', date('Y'))
+            ->sum('amount') / 100;
 
         return response()->json([
-            'sales'     => $currentMonthSales,
+            'sales' => $currentMonthSales,
             'purchases' => $currentMonthPurchases,
-            'expenses'  => $currentMonthExpenses
+            'expenses' => $currentMonthExpenses,
         ]);
     }
 
-
-    public function salesPurchasesChart() {
-        abort_if(!request()->ajax(), 404);
+    public function salesPurchasesChart()
+    {
+        abort_if(! request()->ajax(), 404);
 
         $sales = $this->salesChartData();
         $purchases = $this->purchasesChartData();
@@ -73,9 +73,9 @@ class HomeController extends Controller
         return response()->json(['sales' => $sales, 'purchases' => $purchases]);
     }
 
-
-    public function paymentChart() {
-        abort_if(!request()->ajax(), 404);
+    public function paymentChart()
+    {
+        abort_if(! request()->ajax(), 404);
 
         $dates = collect();
         foreach (range(-11, 0) as $i) {
@@ -88,7 +88,7 @@ class HomeController extends Controller
         $sale_payments = SalePayment::where('date', '>=', $date_range)
             ->select([
                 DB::raw("DATE_FORMAT(date, '%m-%Y') as month"),
-                DB::raw("SUM(amount) as amount")
+                DB::raw('SUM(amount) as amount'),
             ])
             ->groupBy('month')->orderBy('month')
             ->get()->pluck('amount', 'month');
@@ -96,7 +96,7 @@ class HomeController extends Controller
         $sale_return_payments = SaleReturnPayment::where('date', '>=', $date_range)
             ->select([
                 DB::raw("DATE_FORMAT(date, '%m-%Y') as month"),
-                DB::raw("SUM(amount) as amount")
+                DB::raw('SUM(amount) as amount'),
             ])
             ->groupBy('month')->orderBy('month')
             ->get()->pluck('amount', 'month');
@@ -104,7 +104,7 @@ class HomeController extends Controller
         $purchase_payments = PurchasePayment::where('date', '>=', $date_range)
             ->select([
                 DB::raw("DATE_FORMAT(date, '%m-%Y') as month"),
-                DB::raw("SUM(amount) as amount")
+                DB::raw('SUM(amount) as amount'),
             ])
             ->groupBy('month')->orderBy('month')
             ->get()->pluck('amount', 'month');
@@ -112,7 +112,7 @@ class HomeController extends Controller
         $purchase_return_payments = PurchaseReturnPayment::where('date', '>=', $date_range)
             ->select([
                 DB::raw("DATE_FORMAT(date, '%m-%Y') as month"),
-                DB::raw("SUM(amount) as amount")
+                DB::raw('SUM(amount) as amount'),
             ])
             ->groupBy('month')->orderBy('month')
             ->get()->pluck('amount', 'month');
@@ -120,7 +120,7 @@ class HomeController extends Controller
         $expenses = Expense::where('date', '>=', $date_range)
             ->select([
                 DB::raw("DATE_FORMAT(date, '%m-%Y') as month"),
-                DB::raw("SUM(amount) as amount")
+                DB::raw('SUM(amount) as amount'),
             ])
             ->groupBy('month')->orderBy('month')
             ->get()->pluck('amount', 'month');
@@ -151,7 +151,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function salesChartData() {
+    public function salesChartData()
+    {
         $dates = collect();
         foreach (range(-6, 0) as $i) {
             $date = Carbon::now()->addDays($i)->format('d-m-y');
@@ -182,8 +183,8 @@ class HomeController extends Controller
         return response()->json(['data' => $data, 'days' => $days]);
     }
 
-
-    public function purchasesChartData() {
+    public function purchasesChartData()
+    {
         $dates = collect();
         foreach (range(-6, 0) as $i) {
             $date = Carbon::now()->addDays($i)->format('d-m-y');
