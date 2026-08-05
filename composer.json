@@ -17,6 +17,7 @@
         "milon/barcode": "^12.0",
         "nwidart/laravel-modules": "^12.0",
         "realrashid/sweet-alert": "^7.0",
+        "spatie/laravel-activitylog": "^5.0",
         "spatie/laravel-medialibrary": "^11.0",
         "spatie/laravel-permission": "^7.0",
         "yajra/laravel-datatables": "^12.0"

@@ -820,6 +820,35 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Activity Logs -->
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <div class="card h-100 border-0 shadow">
+                                        <div class="card-header">
+                                            Activity Logs
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="access_activity_logs" name="permissions[]"
+                                                               value="access_activity_logs" {{ old('access_activity_logs') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="access_activity_logs">Access</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="delete_activity_logs" name="permissions[]"
+                                                               value="delete_activity_logs" {{ old('delete_activity_logs') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="delete_activity_logs">Delete</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
