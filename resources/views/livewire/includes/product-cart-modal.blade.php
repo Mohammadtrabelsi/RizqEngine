@@ -33,8 +33,8 @@
                     <div class="form-group">
                         <label>Discount Type <span class="text-danger">*</span></label>
                         <select wire:model.live="discount_type.{{ $cart_item->id }}" class="form-control" required>
-                            <option value="fixed">Fixed</option>
-                            <option value="percentage">Percentage</option>
+                            <option value="fixed">{{ __('product.fixed') }}</option>
+                            <option value="percentage">{{ __('product.percentage') }}</option>
                         </select>
                     </div>
                     <div class="form-group">

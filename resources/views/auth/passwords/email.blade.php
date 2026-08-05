@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Send Reset Password Link | {{ config('app.name') }}</title>
+    <title> {{ __('email.send-reset-password-link') }} | {{ config('app.name') }}</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
@@ -47,7 +47,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <button class="btn btn-block btn-primary" type="submit">
-                                        <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
+                                        <i class="fa fa-btn fa-envelope"></i> {{ __('email.send-reset-password-link') }}
                                     </button>
                                 </div>
                             </div>

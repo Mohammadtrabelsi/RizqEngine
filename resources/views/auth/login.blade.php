@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Login | {{ config('app.name') }}</title>
+    <title> {{ __('auth.login') }} | {{ config('app.name') }}</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
@@ -33,8 +33,8 @@
                 <div class="card-body">
                     <form id="login" method="post" action="{{ url('/login') }}">
                         @csrf
-                        <h1>Login</h1>
-                        <p class="text-muted">Sign In to your account</p>
+                        <h1>{{ __('auth.login') }}</h1>
+                        <p class="text-muted">{{ __('auth.sign-in-to-your-account') }}</p>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                     <span class="input-group-text">
@@ -43,7 +43,7 @@
                             </div>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                    name="email" value="{{ old('email') }}"
-                                   placeholder="Email">
+                                   placeholder="{{ __('auth.email') }}" required autocomplete="email" autofocus>
                             @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -56,7 +56,7 @@
                             </div>
                             <input id="password" type="password"
                                    class="form-control @error('password') is-invalid @enderror"
-                                   placeholder="Password" name="password">
+                                   placeholder="{{ __('auth.password') }}" name="password">
                             @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -65,16 +65,16 @@
                             <div class="col-4">
                                 <button id="submit" class="btn btn-primary px-4 d-flex align-items-center"
                                         type="submit">
-                                    Login
+                                    {{ __('auth.login') }}
                                     <div id="spinner" class="spinner-border text-info" role="status"
                                          style="height: 20px;width: 20px;margin-left: 5px;display: none;">
-                                        <span class="sr-only">Loading...</span>
+                                        <span class="sr-only">{{ __('auth.loading') }}...</span>
                                     </div>
                                 </button>
                             </div>
                             <div class="col-8 text-right">
                                 <a class="btn btn-link px-0" href="{{ route('password.request') }}">
-                                    Forgot password?
+                                    {{ __('auth.forgot-password') }}
                                 </a>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
             </div>
 
             <p class="text-center mt-5 lead">
-                Developed By
+                {{ __('auth.developed-by') }}
                 <a href="https://fahimanzam.netlify.app" class="font-weight-bold text-primary">Fahim Anzam Dip</a>
             </p>
         </div>

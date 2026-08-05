@@ -7,7 +7,7 @@
                         <div class="form-row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Start Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>End Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -27,13 +27,13 @@
                         <div class="form-row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Payments</label>
+                                    <label>{{ __('report.payments') }}</label>
                                     <select wire:model.live="payments" class="form-control" name="payments">
-                                        <option value="">Select Payments</option>
-                                        <option value="sale">Sales</option>
-                                        <option value="sale_return">Sale Returns</option>
-                                        <option value="purchase">Purchase</option>
-                                        <option value="purchase_return">Purchase Returns</option>
+                                        <option value="">{{ __('report.select-payments') }}</option>
+                                        <option value="sale">{{ __('report.sales') }}</option>
+                                        <option value="sale_return">{{ __('report.sale-returns') }}</option>
+                                        <option value="purchase">{{ __('report.purchase') }}</option>
+                                        <option value="purchase_return">{{ __('report.purchase-returns') }}</option>
                                     </select>
                                     @error('payments')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -42,14 +42,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Payment Method</label>
+                                    <label>{{ __('report.payment-method') }}</label>
                                     <select wire:model="payment_method" class="form-control" name="payment_method">
-                                        <option value="">Select Payment Method</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Credit Card">Credit Card</option>
-                                        <option value="Bank Transfer">Bank Transfer</option>
-                                        <option value="Cheque">Cheque</option>
-                                        <option value="Other">Other</option>
+                                        <option value="">{{ __('report.select-payment-method') }}</option>
+                                        <option value="Cash">{{ __('report.cash') }}</option>
+                                        <option value="Credit Card">{{ __('report.credit-card') }}</option>
+                                        <option value="Bank Transfer">{{ __('report.bank-transfer') }}</option>
+                                        <option value="Cheque">{{ __('report.cheque') }}</option>
+                                        <option value="Other">{{ __('report.other') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
+                                {{ __('report.generate-report') }}
                             </button>
                         </div>
                     </form>
@@ -75,16 +75,16 @@
                         <table class="table table-bordered table-striped text-center mb-0">
                             <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                                 <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
+                                    <span class="sr-only">{{ __('report.loading') }}...</span>
                                 </div>
                             </div>
                             <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Reference</th>
+                                <th>{{ __('report.date') }}</th>
+                                <th>{{ __('report.reference') }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', $payments)) }}</th>
-                                <th>Total</th>
-                                <th>Payment Method</th>
+                                <th>{{ __('report.total') }}</th>
+                                <th>{{ __('report.payment-method') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -109,7 +109,7 @@
                             @empty
                                 <tr>
                                     <td colspan="8">
-                                        <span class="text-danger">No Data Available!</span>
+                                        <span class="text-danger">{{ __('report.no-data-available') }}</span>
                                     </td>
                                 </tr>
                             @endforelse
@@ -128,7 +128,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <div class="alert alert-warning mb-0">
-                            No Data Available!
+                            {{ __('report.no-data-available') }}
                         </div>
                     </div>
                 </div>
