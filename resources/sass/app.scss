@@ -1,35 +1,334 @@
-// CoreUI
+// =====================================================================
+//  Triangle POS — Modern UI Theme
+//  A contemporary design layer on top of CoreUI 3 / Bootstrap 4.
+//  Refined palette, softer shadows, smoother radii and modern typography.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  1. Design tokens (override CoreUI/Bootstrap variables before import)
+// ---------------------------------------------------------------------
+
+// Typography
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-base: $font-family-sans-serif;
+$font-size-base: 0.9rem;
+$headings-font-weight: 600;
+$line-height-base: 1.55;
+
+// Brand palette — a modern indigo accent that matches the app's charts
+$primary: #4f46e5; // indigo-600
+$secondary: #6b7280; // gray-500
+$success: #10b981; // emerald-500
+$info: #0ea5e9; // sky-500
+$warning: #f59e0b; // amber-500
+$danger: #ef4444; // red-500
+$light: #f4f5fb;
+$dark: #1f2937; // slate-800
+
+// Surfaces
+$body-bg: #f4f6fb;
+$body-color: #303b52;
+
+// Rounded corners — softer, more modern
+$border-radius: 0.6rem;
+$border-radius-lg: 0.85rem;
+$border-radius-sm: 0.4rem;
+
+// Cards
+$card-border-width: 0;
+$card-border-radius: 0.85rem;
+$card-cap-bg: transparent;
+$card-spacer-y: 1.25rem;
+$card-spacer-x: 1.35rem;
+
+// Inputs / buttons
+$input-btn-focus-width: 0.18rem;
+$input-border-color: #e2e6f0;
+$input-focus-border-color: lighten($primary, 25%);
+$btn-font-weight: 500;
+
+// ---------------------------------------------------------------------
+//  2. CoreUI framework
+// ---------------------------------------------------------------------
 @import '@coreui/coreui/scss/coreui';
 
-//Extra Overrides
-//.c-sidebar {
-//    background: #0f766e;
-//    color: #fff;
-//}
-//
-.c-sidebar .c-sidebar-nav-link.c-active, .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
+// ---------------------------------------------------------------------
+//  3. Modern component layer
+// ---------------------------------------------------------------------
+
+// Reusable soft shadows
+$shadow-xs: 0 1px 2px 0 rgba(31, 41, 55, 0.06);
+$shadow-sm: 0 1px 3px 0 rgba(31, 41, 55, 0.08), 0 1px 2px -1px rgba(31, 41, 55, 0.06);
+$shadow-md: 0 6px 18px -4px rgba(31, 41, 55, 0.12), 0 2px 6px -2px rgba(31, 41, 55, 0.08);
+$shadow-lg: 0 18px 40px -12px rgba(31, 41, 55, 0.22);
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.1px;
+}
+
+// -- Sidebar -----------------------------------------------------------
+.c-sidebar {
+    background: linear-gradient(180deg, #1e2233 0%, #171a28 100%);
+    box-shadow: 4px 0 24px -12px rgba(15, 18, 30, 0.6);
+}
+
+.c-sidebar .c-sidebar-brand {
+    background: transparent;
+    padding: 0.75rem 0;
+}
+
+.c-sidebar .c-sidebar-nav-link,
+.c-sidebar .c-sidebar-nav-dropdown-toggle {
+    margin: 2px 10px;
+    border-radius: 0.55rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon,
+.c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
+    transition: color 0.15s ease;
+}
+
+.c-sidebar .c-sidebar-nav-link:hover,
+.c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
     color: #fff;
-    background: $primary;
+    background: rgba(255, 255, 255, 0.06);
 }
-//
-//
-//.c-sidebar .c-sidebar-nav-link:hover {
-//    color: #fff;
-//    background: #0d9488;
-//}
 
-.btn:not([class*=ghost]):not([class*=link]):not([class*=outline]):not([class*=transparent]) {
+.c-sidebar .c-sidebar-nav-link.c-active,
+.c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
+    color: #fff;
+    font-weight: 600;
+    background: linear-gradient(135deg, $primary 0%, lighten($primary, 8%) 100%);
+    box-shadow: 0 6px 16px -6px rgba(79, 70, 229, 0.7);
+}
+
+.c-sidebar .c-sidebar-nav-dropdown.c-show > .c-sidebar-nav-dropdown-toggle {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.c-sidebar .c-sidebar-nav-dropdown-items .c-sidebar-nav-link {
+    margin: 1px 10px 1px 14px;
+    font-size: 0.83rem;
+}
+
+.c-sidebar-minimizer {
+    background: transparent;
+}
+
+// -- Header ------------------------------------------------------------
+.c-header {
+    border-bottom: 1px solid rgba(31, 41, 55, 0.06);
+    box-shadow: 0 1px 12px -6px rgba(31, 41, 55, 0.25);
+    backdrop-filter: saturate(180%) blur(6px);
+}
+
+.c-header.c-header-light {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.c-subheader {
+    border-top: 0;
+    min-height: 44px;
+}
+
+.c-header-nav .c-avatar img {
+    border: 2px solid rgba(79, 70, 229, 0.15);
+}
+
+// -- Cards -------------------------------------------------------------
+.card {
+    border: 1px solid rgba(31, 41, 55, 0.05);
+    border-radius: $card-border-radius;
+    box-shadow: $shadow-sm;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card.shadow-sm {
+    box-shadow: $shadow-sm !important;
+}
+
+.card:hover {
+    box-shadow: $shadow-md;
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(31, 41, 55, 0.06);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.2px;
+    padding: 1rem 1.35rem;
+}
+
+// Dashboard stat cards — modern rounded, lifted look
+.card-body.d-flex.align-items-center {
+    border-radius: $card-border-radius;
+    overflow: hidden;
+    background: #fff;
+}
+
+.card-body .rounded-left {
+    border-radius: $card-border-radius 0 0 $card-border-radius !important;
+}
+
+.text-value,
+.text-value-lg {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+// -- Buttons -----------------------------------------------------------
+.btn {
+    font-weight: 500;
+    border-radius: $border-radius-sm;
+    transition: transform 0.12s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:not([class*='ghost']):not([class*='link']):not([class*='outline']):not([class*='transparent']) {
     border: 0;
-    box-shadow: 0 1px 1px 0 rgb(60 75 100 / 14%), 0 2px 1px -1px rgb(60 75 100 / 12%), 0 1px 3px 0 rgb(60 75 100 / 20%);
+    box-shadow: $shadow-xs;
 }
 
+.btn:not([class*='link']):hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-pill {
+    border-radius: 50rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, $primary 0%, lighten($primary, 8%) 100%);
+}
+
+// -- Forms -------------------------------------------------------------
+.form-control,
+.custom-select {
+    border-radius: $border-radius-sm;
+    border-color: $input-border-color;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus,
+.custom-select:focus {
+    border-color: $input-focus-border-color;
+    box-shadow: 0 0 0 0.18rem rgba(79, 70, 229, 0.15);
+}
+
+.input-group-text {
+    border-radius: $border-radius-sm;
+    border-color: $input-border-color;
+    background: #f7f8fc;
+}
+
+label {
+    font-weight: 500;
+}
+
+// -- Badges ------------------------------------------------------------
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    padding: 0.4em 0.65em;
+    border-radius: 50rem;
+}
+
+// -- Tables ------------------------------------------------------------
+.table thead th {
+    border-top: 0;
+    border-bottom-width: 1px;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr {
+    transition: background-color 0.12s ease;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(79, 70, 229, 0.04);
+}
+
+// -- Dropdowns & modals ------------------------------------------------
+.dropdown-menu {
+    border: 1px solid rgba(31, 41, 55, 0.07);
+    border-radius: $border-radius;
+    box-shadow: $shadow-lg;
+    padding: 0.35rem;
+}
+
+.dropdown-item {
+    border-radius: $border-radius-sm;
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.12s ease;
+}
+
+.modal-content {
+    border: 0;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-lg;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: rgba(31, 41, 55, 0.06);
+}
+
+// -- Alerts ------------------------------------------------------------
+.alert {
+    border: 0;
+    border-radius: $border-radius;
+    box-shadow: $shadow-xs;
+}
+
+// -- Footer ------------------------------------------------------------
+.c-footer {
+    background: transparent;
+    border-top: 1px solid rgba(31, 41, 55, 0.06);
+    color: #6b7280;
+}
+
+// -- Breadcrumbs -------------------------------------------------------
+.breadcrumb {
+    background: transparent;
+    font-size: 0.85rem;
+}
+
+// ---------------------------------------------------------------------
+//  4. Existing component overrides (retained)
+// ---------------------------------------------------------------------
+
+// Dropzone uploader
 .dropzone {
-    border: 2px dashed #3B82F6;
-    border-radius: 5px;
-    background: #DBEAFE;
+    border: 2px dashed lighten($primary, 20%);
+    border-radius: $border-radius-lg;
+    background: #f5f6ff;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.dropzone:hover {
+    border-color: $primary;
+    background: #eef0ff;
 }
 .dz-preview {
-    background: #EFF6FF !important;
+    background: #f5f6ff !important;
     border-radius: 20px;
 }
 .dz-remove {
@@ -37,10 +336,10 @@
 }
 .dropzone i.bi.bi-cloud-arrow-up {
     font-size: 5rem;
-    color: #60A5FA;
+    color: lighten($primary, 12%);
 }
 .dropzone .dz-message {
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, 0.54);
     font-weight: 500;
     font-size: initial;
 }
@@ -49,6 +348,7 @@
     width: 100%;
 }
 
+// Responsive table sizing
 table {
     width: 990px !important;
 }
