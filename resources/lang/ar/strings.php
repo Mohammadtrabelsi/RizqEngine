@@ -10,5 +10,6 @@ return [
     'Something went wrong. Call the dev!!!' => 'حدث خطأ ما. اتصل بالمطور!!!',
     'Sorry, the page you are looking for could not be found.' => 'عذرًا، الصفحة التي تبحث عنها غير موجودة.',
     'Sorry, you don\'t have the permission to visit this page.' => 'عذرًا، ليس لديك الصلاحية لزيارة هذه الصفحة.',
+    'Sorry, you don\\' => '[TODO] Sorry, you don\\',
     'Unauthorized' => 'غير مصرح به',
 ];

@@ -2,6 +2,7 @@
 
 namespace Modules\Adjustment\Entities;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +13,7 @@ use Illuminate\Support\Carbon;
  * @property string $date
  * @property string $reference
  * @property string|null $note
- * @property-read \Illuminate\Database\Eloquent\Collection<int, AdjustedProduct> $adjustedProducts
+ * @property-read Collection<int, AdjustedProduct> $adjustedProducts
  */
 class Adjustment extends Model
 {
