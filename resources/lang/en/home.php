@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'month-overview' => 'Month-overview',
-    'monthly-cash-flow' => 'Monthly-cash-flow',
+    'month-overview' => 'Month Overview',
+    'monthly-cash-flow' => 'Monthly Cash Flow',
     'profit' => 'Profit',
-    'purchases-return' => 'Purchases-return',
-    'sales-and-purchases-last-7-days' => 'Sales-and-purchases-last-7-days',
-    'sales-return' => 'Sales-return',
-    'title' => 'Title',
+    'purchases-return' => 'Purchases Return',
+    'sales-and-purchases-last-7-days' => 'Sales & Purchases (Last 7 Days)',
+    'sales-return' => 'Sales Return',
+    'title' => 'Dashboard',
 ];

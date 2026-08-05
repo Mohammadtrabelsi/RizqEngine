@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'send-reset-password-link' => 'Send-reset-password-link',
+    'send-reset-password-link' => 'Send Password Reset Link',
 ];
