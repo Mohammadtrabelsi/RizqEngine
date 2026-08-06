@@ -64,10 +64,10 @@ class HomeController extends Controller
                 DB::raw('SUM(total_amount) as amount'),
             ]);
         foreach ($weekly_sales as $row) {
-            if ($week->has($row->day)) {
-                $entry = $week->get($row->day);
-                $entry['amount'] = $row->amount / 100;
-                $week->put($row->day, $entry);
+            if ($week->has($row['day'])) {
+                $entry = $week->get($row['day']);
+                $entry['amount'] = $row['amount'] / 100;
+                $week->put($row['day'], $entry);
             }
         }
         $week_bars = $week->values();
@@ -218,7 +218,7 @@ class HomeController extends Controller
             ->groupBy(DB::raw("DATE_FORMAT(date,'%d-%m-%y')"))
             ->orderBy('date')
             ->get([
-                DB::raw(DB::raw("DATE_FORMAT(date,'%d-%m-%y') as date")),
+                DB::raw("DATE_FORMAT(date,'%d-%m-%y') as date"),
                 DB::raw('SUM(total_amount) AS count'),
             ])
             ->pluck('count', 'date');
@@ -250,7 +250,7 @@ class HomeController extends Controller
             ->groupBy(DB::raw("DATE_FORMAT(date,'%d-%m-%y')"))
             ->orderBy('date')
             ->get([
-                DB::raw(DB::raw("DATE_FORMAT(date,'%d-%m-%y') as date")),
+                DB::raw("DATE_FORMAT(date,'%d-%m-%y') as date"),
                 DB::raw('SUM(total_amount) AS count'),
             ])
             ->pluck('count', 'date');

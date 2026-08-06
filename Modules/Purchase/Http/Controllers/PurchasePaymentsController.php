@@ -72,7 +72,7 @@ class PurchasePaymentsController extends Controller
             ]);
         });
 
-        toast('Purchase Payment Created!', 'success');
+        session()->flash('success', trans('purchase.purchase-payment-created'));
 
         return redirect()->route('purchases.index');
     }
@@ -128,7 +128,7 @@ class PurchasePaymentsController extends Controller
             ]);
         });
 
-        toast('Purchase Payment Updated!', 'info');
+        session()->flash('info', trans('purchase.purchase-payment-updated'));
 
         return redirect()->route('purchases.index');
     }
@@ -139,7 +139,7 @@ class PurchasePaymentsController extends Controller
 
         $purchasePayment->delete();
 
-        toast('Purchase Payment Deleted!', 'warning');
+        session()->flash('warning', trans('purchase.purchase-payment-deleted'));
 
         return redirect()->route('purchases.index');
     }

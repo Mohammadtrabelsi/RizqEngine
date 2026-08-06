@@ -58,7 +58,7 @@ class Checkout extends Component
 
         return view('livewire.pos.checkout', [
             'cart_items' => $cart_items,
-            'total_with_shipping' => Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
+            'total_with_shipping' => (float) Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
         ]);
     }
 
@@ -67,7 +67,7 @@ class Checkout extends Component
         if ($this->customer_id != null) {
             $this->dispatch('showCheckoutModal');
         } else {
-            session()->flash('message', 'Please Select Customer!');
+            session()->flash('error', trans('sale.select-customer'));
         }
     }
 
@@ -90,7 +90,7 @@ class Checkout extends Component
         });
 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
+            session()->flash('error', trans('product.product-already-added-to-cart'));
 
             return;
         }
@@ -138,7 +138,7 @@ class Checkout extends Component
     public function updateQuantity($row_id, $product_id)
     {
         if ($this->check_quantity[$product_id] < $this->quantity[$product_id]) {
-            session()->flash('message', 'The requested quantity is not available in stock.');
+            session()->flash('error', trans('product.requested-quantity-not-available'));
 
             return;
         }
@@ -150,13 +150,13 @@ class Checkout extends Component
         Cart::instance($this->cart_instance)->update($row_id, [
             'options' => [
                 'sub_total' => $cart_item->price * $cart_item->qty,
-                'code' => $cart_item->options->code,
-                'stock' => $cart_item->options->stock,
-                'unit' => $cart_item->options->unit,
-                'product_tax' => $cart_item->options->product_tax,
-                'unit_price' => $cart_item->options->unit_price,
-                'product_discount' => $cart_item->options->product_discount,
-                'product_discount_type' => $cart_item->options->product_discount_type,
+                'code' => $cart_item->options['code'],
+                'stock' => $cart_item->options['stock'],
+                'unit' => $cart_item->options['unit'],
+                'product_tax' => $cart_item->options['product_tax'],
+                'unit_price' => $cart_item->options['unit_price'],
+                'product_discount' => $cart_item->options['product_discount'],
+                'product_discount_type' => $cart_item->options['product_discount_type'],
             ],
         ]);
     }
@@ -178,24 +178,24 @@ class Checkout extends Component
         if ($this->discount_type[$product_id] == 'fixed') {
             Cart::instance($this->cart_instance)
                 ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $this->item_discount[$product_id],
+                    'price' => ($cart_item->price + $cart_item->options['product_discount']) - $this->item_discount[$product_id],
                 ]);
 
             $discount_amount = $this->item_discount[$product_id];
 
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
         } elseif ($this->discount_type[$product_id] == 'percentage') {
-            $discount_amount = ($cart_item->price + $cart_item->options->product_discount) * ($this->item_discount[$product_id] / 100);
+            $discount_amount = ($cart_item->price + $cart_item->options['product_discount']) * ($this->item_discount[$product_id] / 100);
 
             Cart::instance($this->cart_instance)
                 ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $discount_amount,
+                    'price' => ($cart_item->price + $cart_item->options['product_discount']) - $discount_amount,
                 ]);
 
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
         }
 
-        session()->flash('discount_message'.$product_id, 'Discount added to the product!');
+        session()->flash('success', trans('product.discount-added-to-product'));
     }
 
     public function calculate($product)
@@ -229,11 +229,11 @@ class Checkout extends Component
     {
         Cart::instance($this->cart_instance)->update($row_id, ['options' => [
             'sub_total' => $cart_item->price * $cart_item->qty,
-            'code' => $cart_item->options->code,
-            'stock' => $cart_item->options->stock,
-            'unit' => $cart_item->options->unit,
-            'product_tax' => $cart_item->options->product_tax,
-            'unit_price' => $cart_item->options->unit_price,
+            'code' => $cart_item->options['code'],
+            'stock' => $cart_item->options['stock'],
+            'unit' => $cart_item->options['unit'],
+            'product_tax' => $cart_item->options['product_tax'],
+            'unit_price' => $cart_item->options['unit_price'],
             'product_discount' => $discount_amount,
             'product_discount_type' => $this->discount_type[$product_id],
         ]]);

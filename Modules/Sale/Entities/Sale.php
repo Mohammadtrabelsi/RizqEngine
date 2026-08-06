@@ -5,19 +5,34 @@ namespace Modules\Sale\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $reference
+ * @property int $customer_id
+ * @property string $customer_name
+ * @property string $status
+ * @property string $payment_status
+ */
 class Sale extends Model
 {
     use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 
-    public function saleDetails()
+    /**
+     * @return HasMany<SaleDetails, $this>
+     */
+    public function saleDetails(): HasMany
     {
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');
     }
 
-    public function salePayments()
+    /**
+     * @return HasMany<SalePayment, $this>
+     */
+    public function salePayments(): HasMany
     {
         return $this->hasMany(SalePayment::class, 'sale_id', 'id');
     }

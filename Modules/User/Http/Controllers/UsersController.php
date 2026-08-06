@@ -57,7 +57,7 @@ class UsersController extends Controller
             }
         }
 
-        toast("User Created & Assigned '$request->role' Role!", 'success');
+        session()->flash('success', trans('user.user-created'));
 
         return redirect()->route('users.index');
     }
@@ -101,7 +101,7 @@ class UsersController extends Controller
             }
         }
 
-        toast("User Updated & Assigned '$request->role' Role!", 'info');
+        session()->flash('info', trans('user.user-updated'));
 
         return redirect()->route('users.index');
     }
@@ -112,7 +112,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        toast('User Deleted!', 'warning');
+        session()->flash('warning', trans('user.user-deleted'));
 
         return redirect()->route('users.index');
     }

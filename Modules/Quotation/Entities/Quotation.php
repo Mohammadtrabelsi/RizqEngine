@@ -5,21 +5,34 @@ namespace Modules\Quotation\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Modules\People\Entities\Customer;
 
+/**
+ * @property int $id
+ * @property string $reference
+ * @property int $customer_id
+ */
 class Quotation extends Model
 {
     use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 
-    public function quotationDetails()
+    /**
+     * @return HasMany<QuotationDetails, $this>
+     */
+    public function quotationDetails(): HasMany
     {
         return $this->hasMany(QuotationDetails::class, 'quotation_id', 'id');
     }
 
-    public function customer()
+    /**
+     * @return BelongsTo<Customer, $this>
+     */
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }

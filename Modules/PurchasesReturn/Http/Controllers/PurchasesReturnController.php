@@ -60,8 +60,8 @@ class PurchasesReturnController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('purchase_return')->tax() * 100,
-                'discount_amount' => Cart::instance('purchase_return')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('purchase_return')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('purchase_return')->discount() * 100,
             ]);
 
             foreach (Cart::instance('purchase_return')->content() as $cart_item) {
@@ -100,7 +100,7 @@ class PurchasesReturnController extends Controller
             }
         });
 
-        toast('Purchase Return Created!', 'success');
+        session()->flash('success', trans('purchasesreturn.purchase-return-created'));
 
         return redirect()->route('purchase-returns.index');
     }
@@ -184,8 +184,8 @@ class PurchasesReturnController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('purchase_return')->tax() * 100,
-                'discount_amount' => Cart::instance('purchase_return')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('purchase_return')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('purchase_return')->discount() * 100,
             ]);
 
             foreach (Cart::instance('purchase_return')->content() as $cart_item) {
@@ -214,7 +214,7 @@ class PurchasesReturnController extends Controller
             Cart::instance('purchase_return')->destroy();
         });
 
-        toast('Purchase Return Updated!', 'info');
+        session()->flash('info', trans('purchasesreturn.purchase-return-updated'));
 
         return redirect()->route('purchase-returns.index');
     }
@@ -225,7 +225,7 @@ class PurchasesReturnController extends Controller
 
         $purchase_return->delete();
 
-        toast('Purchase Return Deleted!', 'warning');
+        session()->flash('warning', trans('purchasesreturn.purchase-return-deleted'));
 
         return redirect()->route('purchase-returns.index');
     }

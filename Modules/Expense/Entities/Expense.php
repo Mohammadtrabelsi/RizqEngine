@@ -5,6 +5,7 @@ namespace Modules\Expense\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 class Expense extends Model
@@ -13,7 +14,10 @@ class Expense extends Model
 
     protected $guarded = [];
 
-    public function category()
+    /**
+     * @return BelongsTo<ExpenseCategory, $this>
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(ExpenseCategory::class, 'category_id', 'id');
     }

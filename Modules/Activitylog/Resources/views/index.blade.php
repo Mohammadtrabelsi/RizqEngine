@@ -22,7 +22,7 @@
                         @can('delete_activity_logs')
                             <button type="button" class="btn btn-danger" onclick="
                                 event.preventDefault();
-                                if (confirm('Are you sure? This will permanently delete ALL activity logs!')) {
+                                {
                                 document.getElementById('clear-activity-logs').submit();
                                 }
                                 ">

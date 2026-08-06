@@ -60,8 +60,8 @@ class SalesReturnController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('sale_return')->tax() * 100,
-                'discount_amount' => Cart::instance('sale_return')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('sale_return')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('sale_return')->discount() * 100,
             ]);
 
             foreach (Cart::instance('sale_return')->content() as $cart_item) {
@@ -100,7 +100,7 @@ class SalesReturnController extends Controller
             }
         });
 
-        toast('Sale Return Created!', 'success');
+        session()->flash('success', trans('salesreturn.sale-return-created'));
 
         return redirect()->route('sale-returns.index');
     }
@@ -184,8 +184,8 @@ class SalesReturnController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('sale_return')->tax() * 100,
-                'discount_amount' => Cart::instance('sale_return')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('sale_return')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('sale_return')->discount() * 100,
             ]);
 
             foreach (Cart::instance('sale_return')->content() as $cart_item) {
@@ -214,7 +214,7 @@ class SalesReturnController extends Controller
             Cart::instance('sale_return')->destroy();
         });
 
-        toast('Sale Return Updated!', 'info');
+        session()->flash('info', trans('salesreturn.sale-return-updated'));
 
         return redirect()->route('sale-returns.index');
     }
@@ -225,7 +225,7 @@ class SalesReturnController extends Controller
 
         $sale_return->delete();
 
-        toast('Sale Return Deleted!', 'warning');
+        session()->flash('warning', trans('salesreturn.sale-return-deleted'));
 
         return redirect()->route('sale-returns.index');
     }

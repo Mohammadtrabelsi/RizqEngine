@@ -32,7 +32,7 @@ class ActivityController extends Controller
 
         $activity->delete();
 
-        toast('Activity Log Deleted!', 'warning');
+        session()->flash('warning', trans('activitylog.activity-log-deleted'));
 
         return redirect()->route('activity-logs.index');
     }
@@ -43,7 +43,7 @@ class ActivityController extends Controller
 
         Activity::query()->delete();
 
-        toast('All Activity Logs Cleared!', 'warning');
+        session()->flash('warning', trans('activitylog.activity-logs-cleared'));
 
         return redirect()->route('activity-logs.index');
     }

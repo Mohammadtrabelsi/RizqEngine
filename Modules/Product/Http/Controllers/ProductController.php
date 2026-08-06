@@ -36,7 +36,7 @@ class ProductController extends Controller
             }
         }
 
-        toast('Product Created!', 'success');
+        session()->flash('success', trans('product.product-created'));
 
         return redirect()->route('products.index');
     }
@@ -77,7 +77,7 @@ class ProductController extends Controller
             }
         }
 
-        toast('Product Updated!', 'info');
+        session()->flash('info', trans('product.product-updated'));
 
         return redirect()->route('products.index');
     }
@@ -88,7 +88,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        toast('Product Deleted!', 'warning');
+        session()->flash('warning', trans('product.product-deleted'));
 
         return redirect()->route('products.index');
     }

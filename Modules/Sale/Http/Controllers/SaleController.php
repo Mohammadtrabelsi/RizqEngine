@@ -60,8 +60,8 @@ class SaleController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('sale')->tax() * 100,
-                'discount_amount' => Cart::instance('sale')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('sale')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('sale')->discount() * 100,
             ]);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
@@ -100,7 +100,7 @@ class SaleController extends Controller
             }
         });
 
-        toast('Sale Created!', 'success');
+        session()->flash('success', trans('sale.sale-created'));
 
         return redirect()->route('sales.index');
     }
@@ -185,8 +185,8 @@ class SaleController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('sale')->tax() * 100,
-                'discount_amount' => Cart::instance('sale')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('sale')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('sale')->discount() * 100,
             ]);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
@@ -215,7 +215,7 @@ class SaleController extends Controller
             Cart::instance('sale')->destroy();
         });
 
-        toast('Sale Updated!', 'info');
+        session()->flash('info', trans('sale.sale-updated'));
 
         return redirect()->route('sales.index');
     }
@@ -226,7 +226,7 @@ class SaleController extends Controller
 
         $sale->delete();
 
-        toast('Sale Deleted!', 'warning');
+        session()->flash('warning', trans('sale.sale-deleted'));
 
         return redirect()->route('sales.index');
     }

@@ -35,7 +35,7 @@ class SettingController extends Controller
 
         cache()->forget('settings');
 
-        toast('Settings Updated!', 'info');
+        session()->flash('info', trans('setting.settings-updated'));
 
         return redirect()->route('settings.index');
     }
@@ -43,14 +43,14 @@ class SettingController extends Controller
     public function updateSmtp(StoreSmtpSettingsRequest $request)
     {
         $toReplace = [
-            'MAIL_MAILER='.env('MAIL_HOST'),
-            'MAIL_HOST="'.env('MAIL_HOST').'"',
-            'MAIL_PORT='.env('MAIL_PORT'),
-            'MAIL_FROM_ADDRESS="'.env('MAIL_FROM_ADDRESS').'"',
-            'MAIL_FROM_NAME="'.env('MAIL_FROM_NAME').'"',
-            'MAIL_USERNAME="'.env('MAIL_USERNAME').'"',
-            'MAIL_PASSWORD="'.env('MAIL_PASSWORD').'"',
-            'MAIL_ENCRYPTION="'.env('MAIL_ENCRYPTION').'"',
+            'MAIL_MAILER='.config('mail.mailers.smtp.host'),
+            'MAIL_HOST="'.config('mail.mailers.smtp.host').'"',
+            'MAIL_PORT='.config('mail.mailers.smtp.port'),
+            'MAIL_FROM_ADDRESS="'.config('mail.from.address').'"',
+            'MAIL_FROM_NAME="'.config('mail.from.name').'"',
+            'MAIL_USERNAME="'.config('mail.mailers.smtp.username').'"',
+            'MAIL_PASSWORD="'.config('mail.mailers.smtp.password').'"',
+            'MAIL_ENCRYPTION="'.config('mail.mailers.smtp.encryption').'"',
         ];
 
         $replaceWith = [
@@ -67,10 +67,10 @@ class SettingController extends Controller
             file_put_contents(base_path('.env'), str_replace($toReplace, $replaceWith, file_get_contents(base_path('.env'))));
             Artisan::call('cache:clear');
 
-            toast('Mail Settings Updated!', 'info');
+            session()->flash('info', trans('setting.smtp-settings-updated'));
         } catch (\Exception $exception) {
             Log::error($exception);
-            session()->flash('settings_smtp_message', 'Something Went Wrong!');
+            session()->flash('error', trans('setting.smtp-settings-update-failed'));
         }
 
         return redirect()->route('settings.index');

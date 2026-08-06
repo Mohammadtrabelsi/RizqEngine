@@ -5,6 +5,7 @@ namespace Modules\Adjustment\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 class Adjustment extends Model
@@ -18,7 +19,10 @@ class Adjustment extends Model
         return Carbon::parse($value)->format('d M, Y');
     }
 
-    public function adjustedProducts()
+    /**
+     * @return HasMany<AdjustedProduct, $this>
+     */
+    public function adjustedProducts(): HasMany
     {
         return $this->hasMany(AdjustedProduct::class, 'adjustment_id', 'id');
     }

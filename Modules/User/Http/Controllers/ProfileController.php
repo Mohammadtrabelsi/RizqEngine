@@ -29,23 +29,21 @@ class ProfileController extends Controller
         ]);
 
         if ($request->has('image')) {
-            if ($request->has('image')) {
-                $tempFile = Upload::where('folder', $request->image)->first();
+            $tempFile = Upload::where('folder', $request->image)->first();
 
-                if (auth()->user()->getFirstMedia('avatars')) {
-                    auth()->user()->getFirstMedia('avatars')->delete();
-                }
+            if (auth()->user()->getFirstMedia('avatars')) {
+                auth()->user()->getFirstMedia('avatars')->delete();
+            }
 
-                if ($tempFile) {
-                    auth()->user()->addMedia(Storage::path('temp/'.$request->image.'/'.$tempFile->filename))->toMediaCollection('avatars');
+            if ($tempFile) {
+                auth()->user()->addMedia(Storage::path('temp/'.$request->image.'/'.$tempFile->filename))->toMediaCollection('avatars');
 
-                    Storage::deleteDirectory('temp/'.$request->image);
-                    $tempFile->delete();
-                }
+                Storage::deleteDirectory('temp/'.$request->image);
+                $tempFile->delete();
             }
         }
 
-        toast('Profile Updated!', 'success');
+        session()->flash('success', trans('user.profile-updated'));
 
         return back();
     }
@@ -61,7 +59,7 @@ class ProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        toast('Password Updated!', 'success');
+        session()->flash('success', trans('user.password-updated'));
 
         return back();
     }

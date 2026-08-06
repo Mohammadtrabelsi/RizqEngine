@@ -26,6 +26,9 @@
 
         <div class="c-body">
             <main class="c-main">
+                <div class="container-fluid">
+                    @include('utils.flash')
+                </div>
                 @yield('content')
             </main>
         </div>
