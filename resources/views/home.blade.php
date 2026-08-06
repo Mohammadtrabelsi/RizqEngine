@@ -16,10 +16,10 @@
         <div class="row">
             @php
                 $kpis = [
-                    ['label' => "Today's sales",   'value' => format_currency($todays_sales),   'meta' => 'Completed sales today'],
-                    ['label' => 'Transactions',    'value' => $todays_transactions,             'meta' => 'Orders today'],
-                    ['label' => 'Low stock items', 'value' => $low_stock_products->count(),      'meta' => 'Needs reorder'],
-                    ['label' => "Today's expenses",'value' => format_currency($todays_expenses), 'meta' => 'Logged today'],
+                    ['label' => __('general.sales-today'),   'value' => format_currency($todays_sales),   'meta' => __('general.completed-sales-today')],
+                       ['label' => __('general.transactions'),    'value' => $todays_transactions,             'meta' => __('general.orders-today')],
+                    ['label' => __('general.low-stock-items'), 'value' => $low_stock_products->count(),      'meta' => __('general.needs-reorder')],
+                    ['label' => __('general.todays-expenses'),'value' => format_currency($todays_expenses), 'meta' => __('general.logged-today')],
                 ];
             @endphp
             @foreach($kpis as $kpi)
