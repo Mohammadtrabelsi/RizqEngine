@@ -44,4 +44,28 @@ class ReportsController extends Controller
 
         return view('reports::purchases-return.index');
     }
+
+    public function inventoryValuationReport() {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports::inventory-valuation.index');
+    }
+
+    public function lowStockReport() {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports::low-stock.index');
+    }
+
+    public function stockMovementReport() {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports::stock-movement.index');
+    }
+
+    public function productMovementReport() {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports::product-movement.index');
+    }
 }

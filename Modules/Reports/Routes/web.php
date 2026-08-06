@@ -30,4 +30,16 @@ Route::group(['middleware' => 'auth'], function () {
     //Purchases Return Report
     Route::get('/purchases-return-report', 'ReportsController@purchasesReturnReport')
         ->name('purchases-return-report.index');
+    //Inventory Valuation Report
+    Route::get('/inventory-valuation-report', 'ReportsController@inventoryValuationReport')
+        ->name('inventory-valuation-report.index');
+    //Low Stock Report
+    Route::get('/low-stock-report', 'ReportsController@lowStockReport')
+        ->name('low-stock-report.index');
+    //Stock Movement Report
+    Route::get('/stock-movement-report', 'ReportsController@stockMovementReport')
+        ->name('stock-movement-report.index');
+    //Fast / Slow Moving Products Report
+    Route::get('/product-movement-report', 'ReportsController@productMovementReport')
+        ->name('product-movement-report.index');
 });

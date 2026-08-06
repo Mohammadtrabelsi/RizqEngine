@@ -4,6 +4,8 @@ namespace Modules\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Product\Entities\Product;
+use Modules\Product\Observers\ProductObserver;
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,8 @@ class ProductServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        Product::observe(ProductObserver::class);
     }
 
     /**
