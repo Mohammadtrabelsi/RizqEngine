@@ -128,7 +128,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <div class="alert alert-warning mb-0">
-                            No Data Available!
+                            {{ __('report.no-data-available') }}
                         </div>
                     </div>
                 </div>

@@ -39,8 +39,8 @@
         </div>
 
         <div style="max-width:420px">
-            <div style="font-family:var(--font-heading); font-weight:500; font-size:32px; line-height:1.2; margin-bottom:var(--space-4)">Run your whole store from one place.</div>
-            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">Products, inventory, purchases, sales, returns, expenses and staff — with reporting and role-based access built in.</div>
+            <div style="font-family:var(--font-heading); font-weight:500; font-size:32px; line-height:1.2; margin-bottom:var(--space-4)">{{ __('login.welcome') }}</div>
+            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">{{ __('login.description') }}</div>
         </div>
 
         <div class="text-muted" style="font-size:12px">© {{ date('Y') }} Triangle POS</div>
@@ -51,8 +51,8 @@
             @csrf
 
             <div>
-                <div style="font-family:var(--font-heading); font-weight:500; font-size:24px; margin-bottom:var(--space-2)">Sign in</div>
-                <div class="text-muted" style="font-size:14px">Welcome back. Enter your details to continue.</div>
+                <div style="font-family:var(--font-heading); font-weight:500; font-size:24px; margin-bottom:var(--space-2)">{{ __('login.sign-in') }}</div>
+                <div class="text-muted" style="font-size:14px">{{ __('login.welcome-back') }}</div>
             </div>
 
             @if(Session::has('account_deactivated'))
@@ -63,8 +63,8 @@
 
             <div style="display:flex; flex-direction:column; gap:var(--space-4)">
                 <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" class="input" placeholder="you@store.com"
+                    <label for="email">{{ __('login.email') }}</label>
+                    <input id="email" name="email" type="email" class="input" placeholder="{{ __('login.email-placeholder') }}"
                            value="{{ old('email') }}" required autofocus>
                     @error('email')
                         <div class="field-error">{{ $message }}</div>
@@ -72,8 +72,8 @@
                 </div>
 
                 <div class="field">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="password" class="input" placeholder="••••••••" required>
+                    <label for="password">{{ __('login.password') }}</label>
+                    <input id="password" name="password" type="password" class="input" placeholder="{{ __('login.password-placeholder') }}" required>
                     @error('password')
                         <div class="field-error">{{ $message }}</div>
                     @enderror
@@ -83,16 +83,16 @@
                     <label class="radio">
                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <span class="dot" style="border-radius:4px"></span>
-                        Remember me
+                        {{ __('login.remember-me') }}
                     </label>
-                    <a href="{{ route('password.request') }}">Forgot password?</a>
+                    <a href="{{ route('password.request') }}">{{ __('login.forgot-password') }}</a>
                 </div>
 
-                <button id="submit" class="btn btn-primary btn-block" type="submit">Sign in</button>
+                <button id="submit" class="btn btn-primary btn-block" type="submit">{{ __('login.sign-in') }}</button>
             </div>
 
             <div class="text-muted" style="font-size:13px; text-align:center">
-                Need access? <a href="{{ route('welcome') }}">Contact your store owner</a>
+               {{ __('login.contact-owner-message') }} <a href="{{ route('welcome') }}">{{ __('login.contact-owner') }}</a>
             </div>
         </form>
     </div>

@@ -31,7 +31,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
             <div class="dropdown-header bg-light">
-                <strong>{{ $low_quantity_products->count() }} Notifications</strong>
+                <strong>{{ $low_quantity_products->count() }} {{ __('app.notifications') }}</strong>
             </div>
             @forelse($low_quantity_products as $product)
                 <a class="dropdown-item" href="{{ route('products.show', $product->id) }}">
@@ -39,7 +39,7 @@
                 </a>
             @empty
                 <a class="dropdown-item" href="#">
-                    <i class="bi bi-app-indicator mr-2 text-danger"></i> No notifications available.
+                    <i class="bi bi-app-indicator mr-2 text-danger"></i> {{ __('app.no-notifications') }}
                 </a>
             @endforelse
         </div>
@@ -54,16 +54,16 @@
             </div>
             <div class="d-flex flex-column">
                 <span class="font-weight-bold">{{ auth()->user()->name }}</span>
-                <span class="font-italic">Online <i class="bi bi-circle-fill text-success" style="font-size: 11px;"></i></span>
+                <span class="font-italic">{{ __('app.online') }} <i class="bi bi-circle-fill text-success" style="font-size: 11px;"></i></span>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right pt-0">
-            <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+            <div class="dropdown-header bg-light py-2"><strong>{{ __('app.account') }}</strong></div>
             <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                <i class="mfe-2  bi bi-person" style="font-size: 1.2rem;"></i> Profile
+                <i class="mfe-2  bi bi-person" style="font-size: 1.2rem;"></i> {{ __('app.profile') }}
             </a>
             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="mfe-2  bi bi-box-arrow-left" style="font-size: 1.2rem;"></i> Logout
+                <i class="mfe-2  bi bi-box-arrow-left" style="font-size: 1.2rem;"></i> {{ __('app.logout') }}
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

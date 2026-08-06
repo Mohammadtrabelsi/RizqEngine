@@ -138,7 +138,7 @@
                         @empty
                             <tr>
                                 <td colspan="8">
-                                    <span class="text-danger">No Sale Return Data Available!</span>
+                                    <span class="text-danger">{{ __('report.no-sale-returns-data') }}</span>
                                 </td>
                             </tr>
                         @endforelse
