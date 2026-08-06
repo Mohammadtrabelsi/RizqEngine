@@ -4,23 +4,63 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "anayarojo/shoppingcart",
+                "version": "4.2.4",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/anayarojo/laravel-shopping-cart.git",
+                    "reference": "776023ad546b7b54a680f783b84cc55bc3fa1a77"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/anayarojo/laravel-shopping-cart/zipball/776023ad546b7b54a680f783b84cc55bc3fa1a77",
+                    "reference": "776023ad546b7b54a680f783b84cc55bc3fa1a77"
+                },
+                "require": {
+                    "illuminate/events": "^11.0||^12.0||^13.0",
+                    "illuminate/session": "^11.0||^12.0||^13.0",
+                    "illuminate/support": "^11.0||^12.0||^13.0",
+                    "nesbot/carbon": "^2.0||^3.0"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Gloudemans\\Shoppingcart\\": "src/"
+                    }
+                },
+                "extra": {
+                    "laravel": {
+                        "providers": [
+                            "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
+                        ],
+                        "aliases": {
+                            "Cart": "Gloudemans\\Shoppingcart\\Facades\\Cart"
+                        }
+                    }
+                }
+            }
+        }
+    ],
     "require": {
         "php": "^8.2",
-        "anayarojo/shoppingcart": "^4.2",
+        "anayarojo/shoppingcart": "4.2.4",
         "barryvdh/laravel-snappy": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "h4cc/wkhtmltopdf-amd64": "^0.12.4",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.5",
+        "laravel/framework": "^13.0",
+        "laravel/tinker": "^3.0",
         "laravel/ui": "^4.6",
-        "livewire/livewire": "^3.8",
-        "milon/barcode": "^12.0",
-        "nwidart/laravel-modules": "^12.0",
+        "livewire/livewire": "^4.0",
+        "milon/barcode": "^13.0",
+        "nwidart/laravel-modules": "^13.0",
         "realrashid/sweet-alert": "^7.0",
         "spatie/laravel-activitylog": "^5.0",
         "spatie/laravel-medialibrary": "^11.0",
-        "spatie/laravel-permission": "^7.0",
-        "yajra/laravel-datatables": "^12.0"
+        "spatie/laravel-permission": "^8.0",
+        "yajra/laravel-datatables": "^13.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.0",
