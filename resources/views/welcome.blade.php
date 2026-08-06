@@ -108,8 +108,8 @@
     <div id="access" style="padding:80px var(--space-8); background:var(--color-section); background-image:radial-gradient(ellipse at 20% 20%, var(--color-section-glow), transparent 60%)">
         <div class="lp-wrap lp-access">
             <div style="display:flex; flex-direction:column; gap:var(--space-3)">
-                <h2 style="color:var(--color-neutral-100)">Fine-grained role-based access</h2>
-                <p style="color:var(--color-neutral-300); max-width:440px; margin:0">Give owners full control, managers day-to-day oversight, and cashiers exactly the screens they need — nothing more.</p>
+                <h2 style="color:var(--color-neutral-100)">{{ __('general.role-based-access') }}</h2>
+                <p style="color:var(--color-neutral-300); max-width:440px; margin:0">{{ __('general.role-based-access-description') }}</p>
             </div>
             <div style="display:flex; flex-direction:column; gap:var(--space-3); width:100%">
                 @php
@@ -132,26 +132,26 @@
     {{-- Reporting --}}
     <div id="reporting" class="lp-wrap lp-reporting">
         <div>
-            <div class="lp-shot">reporting dashboard screenshot</div>
+            <div class="lp-shot">{{ __('general.reporting-dashboard-screenshot') }}</div>
         </div>
         <div style="display:flex; flex-direction:column; gap:var(--space-3)">
-            <h2>Reporting that tells you what's happening</h2>
-            <p class="text-muted" style="max-width:440px; margin:0">Sales, stock levels, expenses and margins in one dashboard — updated as transactions happen at the till.</p>
+            <h2>{{ __('general.reporting') }}</h2>
+            <p class="text-muted" style="max-width:440px; margin:0">{{ __('general.reporting-description') }}</p>
         </div>
     </div>
 
     {{-- CTA --}}
     <div class="lp-wrap lp-cta">
-        <h3 style="margin:0">Ready to run your store?</h3>
-        <a href="{{ route('login') }}" class="btn btn-primary">Get started</a>
+        <h3 style="margin:0">{{ __('general.ready-to-run-your-store') }}</h3>
+        <a href="{{ route('login') }}" class="btn btn-primary">{{ __('general.get-started') }}</a>
     </div>
 
     {{-- Footer --}}
     <div class="lp-wrap lp-footer">
         <div class="text-muted" style="font-size:13px">© {{ date('Y') }} Triangle POS</div>
         <div style="display:flex; gap:var(--space-4)">
-            <a href="#" style="font-size:13px">Privacy</a>
-            <a href="#" style="font-size:13px">Terms</a>
+            <a href="#" style="font-size:13px">{{ __('general.privacy') }}</a>
+            <a href="#" style="font-size:13px">{{ __('general.terms') }}</a>
         </div>
     </div>
 
