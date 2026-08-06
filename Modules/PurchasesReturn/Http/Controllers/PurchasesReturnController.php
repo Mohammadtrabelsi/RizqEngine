@@ -100,7 +100,7 @@ class PurchasesReturnController extends Controller
             }
         });
 
-        toast('Purchase Return Created!', 'success');
+        session()->flash('success', 'Purchase Return Created!');
 
         return redirect()->route('purchase-returns.index');
     }
@@ -214,7 +214,7 @@ class PurchasesReturnController extends Controller
             Cart::instance('purchase_return')->destroy();
         });
 
-        toast('Purchase Return Updated!', 'info');
+        session()->flash('info', 'Purchase Return Updated!');
 
         return redirect()->route('purchase-returns.index');
     }
@@ -225,7 +225,7 @@ class PurchasesReturnController extends Controller
 
         $purchase_return->delete();
 
-        toast('Purchase Return Deleted!', 'warning');
+        session()->flash('warning', 'Purchase Return Deleted!');
 
         return redirect()->route('purchase-returns.index');
     }

@@ -47,7 +47,7 @@ class CurrencyController extends Controller
             'exchange_rate' => $request->exchange_rate,
         ]);
 
-        toast('Currency Created!', 'success');
+        session()->flash('success', 'Currency Created!');
 
         return redirect()->route('currencies.index');
     }
@@ -81,7 +81,7 @@ class CurrencyController extends Controller
             'exchange_rate' => $request->exchange_rate,
         ]);
 
-        toast('Currency Updated!', 'info');
+        session()->flash('info', 'Currency Updated!');
 
         return redirect()->route('currencies.index');
     }
@@ -92,7 +92,7 @@ class CurrencyController extends Controller
 
         $currency->delete();
 
-        toast('Currency Deleted!', 'warning');
+        session()->flash('warning', 'Currency Deleted!');
 
         return redirect()->route('currencies.index');
     }

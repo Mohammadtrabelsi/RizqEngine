@@ -36,7 +36,7 @@ class UnitsController extends Controller
             'operation_value' => $request->operation_value,
         ]);
 
-        toast('Unit Created!', 'success');
+        session()->flash('success', 'Unit Created!');
 
         return redirect()->route('units.index');
     }
@@ -62,7 +62,7 @@ class UnitsController extends Controller
             'operation_value' => $request->operation_value,
         ]);
 
-        toast('Unit Updated!', 'info');
+        session()->flash('info', 'Unit Updated!');
 
         return redirect()->route('units.index');
     }
@@ -71,7 +71,7 @@ class UnitsController extends Controller
     {
         $unit->delete();
 
-        toast('Unit Deleted!', 'warning');
+        session()->flash('warning', 'Unit Deleted!');
 
         return redirect()->route('units.index');
     }

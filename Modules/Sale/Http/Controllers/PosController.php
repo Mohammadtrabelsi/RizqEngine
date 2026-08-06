@@ -91,7 +91,7 @@ class PosController extends Controller
             }
         });
 
-        toast('POS Sale Created!', 'success');
+        session()->flash('success', 'POS Sale Created!');
 
         return redirect()->route('sales.index');
     }
