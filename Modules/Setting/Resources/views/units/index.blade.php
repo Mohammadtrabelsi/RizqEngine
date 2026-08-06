@@ -52,7 +52,7 @@
                                             </a>
                                             <button id="delete" class="btn btn-danger btn-sm delete-confirm" onclick="
                                                 event.preventDefault();
-                                                if (confirm('Are you sure? It will delete the data permanently!')) {
+                                                {
                                                 document.getElementById('destroy{{ $unit->id }}').submit()
                                                 }
                                                 ">

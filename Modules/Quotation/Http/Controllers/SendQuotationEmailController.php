@@ -19,11 +19,11 @@ class SendQuotationEmailController extends Controller
                 'status' => 'Sent',
             ]);
 
-            toast('Sent On "'.$quotation->customer->customer_email.'"!', 'success');
+            session()->flash('success', 'Sent On "'.$quotation->customer->customer_email.'"!');
 
         } catch (\Exception $exception) {
             Log::error($exception);
-            toast('Something Went Wrong!', 'error');
+            session()->flash('error', 'Something Went Wrong!');
         }
 
         return back();
