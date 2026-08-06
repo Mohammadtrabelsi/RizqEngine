@@ -70,7 +70,7 @@ class SettingController extends Controller
             toast('Mail Settings Updated!', 'info');
         } catch (\Exception $exception) {
             Log::error($exception);
-            session()->flash('settings_smtp_message', 'Something Went Wrong!');
+            session()->flash('error', trans('setting.smtp-settings-update-failed'));
         }
 
         return redirect()->route('settings.index');
