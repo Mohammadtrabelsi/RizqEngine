@@ -99,7 +99,7 @@ class PurchaseController extends Controller
             }
         });
 
-        session()->flash('success', 'Purchase Created!');
+        session()->flash('success', trans('purchase.purchase-created'));
 
         return redirect()->route('purchases.index');
     }
@@ -212,7 +212,7 @@ class PurchaseController extends Controller
             Cart::instance('purchase')->destroy();
         });
 
-        session()->flash('info', 'Purchase Updated!');
+        session()->flash('info', trans('purchase.purchase-updated'));
 
         return redirect()->route('purchases.index');
     }
@@ -223,7 +223,7 @@ class PurchaseController extends Controller
 
         $purchase->delete();
 
-        session()->flash('warning', 'Purchase Deleted!');
+        session()->flash('warning', trans('purchase.purchase-deleted'));
 
         return redirect()->route('purchases.index');
     }

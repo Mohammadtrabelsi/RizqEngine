@@ -36,7 +36,7 @@ class UnitsController extends Controller
             'operation_value' => $request->operation_value,
         ]);
 
-        session()->flash('success', 'Unit Created!');
+        session()->flash('success', trans('setting.unit-created'));
 
         return redirect()->route('units.index');
     }
@@ -62,7 +62,7 @@ class UnitsController extends Controller
             'operation_value' => $request->operation_value,
         ]);
 
-        session()->flash('info', 'Unit Updated!');
+        session()->flash('info', trans('setting.unit-updated'));
 
         return redirect()->route('units.index');
     }
@@ -71,7 +71,7 @@ class UnitsController extends Controller
     {
         $unit->delete();
 
-        session()->flash('warning', 'Unit Deleted!');
+        session()->flash('warning', trans('setting.unit-deleted'));
 
         return redirect()->route('units.index');
     }

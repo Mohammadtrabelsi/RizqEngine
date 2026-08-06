@@ -72,7 +72,7 @@ class PurchasePaymentsController extends Controller
             ]);
         });
 
-        session()->flash('success', 'Purchase Payment Created!');
+        session()->flash('success', trans('purchase.purchase-payment-created'));
 
         return redirect()->route('purchases.index');
     }
@@ -128,7 +128,7 @@ class PurchasePaymentsController extends Controller
             ]);
         });
 
-        session()->flash('info', 'Purchase Payment Updated!');
+        session()->flash('info', trans('purchase.purchase-payment-updated'));
 
         return redirect()->route('purchases.index');
     }
@@ -139,7 +139,7 @@ class PurchasePaymentsController extends Controller
 
         $purchasePayment->delete();
 
-        session()->flash('warning', 'Purchase Payment Deleted!');
+        session()->flash('warning', trans('purchase.purchase-payment-deleted'));
 
         return redirect()->route('purchases.index');
     }

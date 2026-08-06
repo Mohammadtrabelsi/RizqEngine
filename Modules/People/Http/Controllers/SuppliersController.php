@@ -46,7 +46,7 @@ class SuppliersController extends Controller
             'address' => $request->address,
         ]);
 
-        session()->flash('success', 'Supplier Created!');
+        session()->flash('success', trans('people.supplier-created'));
 
         return redirect()->route('suppliers.index');
     }
@@ -87,7 +87,7 @@ class SuppliersController extends Controller
             'address' => $request->address,
         ]);
 
-        session()->flash('info', 'Supplier Updated!');
+        session()->flash('info', trans('people.supplier-updated'));
 
         return redirect()->route('suppliers.index');
     }
@@ -98,7 +98,7 @@ class SuppliersController extends Controller
 
         $supplier->delete();
 
-        session()->flash('warning', 'Supplier Deleted!');
+        session()->flash('warning', trans('people.supplier-deleted'));
 
         return redirect()->route('suppliers.index');
     }

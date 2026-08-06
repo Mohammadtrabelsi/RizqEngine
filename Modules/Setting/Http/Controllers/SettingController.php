@@ -35,7 +35,7 @@ class SettingController extends Controller
 
         cache()->forget('settings');
 
-        session()->flash('info', 'Settings Updated!');
+        session()->flash('info', trans('setting.settings-updated'));
 
         return redirect()->route('settings.index');
     }
@@ -67,7 +67,7 @@ class SettingController extends Controller
             file_put_contents(base_path('.env'), str_replace($toReplace, $replaceWith, file_get_contents(base_path('.env'))));
             Artisan::call('cache:clear');
 
-            session()->flash('info', 'Mail Settings Updated!');
+            session()->flash('info', trans('setting.smtp-settings-updated'));
         } catch (\Exception $exception) {
             Log::error($exception);
             session()->flash('error', trans('setting.smtp-settings-update-failed'));

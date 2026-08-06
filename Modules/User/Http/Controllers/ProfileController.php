@@ -43,7 +43,7 @@ class ProfileController extends Controller
             }
         }
 
-        session()->flash('success', 'Profile Updated!');
+        session()->flash('success', trans('user.profile-updated'));
 
         return back();
     }
@@ -59,7 +59,7 @@ class ProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        session()->flash('success', 'Password Updated!');
+        session()->flash('success', trans('user.password-updated'));
 
         return back();
     }

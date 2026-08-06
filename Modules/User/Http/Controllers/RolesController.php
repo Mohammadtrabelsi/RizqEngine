@@ -39,7 +39,7 @@ class RolesController extends Controller
 
         $role->givePermissionTo($request->permissions);
 
-        session()->flash('success', 'Role Created With Selected Permissions!');
+        session()->flash('success', trans('user.role-created'));
 
         return redirect()->route('roles.index');
     }
@@ -66,7 +66,7 @@ class RolesController extends Controller
 
         $role->syncPermissions($request->permissions);
 
-        session()->flash('success', 'Role Updated With Selected Permissions!');
+        session()->flash('success', trans('user.role-updated'));
 
         return redirect()->route('roles.index');
     }
@@ -77,7 +77,7 @@ class RolesController extends Controller
 
         $role->delete();
 
-        session()->flash('success', 'Role Deleted!');
+        session()->flash('success', trans('user.role-deleted'));
 
         return redirect()->route('roles.index');
     }

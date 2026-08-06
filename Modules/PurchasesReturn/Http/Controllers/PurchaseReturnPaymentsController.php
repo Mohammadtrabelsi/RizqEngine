@@ -72,7 +72,7 @@ class PurchaseReturnPaymentsController extends Controller
             ]);
         });
 
-        session()->flash('success', 'Purchase Return Payment Created!');
+        session()->flash('success', trans('purchasesreturn.purchase-return-payment-created'));
 
         return redirect()->route('purchase-returns.index');
     }
@@ -128,7 +128,7 @@ class PurchaseReturnPaymentsController extends Controller
             ]);
         });
 
-        session()->flash('info', 'Purchase Return Payment Updated!');
+        session()->flash('info', trans('purchasesreturn.purchase-return-payment-updated'));
 
         return redirect()->route('purchase-returns.index');
     }
@@ -139,7 +139,7 @@ class PurchaseReturnPaymentsController extends Controller
 
         $purchaseReturnPayment->delete();
 
-        session()->flash('warning', 'Purchase Return Payment Deleted!');
+        session()->flash('warning', trans('purchasesreturn.purchase-return-payment-deleted'));
 
         return redirect()->route('purchase-returns.index');
     }

@@ -31,7 +31,7 @@ class CategoriesController extends Controller
             'category_name' => $request->category_name,
         ]);
 
-        session()->flash('success', 'Product Category Created!');
+        session()->flash('success', trans('product.product-category-created'));
 
         return redirect()->back();
     }
@@ -59,7 +59,7 @@ class CategoriesController extends Controller
             'category_name' => $request->category_name,
         ]);
 
-        session()->flash('info', 'Product Category Updated!');
+        session()->flash('info', trans('product.product-category-updated'));
 
         return redirect()->route('product-categories.index');
     }
@@ -76,7 +76,7 @@ class CategoriesController extends Controller
 
         $category->delete();
 
-        session()->flash('warning', 'Product Category Deleted!');
+        session()->flash('warning', trans('product.product-category-deleted'));
 
         return redirect()->route('product-categories.index');
     }

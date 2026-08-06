@@ -31,7 +31,7 @@ class ExpenseCategoriesController extends Controller
             'category_description' => $request->category_description,
         ]);
 
-        session()->flash('success', 'Expense Category Created!');
+        session()->flash('success', trans('expense.expense-category-created'));
 
         return redirect()->route('expense-categories.index');
     }
@@ -57,7 +57,7 @@ class ExpenseCategoriesController extends Controller
             'category_description' => $request->category_description,
         ]);
 
-        session()->flash('info', 'Expense Category Updated!');
+        session()->flash('info', trans('expense.expense-category-updated'));
 
         return redirect()->route('expense-categories.index');
     }
@@ -72,7 +72,7 @@ class ExpenseCategoriesController extends Controller
 
         $expenseCategory->delete();
 
-        session()->flash('warning', 'Expense Category Deleted!');
+        session()->flash('warning', trans('expense.expense-category-deleted'));
 
         return redirect()->route('expense-categories.index');
     }

@@ -68,7 +68,7 @@ class QuotationController extends Controller
             Cart::instance('quotation')->destroy();
         });
 
-        session()->flash('success', 'Quotation Created!');
+        session()->flash('success', trans('quotation.quotation-created'));
 
         return redirect()->route('quotations.index');
     }
@@ -155,7 +155,7 @@ class QuotationController extends Controller
             Cart::instance('quotation')->destroy();
         });
 
-        session()->flash('info', 'Quotation Updated!');
+        session()->flash('info', trans('quotation.quotation-updated'));
 
         return redirect()->route('quotations.index');
     }
@@ -166,7 +166,7 @@ class QuotationController extends Controller
 
         $quotation->delete();
 
-        session()->flash('warning', 'Quotation Deleted!');
+        session()->flash('warning', trans('quotation.quotation-deleted'));
 
         return redirect()->route('quotations.index');
     }

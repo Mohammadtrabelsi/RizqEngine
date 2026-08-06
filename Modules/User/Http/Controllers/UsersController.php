@@ -57,7 +57,7 @@ class UsersController extends Controller
             }
         }
 
-        session()->flash('success', "User Created & Assigned '$request->role' Role!");
+        session()->flash('success', trans('user.user-created'));
 
         return redirect()->route('users.index');
     }
@@ -101,7 +101,7 @@ class UsersController extends Controller
             }
         }
 
-        session()->flash('info', "User Updated & Assigned '$request->role' Role!");
+        session()->flash('info', trans('user.user-updated'));
 
         return redirect()->route('users.index');
     }
@@ -112,7 +112,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        session()->flash('warning', 'User Deleted!');
+        session()->flash('warning', trans('user.user-deleted'));
 
         return redirect()->route('users.index');
     }

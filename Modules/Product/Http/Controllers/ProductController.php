@@ -36,7 +36,7 @@ class ProductController extends Controller
             }
         }
 
-        session()->flash('success', 'Product Created!');
+        session()->flash('success', trans('product.product-created'));
 
         return redirect()->route('products.index');
     }
@@ -77,7 +77,7 @@ class ProductController extends Controller
             }
         }
 
-        session()->flash('info', 'Product Updated!');
+        session()->flash('info', trans('product.product-updated'));
 
         return redirect()->route('products.index');
     }
@@ -88,7 +88,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        session()->flash('warning', 'Product Deleted!');
+        session()->flash('warning', trans('product.product-deleted'));
 
         return redirect()->route('products.index');
     }

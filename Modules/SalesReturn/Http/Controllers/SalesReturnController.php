@@ -100,7 +100,7 @@ class SalesReturnController extends Controller
             }
         });
 
-        session()->flash('success', 'Sale Return Created!');
+        session()->flash('success', trans('salesreturn.sale-return-created'));
 
         return redirect()->route('sale-returns.index');
     }
@@ -214,7 +214,7 @@ class SalesReturnController extends Controller
             Cart::instance('sale_return')->destroy();
         });
 
-        session()->flash('info', 'Sale Return Updated!');
+        session()->flash('info', trans('salesreturn.sale-return-updated'));
 
         return redirect()->route('sale-returns.index');
     }
@@ -225,7 +225,7 @@ class SalesReturnController extends Controller
 
         $sale_return->delete();
 
-        session()->flash('warning', 'Sale Return Deleted!');
+        session()->flash('warning', trans('salesreturn.sale-return-deleted'));
 
         return redirect()->route('sale-returns.index');
     }

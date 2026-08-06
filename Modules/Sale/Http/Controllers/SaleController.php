@@ -100,7 +100,7 @@ class SaleController extends Controller
             }
         });
 
-        session()->flash('success', 'Sale Created!');
+        session()->flash('success', trans('sale.sale-created'));
 
         return redirect()->route('sales.index');
     }
@@ -215,7 +215,7 @@ class SaleController extends Controller
             Cart::instance('sale')->destroy();
         });
 
-        session()->flash('info', 'Sale Updated!');
+        session()->flash('info', trans('sale.sale-updated'));
 
         return redirect()->route('sales.index');
     }
@@ -226,7 +226,7 @@ class SaleController extends Controller
 
         $sale->delete();
 
-        session()->flash('warning', 'Sale Deleted!');
+        session()->flash('warning', trans('sale.sale-deleted'));
 
         return redirect()->route('sales.index');
     }
