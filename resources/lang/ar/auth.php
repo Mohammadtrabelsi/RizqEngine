@@ -1,20 +1,18 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
+    'already-have-account' => 'لديك حساب بالفعل؟',
+    'before-proceeding' => 'قبل المتابعة، يرجى التحقق من بريدك الإلكتروني للحصول على رابط التحقق.',
+    'check-your-email' => 'تحقق من بريدك الإلكتروني',
+    'confirm-password' => 'تأكيد كلمة المرور',
+    'create-account' => 'إنشاء حساب',
+    'email' => 'البريد الإلكتروني',
     'failed' => 'بيانات الاعتماد هذه لا تطابق سجلاتنا.',
+    'full-name' => 'الاسم الكامل',
     'password' => 'كلمة المرور المدخلة غير صحيحة.',
+    'register' => 'إنشاء حساب جديد',
+    'request-another' => 'انقر هنا لطلب رابط آخر',
     'throttle' => 'عدد كبير جدًا من محاولات تسجيل الدخول. الرجاء المحاولة مرة أخرى بعد :seconds ثانية.',
-
+    'verification-link-sent' => 'تم إرسال رابط تحقق جديد إلى عنوان بريدك الإلكتروني.',
+    'verify-email' => 'التحقق من البريد الإلكتروني',
 ];

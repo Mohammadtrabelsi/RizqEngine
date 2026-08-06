@@ -22,7 +22,7 @@ class SyncTranslationKeys extends Command
                             {--dry-run  : Show changes without writing files}
                             {--clean    : Remove keys from files that are not found in views}';
 
-    protected $description = 'Scan resources/, app/Livewire/, and app/Services/ for translation keys, create missing lang files, and sync keys across all locales.';
+    protected $description = 'Scan resources/, app/Livewire, and app/Services for translation keys, create missing lang files, and sync keys across all locales.';
 
     // ── Patterns ──────────────────────────────────────────────────────────────
     // Matches: __('key'), __("key"), trans('key'), trans("key"),
@@ -42,8 +42,6 @@ class SyncTranslationKeys extends Command
         $base = trim($this->option('base') ?? 'en');
         $langPath = lang_path();                    // resources/lang  (Laravel 9+)
         $resPath = resource_path();
-        $livewirePath = app_path('Livewire');
-        $servicesPath = app_path('Services');
 
         $this->info('');
         $this->line('  <fg=cyan>Laravel Translation Sync</>');
@@ -53,17 +51,13 @@ class SyncTranslationKeys extends Command
         $this->line("\n  📂 Scanning: <fg=yellow>{$resPath}</>");
         $foundKeys = $this->extractKeysFromDirectory($resPath);
 
-        if (File::isDirectory($livewirePath)) {
-            $this->line("  📂 Scanning: <fg=yellow>{$livewirePath}</>");
-            $foundKeys = array_merge($foundKeys, $this->extractKeysFromDirectory($livewirePath));
+        foreach (['Livewire', 'Services'] as $appDir) {
+            $path = app_path($appDir);
+            if (File::isDirectory($path)) {
+                $this->line("  📂 Scanning: <fg=yellow>{$path}</>");
+                $foundKeys = array_values(array_unique(array_merge($foundKeys, $this->extractKeysFromDirectory($path))));
+            }
         }
-
-        if (File::isDirectory($servicesPath)) {
-            $this->line("  📂 Scanning: <fg=yellow>{$servicesPath}</>");
-            $foundKeys = array_merge($foundKeys, $this->extractKeysFromDirectory($servicesPath));
-        }
-
-        $foundKeys = array_values(array_unique($foundKeys));
 
         if ($foundKeys === []) {
             $this->warn('  No translation keys found. Make sure you use __(), trans(), or @lang().');
@@ -173,12 +167,6 @@ class SyncTranslationKeys extends Command
                 $subKey = $key;
             }
 
-            // Skip keys built from dynamic concatenation, e.g. __('sidebar.'.$label),
-            // which the static regex captures as "sidebar." with an empty sub-key/group.
-            if ($group === '' || $subKey === '') {
-                continue;
-            }
-
             $grouped[$group][$subKey] = null; // null = placeholder
         }
 
@@ -220,15 +208,6 @@ class SyncTranslationKeys extends Command
 
         $added = [];
         $removed = [];
-
-        // Strip stray empty-string keys. These are artifacts of dynamic key
-        // concatenation the extractor can't resolve (e.g. __('group.'.$var)
-        // gets captured as the literal key "group."), and are never valid
-        // translation keys — remove them regardless of --clean.
-        if (array_key_exists('', $existing)) {
-            unset($existing['']);
-            $removed[] = '';
-        }
 
         // Add missing keys
         foreach (array_keys($expectedKeys) as $key) {
