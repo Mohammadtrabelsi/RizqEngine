@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </div>
+            @endcan
         </div>
 
         {{-- Recent transactions --}}
