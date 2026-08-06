@@ -12,5 +12,8 @@
     "Something went wrong. Call the dev!!!": "Something went wrong. Call the dev!!!",
     "Sorry, the page you are looking for could not be found.": "Sorry, the page you are looking for could not be found.",
     "Sorry, you don't have the permission to visit this page.": "Sorry, you don't have the permission to visit this page.",
-    "Unauthorized": "Unauthorized"
+    "Unauthorized": "Unauthorized",
+    "key": "key",
+    "sidebar.": "sidebar.",
+    "group.": "group."
 }
