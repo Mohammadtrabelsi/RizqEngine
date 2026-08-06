@@ -15,7 +15,7 @@ class ActivitiesDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('causer', function ($data) {
-                return $data->causer?->name ?? 'System';
+                return $data->causer->name ?? 'System';
             })
             ->addColumn('subject', function ($data) {
                 if (! $data->subject_type) {

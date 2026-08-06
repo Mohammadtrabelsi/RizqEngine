@@ -5,19 +5,34 @@ namespace Modules\PurchasesReturn\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $reference
+ * @property int $supplier_id
+ * @property string $supplier_name
+ * @property string $status
+ * @property string $payment_status
+ */
 class PurchaseReturn extends Model
 {
     use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 
-    public function purchaseReturnDetails()
+    /**
+     * @return HasMany<PurchaseReturnDetail, $this>
+     */
+    public function purchaseReturnDetails(): HasMany
     {
         return $this->hasMany(PurchaseReturnDetail::class, 'purchase_return_id', 'id');
     }
 
-    public function purchaseReturnPayments()
+    /**
+     * @return HasMany<PurchaseReturnPayment, $this>
+     */
+    public function purchaseReturnPayments(): HasMany
     {
         return $this->hasMany(PurchaseReturnPayment::class, 'purchase_return_id', 'id');
     }

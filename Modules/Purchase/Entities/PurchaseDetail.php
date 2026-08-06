@@ -4,8 +4,18 @@ namespace Modules\Purchase\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Product\Entities\Product;
 
+/**
+ * @property int $id
+ * @property int $purchase_id
+ * @property int $product_id
+ * @property string $product_name
+ * @property string $product_code
+ * @property int $quantity
+ * @property string $product_discount_type
+ */
 class PurchaseDetail extends Model
 {
     use HasFactory;
@@ -14,12 +24,18 @@ class PurchaseDetail extends Model
 
     protected $with = ['product'];
 
-    public function product()
+    /**
+     * @return BelongsTo<Product, $this>
+     */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public function purchase()
+    /**
+     * @return BelongsTo<Purchase, $this>
+     */
+    public function purchase(): BelongsTo
     {
         return $this->belongsTo(Purchase::class, 'purchase_id', 'id');
     }

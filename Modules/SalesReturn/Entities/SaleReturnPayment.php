@@ -4,6 +4,7 @@ namespace Modules\SalesReturn\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 class SaleReturnPayment extends Model
@@ -12,7 +13,10 @@ class SaleReturnPayment extends Model
 
     protected $guarded = [];
 
-    public function saleReturn()
+    /**
+     * @return BelongsTo<SaleReturn, $this>
+     */
+    public function saleReturn(): BelongsTo
     {
         return $this->belongsTo(SaleReturn::class, 'sale_return_id', 'id');
     }
