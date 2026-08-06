@@ -133,5 +133,69 @@ class PermissionsTableSeeder extends Seeder
         $role->revokePermissionTo('access_user_management');
         // Only the Super Admin may purge the audit trail.
         $role->revokePermissionTo('delete_activity_logs');
+
+        $this->seedBusinessRoles($permissions);
+    }
+
+    /**
+     * Seed the three business roles shown in the Triangle POS design system.
+     * These gate the sidebar via the same @can permission checks the app
+     * already uses — a user's role determines exactly which nav sections
+     * (and screens) they can reach.
+     *
+     *   Owner   — full access to everything.
+     *   Manager — day-to-day oversight; everything except the Settings
+     *             section (system settings, currencies, units) and audit purge.
+     *   Cashier — the till: dashboard, product lookup, sales, POS and returns.
+     */
+    protected function seedBusinessRoles(array $permissions): void
+    {
+        // Settings section — the only thing a Manager may not touch.
+        $settingsPermissions = [
+            'access_settings',
+            'access_currencies', 'create_currencies', 'edit_currencies', 'delete_currencies',
+            'access_units',
+        ];
+
+        // Owner: everything.
+        $owner = Role::firstOrCreate(['name' => 'Owner']);
+        $owner->syncPermissions($permissions);
+
+        // Manager: everything except the Settings section and audit purge.
+        $manager = Role::firstOrCreate(['name' => 'Manager']);
+        $manager->syncPermissions(array_values(array_diff(
+            $permissions,
+            array_merge($settingsPermissions, ['delete_activity_logs'])
+        )));
+
+        // Cashier: sales floor only.
+        $cashier = Role::firstOrCreate(['name' => 'Cashier']);
+        $cashier->syncPermissions([
+            'edit_own_profile',
+            // Dashboard
+            'show_total_stats',
+            'show_weekly_sales_purchases',
+            'show_notifications',
+            // Products & inventory (read-only lookup)
+            'access_products',
+            'show_products',
+            'access_product_categories',
+            'print_barcodes',
+            // Sales & POS
+            'access_sales',
+            'create_sales',
+            'show_sales',
+            'create_pos_sales',
+            'access_sale_payments',
+            // Returns
+            'access_sale_returns',
+            'create_sale_returns',
+            'show_sale_returns',
+            'access_sale_return_payments',
+            // Customers (needed to ring up a sale)
+            'access_customers',
+            'create_customers',
+            'show_customers',
+        ]);
     }
 }

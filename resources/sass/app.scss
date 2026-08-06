@@ -1,11 +1,38 @@
 // =====================================================================
-//  Triangle POS — Modern UI Theme
-//  A contemporary design layer on top of CoreUI 3 / Bootstrap 4.
-//  Refined palette, softer shadows, smoother radii and modern typography.
+//  Triangle POS — Nocturne theme
+//  A dark design system layered on top of CoreUI 3 / Bootstrap 4.
+//  Tokens are ported from the Nocturne design system (see
+//  public/css/nocturne.css, the standalone source of truth used by the
+//  login & landing pages). Here they are expressed as SCSS variables that
+//  drive the CoreUI/Bootstrap build, plus CSS custom properties for the
+//  bespoke Nocturne components (KPI cards, tags, etc.).
 // =====================================================================
 
 // ---------------------------------------------------------------------
-//  1. Design tokens (override CoreUI/Bootstrap variables before import)
+//  1. Nocturne tokens (SCSS)
+// ---------------------------------------------------------------------
+$n-bg:           #161826; // app background
+$n-surface:      #232532; // cards, inputs, raised panels
+$n-surface-2:    #2b2d3c; // slightly raised (dropdowns, hover)
+$n-text:         #e9e9ed;
+$n-accent:       #9184d9; // blurple
+$n-accent-2:     #a7a1db;
+$n-accent-100:   #f5f4ff;
+$n-accent-800:   #423a6a;
+$n-neutral-100:  #f3f5fe;
+$n-neutral-600:  #75798c;
+$n-neutral-800:  #3f424d;
+$n-neutral-900:  #292b31;
+$n-divider:      rgba(233, 233, 237, 0.16);
+$n-muted:        rgba(233, 233, 237, 0.55);
+
+$n-success:      #34b881;
+$n-info:         #57a6e0;
+$n-warning:      #d8a24a;
+$n-danger:       #e0645f;
+
+// ---------------------------------------------------------------------
+//  2. Bootstrap / CoreUI variable overrides (must precede the import)
 // ---------------------------------------------------------------------
 
 // Typography
@@ -13,349 +40,464 @@ $font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
 $font-family-base: $font-family-sans-serif;
 $font-size-base: 0.9rem;
-$headings-font-weight: 600;
+$headings-font-weight: 500;
 $line-height-base: 1.55;
+$headings-color: $n-text;
 
-// Brand palette — a modern indigo accent that matches the app's charts
-$primary: #4f46e5; // indigo-600
-$secondary: #6b7280; // gray-500
-$success: #10b981; // emerald-500
-$info: #0ea5e9; // sky-500
-$warning: #f59e0b; // amber-500
-$danger: #ef4444; // red-500
-$light: #f4f5fb;
-$dark: #1f2937; // slate-800
+// Brand palette
+$primary:   $n-accent;
+$secondary: $n-neutral-600;
+$success:   $n-success;
+$info:      $n-info;
+$warning:   $n-warning;
+$danger:    $n-danger;
+$light:     $n-surface-2;
+$dark:      #0f111a;
 
-// Surfaces
-$body-bg: #f4f6fb;
-$body-color: #303b52;
+// Core surfaces
+$body-bg:    $n-bg;
+$body-color: $n-text;
+$border-color: $n-divider;
+$text-muted: $n-muted;
+$component-active-color: $n-accent-100;
+$component-active-bg: $n-accent;
+$hr-border-color: $n-divider;
 
-// Rounded corners — softer, more modern
-$border-radius: 0.6rem;
-$border-radius-lg: 0.85rem;
-$border-radius-sm: 0.4rem;
+// Links
+$link-color: $n-accent;
+$link-hover-color: lighten($n-accent, 8%);
+
+// Radii — Nocturne uses 8px default, 4px small, 14px large
+$border-radius:    0.5rem;   // 8px
+$border-radius-lg: 0.875rem; // 14px
+$border-radius-sm: 0.25rem;  // 4px
 
 // Cards
+$card-bg: $n-surface;
 $card-border-width: 0;
-$card-border-radius: 0.85rem;
+$card-border-color: $n-divider;
+$card-border-radius: 0.5rem;
 $card-cap-bg: transparent;
-$card-spacer-y: 1.25rem;
-$card-spacer-x: 1.35rem;
+$card-color: $n-text;
+$card-spacer-y: 1.15rem;
+$card-spacer-x: 1.25rem;
 
-// Inputs / buttons
+// Inputs
+$input-bg: $n-surface;
+$input-disabled-bg: $n-neutral-900;
+$input-color: $n-text;
+$input-border-color: $n-divider;
+$input-focus-bg: $n-surface;
+$input-focus-border-color: $n-accent;
+$input-focus-color: $n-text;
+$input-placeholder-color: rgba(233, 233, 237, 0.4);
+$input-group-addon-bg: $n-surface-2;
+$input-group-addon-color: $n-text;
 $input-btn-focus-width: 0.18rem;
-$input-border-color: #e2e6f0;
-$input-focus-border-color: lighten($primary, 25%);
+$input-btn-focus-color: rgba($n-accent, 0.4);
+$custom-select-bg: $n-surface;
+$custom-select-color: $n-text;
+$custom-select-indicator-color: $n-text;
 $btn-font-weight: 500;
 
+// Dropdowns
+$dropdown-bg: $n-surface-2;
+$dropdown-color: $n-text;
+$dropdown-border-color: $n-divider;
+$dropdown-divider-bg: $n-divider;
+$dropdown-link-color: $n-text;
+$dropdown-link-hover-color: $n-text;
+$dropdown-link-hover-bg: rgba(255, 255, 255, 0.06);
+$dropdown-link-active-color: $n-accent-100;
+$dropdown-link-active-bg: $n-accent;
+$dropdown-header-color: $n-muted;
+
+// Modals / popovers / tooltips
+$modal-content-bg: $n-surface;
+$modal-content-border-color: $n-divider;
+$modal-header-border-color: $n-divider;
+$modal-footer-border-color: $n-divider;
+$modal-backdrop-bg: #0a0b12;
+$modal-backdrop-opacity: 0.6;
+$popover-bg: $n-surface-2;
+$popover-border-color: $n-divider;
+$popover-header-bg: $n-surface-2;
+$tooltip-bg: $n-neutral-900;
+
+// Tables
+$table-color: $n-text;
+$table-bg: transparent;
+$table-accent-bg: rgba(255, 255, 255, 0.02);
+$table-hover-color: $n-text;
+$table-hover-bg: rgba(255, 255, 255, 0.04);
+$table-border-color: $n-divider;
+$table-head-bg: transparent;
+$table-head-color: $n-muted;
+$table-dark-bg: $n-surface;
+
+// List group
+$list-group-bg: $n-surface;
+$list-group-color: $n-text;
+$list-group-border-color: $n-divider;
+$list-group-hover-bg: rgba(255, 255, 255, 0.04);
+$list-group-action-color: $n-text;
+
+// Nav / pagination
+$nav-tabs-border-color: $n-divider;
+$nav-tabs-link-active-bg: $n-surface;
+$nav-tabs-link-active-color: $n-text;
+$nav-tabs-link-active-border-color: $n-divider;
+$pagination-bg: $n-surface;
+$pagination-color: $n-text;
+$pagination-border-color: $n-divider;
+$pagination-hover-bg: $n-surface-2;
+$pagination-hover-color: $n-accent;
+$pagination-active-bg: $n-accent;
+$pagination-active-border-color: $n-accent;
+$pagination-disabled-bg: $n-surface;
+$pagination-disabled-color: $n-muted;
+
+// Breadcrumb / close / code
+$breadcrumb-bg: transparent;
+$breadcrumb-active-color: $n-text;
+$breadcrumb-divider-color: $n-muted;
+$close-color: $n-text;
+$close-text-shadow: none;
+$code-color: $n-accent-2;
+
 // ---------------------------------------------------------------------
-//  2. CoreUI framework
+//  3. CoreUI framework
 // ---------------------------------------------------------------------
 @import '@coreui/coreui/scss/coreui';
 
 // ---------------------------------------------------------------------
-//  3. Modern component layer
+//  4. Nocturne CSS custom properties (for bespoke components & inline use)
 // ---------------------------------------------------------------------
+:root {
+    --color-bg: #{$n-bg};
+    --color-surface: #{$n-surface};
+    --color-surface-2: #{$n-surface-2};
+    --color-text: #{$n-text};
+    --color-accent: #{$n-accent};
+    --color-accent-2: #{$n-accent-2};
+    --color-accent-100: #f5f4ff;
+    --color-accent-800: #423a6a;
+    --color-neutral-100: #f3f5fe;
+    --color-neutral-300: #cfd3e5;
+    --color-neutral-500: #9397ab;
+    --color-neutral-600: #75798c;
+    --color-neutral-800: #3f424d;
+    --color-neutral-900: #292b31;
+    --color-divider: #{$n-divider};
+    --color-muted: #{$n-muted};
 
-// Reusable soft shadows
-$shadow-xs: 0 1px 2px 0 rgba(31, 41, 55, 0.06);
-$shadow-sm: 0 1px 3px 0 rgba(31, 41, 55, 0.08), 0 1px 2px -1px rgba(31, 41, 55, 0.06);
-$shadow-md: 0 6px 18px -4px rgba(31, 41, 55, 0.12), 0 2px 6px -2px rgba(31, 41, 55, 0.08);
-$shadow-lg: 0 18px 40px -12px rgba(31, 41, 55, 0.22);
+    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --space-1: 2.8px;
+    --space-2: 5.6px;
+    --space-3: 8.4px;
+    --space-4: 11.2px;
+    --space-6: 16.8px;
+    --space-8: 22.4px;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+
+    --shadow-sm: 0 0 0 1px #{$n-neutral-800};
+    --shadow-md: 0 0 0 1px #595d6c, 0 6px 18px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 0 0 1px #9397ab, 0 16px 40px rgba(0, 0, 0, 0.65);
+}
+
+// Reusable dark shadows
+$shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+$shadow-md: 0 6px 18px -4px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+$shadow-lg: 0 16px 40px -12px rgba(0, 0, 0, 0.65);
 
 body {
+    background: $n-bg;
+    color: $n-text;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.1px;
 }
 
-// -- Sidebar -----------------------------------------------------------
-.c-sidebar {
-    background: linear-gradient(180deg, #1e2233 0%, #171a28 100%);
-    box-shadow: 4px 0 24px -12px rgba(15, 18, 30, 0.6);
-}
+.c-app { background-color: $n-bg; }
 
+// ---------------------------------------------------------------------
+//  5. Shell — sidebar & header (dark)
+// ---------------------------------------------------------------------
+.c-sidebar {
+    background: $n-surface;
+    box-shadow: inset -1px 0 0 $n-divider;
+    color: $n-text;
+}
 .c-sidebar .c-sidebar-brand {
     background: transparent;
-    padding: 0.75rem 0;
+    padding: 0.9rem 0.75rem;
+    justify-content: flex-start;
 }
-
 .c-sidebar .c-sidebar-nav-link,
 .c-sidebar .c-sidebar-nav-dropdown-toggle {
     margin: 2px 10px;
-    border-radius: 0.55rem;
+    border-radius: var(--radius-sm);
     font-weight: 500;
+    font-size: 0.85rem;
+    color: rgba(233, 233, 237, 0.82);
     transition: background-color 0.15s ease, color 0.15s ease;
 }
-
-.c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon,
-.c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
-    transition: color 0.15s ease;
-}
-
 .c-sidebar .c-sidebar-nav-link:hover,
 .c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
     color: #fff;
     background: rgba(255, 255, 255, 0.06);
 }
-
+.c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon,
+.c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
+    color: rgba(233, 233, 237, 0.55);
+}
+.c-sidebar .c-sidebar-nav-link:hover .c-sidebar-nav-icon,
+.c-sidebar .c-sidebar-nav-link.c-active .c-sidebar-nav-icon { color: inherit; }
 .c-sidebar .c-sidebar-nav-link.c-active,
 .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
-    color: #fff;
-    font-weight: 600;
-    background: linear-gradient(135deg, $primary 0%, lighten($primary, 8%) 100%);
-    box-shadow: 0 6px 16px -6px rgba(79, 70, 229, 0.7);
+    color: $n-accent-100;
+    font-weight: 500;
+    background: $n-accent-800;
 }
-
 .c-sidebar .c-sidebar-nav-dropdown.c-show > .c-sidebar-nav-dropdown-toggle {
     background: rgba(255, 255, 255, 0.04);
+    color: #fff;
 }
-
 .c-sidebar .c-sidebar-nav-dropdown-items .c-sidebar-nav-link {
     margin: 1px 10px 1px 14px;
-    font-size: 0.83rem;
+    font-size: 0.8rem;
 }
+.c-sidebar-minimizer { background: transparent; }
+.c-sidebar-minimizer:hover { background: rgba(255, 255, 255, 0.06); }
 
-.c-sidebar-minimizer {
-    background: transparent;
-}
-
-// -- Header ------------------------------------------------------------
 .c-header {
-    border-bottom: 1px solid rgba(31, 41, 55, 0.06);
-    box-shadow: 0 1px 12px -6px rgba(31, 41, 55, 0.25);
-    backdrop-filter: saturate(180%) blur(6px);
+    background: $n-surface;
+    border-bottom: 1px solid $n-divider;
+    box-shadow: none;
 }
-
-.c-header.c-header-light {
-    background: rgba(255, 255, 255, 0.9);
-}
-
+.c-header.c-header-light { background: $n-surface; }
+.c-header .c-header-nav .c-header-nav-link,
+.c-header .c-header-toggler { color: $n-text; }
 .c-subheader {
+    background: transparent;
     border-top: 0;
+    border-bottom: 1px solid $n-divider;
     min-height: 44px;
+    color: $n-muted;
+}
+.c-header-nav .c-avatar img { border: 2px solid rgba($n-accent, 0.35); }
+.c-footer {
+    background: transparent;
+    border-top: 1px solid $n-divider;
+    color: $n-muted;
 }
 
-.c-header-nav .c-avatar img {
-    border: 2px solid rgba(79, 70, 229, 0.15);
-}
-
-// -- Cards -------------------------------------------------------------
+// ---------------------------------------------------------------------
+//  6. Components
+// ---------------------------------------------------------------------
 .card {
-    border: 1px solid rgba(31, 41, 55, 0.05);
+    background: $n-surface;
+    border: 1px solid $n-divider;
     border-radius: $card-border-radius;
     box-shadow: $shadow-sm;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    color: $n-text;
 }
-
-.card.shadow-sm {
-    box-shadow: $shadow-sm !important;
-}
-
-.card:hover {
-    box-shadow: $shadow-md;
-}
-
+.card.shadow-sm { box-shadow: $shadow-sm !important; }
 .card-header {
     background: transparent;
-    border-bottom: 1px solid rgba(31, 41, 55, 0.06);
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.2px;
-    padding: 1rem 1.35rem;
-}
-
-// Dashboard stat cards — modern rounded, lifted look
-.card-body.d-flex.align-items-center {
-    border-radius: $card-border-radius;
-    overflow: hidden;
-    background: #fff;
-}
-
-.card-body .rounded-left {
-    border-radius: $card-border-radius 0 0 $card-border-radius !important;
-}
-
-.text-value,
-.text-value-lg {
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-
-// -- Buttons -----------------------------------------------------------
-.btn {
+    border-bottom: 1px solid $n-divider;
     font-weight: 500;
-    border-radius: $border-radius-sm;
-    transition: transform 0.12s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    font-size: 0.95rem;
+    color: $n-text;
+    padding: 1rem 1.25rem;
 }
 
-.btn:not([class*='ghost']):not([class*='link']):not([class*='outline']):not([class*='transparent']) {
-    border: 0;
-    box-shadow: $shadow-xs;
+// Primary buttons are OUTLINED in Nocturne, not filled.
+.btn { font-weight: 500; border-radius: var(--radius-md); }
+.btn-primary,
+.btn-primary:not([class*='ghost']) {
+    color: $n-accent;
+    background: transparent;
+    border: 1px solid $n-accent;
+    box-shadow: none;
 }
-
-.btn:not([class*='link']):hover {
-    transform: translateY(-1px);
-    box-shadow: $shadow-sm;
+.btn-primary:hover,
+.btn-primary:focus {
+    color: $n-accent;
+    background: rgba($n-accent, 0.12);
+    border-color: $n-accent;
+    box-shadow: none;
 }
-
-.btn:active {
-    transform: translateY(0);
+.btn-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: $n-accent;
+    background: rgba($n-accent, 0.22);
+    border-color: $n-accent;
 }
-
-.btn-pill {
-    border-radius: 50rem;
+.btn-secondary {
+    color: $n-text;
+    background: transparent;
+    border: 1px solid $n-divider;
 }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.07); color: $n-text; border-color: $n-divider; }
+.btn-outline-primary { color: $n-accent; border-color: $n-accent; }
+.btn-outline-primary:hover { background: rgba($n-accent, 0.12); color: $n-accent; }
+.btn-link { color: $n-accent; }
 
-.btn-primary {
-    background: linear-gradient(135deg, $primary 0%, lighten($primary, 8%) 100%);
-}
-
-// -- Forms -------------------------------------------------------------
+// Forms
 .form-control,
 .custom-select {
-    border-radius: $border-radius-sm;
-    border-color: $input-border-color;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    background: $n-surface;
+    color: $n-text;
+    border-color: $n-divider;
+    border-radius: var(--radius-md);
 }
-
 .form-control:focus,
 .custom-select:focus {
-    border-color: $input-focus-border-color;
-    box-shadow: 0 0 0 0.18rem rgba(79, 70, 229, 0.15);
+    background: $n-surface;
+    color: $n-text;
+    border-color: $n-accent;
+    box-shadow: 0 0 0 0.18rem rgba($n-accent, 0.2);
 }
-
+.form-control::placeholder { color: rgba(233, 233, 237, 0.4); }
+.form-control:disabled,
+.form-control[readonly] { background: $n-neutral-900; color: $n-muted; }
 .input-group-text {
-    border-radius: $border-radius-sm;
-    border-color: $input-border-color;
-    background: #f7f8fc;
+    background: $n-surface-2;
+    color: $n-text;
+    border-color: $n-divider;
+    border-radius: var(--radius-md);
 }
+label { font-weight: 500; color: rgba(233, 233, 237, 0.8); }
 
-label {
-    font-weight: 500;
-}
-
-// -- Badges ------------------------------------------------------------
-.badge {
-    font-weight: 600;
-    letter-spacing: 0.2px;
-    padding: 0.4em 0.65em;
-    border-radius: 50rem;
-}
-
-// -- Tables ------------------------------------------------------------
+// Tables
+.table { color: $n-text; }
 .table thead th {
     border-top: 0;
-    border-bottom-width: 1px;
+    border-bottom: 1px solid $n-divider;
     text-transform: uppercase;
     font-size: 0.72rem;
     letter-spacing: 0.06em;
-    color: #6b7280;
+    color: $n-muted;
     font-weight: 600;
 }
-
-.table td,
-.table th {
+.table td, .table th {
     vertical-align: middle;
+    border-top: 1px solid $n-divider;
 }
+.table-hover tbody tr:hover { background-color: rgba(255, 255, 255, 0.04); color: $n-text; }
 
-.table-hover tbody tr {
-    transition: background-color 0.12s ease;
-}
+// Badges & tags
+.badge { font-weight: 500; letter-spacing: 0.2px; padding: 0.4em 0.65em; border-radius: 50rem; }
+.badge-primary { background: $n-accent-800; color: $n-accent-100; }
 
-.table-hover tbody tr:hover {
-    background-color: rgba(79, 70, 229, 0.04);
-}
-
-// -- Dropdowns & modals ------------------------------------------------
+// Dropdowns / modals
 .dropdown-menu {
-    border: 1px solid rgba(31, 41, 55, 0.07);
-    border-radius: $border-radius;
+    background: $n-surface-2;
+    border: 1px solid $n-divider;
+    border-radius: var(--radius-md);
     box-shadow: $shadow-lg;
     padding: 0.35rem;
+    color: $n-text;
 }
+.dropdown-item { color: $n-text; border-radius: var(--radius-sm); padding: 0.5rem 0.75rem; }
+.dropdown-item:hover, .dropdown-item:focus { background: rgba(255, 255, 255, 0.06); color: $n-text; }
+.dropdown-header { color: $n-muted; }
+.dropdown-header.bg-light,
+.bg-light { background: $n-surface !important; color: $n-text !important; }
+.dropdown-divider { border-color: $n-divider; }
+.modal-content { background: $n-surface; border: 0; border-radius: var(--radius-lg); box-shadow: $shadow-lg; color: $n-text; }
+.modal-header, .modal-footer { border-color: $n-divider; }
+.close { color: $n-text; text-shadow: none; opacity: 0.7; }
+.close:hover { color: $n-text; opacity: 1; }
 
-.dropdown-item {
-    border-radius: $border-radius-sm;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.12s ease;
-}
+// Alerts
+.alert { border: 1px solid $n-divider; border-radius: var(--radius-md); }
+.alert-danger { background: rgba($n-danger, 0.12); color: lighten($n-danger, 12%); border-color: rgba($n-danger, 0.4); }
+.alert-success { background: rgba($n-success, 0.12); color: lighten($n-success, 12%); border-color: rgba($n-success, 0.4); }
+.alert-warning { background: rgba($n-warning, 0.12); color: lighten($n-warning, 12%); border-color: rgba($n-warning, 0.4); }
+.alert-info { background: rgba($n-info, 0.12); color: lighten($n-info, 12%); border-color: rgba($n-info, 0.4); }
 
-.modal-content {
-    border: 0;
-    border-radius: $border-radius-lg;
-    box-shadow: $shadow-lg;
-}
+// Breadcrumb
+.breadcrumb { background: transparent; font-size: 0.85rem; }
+.breadcrumb-item.active { color: $n-text; }
 
-.modal-header,
-.modal-footer {
-    border-color: rgba(31, 41, 55, 0.06);
-}
-
-// -- Alerts ------------------------------------------------------------
-.alert {
-    border: 0;
-    border-radius: $border-radius;
-    box-shadow: $shadow-xs;
-}
-
-// -- Footer ------------------------------------------------------------
-.c-footer {
-    background: transparent;
-    border-top: 1px solid rgba(31, 41, 55, 0.06);
-    color: #6b7280;
-}
-
-// -- Breadcrumbs -------------------------------------------------------
-.breadcrumb {
-    background: transparent;
-    font-size: 0.85rem;
-}
+// Text helpers
+.text-muted { color: $n-muted !important; }
+a { color: $n-accent; }
+hr { border-top-color: $n-divider; }
 
 // ---------------------------------------------------------------------
-//  4. Existing component overrides (retained)
+//  7. Nocturne bespoke component classes (KPI cards, tags, kicker, etc.)
+//     Namespaced-free but distinct from Bootstrap classes.
 // ---------------------------------------------------------------------
+.n-card-kicker {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: $n-accent; font-weight: 500;
+}
+.n-card-title { font-family: var(--font-heading); font-weight: 500; font-size: 17px; line-height: 1.2; }
+.n-meta { font-size: 11px; color: rgba(233, 233, 237, 0.5); }
+.n-value { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.01em; }
 
-// Dropzone uploader
+.n-tag {
+    display: inline-flex; align-items: center; font-size: 11px;
+    letter-spacing: 0.02em; padding: 3px 10px; border-radius: 6px;
+}
+.n-tag-accent { background: $n-accent-800; color: $n-accent-100; }
+.n-tag-neutral { background: $n-neutral-800; color: $n-neutral-100; }
+.n-tag-outline { border: 1px solid $n-accent; color: $n-accent; }
+.n-tag-success { background: rgba($n-success, 0.18); color: lighten($n-success, 15%); }
+.n-tag-danger  { background: rgba($n-danger, 0.18); color: lighten($n-danger, 12%); }
+
+// Weekly sales bar chart (CSS bars)
+.n-bars { display: flex; align-items: flex-end; gap: var(--space-4); height: 180px; }
+.n-bar-col { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); flex: 1; }
+.n-bar {
+    width: 100%; max-width: 34px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    background: $n-accent;
+    min-height: 2px;
+    transition: filter 0.15s ease;
+}
+.n-bar:hover { filter: brightness(1.15); }
+
+// ---------------------------------------------------------------------
+//  8. Retained component overrides (dark-adapted)
+// ---------------------------------------------------------------------
 .dropzone {
-    border: 2px dashed lighten($primary, 20%);
-    border-radius: $border-radius-lg;
-    background: #f5f6ff;
-    transition: border-color 0.15s ease, background-color 0.15s ease;
+    border: 2px dashed rgba($n-accent, 0.5);
+    border-radius: var(--radius-lg);
+    background: rgba($n-accent, 0.05);
 }
-.dropzone:hover {
-    border-color: $primary;
-    background: #eef0ff;
-}
-.dz-preview {
-    background: #f5f6ff !important;
-    border-radius: 20px;
-}
-.dz-remove {
-    color: #333;
-}
-.dropzone i.bi.bi-cloud-arrow-up {
-    font-size: 5rem;
-    color: lighten($primary, 12%);
-}
-.dropzone .dz-message {
-    color: rgba(0, 0, 0, 0.54);
-    font-weight: 500;
-    font-size: initial;
-}
-.dropzone .dz-preview .dz-image img {
-    display: block;
-    width: 100%;
-}
+.dropzone:hover { border-color: $n-accent; background: rgba($n-accent, 0.09); }
+.dz-preview { background: $n-surface-2 !important; border-radius: 12px; }
+.dz-remove { color: $n-text; }
+.dropzone i.bi.bi-cloud-arrow-up { font-size: 5rem; color: lighten($n-accent, 8%); }
+.dropzone .dz-message { color: $n-muted; font-weight: 500; font-size: initial; }
+.dropzone .dz-preview .dz-image img { display: block; width: 100%; }
 
-// Responsive table sizing
-table {
-    width: 990px !important;
+// Select2 dark alignment
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    background-color: $n-surface;
+    border: 1px solid $n-divider;
+    border-radius: var(--radius-md);
+    color: $n-text;
 }
+.select2-container--default .select2-selection--single .select2-selection__rendered { color: $n-text; }
+.select2-dropdown { background: $n-surface-2; border-color: $n-divider; color: $n-text; }
+.select2-container--default .select2-results__option--highlighted[aria-selected] { background: $n-accent; }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    table {
-        width: 100% !important;
-    }
-}
+// DataTables dark alignment
+.dataTables_wrapper { color: $n-text; }
+table.dataTable, .dataTables_wrapper .dataTables_paginate .paginate_button { color: $n-text !important; }
+
+// Responsive table sizing (retained)
+table { width: 990px !important; }
+@media (min-width: 992px) { table { width: 100% !important; } }

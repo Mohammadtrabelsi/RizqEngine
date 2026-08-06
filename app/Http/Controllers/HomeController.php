@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Modules\Expense\Entities\Expense;
+use Modules\Product\Entities\Product;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Purchase\Entities\PurchasePayment;
 use Modules\PurchasesReturn\Entities\PurchaseReturn;
@@ -34,11 +35,62 @@ class HomeController extends Controller
         $revenue = ($sales - $sale_returns) / 100;
         $profit = $revenue - $product_costs;
 
+        $today = Carbon::today()->toDateString();
+
+        // --- KPI tiles -------------------------------------------------
+        $todays_sales = Sale::completed()->whereDate('date', $today)->sum('total_amount') / 100;
+        $todays_transactions = Sale::completed()->whereDate('date', $today)->count();
+        $todays_expenses = Expense::whereDate('date', $today)->sum('amount') / 100;
+
+        $low_stock_products = Product::select('id', 'product_name', 'product_code', 'product_quantity', 'product_stock_alert')
+            ->whereColumn('product_quantity', '<=', 'product_stock_alert')
+            ->orderBy('product_quantity')
+            ->get();
+
+        // --- Weekly sales bars (last 7 days) ---------------------------
+        $week = collect();
+        foreach (range(-6, 0) as $i) {
+            $date = Carbon::today()->addDays($i);
+            $week->put($date->toDateString(), [
+                'label'  => $date->format('D'),
+                'amount' => 0.0,
+            ]);
+        }
+        $weekly_sales = Sale::completed()
+            ->where('date', '>=', Carbon::today()->subDays(6)->toDateString())
+            ->groupBy(DB::raw('DATE(date)'))
+            ->get([
+                DB::raw('DATE(date) as day'),
+                DB::raw('SUM(total_amount) as amount'),
+            ]);
+        foreach ($weekly_sales as $row) {
+            if ($week->has($row->day)) {
+                $entry = $week->get($row->day);
+                $entry['amount'] = $row->amount / 100;
+                $week->put($row->day, $entry);
+            }
+        }
+        $week_bars = $week->values();
+        $week_max = max($week_bars->max('amount'), 1);
+
+        // --- Recent transactions --------------------------------------
+        $recent_sales = Sale::withCount('saleDetails')
+            ->latest()
+            ->take(6)
+            ->get(['id', 'reference', 'customer_name', 'total_amount', 'status', 'payment_status']);
+
         return view('home', [
             'revenue'          => $revenue,
             'sale_returns'     => $sale_returns / 100,
             'purchase_returns' => $purchase_returns / 100,
-            'profit'           => $profit
+            'profit'           => $profit,
+            'todays_sales'         => $todays_sales,
+            'todays_transactions'  => $todays_transactions,
+            'todays_expenses'      => $todays_expenses,
+            'low_stock_products'   => $low_stock_products,
+            'week_bars'            => $week_bars,
+            'week_max'             => $week_max,
+            'recent_sales'         => $recent_sales,
         ]);
     }
 
