@@ -5,6 +5,7 @@ namespace Modules\Product\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Product\Database\factories\ProductFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -16,6 +17,11 @@ class Product extends Model implements HasMedia
     protected $guarded = [];
 
     protected $with = ['media'];
+
+    protected static function newFactory()
+    {
+        return ProductFactory::new();
+    }
 
     public function category()
     {
