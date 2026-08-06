@@ -73,7 +73,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <table class="table table-bordered table-striped text-center mb-0">
-                            <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
+                            <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
