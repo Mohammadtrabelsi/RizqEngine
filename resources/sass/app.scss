@@ -628,6 +628,155 @@ body:not(.c-dark-theme) {
     }
 }
 
+// ---------------------------------------------------------------------
+//  9. Nocturne bespoke components (dashboard KPIs, bar chart, tags)
+//  These mirror the Admin design comp (Triangle-Admin.dc.html): card
+//  kickers/titles/meta, the weekly-sales bar chart and status tags.
+//  Used by resources/views/home.blade.php.
+// ---------------------------------------------------------------------
+.n-card-kicker {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $n-accent;
+}
+.n-card-title {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.2;
+    color: $n-text;
+}
+.n-value {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.1;
+    color: $n-text;
+}
+.n-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: $n-muted;
+}
+
+// Weekly sales bar chart
+.n-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-4);
+    height: 160px;
+}
+.n-bar-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    flex: 1;
+    height: 100%;
+}
+.n-bar {
+    width: 100%;
+    max-width: 32px;
+    min-height: 3px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    background: $n-accent;
+}
+
+// Status tags — small labels tinted from the ramps (Nocturne .tag)
+.n-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    padding: 3px 10px;
+    border-radius: calc(var(--radius-md) * 0.75);
+    white-space: nowrap;
+}
+.n-tag-accent { background: $n-accent-800; color: $n-accent-100; }
+.n-tag-neutral { background: $n-neutral-800; color: $n-neutral-100; }
+.n-tag-success { background: rgba($n-success, 0.18); color: lighten($n-success, 18%); }
+.n-tag-danger { background: rgba($n-danger, 0.18); color: lighten($n-danger, 14%); }
+.n-tag-warning { background: rgba($n-warning, 0.18); color: lighten($n-warning, 12%); }
+
+// Light-theme text overrides for the bespoke dashboard components.
+body:not(.c-dark-theme) {
+    .n-card-title { color: $l-text; }
+    .n-value { color: $l-text; }
+    .n-meta { color: $l-muted; }
+    .n-tag-neutral { background: $l-surface-2; color: $l-text; }
+}
+
+// ---------------------------------------------------------------------
+//  10. Auth screens — the split-panel layout from the Login design comp
+//  (Triangle-Login.dc.html). Brand panel on the left, form on the right;
+//  collapses to a single centred column on small screens. Shared by
+//  login / register / password reset / forgot-password pages.
+// ---------------------------------------------------------------------
+.login-grid {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: $n-bg;
+    color: $n-text;
+}
+.login-brand {
+    background: linear-gradient(160deg, $n-surface, $n-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: calc(var(--space-8) * 2);
+}
+.login-brand-lead {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: var(--space-4);
+}
+.login-form-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--space-8) * 2) var(--space-8);
+}
+.login-form {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+.login-title {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: var(--space-2);
+}
+
+// Nocturne form field label (paired with CoreUI .form-control inputs so
+// Laravel validation states keep working).
+.field { margin-bottom: 0; }
+.field > label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: rgba(233, 233, 237, 0.7);
+}
+body:not(.c-dark-theme) .field > label { color: rgba(35, 40, 44, 0.7); }
+
+@media (max-width: 800px) {
+    .login-grid { grid-template-columns: 1fr; }
+    .login-brand {
+        padding: var(--space-8);
+        gap: var(--space-6);
+    }
+    .login-brand-copy { display: none; }
+}
+
 // Sidebar perfect-scrollbar rails (perfect-scrollbar overrides these at runtime)
 .c-sidebar-nav .ps__rail-x {
     left: 0;

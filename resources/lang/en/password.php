@@ -1,14 +1,14 @@
 <?php
 
 return [
-    'confirm' => 'Confirm',
-    'confirm-message' => 'Confirm-message',
-    'confirm-password' => 'Confirm-password',
-    'confirmation' => 'Confirmation',
+    'confirm' => 'Confirm password',
+    'confirm-message' => 'Please confirm your password before continuing.',
+    'confirm-password' => 'Confirm password',
+    'confirmation' => 'Confirm password',
     'email' => 'Email',
-    'forgot' => 'Forgot',
+    'forgot' => 'Forgot your password?',
     'password' => 'Password',
-    'reset' => 'Reset',
-    'reset-message' => 'Reset-message',
-    'send-reset-link' => 'Send-reset-link',
+    'reset' => 'Reset password',
+    'reset-message' => 'Enter your email address and we will send you a link to reset your password.',
+    'send-reset-link' => 'Send password reset link',
 ];
