@@ -98,7 +98,7 @@ class CustomersController extends Controller
 
         $customer->delete();
 
-        session()->flash('warning', trans('people.customer-deleted')    );
+        session()->flash('warning', trans('people.customer-deleted'));
 
         return redirect()->route('customers.index');
     }

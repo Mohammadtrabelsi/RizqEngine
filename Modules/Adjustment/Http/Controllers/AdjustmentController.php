@@ -156,7 +156,7 @@ class AdjustmentController extends Controller
 
         $adjustment->delete();
 
-        session()->flash('warning',trans('adjustment.adjustment-deleted'));
+        session()->flash('warning', trans('adjustment.adjustment-deleted'));
 
         return redirect()->route('adjustments.index');
     }

@@ -214,7 +214,7 @@ class PurchasesReturnController extends Controller
             Cart::instance('purchase_return')->destroy();
         });
 
-        session()->flash('info',    trans('purchasesreturn.purchase-return-updated'));
+        session()->flash('info', trans('purchasesreturn.purchase-return-updated'));
 
         return redirect()->route('purchase-returns.index');
     }
