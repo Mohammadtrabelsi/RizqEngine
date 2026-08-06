@@ -53,6 +53,166 @@ table {
     width: 990px !important;
 }
 
+/* ------------------------------------------------------------------ */
+/* Dark theme                                                         */
+/* Toggled by adding the `.c-dark-theme` class to <body> (see app.js) */
+/* ------------------------------------------------------------------ */
+.c-dark-theme {
+    $dark-bg: #1e1e2d;
+    $dark-surface: #2a2a3c;
+    $dark-surface-2: #313145;
+    $dark-border: #3a3a52;
+    $dark-text: #e1e1ea;
+    $dark-muted: #a0a0b8;
+
+    background-color: $dark-bg;
+    color: $dark-text;
+
+    .c-wrapper,
+    .c-body,
+    .c-main,
+    .c-subheader {
+        background-color: $dark-bg;
+        color: $dark-text;
+    }
+
+    .c-header {
+        background-color: $dark-surface;
+        border-bottom-color: $dark-border;
+        color: $dark-text;
+
+        .c-header-nav-link,
+        .c-header-toggler {
+            color: $dark-text;
+        }
+    }
+
+    // Cards, modals and other raised surfaces
+    .card,
+    .modal-content,
+    .dropdown-menu,
+    .list-group-item,
+    .c-callout {
+        background-color: $dark-surface;
+        border-color: $dark-border;
+        color: $dark-text;
+    }
+
+    .card-header,
+    .card-footer,
+    .modal-header,
+    .modal-footer {
+        background-color: $dark-surface-2;
+        border-color: $dark-border;
+        color: $dark-text;
+    }
+
+    .bg-light,
+    .bg-white {
+        background-color: $dark-surface-2 !important;
+        color: $dark-text !important;
+    }
+
+    // Tables
+    .table,
+    .dataTable {
+        color: $dark-text;
+
+        th,
+        td {
+            border-color: $dark-border;
+        }
+
+        thead th {
+            border-color: $dark-border;
+            color: $dark-text;
+        }
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+        color: $dark-text;
+    }
+
+    // Form controls
+    .form-control,
+    .custom-select,
+    .input-group-text {
+        background-color: $dark-surface-2;
+        border-color: $dark-border;
+        color: $dark-text;
+
+        &::placeholder {
+            color: $dark-muted;
+        }
+
+        &:focus {
+            background-color: $dark-surface-2;
+            color: $dark-text;
+        }
+    }
+
+    // Select2 (used across the app)
+    .select2-container--default .select2-selection--single,
+    .select2-container--default .select2-selection--multiple {
+        background-color: $dark-surface-2;
+        border-color: $dark-border;
+        color: $dark-text;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: $dark-text;
+    }
+    .select2-dropdown {
+        background-color: $dark-surface-2;
+        border-color: $dark-border;
+        color: $dark-text;
+    }
+
+    .dropdown-item {
+        color: $dark-text;
+
+        &:hover,
+        &:focus {
+            background-color: $dark-surface-2;
+            color: $dark-text;
+        }
+    }
+
+    .text-dark {
+        color: $dark-text !important;
+    }
+    .text-muted {
+        color: $dark-muted !important;
+    }
+
+    hr {
+        border-top-color: $dark-border;
+    }
+
+    .border,
+    .border-top,
+    .border-bottom,
+    .border-left,
+    .border-right {
+        border-color: $dark-border !important;
+    }
+}
+
+// Theme toggle icon: show the icon for the theme you can switch TO.
+#theme-toggle .theme-toggle-light {
+    display: none;
+}
+.c-dark-theme #theme-toggle .theme-toggle-dark {
+    display: none;
+}
+.c-dark-theme #theme-toggle .theme-toggle-light {
+    display: inline-block;
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     table {
