@@ -27,7 +27,7 @@
                         @if(!empty($product))
                             <td class="align-middle">{{ $product->product_name }}</td>
                             <td class="align-middle">{{ $product->product_code }}</td>
-                            <td class="align-middle text-center" style="width: 200px;">
+                            <td class="align-middle text-center barcode-cell">
                                 <input wire:model.live="quantity" class="form-control" type="number" min="1" max="100" value="{{ $quantity }}">
                             </td>
                         @else
@@ -66,14 +66,14 @@
             <div class="card-body">
                 <div class="row justify-content-center">
                     @foreach($barcodes as $barcode)
-                        <div class="col-lg-3 col-md-4 col-sm-6" style="border: 1px solid #ffffff;border-style: dashed;background-color: #48FCFE;">
-                            <p class="mt-3 mb-1" style="font-size: 15px;color: #000;">
+                        <div class="col-lg-3 col-md-4 col-sm-6 barcode-label">
+                            <p class="mt-3 mb-1 barcode-label-text">
                                 {{ $product->product_name }}
                             </p>
                             <div>
                                 {!! $barcode !!}
                             </div>
-                            <p style="font-size: 15px;color: #000;">
+                            <p class="barcode-label-text">
                                 Price:: {{ format_currency($product->product_price) }}
                             </p>
                         </div>

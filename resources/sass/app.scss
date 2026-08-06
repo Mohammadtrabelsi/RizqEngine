@@ -345,159 +345,151 @@ body {
     background: transparent;
     border: 1px solid $n-divider;
 }
-.btn-secondary:hover { background: rgba(255, 255, 255, 0.07); color: $n-text; border-color: $n-divider; }
-.btn-outline-primary { color: $n-accent; border-color: $n-accent; }
-.btn-outline-primary:hover { background: rgba($n-accent, 0.12); color: $n-accent; }
-.btn-link { color: $n-accent; }
 
-// Forms
-.form-control,
-.custom-select {
-    background: $n-surface;
-    color: $n-text;
-    border-color: $n-divider;
-    border-radius: var(--radius-md);
+/* ------------------------------------------------------------------ */
+/* Rules moved out of the inline <style> block in includes/main-css   */
+/* ------------------------------------------------------------------ */
+div.dataTables_wrapper div.dataTables_length select {
+    width: 65px;
+    display: inline-block;
 }
-.form-control:focus,
-.custom-select:focus {
-    background: $n-surface;
-    color: $n-text;
-    border-color: $n-accent;
-    box-shadow: 0 0 0 0.18rem rgba($n-accent, 0.2);
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #d8dbe0;
+    border-radius: 4px;
 }
-.form-control::placeholder { color: rgba(233, 233, 237, 0.4); }
-.form-control:disabled,
-.form-control[readonly] { background: $n-neutral-900; color: $n-muted; }
-.input-group-text {
-    background: $n-surface-2;
-    color: $n-text;
-    border-color: $n-divider;
-    border-radius: var(--radius-md);
-}
-label { font-weight: 500; color: rgba(233, 233, 237, 0.8); }
-
-// Tables
-.table { color: $n-text; }
-.table thead th {
-    border-top: 0;
-    border-bottom: 1px solid $n-divider;
-    text-transform: uppercase;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    color: $n-muted;
-    font-weight: 600;
-}
-.table td, .table th {
-    vertical-align: middle;
-    border-top: 1px solid $n-divider;
-}
-.table-hover tbody tr:hover { background-color: rgba(255, 255, 255, 0.04); color: $n-text; }
-
-// Badges & tags
-.badge { font-weight: 500; letter-spacing: 0.2px; padding: 0.4em 0.65em; border-radius: 50rem; }
-.badge-primary { background: $n-accent-800; color: $n-accent-100; }
-
-// Dropdowns / modals
-.dropdown-menu {
-    background: $n-surface-2;
-    border: 1px solid $n-divider;
-    border-radius: var(--radius-md);
-    box-shadow: $shadow-lg;
-    padding: 0.35rem;
-    color: $n-text;
-}
-.dropdown-item { color: $n-text; border-radius: var(--radius-sm); padding: 0.5rem 0.75rem; }
-.dropdown-item:hover, .dropdown-item:focus { background: rgba(255, 255, 255, 0.06); color: $n-text; }
-.dropdown-header { color: $n-muted; }
-.dropdown-header.bg-light,
-.bg-light { background: $n-surface !important; color: $n-text !important; }
-.dropdown-divider { border-color: $n-divider; }
-.modal-content { background: $n-surface; border: 0; border-radius: var(--radius-lg); box-shadow: $shadow-lg; color: $n-text; }
-.modal-header, .modal-footer { border-color: $n-divider; }
-.close { color: $n-text; text-shadow: none; opacity: 0.7; }
-.close:hover { color: $n-text; opacity: 1; }
-
-// Alerts
-.alert { border: 1px solid $n-divider; border-radius: var(--radius-md); }
-.alert-danger { background: rgba($n-danger, 0.12); color: lighten($n-danger, 12%); border-color: rgba($n-danger, 0.4); }
-.alert-success { background: rgba($n-success, 0.12); color: lighten($n-success, 12%); border-color: rgba($n-success, 0.4); }
-.alert-warning { background: rgba($n-warning, 0.12); color: lighten($n-warning, 12%); border-color: rgba($n-warning, 0.4); }
-.alert-info { background: rgba($n-info, 0.12); color: lighten($n-info, 12%); border-color: rgba($n-info, 0.4); }
-
-// Breadcrumb
-.breadcrumb { background: transparent; font-size: 0.85rem; }
-.breadcrumb-item.active { color: $n-text; }
-
-// Text helpers
-.text-muted { color: $n-muted !important; }
-a { color: $n-accent; }
-hr { border-top-color: $n-divider; }
-
-// ---------------------------------------------------------------------
-//  7. Nocturne bespoke component classes (KPI cards, tags, kicker, etc.)
-//     Namespaced-free but distinct from Bootstrap classes.
-// ---------------------------------------------------------------------
-.n-card-kicker {
-    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: $n-accent; font-weight: 500;
-}
-.n-card-title { font-family: var(--font-heading); font-weight: 500; font-size: 17px; line-height: 1.2; }
-.n-meta { font-size: 11px; color: rgba(233, 233, 237, 0.5); }
-.n-value { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.01em; }
-
-.n-tag {
-    display: inline-flex; align-items: center; font-size: 11px;
-    letter-spacing: 0.02em; padding: 3px 10px; border-radius: 6px;
-}
-.n-tag-accent { background: $n-accent-800; color: $n-accent-100; }
-.n-tag-neutral { background: $n-neutral-800; color: $n-neutral-100; }
-.n-tag-outline { border: 1px solid $n-accent; color: $n-accent; }
-.n-tag-success { background: rgba($n-success, 0.18); color: lighten($n-success, 15%); }
-.n-tag-danger  { background: rgba($n-danger, 0.18); color: lighten($n-danger, 12%); }
-
-// Weekly sales bar chart (CSS bars)
-.n-bars { display: flex; align-items: flex-end; gap: var(--space-4); height: 180px; }
-.n-bar-col { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); flex: 1; }
-.n-bar {
-    width: 100%; max-width: 34px;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    background: $n-accent;
-    min-height: 2px;
-    transition: filter 0.15s ease;
-}
-.n-bar:hover { filter: brightness(1.15); }
-
-// ---------------------------------------------------------------------
-//  8. Retained component overrides (dark-adapted)
-// ---------------------------------------------------------------------
-.dropzone {
-    border: 2px dashed rgba($n-accent, 0.5);
-    border-radius: var(--radius-lg);
-    background: rgba($n-accent, 0.05);
-}
-.dropzone:hover { border-color: $n-accent; background: rgba($n-accent, 0.09); }
-.dz-preview { background: $n-surface-2 !important; border-radius: 12px; }
-.dz-remove { color: $n-text; }
-.dropzone i.bi.bi-cloud-arrow-up { font-size: 5rem; color: lighten($n-accent, 8%); }
-.dropzone .dz-message { color: $n-muted; font-weight: 500; font-size: initial; }
-.dropzone .dz-preview .dz-image img { display: block; width: 100%; }
-
-// Select2 dark alignment
-.select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
-    background-color: $n-surface;
-    border: 1px solid $n-divider;
-    border-radius: var(--radius-md);
-    color: $n-text;
+    background-color: #fff;
+    border: 1px solid #d8dbe0;
+    border-radius: 4px;
 }
-.select2-container--default .select2-selection--single .select2-selection__rendered { color: $n-text; }
-.select2-dropdown { background: $n-surface-2; border-color: $n-divider; color: $n-text; }
-.select2-container--default .select2-results__option--highlighted[aria-selected] { background: $n-accent; }
+.select2-container .select2-selection--multiple {
+    height: 35px;
+}
+.select2-container .select2-selection--single {
+    height: 35px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 33px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    margin-top: 2px;
+}
 
-// DataTables dark alignment
-.dataTables_wrapper { color: $n-text; }
-table.dataTable, .dataTables_wrapper .dataTables_paginate .paginate_button { color: $n-text !important; }
+/* ------------------------------------------------------------------ */
+/* Helper classes that replace inline style="" attributes in views    */
+/* ------------------------------------------------------------------ */
 
-// Responsive table sizing (retained)
-table { width: 990px !important; }
-@media (min-width: 992px) { table { width: 100% !important; } }
+// Sidebar nav icons (previously inline line-height:1 on each icon)
+.c-sidebar-nav-icon {
+    line-height: 1;
+}
+
+// Icon sizing helpers used in the header
+.icon-fs-2rem   { font-size: 2rem; }
+.icon-fs-1-3rem { font-size: 1.3rem; }
+.icon-fs-1-2rem { font-size: 1.2rem; }
+.icon-fs-20px   { font-size: 20px; }
+.icon-fs-15px   { font-size: 15px; }
+.icon-fs-13px   { font-size: 13px; }
+.icon-fs-11px   { font-size: 11px; }
+
+// Livewire "loading" overlay used across cart / report tables
+.wire-loading-overlay {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 99;
+}
+
+// Generic pointer cursor helper
+.cursor-pointer {
+    cursor: pointer;
+}
+
+// POS product list stock badge
+.pos-stock-badge {
+    left: 10px;
+    top: 10px;
+}
+
+// Search-product dropdown layering
+.search-product-backdrop {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.search-product-results {
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+.search-product-results-front {
+    left: 0;
+    right: 0;
+    z-index: 2;
+    border: 0;
+}
+
+// Cart quantity / price inputs
+.cart-item-input {
+    min-width: 40px;
+    max-width: 90px;
+}
+
+// Barcode preview
+.barcode-cell {
+    width: 200px;
+}
+.barcode-label {
+    border: 1px dashed #ffffff;
+    background-color: #48fcfe;
+}
+.barcode-label-text {
+    font-size: 15px;
+    color: #000;
+}
+
+// Dashboard doughnut chart wrapper
+.chart-container-sm {
+    position: relative;
+    height: auto;
+    width: 280px;
+}
+
+// Email verification card
+.verify-wrapper {
+    margin-top: 2%;
+}
+.verify-card {
+    width: 40rem;
+}
+
+// Login button spinner
+.login-spinner {
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    display: none;
+}
+
+// Sidebar perfect-scrollbar rails (perfect-scrollbar overrides these at runtime)
+.c-sidebar-nav .ps__rail-x {
+    left: 0;
+    bottom: 0;
+}
+.c-sidebar-nav .ps__rail-x .ps__thumb-x {
+    left: 0;
+    width: 0;
+}
+.c-sidebar-nav .ps__rail-y {
+    top: 0;
+    right: 0;
+}
+.c-sidebar-nav .ps__rail-y .ps__thumb-y {
+    top: 0;
+}
