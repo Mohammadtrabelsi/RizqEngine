@@ -23,8 +23,8 @@
                                 <div class="form-group">
                                     <label>Ranking</label>
                                     <select wire:model="direction" class="form-control">
-                                        <option value="fast">Fast Moving (most sold)</option>
-                                        <option value="slow">Slow Moving (least sold)</option>
+                                        <option value="fast">{{ __('report.fast-moving') }}</option>
+                                        <option value="slow">{{ __('report.slow-moving') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -32,9 +32,9 @@
                                 <div class="form-group">
                                     <label>Show Top</label>
                                     <select wire:model="limit" class="form-control">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
+                                        <option value="10">{{ __('report.top-10') }}</option>
+                                        <option value="25">{{ __('report.top-25') }}</option>
+                                        <option value="50">{{ __('report.top-50') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
+                                {{ __('report.generate-report') }}
                             </button>
                         </div>
                     </form>
@@ -56,15 +56,15 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h5 class="mb-3">{{ $direction === 'slow' ? 'Slow Moving Products' : 'Fast Moving Products' }}</h5>
+                    <h5 class="mb-3">{{ $direction === 'slow' ? __('report.slow-moving-products') : __('report.fast-moving-products') }}</h5>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Product</th>
-                                    <th class="text-right">Units Sold</th>
-                                    <th class="text-right">Current Stock</th>
+                                    <th>{{ __('report.product') }}</th>
+                                    <th class="text-right">{{ __('report.units-sold') }}</th>
+                                    <th class="text-right">{{ __('report.current-stock') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +77,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">No sales data for the selected period.</td>
+                                        <td colspan="4" class="text-center">{{ __('report.no-sales-data') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>

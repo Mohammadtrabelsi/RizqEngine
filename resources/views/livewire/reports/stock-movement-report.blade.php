@@ -7,23 +7,23 @@
                         <div class="form-row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>Start Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control">
                                     @error('start_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>End Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control">
                                     @error('end_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>Product</label>
+                                    <label>{{ __('report.product') }}</label>
                                     <select wire:model="product_id" class="form-control">
-                                        <option value="">All Products</option>
+                                        <option value="">{{ __('report.all-products') }}</option>
                                         @foreach($products as $product)
                                             <option value="{{ $product->id }}">{{ $product->product_name }}</option>
                                         @endforeach
@@ -32,13 +32,13 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>Type</label>
+                                    <label>{{ __('report.type') }}</label>
                                     <select wire:model="type" class="form-control">
-                                        <option value="">All Types</option>
-                                        <option value="in">Stock In</option>
-                                        <option value="out">Stock Out</option>
-                                        <option value="adjustment">Adjustment</option>
-                                        <option value="opening">Opening</option>
+                                        <option value="">{{ __('report.all-types') }}</option>
+                                        <option value="in">{{ __('report.stock-in') }}</option>
+                                        <option value="out">{{ __('report.stock-out') }}</option>
+                                        <option value="adjustment">{{ __('report.adjustment') }}</option>
+                                        <option value="opening">{{ __('report.opening') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
+                                {{ __('report.filter-report') }}
                             </button>
                         </div>
                     </form>
@@ -64,14 +64,14 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Product</th>
-                                    <th class="text-center">Type</th>
-                                    <th class="text-right">Change</th>
-                                    <th class="text-right">Before</th>
-                                    <th class="text-right">After</th>
-                                    <th>Reference</th>
-                                    <th>User</th>
+                                    <th>{{ __('report.date') }}</th>
+                                    <th>{{ __('report.product') }}</th>
+                                    <th class="text-center">{{ __('report.type') }}</th>
+                                    <th class="text-right">{{ __('report.change') }}</th>
+                                    <th class="text-right">{{ __('report.before') }}</th>
+                                    <th class="text-right">{{ __('report.after') }}</th>
+                                    <th>{{ __('report.reference') }}</th>
+                                    <th>{{ __('report.user') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,7 +103,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center">No stock movements for the selected period.</td>
+                                        <td colspan="8" class="text-center">{{ __('report.no-movements') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>

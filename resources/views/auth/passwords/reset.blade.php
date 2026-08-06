@@ -24,8 +24,8 @@
                 <div class="card-body p-4">
                     <form method="post" action="{{ url('/password/reset') }}">
                         @csrf
-                        <h1>Reset Password</h1>
-                        <p class="text-muted">Enter email and new password</p>
+                        <h1>{{ __('password.reset') }}</h1>
+                        <p class="text-muted">{{ __('password.reset-message') }}</p>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -33,7 +33,7 @@
                                 </span>
                             </div>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                                   value="{{ $email ?? old('email') }}" placeholder="Email">
+                                   value="{{ $email ?? old('email') }}" placeholder="{{ __('password.email') }}">
                             @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -57,10 +57,10 @@
                               </span>
                             </div>
                             <input type="password" name="password_confirmation" class="form-control"
-                                   placeholder="Confirm password">
+                                   placeholder="{{ __('password.confirm-password') }}">
                         </div>
                         <button type="submit" class="btn btn-block btn-primary btn-block btn-flat">
-                            <i class="fa fa-btn fa-refresh"></i> Reset
+                            <i class="fa fa-btn fa-refresh"></i> {{ __('password.reset') }}
                         </button>
                     </form>
                 </div>

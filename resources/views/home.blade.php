@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">{{ __('general.dashboard') }}</li>
     </ol>
 @endsection
 
@@ -42,7 +42,7 @@
             <div class="col-lg-8 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <div class="n-card-title mb-4">Sales this week</div>
+                        <div class="n-card-title mb-4">{{ __('general.sales-this-week') }}</div>
                         <div class="n-bars">
                             @foreach($week_bars as $bar)
                                 @php $pct = max(2, round(($bar['amount'] / $week_max) * 100)); @endphp
@@ -62,7 +62,7 @@
             <div class="col-lg-4 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <div class="n-card-title mb-3">Low stock</div>
+                        <div class="n-card-title mb-3">{{ __('general.low-stock') }}</div>
                         @forelse($low_stock_products->take(6) as $product)
                             <div class="d-flex justify-content-between align-items-center py-2"
                                  style="border-bottom:1px solid var(--color-divider)">
@@ -73,7 +73,7 @@
                                 <span class="n-tag n-tag-outline">{{ $product->product_quantity }} left</span>
                             </div>
                         @empty
-                            <div class="n-meta py-2">All products are above their stock alert level.</div>
+                            <div class="n-meta py-2">{{ __('general.all-products-above-alert-level') }}</div>
                         @endforelse
                     </div>
                 </div>
@@ -90,11 +90,11 @@
                             <table class="table mb-0" style="width:100% !important">
                                 <thead>
                                     <tr>
-                                        <th>Order</th>
-                                        <th>Customer</th>
-                                        <th>Items</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
+                                        <th>{{ __('general.order') }}</th>
+                                        <th>{{ __('general.customer') }}</th>
+                                        <th>{{ __('general.items') }}</th>
+                                        <th>{{ __('general.total') }}</th>
+                                        <th>{{ __('general.status') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,7 +116,7 @@
                                             <td><span class="n-tag {{ $tagClass }}">{{ $ps }}</span></td>
                                         </tr>
                                     @empty
-                                        <tr><td colspan="5" class="n-meta">No transactions yet.</td></tr>
+                                        <tr><td colspan="5" class="n-meta">{{ __('general.no-transactions') }}</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
