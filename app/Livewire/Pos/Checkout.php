@@ -44,7 +44,8 @@ class Checkout extends Component
         $cart_items = Cart::instance($this->cart_instance)->content();
 
         return view('livewire.pos.checkout', [
-            'cart_items' => $cart_items
+            'cart_items' => $cart_items,
+            'total_with_shipping' => Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
         ]);
     }
 

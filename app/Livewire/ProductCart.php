@@ -67,7 +67,8 @@ class ProductCart extends Component
         $cart_items = Cart::instance($this->cart_instance)->content();
 
         return view('livewire.product-cart', [
-            'cart_items' => $cart_items
+            'cart_items' => $cart_items,
+            'total_with_shipping' => Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
         ]);
     }
 

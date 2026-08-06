@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8" style="margin-top: 2%">
-                <div class="card" style="width: 40rem;">
+            <div class="col-md-8 verify-wrapper">
+                <div class="card verify-card">
                     <div class="card-body">
                         <h4 class="card-title">Verify Your Email Address</h4>
                         @if (session('resent'))

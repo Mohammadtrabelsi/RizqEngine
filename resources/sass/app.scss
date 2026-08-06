@@ -219,3 +219,151 @@ table {
         width: 100% !important;
     }
 }
+
+/* ------------------------------------------------------------------ */
+/* Rules moved out of the inline <style> block in includes/main-css   */
+/* ------------------------------------------------------------------ */
+div.dataTables_wrapper div.dataTables_length select {
+    width: 65px;
+    display: inline-block;
+}
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #d8dbe0;
+    border-radius: 4px;
+}
+.select2-container--default .select2-selection--multiple {
+    background-color: #fff;
+    border: 1px solid #d8dbe0;
+    border-radius: 4px;
+}
+.select2-container .select2-selection--multiple {
+    height: 35px;
+}
+.select2-container .select2-selection--single {
+    height: 35px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 33px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    margin-top: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Helper classes that replace inline style="" attributes in views    */
+/* ------------------------------------------------------------------ */
+
+// Sidebar nav icons (previously inline line-height:1 on each icon)
+.c-sidebar-nav-icon {
+    line-height: 1;
+}
+
+// Icon sizing helpers used in the header
+.icon-fs-2rem   { font-size: 2rem; }
+.icon-fs-1-3rem { font-size: 1.3rem; }
+.icon-fs-1-2rem { font-size: 1.2rem; }
+.icon-fs-20px   { font-size: 20px; }
+.icon-fs-15px   { font-size: 15px; }
+.icon-fs-13px   { font-size: 13px; }
+.icon-fs-11px   { font-size: 11px; }
+
+// Livewire "loading" overlay used across cart / report tables
+.wire-loading-overlay {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 99;
+}
+
+// Generic pointer cursor helper
+.cursor-pointer {
+    cursor: pointer;
+}
+
+// POS product list stock badge
+.pos-stock-badge {
+    left: 10px;
+    top: 10px;
+}
+
+// Search-product dropdown layering
+.search-product-backdrop {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.search-product-results {
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+.search-product-results-front {
+    left: 0;
+    right: 0;
+    z-index: 2;
+    border: 0;
+}
+
+// Cart quantity / price inputs
+.cart-item-input {
+    min-width: 40px;
+    max-width: 90px;
+}
+
+// Barcode preview
+.barcode-cell {
+    width: 200px;
+}
+.barcode-label {
+    border: 1px dashed #ffffff;
+    background-color: #48fcfe;
+}
+.barcode-label-text {
+    font-size: 15px;
+    color: #000;
+}
+
+// Dashboard doughnut chart wrapper
+.chart-container-sm {
+    position: relative;
+    height: auto;
+    width: 280px;
+}
+
+// Email verification card
+.verify-wrapper {
+    margin-top: 2%;
+}
+.verify-card {
+    width: 40rem;
+}
+
+// Login button spinner
+.login-spinner {
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    display: none;
+}
+
+// Sidebar perfect-scrollbar rails (perfect-scrollbar overrides these at runtime)
+.c-sidebar-nav .ps__rail-x {
+    left: 0;
+    bottom: 0;
+}
+.c-sidebar-nav .ps__rail-x .ps__thumb-x {
+    left: 0;
+    width: 0;
+}
+.c-sidebar-nav .ps__rail-y {
+    top: 0;
+    right: 0;
+}
+.c-sidebar-nav .ps__rail-y .ps__thumb-y {
+    top: 0;
+}
