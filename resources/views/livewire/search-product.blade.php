@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div wire:loading class="card position-absolute mt-1 border-0" style="z-index: 1;left: 0;right: 0;">
+    <div wire:loading class="card position-absolute mt-1 border-0 search-product-results">
         <div class="card-body shadow">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
@@ -25,9 +25,9 @@
     </div>
 
     @if(!empty($query))
-        <div wire:click="resetQuery" class="position-fixed w-100 h-100" style="left: 0; top: 0; right: 0; bottom: 0;z-index: 1;"></div>
+        <div wire:click="resetQuery" class="position-fixed w-100 h-100 search-product-backdrop"></div>
         @if($search_results->isNotEmpty())
-            <div class="card position-absolute mt-1" style="z-index: 2;left: 0;right: 0;border: 0;">
+            <div class="card position-absolute mt-1 search-product-results-front">
                 <div class="card-body shadow">
                     <ul class="list-group list-group-flush">
                         @foreach($search_results as $result)
@@ -48,7 +48,7 @@
                 </div>
             </div>
         @else
-            <div class="card position-absolute mt-1 border-0" style="z-index: 1;left: 0;right: 0;">
+            <div class="card position-absolute mt-1 border-0 search-product-results">
                 <div class="card-body shadow">
                     <div class="alert alert-warning mb-0">
                         {{ __('general.no-product-found') }}

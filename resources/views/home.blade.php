@@ -57,24 +57,16 @@
                 </div>
             </div>
             @endcan
-
-            {{-- Low stock list --}}
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="n-card-title mb-3">{{ __('general.low-stock') }}</div>
-                        @forelse($low_stock_products->take(6) as $product)
-                            <div class="d-flex justify-content-between align-items-center py-2"
-                                 style="border-bottom:1px solid var(--color-divider)">
-                                <div>
-                                    <div style="font-size:13px; font-weight:500">{{ $product->product_name }}</div>
-                                    <div class="n-meta">{{ $product->product_code }}</div>
-                                </div>
-                                <span class="n-tag n-tag-outline">{{ $product->product_quantity }} left</span>
-                            </div>
-                        @empty
-                            <div class="n-meta py-2">{{ __('general.all-products-above-alert-level') }}</div>
-                        @endforelse
+            @can('show_month_overview')
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header">
+                        Overview of {{ now()->format('F, Y') }}
+                    </div>
+                    <div class="card-body d-flex justify-content-center">
+                        <div class="chart-container chart-container-sm">
+                            <canvas id="currentMonthChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

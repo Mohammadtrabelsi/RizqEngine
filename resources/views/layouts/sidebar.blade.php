@@ -11,11 +11,11 @@
     </div>
     <ul class="c-sidebar-nav">
         @include('layouts.menu')
-        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        <div class="ps__rail-x">
+            <div class="ps__thumb-x" tabindex="0"></div>
         </div>
-        <div class="ps__rail-y" style="top: 0px; height: 692px; right: 0px;">
-            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 369px;"></div>
+        <div class="ps__rail-y">
+            <div class="ps__thumb-y" tabindex="0"></div>
         </div>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

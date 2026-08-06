@@ -1,9 +1,9 @@
 <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
-    <i class="bi bi-list" style="font-size: 2rem;"></i>
+    <i class="bi bi-list icon-fs-2rem"></i>
 </button>
 
 <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
-    <i class="bi bi-list" style="font-size: 2rem;"></i>
+    <i class="bi bi-list icon-fs-2rem"></i>
 </button>
 
 <ul class="c-header-nav ml-auto">
@@ -12,8 +12,8 @@
 <ul class="c-header-nav ml-auto mr-4">
     <li class="c-header-nav-item mr-3 d-flex align-items-center">
         <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link px-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
-            <i class="bi bi-moon-stars theme-toggle-dark" style="font-size: 1.3rem;"></i>
-            <i class="bi bi-sun theme-toggle-light" style="font-size: 1.3rem;"></i>
+            <i class="bi bi-moon-stars theme-toggle-dark icon-fs-1-3rem"></i>
+            <i class="bi bi-sun theme-toggle-light icon-fs-1-3rem"></i>
         </button>
     </li>
 
@@ -28,13 +28,8 @@
     @can('show_notifications')
     <li class="c-header-nav-item dropdown d-md-down-none mr-2">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="bi bi-bell" style="font-size: 20px;"></i>
-            <span class="badge badge-pill badge-danger">
-            @php
-                $low_quantity_products = \Modules\Product\Entities\Product::select('id', 'product_quantity', 'product_stock_alert', 'product_code')->whereColumn('product_quantity', '<=', 'product_stock_alert')->get();
-                echo $low_quantity_products->count();
-            @endphp
-            </span>
+            <i class="bi bi-bell icon-fs-20px"></i>
+            <span class="badge badge-pill badge-danger">{{ $low_quantity_products->count() }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
             <div class="dropdown-header bg-light">
@@ -61,16 +56,16 @@
             </div>
             <div class="d-flex flex-column">
                 <span class="font-weight-bold">{{ auth()->user()->name }}</span>
-                <span class="font-italic">{{ __('app.online') }} <i class="bi bi-circle-fill text-success" style="font-size: 11px;"></i></span>
+                <span class="font-italic">Online <i class="bi bi-circle-fill text-success icon-fs-11px"></i></span>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right pt-0">
             <div class="dropdown-header bg-light py-2"><strong>{{ __('app.account') }}</strong></div>
             <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                <i class="mfe-2  bi bi-person" style="font-size: 1.2rem;"></i> {{ __('app.profile') }}
+                <i class="mfe-2  bi bi-person icon-fs-1-2rem"></i> Profile
             </a>
-            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="mfe-2  bi bi-box-arrow-left" style="font-size: 1.2rem;"></i> {{ __('app.logout') }}
+            <a id="logout-link" class="dropdown-item" href="#">
+                <i class="mfe-2  bi bi-box-arrow-left icon-fs-1-2rem"></i> Logout
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

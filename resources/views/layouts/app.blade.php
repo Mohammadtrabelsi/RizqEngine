@@ -13,18 +13,7 @@
     @include('includes.main-css')
 </head>
 
-<body class="c-app">
-    <script>
-        // Apply saved theme as early as possible to avoid a flash of the wrong theme.
-        (function () {
-            try {
-                if (localStorage.getItem('theme') === 'dark') {
-                    document.body.classList.add('c-dark-theme');
-                }
-            } catch (e) {}
-        })();
-    </script>
-
+<body class="c-app {{ request()->cookie('theme') === 'dark' ? 'c-dark-theme' : '' }}">
     @include('layouts.sidebar')
 
     <div class="c-wrapper">

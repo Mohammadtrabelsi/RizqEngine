@@ -9,9 +9,24 @@
     "isEntry": true,
     "src": "resources/js/chart-config.js"
   },
+  "resources/js/filepond.js": {
+    "file": "assets/filepond-9aa6d4eb.js",
+    "isEntry": true,
+    "src": "resources/js/filepond.js"
+  },
+  "resources/js/login.js": {
+    "file": "assets/login-af75e073.js",
+    "isEntry": true,
+    "src": "resources/js/login.js"
+  },
   "resources/sass/app.scss": {
-    "file": "assets/app-a16b28f7.css",
+    "file": "assets/app-27f5f9a2.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
+  },
+  "resources/sass/errors.scss": {
+    "file": "assets/errors-1d859143.css",
+    "isEntry": true,
+    "src": "resources/sass/errors.scss"
   }
 }
