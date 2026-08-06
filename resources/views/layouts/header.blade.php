@@ -10,6 +10,13 @@
 
 </ul>
 <ul class="c-header-nav ml-auto mr-4">
+    <li class="c-header-nav-item mr-3 d-flex align-items-center">
+        <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link px-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
+            <i class="bi bi-moon-stars theme-toggle-dark" style="font-size: 1.3rem;"></i>
+            <i class="bi bi-sun theme-toggle-light" style="font-size: 1.3rem;"></i>
+        </button>
+    </li>
+
     @can('create_pos_sales')
     <li class="c-header-nav-item mr-3">
         <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
