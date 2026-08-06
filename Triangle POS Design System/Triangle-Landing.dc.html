@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="nocturne-styles.css"></link>
+</helmet>
+<div style="background:var(--color-bg); color:var(--color-text)">
+
+  <div class="nav" style="padding:var(--space-4) var(--space-8); border-bottom:1px solid var(--color-divider)">
+    <div class="nav-brand" style="display:flex; align-items:center; gap:var(--space-2); font-size:15px">
+      <svg width="22" height="20" viewBox="0 0 100 90">
+        <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="var(--color-text)" stroke-width="8"></polygon>
+        <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="8"></polygon>
+        <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="8"></polygon>
+        <polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="8"></polygon>
+      </svg>
+      Triangle POS
+    </div>
+    <a href="#features">Features</a>
+    <a href="#access">Access control</a>
+    <a href="#reporting">Reporting</a>
+    <a href="#" class="btn btn-secondary">Sign in</a>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:var(--space-8); padding:96px var(--space-8) 96px 0; max-width:1280px">
+    <div style="flex:1; display:flex; flex-direction:column; gap:var(--space-4); padding-left:var(--space-8)">
+      <h1 style="max-width:560px">Run your store with Triangle POS</h1>
+      <p class="text-muted" style="font-size:16px; max-width:480px; margin:0">A complete, production-ready POS and inventory platform. Manage products, stock, purchases, sales, returns, expenses and people — with powerful reporting and fine-grained role-based access control.</p>
+      <div style="display:flex; gap:var(--space-3); margin-top:var(--space-3)">
+        <a href="#" class="btn btn-primary">Get started</a>
+        <a href="#" class="btn btn-secondary">See a demo</a>
+      </div>
+    </div>
+    <div style="flex:1">
+      <div class="lighten" style="aspect-ratio:16/11; border-radius:var(--radius-lg); background:repeating-linear-gradient(135deg, var(--color-surface) 0px, var(--color-surface) 10px, var(--color-neutral-900) 10px, var(--color-neutral-900) 20px); display:flex; align-items:center; justify-content:center; font-family:monospace; font-size:12px; color:var(--color-neutral-500)">product screenshot</div>
+    </div>
+  </div>
+
+  <div id="features" style="padding:80px var(--space-8) 80px calc(var(--space-8) * 2); max-width:1280px">
+    <h2 style="margin-bottom:var(--space-2)">Everything the shop floor needs</h2>
+    <p class="text-muted" style="max-width:520px; margin-bottom:var(--space-6)">One system for every part of running a store, from stock room to till.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4)">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="7">
+        <div class="card elev-sm">
+          <svg width="26" height="23" viewBox="0 0 100 90">
+            <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="var(--color-text)" stroke-width="9"></polygon>
+            <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="9"></polygon>
+            <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="9"></polygon>
+            <polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="9"></polygon>
+          </svg>
+          <div class="card-title">{{ f.title }}</div>
+          <p class="card-body">{{ f.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div id="access" style="padding:80px var(--space-8); background:var(--color-section); background-image:radial-gradient(ellipse at 20% 20%, var(--color-section-glow), transparent 60%)">
+    <div style="max-width:1280px; display:flex; align-items:center; gap:var(--space-8)">
+      <div style="flex:1; display:flex; flex-direction:column; gap:var(--space-3)">
+        <h2 style="color:var(--color-neutral-100)">Fine-grained role-based access</h2>
+        <p style="color:var(--color-neutral-300); max-width:440px; margin:0">Give owners full control, managers day-to-day oversight, and cashiers exactly the screens they need — nothing more.</p>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:var(--space-3)">
+        <sc-for list="{{ roles }}" as="r" hint-placeholder-count="3">
+          <div style="display:flex; align-items:center; justify-content:space-between; background:var(--color-section-ghost); border-radius:var(--radius-md); padding:var(--space-4)">
+            <div style="font-weight:500; font-size:14px; color:var(--color-neutral-100)">{{ r.name }}</div>
+            <div style="font-size:13px; color:var(--color-neutral-300)">{{ r.access }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div id="reporting" style="padding:80px var(--space-8) 80px calc(var(--space-8) * 2); max-width:1280px; display:flex; align-items:center; gap:var(--space-8)">
+    <div style="flex:1">
+      <div class="lighten" style="aspect-ratio:16/11; border-radius:var(--radius-lg); background:repeating-linear-gradient(135deg, var(--color-surface) 0px, var(--color-surface) 10px, var(--color-neutral-900) 10px, var(--color-neutral-900) 20px); display:flex; align-items:center; justify-content:center; font-family:monospace; font-size:12px; color:var(--color-neutral-500)">reporting dashboard screenshot</div>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:var(--space-3)">
+      <h2>Reporting that tells you what's happening</h2>
+      <p class="text-muted" style="max-width:440px; margin:0">Sales, stock levels, expenses and margins in one dashboard — updated as transactions happen at the till.</p>
+    </div>
+  </div>
+
+  <div style="padding:64px var(--space-8) 64px calc(var(--space-8) * 2); max-width:1280px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--color-divider)">
+    <h3 style="margin:0">Ready to run your store?</h3>
+    <a href="#" class="btn btn-primary">Get started</a>
+  </div>
+
+  <div style="padding:var(--space-6) var(--space-8) var(--space-6) calc(var(--space-8) * 2); max-width:1280px; display:flex; justify-content:space-between; border-top:1px solid var(--color-divider)">
+    <div class="text-muted" style="font-size:13px">© 2026 Triangle POS</div>
+    <div style="display:flex; gap:var(--space-4)">
+      <a href="#" style="font-size:13px">Privacy</a>
+      <a href="#" style="font-size:13px">Terms</a>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      features: [
+        { title: 'Products & inventory', desc: 'Track stock levels, variants and categories across every location.' },
+        { title: 'Purchases', desc: 'Manage suppliers and purchase orders as stock comes in.' },
+        { title: 'Sales', desc: 'A fast checkout flow for the till, built for busy hours.' },
+        { title: 'Returns', desc: 'Process refunds and exchanges without breaking your stock counts.' },
+        { title: 'Expenses', desc: 'Log day-to-day spending and keep it tied to your reporting.' },
+        { title: 'People', desc: 'Manage staff accounts and what each one can access.' },
+        { title: 'Reporting', desc: 'Sales, margin and stock reports whenever you need them.' }
+      ],
+      roles: [
+        { name: 'Owner', access: 'Full access' },
+        { name: 'Manager', access: 'All except settings' },
+        { name: 'Cashier', access: 'Sales & returns only' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
