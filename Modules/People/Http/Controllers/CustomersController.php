@@ -46,7 +46,7 @@ class CustomersController extends Controller
             'address' => $request->address,
         ]);
 
-        toast('Customer Created!', 'success');
+        session()->flash('success', 'Customer Created!');
 
         return redirect()->route('customers.index');
     }
@@ -87,7 +87,7 @@ class CustomersController extends Controller
             'address' => $request->address,
         ]);
 
-        toast('Customer Updated!', 'info');
+        session()->flash('info', 'Customer Updated!');
 
         return redirect()->route('customers.index');
     }
@@ -98,7 +98,7 @@ class CustomersController extends Controller
 
         $customer->delete();
 
-        toast('Customer Deleted!', 'warning');
+        session()->flash('warning', 'Customer Deleted!');
 
         return redirect()->route('customers.index');
     }
