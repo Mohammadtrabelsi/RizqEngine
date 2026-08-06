@@ -4,6 +4,7 @@ namespace Modules\PurchasesReturn\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 class PurchaseReturnPayment extends Model
@@ -12,7 +13,10 @@ class PurchaseReturnPayment extends Model
 
     protected $guarded = [];
 
-    public function purchaseReturn()
+    /**
+     * @return BelongsTo<PurchaseReturn, $this>
+     */
+    public function purchaseReturn(): BelongsTo
     {
         return $this->belongsTo(PurchaseReturn::class, 'purchase_return_id', 'id');
     }

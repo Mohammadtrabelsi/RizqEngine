@@ -45,8 +45,8 @@ class QuotationController extends Controller
                 'total_amount' => $request->total_amount * 100,
                 'status' => $request->status,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('quotation')->tax() * 100,
-                'discount_amount' => Cart::instance('quotation')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('quotation')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('quotation')->discount() * 100,
             ]);
 
             foreach (Cart::instance('quotation')->content() as $cart_item) {
@@ -132,8 +132,8 @@ class QuotationController extends Controller
                 'total_amount' => $request->total_amount * 100,
                 'status' => $request->status,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('quotation')->tax() * 100,
-                'discount_amount' => Cart::instance('quotation')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('quotation')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('quotation')->discount() * 100,
             ]);
 
             foreach (Cart::instance('quotation')->content() as $cart_item) {

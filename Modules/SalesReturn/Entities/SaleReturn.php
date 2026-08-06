@@ -5,19 +5,34 @@ namespace Modules\SalesReturn\Entities;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $reference
+ * @property int $customer_id
+ * @property string $customer_name
+ * @property string $status
+ * @property string $payment_status
+ */
 class SaleReturn extends Model
 {
     use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 
-    public function saleReturnDetails()
+    /**
+     * @return HasMany<SaleReturnDetail, $this>
+     */
+    public function saleReturnDetails(): HasMany
     {
         return $this->hasMany(SaleReturnDetail::class, 'sale_return_id', 'id');
     }
 
-    public function saleReturnPayments()
+    /**
+     * @return HasMany<SaleReturnPayment, $this>
+     */
+    public function saleReturnPayments(): HasMany
     {
         return $this->hasMany(SaleReturnPayment::class, 'sale_return_id', 'id');
     }

@@ -59,8 +59,8 @@ class PurchaseController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('purchase')->tax() * 100,
-                'discount_amount' => Cart::instance('purchase')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('purchase')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('purchase')->discount() * 100,
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {
@@ -182,8 +182,8 @@ class PurchaseController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('purchase')->tax() * 100,
-                'discount_amount' => Cart::instance('purchase')->discount() * 100,
+                'tax_amount' => (float) Cart::instance('purchase')->tax() * 100,
+                'discount_amount' => (float) Cart::instance('purchase')->discount() * 100,
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {

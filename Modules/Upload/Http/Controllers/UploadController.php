@@ -5,7 +5,6 @@ namespace Modules\Upload\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Modules\Upload\Entities\Upload;
 
 class UploadController extends Controller
@@ -21,9 +20,7 @@ class UploadController extends Controller
             $filename = now()->timestamp.'.'.$uploaded_file->getClientOriginalExtension();
             $folder = uniqid().'-'.now()->timestamp;
 
-            $file = Image::make($uploaded_file)->encode($uploaded_file->getClientOriginalExtension());
-
-            Storage::put('temp/'.$folder.'/'.$filename, $file);
+            Storage::putFileAs('temp/'.$folder, $uploaded_file, $filename);
 
             Upload::create([
                 'folder' => $folder,

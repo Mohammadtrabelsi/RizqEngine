@@ -150,13 +150,13 @@ class Checkout extends Component
         Cart::instance($this->cart_instance)->update($row_id, [
             'options' => [
                 'sub_total' => $cart_item->price * $cart_item->qty,
-                'code' => $cart_item->options->code,
-                'stock' => $cart_item->options->stock,
-                'unit' => $cart_item->options->unit,
-                'product_tax' => $cart_item->options->product_tax,
-                'unit_price' => $cart_item->options->unit_price,
-                'product_discount' => $cart_item->options->product_discount,
-                'product_discount_type' => $cart_item->options->product_discount_type,
+                'code' => $cart_item->options['code'],
+                'stock' => $cart_item->options['stock'],
+                'unit' => $cart_item->options['unit'],
+                'product_tax' => $cart_item->options['product_tax'],
+                'unit_price' => $cart_item->options['unit_price'],
+                'product_discount' => $cart_item->options['product_discount'],
+                'product_discount_type' => $cart_item->options['product_discount_type'],
             ],
         ]);
     }
@@ -178,18 +178,18 @@ class Checkout extends Component
         if ($this->discount_type[$product_id] == 'fixed') {
             Cart::instance($this->cart_instance)
                 ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $this->item_discount[$product_id],
+                    'price' => ($cart_item->price + $cart_item->options['product_discount']) - $this->item_discount[$product_id],
                 ]);
 
             $discount_amount = $this->item_discount[$product_id];
 
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
         } elseif ($this->discount_type[$product_id] == 'percentage') {
-            $discount_amount = ($cart_item->price + $cart_item->options->product_discount) * ($this->item_discount[$product_id] / 100);
+            $discount_amount = ($cart_item->price + $cart_item->options['product_discount']) * ($this->item_discount[$product_id] / 100);
 
             Cart::instance($this->cart_instance)
                 ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $discount_amount,
+                    'price' => ($cart_item->price + $cart_item->options['product_discount']) - $discount_amount,
                 ]);
 
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
@@ -229,11 +229,11 @@ class Checkout extends Component
     {
         Cart::instance($this->cart_instance)->update($row_id, ['options' => [
             'sub_total' => $cart_item->price * $cart_item->qty,
-            'code' => $cart_item->options->code,
-            'stock' => $cart_item->options->stock,
-            'unit' => $cart_item->options->unit,
-            'product_tax' => $cart_item->options->product_tax,
-            'unit_price' => $cart_item->options->unit_price,
+            'code' => $cart_item->options['code'],
+            'stock' => $cart_item->options['stock'],
+            'unit' => $cart_item->options['unit'],
+            'product_tax' => $cart_item->options['product_tax'],
+            'unit_price' => $cart_item->options['unit_price'],
             'product_discount' => $discount_amount,
             'product_discount_type' => $this->discount_type[$product_id],
         ]]);
