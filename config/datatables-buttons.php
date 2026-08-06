@@ -4,7 +4,7 @@ return [
     /*
      * Namespaces used by the generator.
      */
-    'namespace'     => [
+    'namespace' => [
         /*
          * Base namespace/directory to create the new file.
          * This is appended on default Laravel namespace.
@@ -13,7 +13,7 @@ return [
          * With Model: App\User (default model)
          * Export filename: users_timestamp
          */
-        'base'  => 'DataTables',
+        'base' => 'DataTables',
 
         /*
          * Base namespace/directory where your model's are located.
@@ -29,7 +29,7 @@ return [
     /*
      * Set Custom stub folder
      */
-    //'stub' => '/resources/custom_stub',
+    // 'stub' => '/resources/custom_stub',
 
     /*
      * PDF generator to be used when converting the table to pdf.
@@ -42,12 +42,12 @@ return [
     /*
      * Snappy PDF options.
      */
-    'snappy'        => [
-        'options'     => [
-            'no-outline'    => true,
-            'margin-left'   => '0',
-            'margin-right'  => '0',
-            'margin-top'    => '10mm',
+    'snappy' => [
+        'options' => [
+            'no-outline' => true,
+            'margin-left' => '0',
+            'margin-right' => '0',
+            'margin-top' => '10mm',
             'margin-bottom' => '10mm',
         ],
         'orientation' => 'landscape',
@@ -56,11 +56,11 @@ return [
     /*
      * Default html builder parameters.
      */
-    'parameters'    => [
-        'dom'     => "<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
+    'parameters' => [
+        'dom' => "<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>",
-        'order'   => [[0, 'desc']],
+        'order' => [[0, 'desc']],
         'buttons' => [
             'excel',
             'print',
@@ -72,7 +72,7 @@ return [
     /*
      * Generator command default options value.
      */
-    'generator'     => [
+    'generator' => [
         /*
          * Default columns to generate when not set.
          */
@@ -86,7 +86,7 @@ return [
         /*
          * Default DOM to generate when not set.
          */
-        'dom'     => "<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
+        'dom' => "<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>",
     ],

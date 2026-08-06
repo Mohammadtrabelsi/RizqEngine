@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Login | {{ config('app.name') }}</title>
+    <title>Sign in | {{ config('app.name') }}</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
@@ -14,18 +14,39 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
+<body>
+<div class="login-grid">
 
-<body class="c-app flex-row align-items-center">
-<div class="container">
-    <div class="row mb-3">
-        <div class="col-12 d-flex justify-content-center">
-            <img width="200" src="{{ asset('images/logo-dark.png') }}" alt="Logo">
+    <div class="login-brand">
+        <div style="display:flex; align-items:center; gap:var(--space-3)">
+            <svg width="26" height="23" viewBox="0 0 100 90">
+                <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="var(--color-text)" stroke-width="7"></polygon>
+                <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="7"></polygon>
+                <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="7"></polygon>
+                <polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="7"></polygon>
+            </svg>
+            <div style="font-family:var(--font-heading); font-weight:500; font-size:15px">Triangle POS</div>
         </div>
+
+        <div style="max-width:420px">
+            <div style="font-family:var(--font-heading); font-weight:500; font-size:32px; line-height:1.2; margin-bottom:var(--space-4)">{{ __('login.welcome') }}</div>
+            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">{{ __('login.description') }}</div>
+        </div>
+
+        <div class="text-muted" style="font-size:12px">© {{ date('Y') }} Triangle POS</div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-5">
+
+    <div class="login-form-wrap">
+        <form id="login" class="login-form" method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <div>
+                <div style="font-family:var(--font-heading); font-weight:500; font-size:24px; margin-bottom:var(--space-2)">{{ __('login.sign-in') }}</div>
+                <div class="text-muted" style="font-size:14px">{{ __('login.welcome-back') }}</div>
+            </div>
+
             @if(Session::has('account_deactivated'))
-                <div class="alert alert-danger" role="alert">
+                <div class="card elev-sm" style="border:1px solid #e0645f; color:#e0645f; padding:var(--space-3); font-size:13px">
                     {{ Session::get('account_deactivated') }}
                 </div>
             @endif
@@ -79,14 +100,16 @@
                         </div>
                     </form>
                 </div>
+
+                <button id="submit" class="btn btn-primary btn-block" type="submit">{{ __('login.sign-in') }}</button>
             </div>
 
-            <p class="text-center mt-5 lead">
-                Developed By
-                <a href="https://fahimanzam.netlify.app" class="font-weight-bold text-primary">Fahim Anzam Dip</a>
-            </p>
-        </div>
+            <div class="text-muted" style="font-size:13px; text-align:center">
+               {{ __('login.contact-owner-message') }} <a href="{{ route('welcome') }}">{{ __('login.contact-owner') }}</a>
+            </div>
+        </form>
     </div>
+
 </div>
 
 <!-- CoreUI -->

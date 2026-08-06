@@ -2,13 +2,13 @@
 
 namespace Modules\Sale\Http\Controllers;
 
-use Modules\Sale\DataTables\SalesDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
+use Modules\Sale\DataTables\SalesDataTable;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
@@ -17,15 +17,15 @@ use Modules\Sale\Http\Requests\UpdateSaleRequest;
 
 class SaleController extends Controller
 {
-
-    public function index(SalesDataTable $dataTable) {
+    public function index(SalesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_sales'), 403);
 
         return $dataTable->render('sale::index');
     }
 
-
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_sales'), 403);
 
         Cart::instance('sale')->destroy();
@@ -33,8 +33,8 @@ class SaleController extends Controller
         return view('sale::create');
     }
 
-
-    public function store(StoreSaleRequest $request) {
+    public function store(StoreSaleRequest $request)
+    {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -82,7 +82,7 @@ class SaleController extends Controller
                 if ($request->status == 'Shipped' || $request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                        'product_quantity' => $product->product_quantity - $cart_item->qty,
                     ]);
                 }
             }
@@ -95,7 +95,7 @@ class SaleController extends Controller
                     'reference' => 'INV/'.$sale->reference,
                     'amount' => $sale->paid_amount,
                     'sale_id' => $sale->id,
-                    'payment_method' => $request->payment_method
+                    'payment_method' => $request->payment_method,
                 ]);
             }
         });
@@ -105,8 +105,8 @@ class SaleController extends Controller
         return redirect()->route('sales.index');
     }
 
-
-    public function show(Sale $sale) {
+    public function show(Sale $sale)
+    {
         abort_if(Gate::denies('show_sales'), 403);
 
         $customer = Customer::findOrFail($sale->customer_id);
@@ -114,8 +114,8 @@ class SaleController extends Controller
         return view('sale::show', compact('sale', 'customer'));
     }
 
-
-    public function edit(Sale $sale) {
+    public function edit(Sale $sale)
+    {
         abort_if(Gate::denies('edit_sales'), 403);
 
         $sale_details = $sale->saleDetails;
@@ -126,28 +126,28 @@ class SaleController extends Controller
 
         foreach ($sale_details as $sale_detail) {
             $cart->add([
-                'id'      => $sale_detail->product_id,
-                'name'    => $sale_detail->product_name,
-                'qty'     => $sale_detail->quantity,
-                'price'   => $sale_detail->price,
-                'weight'  => 1,
+                'id' => $sale_detail->product_id,
+                'name' => $sale_detail->product_name,
+                'qty' => $sale_detail->quantity,
+                'price' => $sale_detail->price,
+                'weight' => 1,
                 'options' => [
                     'product_discount' => $sale_detail->product_discount_amount,
                     'product_discount_type' => $sale_detail->product_discount_type,
-                    'sub_total'   => $sale_detail->sub_total,
-                    'code'        => $sale_detail->product_code,
-                    'stock'       => Product::findOrFail($sale_detail->product_id)->product_quantity,
+                    'sub_total' => $sale_detail->sub_total,
+                    'code' => $sale_detail->product_code,
+                    'stock' => Product::findOrFail($sale_detail->product_id)->product_quantity,
                     'product_tax' => $sale_detail->product_tax_amount,
-                    'unit_price'  => $sale_detail->unit_price
-                ]
+                    'unit_price' => $sale_detail->unit_price,
+                ],
             ]);
         }
 
         return view('sale::edit', compact('sale'));
     }
 
-
-    public function update(UpdateSaleRequest $request, Sale $sale) {
+    public function update(UpdateSaleRequest $request, Sale $sale)
+    {
         DB::transaction(function () use ($request, $sale) {
 
             $due_amount = $request->total_amount - $request->paid_amount;
@@ -164,7 +164,7 @@ class SaleController extends Controller
                 if ($sale->status == 'Shipped' || $sale->status == 'Completed') {
                     $product = Product::findOrFail($sale_detail->product_id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity + $sale_detail->quantity
+                        'product_quantity' => $product->product_quantity + $sale_detail->quantity,
                     ]);
                 }
                 $sale_detail->delete();
@@ -207,7 +207,7 @@ class SaleController extends Controller
                 if ($request->status == 'Shipped' || $request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                        'product_quantity' => $product->product_quantity - $cart_item->qty,
                     ]);
                 }
             }
@@ -220,8 +220,8 @@ class SaleController extends Controller
         return redirect()->route('sales.index');
     }
 
-
-    public function destroy(Sale $sale) {
+    public function destroy(Sale $sale)
+    {
         abort_if(Gate::denies('delete_sales'), 403);
 
         $sale->delete();

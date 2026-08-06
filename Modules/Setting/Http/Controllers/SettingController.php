@@ -2,8 +2,6 @@
 
 namespace Modules\Setting\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
@@ -14,8 +12,8 @@ use Modules\Setting\Http\Requests\StoreSmtpSettingsRequest;
 
 class SettingController extends Controller
 {
-
-    public function index() {
+    public function index()
+    {
         abort_if(Gate::denies('access_settings'), 403);
 
         $settings = Setting::firstOrFail();
@@ -23,8 +21,8 @@ class SettingController extends Controller
         return view('setting::index', compact('settings'));
     }
 
-
-    public function update(StoreSettingsRequest $request) {
+    public function update(StoreSettingsRequest $request)
+    {
         Setting::firstOrFail()->update([
             'company_name' => $request->company_name,
             'company_email' => $request->company_email,
@@ -42,9 +40,9 @@ class SettingController extends Controller
         return redirect()->route('settings.index');
     }
 
-
-    public function updateSmtp(StoreSmtpSettingsRequest $request) {
-        $toReplace = array(
+    public function updateSmtp(StoreSmtpSettingsRequest $request)
+    {
+        $toReplace = [
             'MAIL_MAILER='.env('MAIL_HOST'),
             'MAIL_HOST="'.env('MAIL_HOST').'"',
             'MAIL_PORT='.env('MAIL_PORT'),
@@ -52,10 +50,10 @@ class SettingController extends Controller
             'MAIL_FROM_NAME="'.env('MAIL_FROM_NAME').'"',
             'MAIL_USERNAME="'.env('MAIL_USERNAME').'"',
             'MAIL_PASSWORD="'.env('MAIL_PASSWORD').'"',
-            'MAIL_ENCRYPTION="'.env('MAIL_ENCRYPTION').'"'
-        );
+            'MAIL_ENCRYPTION="'.env('MAIL_ENCRYPTION').'"',
+        ];
 
-        $replaceWith = array(
+        $replaceWith = [
             'MAIL_MAILER='.$request->mail_mailer,
             'MAIL_HOST="'.$request->mail_host.'"',
             'MAIL_PORT='.$request->mail_port,
@@ -63,7 +61,7 @@ class SettingController extends Controller
             'MAIL_FROM_NAME="'.$request->mail_from_name.'"',
             'MAIL_USERNAME="'.$request->mail_username.'"',
             'MAIL_PASSWORD="'.$request->mail_password.'"',
-            'MAIL_ENCRYPTION="'.$request->mail_encryption.'"');
+            'MAIL_ENCRYPTION="'.$request->mail_encryption.'"'];
 
         try {
             file_put_contents(base_path('.env'), str_replace($toReplace, $replaceWith, file_get_contents(base_path('.env'))));

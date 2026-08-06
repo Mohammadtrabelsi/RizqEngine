@@ -4,7 +4,6 @@ namespace Modules\Product\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -17,7 +16,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'product_name' => ['required', 'string', 'max:255'],
-            'product_code' => ['required', 'string', 'max:255', 'unique:products,product_code,' . $this->product->id],
+            'product_code' => ['required', 'string', 'max:255', 'unique:products,product_code,'.$this->product->id],
             'product_barcode_symbology' => ['required', 'string', 'max:255'],
             'product_unit' => ['required', 'string', 'max:255'],
             'product_quantity' => ['required', 'integer', 'min:1'],
@@ -27,7 +26,7 @@ class UpdateProductRequest extends FormRequest
             'product_order_tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'product_tax_type' => ['nullable', 'integer'],
             'product_note' => ['nullable', 'string', 'max:1000'],
-            'category_id' => ['required', 'integer']
+            'category_id' => ['required', 'integer'],
         ];
     }
 

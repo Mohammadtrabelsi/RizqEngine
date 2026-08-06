@@ -1,5 +1,8 @@
 <?php
 
+use Modules\People\Entities\Supplier;
+use Modules\PurchasesReturn\Entities\PurchaseReturn;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,25 +14,25 @@
 |
 */
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
 
-    //Generate PDF
+    // Generate PDF
     Route::get('/purchase-returns/pdf/{id}', function ($id) {
-        $purchaseReturn = \Modules\PurchasesReturn\Entities\PurchaseReturn::findOrFail($id);
-        $supplier = \Modules\People\Entities\Supplier::findOrFail($purchaseReturn->supplier_id);
+        $purchaseReturn = PurchaseReturn::findOrFail($id);
+        $supplier = Supplier::findOrFail($purchaseReturn->supplier_id);
 
-        $pdf = \PDF::loadView('purchasesreturn::print', [
+        $pdf = PDF::loadView('purchasesreturn::print', [
             'purchase_return' => $purchaseReturn,
             'supplier' => $supplier,
         ])->setPaper('a4');
 
-        return $pdf->stream('purchase-return-'. $purchaseReturn->reference .'.pdf');
+        return $pdf->stream('purchase-return-'.$purchaseReturn->reference.'.pdf');
     })->name('purchase-returns.pdf');
 
-    //Purchase Returns
+    // Purchase Returns
     Route::resource('purchase-returns', 'PurchasesReturnController');
 
-    //Payments
+    // Payments
     Route::get('/purchase-return-payments/{purchase_return_id}', 'PurchaseReturnPaymentsController@index')
         ->name('purchase-return-payments.index');
     Route::get('/purchase-return-payments/{purchase_return_id}/create', 'PurchaseReturnPaymentsController@create')

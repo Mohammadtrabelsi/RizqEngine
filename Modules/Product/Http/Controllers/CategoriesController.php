@@ -2,29 +2,28 @@
 
 namespace Modules\Product\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use Modules\Product\Entities\Category;
 use Modules\Product\DataTables\ProductCategoriesDataTable;
+use Modules\Product\Entities\Category;
 
 class CategoriesController extends Controller
 {
-
-    public function index(ProductCategoriesDataTable $dataTable) {
+    public function index(ProductCategoriesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         return $dataTable->render('product::categories.index');
     }
 
-
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         $request->validate([
             'category_code' => 'required|unique:categories,category_code',
-            'category_name' => 'required'
+            'category_name' => 'required',
         ]);
 
         Category::create([
@@ -37,8 +36,8 @@ class CategoriesController extends Controller
         return redirect()->back();
     }
 
-
-    public function edit($id) {
+    public function edit($id)
+    {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         $category = Category::findOrFail($id);
@@ -46,13 +45,13 @@ class CategoriesController extends Controller
         return view('product::categories.edit', compact('category'));
     }
 
-
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         $request->validate([
-            'category_code' => 'required|unique:categories,category_code,' . $id,
-            'category_name' => 'required'
+            'category_code' => 'required|unique:categories,category_code,'.$id,
+            'category_name' => 'required',
         ]);
 
         Category::findOrFail($id)->update([
@@ -65,8 +64,8 @@ class CategoriesController extends Controller
         return redirect()->route('product-categories.index');
     }
 
-
-    public function destroy($id) {
+    public function destroy($id)
+    {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         $category = Category::findOrFail($id);

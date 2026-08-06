@@ -12,7 +12,7 @@ return [
      */
     'table' => [
         'class' => 'table table-bordered',
-        'id'    => 'dataTableBuilder',
+        'id' => 'dataTableBuilder',
     ],
 
     /*

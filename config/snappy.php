@@ -35,24 +35,24 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        //'binary'  => env('WKHTML_PDF_BINARY', base_path('vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'),),
-        'binary'  => env('WKHTML_PDF_BINARY', 'C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'),
+        // 'binary'  => env('WKHTML_PDF_BINARY', base_path('vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'),),
+        'binary' => env('WKHTML_PDF_BINARY', 'C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'),
         'timeout' => false,
         'options' => [
             'enable-local-file-access' => true,
-            'print-media-type' => true
+            'print-media-type' => true,
         ],
-        'env'     => [],
+        'env' => [],
     ],
 
     'image' => [
         'enabled' => true,
-        'binary'  => env('WKHTML_IMG_BINARY', ''),
+        'binary' => env('WKHTML_IMG_BINARY', ''),
         'timeout' => false,
         'options' => [
-            'enable-local-file-access' => true
+            'enable-local-file-access' => true,
         ],
-        'env'     => [],
+        'env' => [],
     ],
 
 ];

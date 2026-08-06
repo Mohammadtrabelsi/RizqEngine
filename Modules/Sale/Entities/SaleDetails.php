@@ -2,8 +2,8 @@
 
 namespace Modules\Sale\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Product\Entities\Product;
 
 class SaleDetails extends Model
@@ -14,31 +14,38 @@ class SaleDetails extends Model
 
     protected $with = ['product'];
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public function sale() {
+    public function sale()
+    {
         return $this->belongsTo(Sale::class, 'sale_id', 'id');
     }
 
-    public function getPriceAttribute($value) {
+    public function getPriceAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getUnitPriceAttribute($value) {
+    public function getUnitPriceAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getSubTotalAttribute($value) {
+    public function getSubTotalAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getProductDiscountAmountAttribute($value) {
+    public function getProductDiscountAmountAttribute($value)
+    {
         return $value / 100;
     }
 
-    public function getProductTaxAmountAttribute($value) {
+    public function getProductTaxAmountAttribute($value)
+    {
         return $value / 100;
     }
 }

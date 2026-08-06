@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-})->middleware('guest');
+    if (auth()->check()) {
+        return redirect()->route('home');
+    }
+
+    return view('welcome');
+})->name('welcome');
 
 Auth::routes(['register' => false]);
 
@@ -27,4 +31,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/payment-flow/chart-data', 'HomeController@paymentChart')
         ->name('payment-flow.chart');
 });
-

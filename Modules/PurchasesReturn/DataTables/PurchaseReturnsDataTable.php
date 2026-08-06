@@ -5,14 +5,12 @@ namespace Modules\PurchasesReturn\DataTables;
 use Modules\PurchasesReturn\Entities\PurchaseReturn;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class PurchaseReturnsDataTable extends DataTable
 {
-
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('total_amount', function ($data) {
@@ -35,11 +33,13 @@ class PurchaseReturnsDataTable extends DataTable
             });
     }
 
-    public function query(PurchaseReturn $model) {
+    public function query(PurchaseReturn $model)
+    {
         return $model->newQuery();
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('purchase-returns-table')
             ->columns($this->getColumns())
@@ -60,7 +60,8 @@ class PurchaseReturnsDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('reference')
                 ->className('text-center align-middle'),
@@ -90,11 +91,12 @@ class PurchaseReturnsDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('created_at')
-                ->visible(false)
+                ->visible(false),
         ];
     }
 
-    protected function filename(): string {
-        return 'PurchaseReturns_' . date('YmdHis');
+    protected function filename(): string
+    {
+        return 'PurchaseReturns_'.date('YmdHis');
     }
 }

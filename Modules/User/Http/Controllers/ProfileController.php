@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -12,21 +11,21 @@ use Modules\User\Rules\MatchCurrentPassword;
 
 class ProfileController extends Controller
 {
-
-    public function edit() {
+    public function edit()
+    {
         return view('user::profile');
     }
 
-
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id()
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.auth()->id(),
         ]);
 
         auth()->user()->update([
-            'name'  => $request->name,
-            'email' => $request->email
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
 
         if ($request->has('image')) {
@@ -38,9 +37,9 @@ class ProfileController extends Controller
                 }
 
                 if ($tempFile) {
-                    auth()->user()->addMedia(Storage::path('temp/' . $request->image . '/' . $tempFile->filename))->toMediaCollection('avatars');
+                    auth()->user()->addMedia(Storage::path('temp/'.$request->image.'/'.$tempFile->filename))->toMediaCollection('avatars');
 
-                    Storage::deleteDirectory('temp/' . $request->image);
+                    Storage::deleteDirectory('temp/'.$request->image);
                     $tempFile->delete();
                 }
             }
@@ -51,14 +50,15 @@ class ProfileController extends Controller
         return back();
     }
 
-    public function updatePassword(Request $request) {
+    public function updatePassword(Request $request)
+    {
         $request->validate([
-            'current_password'  => ['required', 'max:255', new MatchCurrentPassword()],
-            'password' => 'required|min:8|max:255|confirmed'
+            'current_password' => ['required', 'max:255', new MatchCurrentPassword],
+            'password' => 'required|min:8|max:255|confirmed',
         ]);
 
         auth()->user()->update([
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
         toast('Password Updated!', 'success');

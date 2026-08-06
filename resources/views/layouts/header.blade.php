@@ -33,7 +33,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
             <div class="dropdown-header bg-light">
-                <strong>{{ $low_quantity_products->count() }} Notifications</strong>
+                <strong>{{ $low_quantity_products->count() }} {{ __('app.notifications') }}</strong>
             </div>
             @forelse($low_quantity_products as $product)
                 <a class="dropdown-item" href="{{ route('products.show', $product->id) }}">
@@ -41,7 +41,7 @@
                 </a>
             @empty
                 <a class="dropdown-item" href="#">
-                    <i class="bi bi-app-indicator mr-2 text-danger"></i> No notifications available.
+                    <i class="bi bi-app-indicator mr-2 text-danger"></i> {{ __('app.no-notifications') }}
                 </a>
             @endforelse
         </div>
@@ -60,7 +60,7 @@
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right pt-0">
-            <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+            <div class="dropdown-header bg-light py-2"><strong>{{ __('app.account') }}</strong></div>
             <a class="dropdown-item" href="{{ route('profile.edit') }}">
                 <i class="mfe-2  bi bi-person icon-fs-1-2rem"></i> Profile
             </a>

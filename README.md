@@ -30,8 +30,17 @@ This will start the application along with the mysql database using docker compo
 - run `` docker compose up ``
 - then visit `` http://localhost:8000 or http://127.0.0.1:8000 ``.
 
-# Admin Credentials
-> Email: super.admin@test.com || Password: 12345678
+# Login Credentials
+
+A user is seeded for every role. All accounts use the password `12345678`.
+
+| Role        | Email                   | Password   |
+|-------------|-------------------------|------------|
+| Super Admin | super.admin@test.com    | 12345678   |
+| Admin       | admin@test.com          | 12345678   |
+| Owner       | owner@test.com          | 12345678   |
+| Manager     | manager@test.com        | 12345678   |
+| Cashier     | cashier@test.com        | 12345678   |
 
 ## Demo
 ![Triangle POS](public/images/screenshot.jpg)
@@ -48,6 +57,7 @@ This will start the application along with the mysql database using docker compo
 - **Expense Management**
 - **Customer & Supplier Management**
 - **User Management (Roles & Permissions)**
+- **Activity Logs / Audit Trail (records who created, updated or deleted each record)**
 - **Product Multiple Images**
 - **Multiple Currency Settings**
 - **Unit Settings**

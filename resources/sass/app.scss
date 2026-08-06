@@ -1,223 +1,349 @@
-// CoreUI
+// =====================================================================
+//  Triangle POS — Nocturne theme
+//  A dark design system layered on top of CoreUI 3 / Bootstrap 4.
+//  Tokens are ported from the Nocturne design system (see
+//  public/css/nocturne.css, the standalone source of truth used by the
+//  login & landing pages). Here they are expressed as SCSS variables that
+//  drive the CoreUI/Bootstrap build, plus CSS custom properties for the
+//  bespoke Nocturne components (KPI cards, tags, etc.).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  1. Nocturne tokens (SCSS)
+// ---------------------------------------------------------------------
+$n-bg:           #161826; // app background
+$n-surface:      #232532; // cards, inputs, raised panels
+$n-surface-2:    #2b2d3c; // slightly raised (dropdowns, hover)
+$n-text:         #e9e9ed;
+$n-accent:       #9184d9; // blurple
+$n-accent-2:     #a7a1db;
+$n-accent-100:   #f5f4ff;
+$n-accent-800:   #423a6a;
+$n-neutral-100:  #f3f5fe;
+$n-neutral-600:  #75798c;
+$n-neutral-800:  #3f424d;
+$n-neutral-900:  #292b31;
+$n-divider:      rgba(233, 233, 237, 0.16);
+$n-muted:        rgba(233, 233, 237, 0.55);
+
+$n-success:      #34b881;
+$n-info:         #57a6e0;
+$n-warning:      #d8a24a;
+$n-danger:       #e0645f;
+
+// ---------------------------------------------------------------------
+//  2. Bootstrap / CoreUI variable overrides (must precede the import)
+// ---------------------------------------------------------------------
+
+// Typography
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-base: $font-family-sans-serif;
+$font-size-base: 0.9rem;
+$headings-font-weight: 500;
+$line-height-base: 1.55;
+$headings-color: $n-text;
+
+// Brand palette
+$primary:   $n-accent;
+$secondary: $n-neutral-600;
+$success:   $n-success;
+$info:      $n-info;
+$warning:   $n-warning;
+$danger:    $n-danger;
+$light:     $n-surface-2;
+$dark:      #0f111a;
+
+// Core surfaces
+$body-bg:    $n-bg;
+$body-color: $n-text;
+$border-color: $n-divider;
+$text-muted: $n-muted;
+$component-active-color: $n-accent-100;
+$component-active-bg: $n-accent;
+$hr-border-color: $n-divider;
+
+// Links
+$link-color: $n-accent;
+$link-hover-color: lighten($n-accent, 8%);
+
+// Radii — Nocturne uses 8px default, 4px small, 14px large
+$border-radius:    0.5rem;   // 8px
+$border-radius-lg: 0.875rem; // 14px
+$border-radius-sm: 0.25rem;  // 4px
+
+// Cards
+$card-bg: $n-surface;
+$card-border-width: 0;
+$card-border-color: $n-divider;
+$card-border-radius: 0.5rem;
+$card-cap-bg: transparent;
+$card-color: $n-text;
+$card-spacer-y: 1.15rem;
+$card-spacer-x: 1.25rem;
+
+// Inputs
+$input-bg: $n-surface;
+$input-disabled-bg: $n-neutral-900;
+$input-color: $n-text;
+$input-border-color: $n-divider;
+$input-focus-bg: $n-surface;
+$input-focus-border-color: $n-accent;
+$input-focus-color: $n-text;
+$input-placeholder-color: rgba(233, 233, 237, 0.4);
+$input-group-addon-bg: $n-surface-2;
+$input-group-addon-color: $n-text;
+$input-btn-focus-width: 0.18rem;
+$input-btn-focus-color: rgba($n-accent, 0.4);
+$custom-select-bg: $n-surface;
+$custom-select-color: $n-text;
+$custom-select-indicator-color: $n-text;
+$btn-font-weight: 500;
+
+// Dropdowns
+$dropdown-bg: $n-surface-2;
+$dropdown-color: $n-text;
+$dropdown-border-color: $n-divider;
+$dropdown-divider-bg: $n-divider;
+$dropdown-link-color: $n-text;
+$dropdown-link-hover-color: $n-text;
+$dropdown-link-hover-bg: rgba(255, 255, 255, 0.06);
+$dropdown-link-active-color: $n-accent-100;
+$dropdown-link-active-bg: $n-accent;
+$dropdown-header-color: $n-muted;
+
+// Modals / popovers / tooltips
+$modal-content-bg: $n-surface;
+$modal-content-border-color: $n-divider;
+$modal-header-border-color: $n-divider;
+$modal-footer-border-color: $n-divider;
+$modal-backdrop-bg: #0a0b12;
+$modal-backdrop-opacity: 0.6;
+$popover-bg: $n-surface-2;
+$popover-border-color: $n-divider;
+$popover-header-bg: $n-surface-2;
+$tooltip-bg: $n-neutral-900;
+
+// Tables
+$table-color: $n-text;
+$table-bg: transparent;
+$table-accent-bg: rgba(255, 255, 255, 0.02);
+$table-hover-color: $n-text;
+$table-hover-bg: rgba(255, 255, 255, 0.04);
+$table-border-color: $n-divider;
+$table-head-bg: transparent;
+$table-head-color: $n-muted;
+$table-dark-bg: $n-surface;
+
+// List group
+$list-group-bg: $n-surface;
+$list-group-color: $n-text;
+$list-group-border-color: $n-divider;
+$list-group-hover-bg: rgba(255, 255, 255, 0.04);
+$list-group-action-color: $n-text;
+
+// Nav / pagination
+$nav-tabs-border-color: $n-divider;
+$nav-tabs-link-active-bg: $n-surface;
+$nav-tabs-link-active-color: $n-text;
+$nav-tabs-link-active-border-color: $n-divider;
+$pagination-bg: $n-surface;
+$pagination-color: $n-text;
+$pagination-border-color: $n-divider;
+$pagination-hover-bg: $n-surface-2;
+$pagination-hover-color: $n-accent;
+$pagination-active-bg: $n-accent;
+$pagination-active-border-color: $n-accent;
+$pagination-disabled-bg: $n-surface;
+$pagination-disabled-color: $n-muted;
+
+// Breadcrumb / close / code
+$breadcrumb-bg: transparent;
+$breadcrumb-active-color: $n-text;
+$breadcrumb-divider-color: $n-muted;
+$close-color: $n-text;
+$close-text-shadow: none;
+$code-color: $n-accent-2;
+
+// ---------------------------------------------------------------------
+//  3. CoreUI framework
+// ---------------------------------------------------------------------
 @import '@coreui/coreui/scss/coreui';
 
-//Extra Overrides
-//.c-sidebar {
-//    background: #0f766e;
-//    color: #fff;
-//}
-//
-.c-sidebar .c-sidebar-nav-link.c-active, .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
-    color: #fff;
-    background: $primary;
-}
-//
-//
-//.c-sidebar .c-sidebar-nav-link:hover {
-//    color: #fff;
-//    background: #0d9488;
-//}
+// ---------------------------------------------------------------------
+//  4. Nocturne CSS custom properties (for bespoke components & inline use)
+// ---------------------------------------------------------------------
+:root {
+    --color-bg: #{$n-bg};
+    --color-surface: #{$n-surface};
+    --color-surface-2: #{$n-surface-2};
+    --color-text: #{$n-text};
+    --color-accent: #{$n-accent};
+    --color-accent-2: #{$n-accent-2};
+    --color-accent-100: #f5f4ff;
+    --color-accent-800: #423a6a;
+    --color-neutral-100: #f3f5fe;
+    --color-neutral-300: #cfd3e5;
+    --color-neutral-500: #9397ab;
+    --color-neutral-600: #75798c;
+    --color-neutral-800: #3f424d;
+    --color-neutral-900: #292b31;
+    --color-divider: #{$n-divider};
+    --color-muted: #{$n-muted};
 
-.btn:not([class*=ghost]):not([class*=link]):not([class*=outline]):not([class*=transparent]) {
-    border: 0;
-    box-shadow: 0 1px 1px 0 rgb(60 75 100 / 14%), 0 2px 1px -1px rgb(60 75 100 / 12%), 0 1px 3px 0 rgb(60 75 100 / 20%);
+    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --space-1: 2.8px;
+    --space-2: 5.6px;
+    --space-3: 8.4px;
+    --space-4: 11.2px;
+    --space-6: 16.8px;
+    --space-8: 22.4px;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+
+    --shadow-sm: 0 0 0 1px #{$n-neutral-800};
+    --shadow-md: 0 0 0 1px #595d6c, 0 6px 18px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 0 0 1px #9397ab, 0 16px 40px rgba(0, 0, 0, 0.65);
 }
 
-.dropzone {
-    border: 2px dashed #3B82F6;
-    border-radius: 5px;
-    background: #DBEAFE;
+// Reusable dark shadows
+$shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+$shadow-md: 0 6px 18px -4px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+$shadow-lg: 0 16px 40px -12px rgba(0, 0, 0, 0.65);
+
+body {
+    background: $n-bg;
+    color: $n-text;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.1px;
 }
-.dz-preview {
-    background: #EFF6FF !important;
-    border-radius: 20px;
+
+.c-app { background-color: $n-bg; }
+
+// ---------------------------------------------------------------------
+//  5. Shell — sidebar & header (dark)
+// ---------------------------------------------------------------------
+.c-sidebar {
+    background: $n-surface;
+    box-shadow: inset -1px 0 0 $n-divider;
+    color: $n-text;
 }
-.dz-remove {
-    color: #333;
+.c-sidebar .c-sidebar-brand {
+    background: transparent;
+    padding: 0.9rem 0.75rem;
+    justify-content: flex-start;
 }
-.dropzone i.bi.bi-cloud-arrow-up {
-    font-size: 5rem;
-    color: #60A5FA;
-}
-.dropzone .dz-message {
-    color: rgba(0,0,0,.54);
+.c-sidebar .c-sidebar-nav-link,
+.c-sidebar .c-sidebar-nav-dropdown-toggle {
+    margin: 2px 10px;
+    border-radius: var(--radius-sm);
     font-weight: 500;
-    font-size: initial;
+    font-size: 0.85rem;
+    color: rgba(233, 233, 237, 0.82);
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
-.dropzone .dz-preview .dz-image img {
-    display: block;
-    width: 100%;
+.c-sidebar .c-sidebar-nav-link:hover,
+.c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
 }
-
-table {
-    width: 990px !important;
+.c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon,
+.c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
+    color: rgba(233, 233, 237, 0.55);
 }
+.c-sidebar .c-sidebar-nav-link:hover .c-sidebar-nav-icon,
+.c-sidebar .c-sidebar-nav-link.c-active .c-sidebar-nav-icon { color: inherit; }
+.c-sidebar .c-sidebar-nav-link.c-active,
+.c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
+    color: $n-accent-100;
+    font-weight: 500;
+    background: $n-accent-800;
+}
+.c-sidebar .c-sidebar-nav-dropdown.c-show > .c-sidebar-nav-dropdown-toggle {
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+}
+.c-sidebar .c-sidebar-nav-dropdown-items .c-sidebar-nav-link {
+    margin: 1px 10px 1px 14px;
+    font-size: 0.8rem;
+}
+.c-sidebar-minimizer { background: transparent; }
+.c-sidebar-minimizer:hover { background: rgba(255, 255, 255, 0.06); }
 
-/* ------------------------------------------------------------------ */
-/* Dark theme                                                         */
-/* Toggled by adding the `.c-dark-theme` class to <body> (see app.js) */
-/* ------------------------------------------------------------------ */
-.c-dark-theme {
-    $dark-bg: #1e1e2d;
-    $dark-surface: #2a2a3c;
-    $dark-surface-2: #313145;
-    $dark-border: #3a3a52;
-    $dark-text: #e1e1ea;
-    $dark-muted: #a0a0b8;
-
-    background-color: $dark-bg;
-    color: $dark-text;
-
-    .c-wrapper,
-    .c-body,
-    .c-main,
-    .c-subheader {
-        background-color: $dark-bg;
-        color: $dark-text;
-    }
-
-    .c-header {
-        background-color: $dark-surface;
-        border-bottom-color: $dark-border;
-        color: $dark-text;
-
-        .c-header-nav-link,
-        .c-header-toggler {
-            color: $dark-text;
-        }
-    }
-
-    // Cards, modals and other raised surfaces
-    .card,
-    .modal-content,
-    .dropdown-menu,
-    .list-group-item,
-    .c-callout {
-        background-color: $dark-surface;
-        border-color: $dark-border;
-        color: $dark-text;
-    }
-
-    .card-header,
-    .card-footer,
-    .modal-header,
-    .modal-footer {
-        background-color: $dark-surface-2;
-        border-color: $dark-border;
-        color: $dark-text;
-    }
-
-    .bg-light,
-    .bg-white {
-        background-color: $dark-surface-2 !important;
-        color: $dark-text !important;
-    }
-
-    // Tables
-    .table,
-    .dataTable {
-        color: $dark-text;
-
-        th,
-        td {
-            border-color: $dark-border;
-        }
-
-        thead th {
-            border-color: $dark-border;
-            color: $dark-text;
-        }
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(255, 255, 255, 0.03);
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(255, 255, 255, 0.06);
-        color: $dark-text;
-    }
-
-    // Form controls
-    .form-control,
-    .custom-select,
-    .input-group-text {
-        background-color: $dark-surface-2;
-        border-color: $dark-border;
-        color: $dark-text;
-
-        &::placeholder {
-            color: $dark-muted;
-        }
-
-        &:focus {
-            background-color: $dark-surface-2;
-            color: $dark-text;
-        }
-    }
-
-    // Select2 (used across the app)
-    .select2-container--default .select2-selection--single,
-    .select2-container--default .select2-selection--multiple {
-        background-color: $dark-surface-2;
-        border-color: $dark-border;
-        color: $dark-text;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        color: $dark-text;
-    }
-    .select2-dropdown {
-        background-color: $dark-surface-2;
-        border-color: $dark-border;
-        color: $dark-text;
-    }
-
-    .dropdown-item {
-        color: $dark-text;
-
-        &:hover,
-        &:focus {
-            background-color: $dark-surface-2;
-            color: $dark-text;
-        }
-    }
-
-    .text-dark {
-        color: $dark-text !important;
-    }
-    .text-muted {
-        color: $dark-muted !important;
-    }
-
-    hr {
-        border-top-color: $dark-border;
-    }
-
-    .border,
-    .border-top,
-    .border-bottom,
-    .border-left,
-    .border-right {
-        border-color: $dark-border !important;
-    }
+.c-header {
+    background: $n-surface;
+    border-bottom: 1px solid $n-divider;
+    box-shadow: none;
+}
+.c-header.c-header-light { background: $n-surface; }
+.c-header .c-header-nav .c-header-nav-link,
+.c-header .c-header-toggler { color: $n-text; }
+.c-subheader {
+    background: transparent;
+    border-top: 0;
+    border-bottom: 1px solid $n-divider;
+    min-height: 44px;
+    color: $n-muted;
+}
+.c-header-nav .c-avatar img { border: 2px solid rgba($n-accent, 0.35); }
+.c-footer {
+    background: transparent;
+    border-top: 1px solid $n-divider;
+    color: $n-muted;
 }
 
-// Theme toggle icon: show the icon for the theme you can switch TO.
-#theme-toggle .theme-toggle-light {
-    display: none;
+// ---------------------------------------------------------------------
+//  6. Components
+// ---------------------------------------------------------------------
+.card {
+    background: $n-surface;
+    border: 1px solid $n-divider;
+    border-radius: $card-border-radius;
+    box-shadow: $shadow-sm;
+    color: $n-text;
 }
-.c-dark-theme #theme-toggle .theme-toggle-dark {
-    display: none;
-}
-.c-dark-theme #theme-toggle .theme-toggle-light {
-    display: inline-block;
+.card.shadow-sm { box-shadow: $shadow-sm !important; }
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid $n-divider;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: $n-text;
+    padding: 1rem 1.25rem;
 }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    table {
-        width: 100% !important;
-    }
+// Primary buttons are OUTLINED in Nocturne, not filled.
+.btn { font-weight: 500; border-radius: var(--radius-md); }
+.btn-primary,
+.btn-primary:not([class*='ghost']) {
+    color: $n-accent;
+    background: transparent;
+    border: 1px solid $n-accent;
+    box-shadow: none;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    color: $n-accent;
+    background: rgba($n-accent, 0.12);
+    border-color: $n-accent;
+    box-shadow: none;
+}
+.btn-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: $n-accent;
+    background: rgba($n-accent, 0.22);
+    border-color: $n-accent;
+}
+.btn-secondary {
+    color: $n-text;
+    background: transparent;
+    border: 1px solid $n-divider;
 }
 
 /* ------------------------------------------------------------------ */
