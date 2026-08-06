@@ -48,6 +48,7 @@ This will start the application along with the mysql database using docker compo
 - **Expense Management**
 - **Customer & Supplier Management**
 - **User Management (Roles & Permissions)**
+- **Activity Logs / Audit Trail (records who created, updated or deleted each record)**
 - **Product Multiple Images**
 - **Multiple Currency Settings**
 - **Unit Settings**

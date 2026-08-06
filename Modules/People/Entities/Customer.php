@@ -9,6 +9,12 @@ use Modules\People\Database\factories\CustomerFactory;
 class Customer extends Model
 {
     use HasFactory;
+use App\Traits\RecordsActivity;
+
+class Customer extends Model
+{
+
+    use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 

@@ -5,6 +5,7 @@ namespace Modules\Expense\Entities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\RecordsActivity;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,7 +19,7 @@ use Illuminate\Support\Carbon;
  */
 class Expense extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 

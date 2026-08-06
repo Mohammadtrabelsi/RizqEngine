@@ -298,6 +298,14 @@
     </li>
 @endcan
 
+@can('access_activity_logs')
+    <li class="c-sidebar-nav-item {{ request()->routeIs('activity-logs.*') ? 'c-active' : '' }}">
+        <a class="c-sidebar-nav-link" href="{{ route('activity-logs.index') }}">
+            <i class="c-sidebar-nav-icon bi bi-clock-history" style="line-height: 1;"></i> Activity Logs
+        </a>
+    </li>
+@endcan
+
 @can('access_currencies|access_settings')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('currencies*') || request()->routeIs('units*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

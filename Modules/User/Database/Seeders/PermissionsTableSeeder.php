@@ -125,9 +125,24 @@ class PermissionsTableSeeder extends Seeder
 
         $role = Role::create([
             'name' => 'Admin',
+            //Units
+            'access_units',
+            //Activity Logs
+            'access_activity_logs',
+            'delete_activity_logs'
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::findOrCreate($permission, 'web');
+        }
+
+        $role = Role::firstOrCreate([
+            'name' => 'Admin'
         ]);
 
         $role->givePermissionTo($permissions);
         $role->revokePermissionTo('access_user_management');
+        // Only the Super Admin may purge the audit trail.
+        $role->revokePermissionTo('delete_activity_logs');
     }
 }

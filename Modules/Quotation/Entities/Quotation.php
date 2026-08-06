@@ -4,12 +4,13 @@ namespace Modules\Quotation\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\RecordsActivity;
 use Illuminate\Support\Carbon;
 use Modules\People\Entities\Customer;
 
 class Quotation extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 

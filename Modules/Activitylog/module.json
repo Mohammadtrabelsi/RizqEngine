@@ -1,0 +1,13 @@
+{
+    "name": "Activitylog",
+    "alias": "activitylog",
+    "description": "Records and displays user activity across the application.",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Activitylog\\Providers\\ActivitylogServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
