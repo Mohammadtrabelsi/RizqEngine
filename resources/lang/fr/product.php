@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'action' => 'Action',
+    'addition' => 'Addition',
+    'close' => 'Fermer',
+    'code' => 'Code',
+    'discount-added-to-product' => 'Remise ajoutée au produit',
+    'download-pdf' => 'Télécharger le PDF',
+    'fixed' => 'Fixe',
+    'generate-barcodes' => 'Générer des codes-barres',
+    'loading' => 'Chargement...',
+    'name' => 'Nom',
+    'no-products-found' => 'Aucun produit trouvé',
+    'percentage' => 'Pourcentage',
+    'product-already-added-to-cart' => 'Le produit est déjà ajouté au panier',
+    'products-not-found' => 'Produits non trouvés',
+    'quantity' => 'Quantité',
+    'requested-quantity-not-available' => 'La quantité demandée n\'est pas disponible',
+    'save-changes' => 'Enregistrer les modifications',
+    'something-went-wrong' => 'Quelque chose s\'est mal passé',
+    'stock' => 'Stock',
+    'submit' => 'Soumettre',
+    'subtraction' => 'Soustraction',
+    'type' => 'Type',
+];

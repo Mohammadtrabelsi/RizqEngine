@@ -43,7 +43,7 @@ class ExpenseController extends Controller
             'details' => $request->details,
         ]);
 
-        toast('Expense Created!', 'success');
+        session()->flash('success', 'Expense Created!');
 
         return redirect()->route('expenses.index');
     }
@@ -75,7 +75,7 @@ class ExpenseController extends Controller
             'details' => $request->details,
         ]);
 
-        toast('Expense Updated!', 'info');
+        session()->flash('info', 'Expense Updated!');
 
         return redirect()->route('expenses.index');
     }
@@ -86,7 +86,7 @@ class ExpenseController extends Controller
 
         $expense->delete();
 
-        toast('Expense Deleted!', 'warning');
+        session()->flash('warning', 'Expense Deleted!');
 
         return redirect()->route('expenses.index');
     }

@@ -13,7 +13,7 @@
     @include('includes.main-css')
 </head>
 
-<body class="c-app">
+<body class="c-app {{ request()->cookie('theme') === 'dark' ? 'c-dark-theme' : '' }}">
     @include('layouts.sidebar')
 
     <div class="c-wrapper">
@@ -26,6 +26,9 @@
 
         <div class="c-body">
             <main class="c-main">
+                <div class="container-fluid">
+                    @include('utils.flash')
+                </div>
                 @yield('content')
             </main>
         </div>

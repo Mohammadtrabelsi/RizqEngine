@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'action' => 'الإجراء',
+    'addition' => 'إضافة',
+    'close' => 'إغلاق',
+    'code' => 'الرمز',
+    'discount-added-to-product' => 'تمت إضافة الخصم إلى المنتج',
+    'download-pdf' => 'تنزيل ملف PDF',
+    'fixed' => 'ثابت',
+    'generate-barcodes' => 'إنشاء الباركود',
+    'loading' => 'جاري التحميل...',
+    'name' => 'الاسم',
+    'no-products-found' => 'لم يتم العثور على أي منتجات',
+    'percentage' => 'نسبة مئوية',
+    'product-already-added-to-cart' => 'المنتج مضافة بالفعل إلى السلة',
+    'products-not-found' => 'المنتجات غير موجودة',
+    'quantity' => 'الكمية',
+    'requested-quantity-not-available' => 'الكمية المطلوبة غير متوفرة',
+    'save-changes' => 'حفظ التغييرات',
+    'something-went-wrong' => 'حدث خطأ ما',
+    'stock' => 'المخزون',
+    'submit' => 'إرسال',
+    'subtraction' => 'خصم',
+    'type' => 'النوع',
+];

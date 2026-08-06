@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'action' => 'Action',
+    'addition' => 'Addition',
+    'close' => 'Close',
+    'code' => 'Code',
+    'discount-added-to-product' => 'Discount-added-to-product',
+    'download-pdf' => 'Download-pdf',
+    'fixed' => 'Fixed',
+    'generate-barcodes' => 'Generate-barcodes',
+    'loading' => 'Loading',
+    'name' => 'Name',
+    'no-products-found' => 'No-products-found',
+    'percentage' => 'Percentage',
+    'product-already-added-to-cart' => 'Product-already-added-to-cart',
+    'products-not-found' => 'Products-not-found',
+    'quantity' => 'Quantity',
+    'requested-quantity-not-available' => 'Requested-quantity-not-available',
+    'save-changes' => 'Save-changes',
+    'something-went-wrong' => 'Something-went-wrong',
+    'stock' => 'Stock',
+    'submit' => 'Submit',
+    'subtraction' => 'Subtraction',
+    'type' => 'Type',
+];

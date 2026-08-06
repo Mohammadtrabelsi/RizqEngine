@@ -7,22 +7,12 @@
 
     <title>Sign in | {{ config('app.name') }}</title>
 
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
-    <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/nocturne.css') }}">
-    <style>
-        .login-grid { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
-            background: var(--color-bg); color: var(--color-text); }
-        .login-brand { background: linear-gradient(160deg, var(--color-surface), var(--color-bg));
-            display: flex; flex-direction: column; justify-content: space-between; padding: var(--space-8); }
-        .login-form-wrap { display: flex; align-items: center; justify-content: center; padding: var(--space-8); }
-        .login-form { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: var(--space-6); }
-        .field-error { color: #e0645f; font-size: 12px; margin-top: 4px; }
-        @media (max-width: 820px) {
-            .login-grid { grid-template-columns: 1fr; }
-            .login-brand { display: none; }
-        }
-    </style>
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.png') }}">
+    <!-- CoreUI CSS -->
+    @vite('resources/sass/app.scss')
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
 <div class="login-grid">
@@ -60,32 +50,55 @@
                     {{ Session::get('account_deactivated') }}
                 </div>
             @endif
-
-            <div style="display:flex; flex-direction:column; gap:var(--space-4)">
-                <div class="field">
-                    <label for="email">{{ __('login.email') }}</label>
-                    <input id="email" name="email" type="email" class="input" placeholder="{{ __('login.email-placeholder') }}"
-                           value="{{ old('email') }}" required autofocus>
-                    @error('email')
-                        <div class="field-error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label for="password">{{ __('login.password') }}</label>
-                    <input id="password" name="password" type="password" class="input" placeholder="{{ __('login.password-placeholder') }}" required>
-                    @error('password')
-                        <div class="field-error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div style="display:flex; align-items:center; justify-content:space-between; font-size:13px">
-                    <label class="radio">
-                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <span class="dot" style="border-radius:4px"></span>
-                        {{ __('login.remember-me') }}
-                    </label>
-                    <a href="{{ route('password.request') }}">{{ __('login.forgot-password') }}</a>
+            <div class="card p-4 border-0 shadow-sm">
+                <div class="card-body">
+                    <form id="login" method="post" action="{{ url('/login') }}">
+                        @csrf
+                        <h1>Login</h1>
+                        <p class="text-muted">Sign In to your account</p>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="bi bi-person"></i>
+                                    </span>
+                            </div>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                   name="email" value="{{ old('email') }}"
+                                   placeholder="Email">
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="bi bi-lock"></i>
+                                    </span>
+                            </div>
+                            <input id="password" type="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   placeholder="Password" name="password">
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <button id="submit" class="btn btn-primary px-4 d-flex align-items-center"
+                                        type="submit">
+                                    Login
+                                    <div id="spinner" class="spinner-border text-info login-spinner" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-8 text-right">
+                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
+                                    Forgot password?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <button id="submit" class="btn btn-primary btn-block" type="submit">{{ __('login.sign-in') }}</button>
@@ -99,12 +112,8 @@
 
 </div>
 
-<script>
-    document.getElementById('login').addEventListener('submit', function () {
-        var btn = document.getElementById('submit');
-        btn.disabled = true;
-        btn.textContent = 'Signing in…';
-    });
-</script>
+<!-- CoreUI -->
+@vite(['resources/js/app.js', 'resources/js/login.js'])
+
 </body>
 </html>

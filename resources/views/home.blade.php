@@ -16,10 +16,10 @@
         <div class="row">
             @php
                 $kpis = [
-                    ['label' => "Today's sales",   'value' => format_currency($todays_sales),   'meta' => 'Completed sales today'],
-                    ['label' => 'Transactions',    'value' => $todays_transactions,             'meta' => 'Orders today'],
-                    ['label' => 'Low stock items', 'value' => $low_stock_products->count(),      'meta' => 'Needs reorder'],
-                    ['label' => "Today's expenses",'value' => format_currency($todays_expenses), 'meta' => 'Logged today'],
+                    ['label' => __('general.sales-today'),   'value' => format_currency($todays_sales),   'meta' => __('general.completed-sales-today')],
+                       ['label' => __('general.transactions'),    'value' => $todays_transactions,             'meta' => __('general.orders-today')],
+                    ['label' => __('general.low-stock-items'), 'value' => $low_stock_products->count(),      'meta' => __('general.needs-reorder')],
+                    ['label' => __('general.todays-expenses'),'value' => format_currency($todays_expenses), 'meta' => __('general.logged-today')],
                 ];
             @endphp
             @foreach($kpis as $kpi)
@@ -57,27 +57,20 @@
                 </div>
             </div>
             @endcan
-
-            {{-- Low stock list --}}
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="n-card-title mb-3">{{ __('general.low-stock') }}</div>
-                        @forelse($low_stock_products->take(6) as $product)
-                            <div class="d-flex justify-content-between align-items-center py-2"
-                                 style="border-bottom:1px solid var(--color-divider)">
-                                <div>
-                                    <div style="font-size:13px; font-weight:500">{{ $product->product_name }}</div>
-                                    <div class="n-meta">{{ $product->product_code }}</div>
-                                </div>
-                                <span class="n-tag n-tag-outline">{{ $product->product_quantity }} left</span>
-                            </div>
-                        @empty
-                            <div class="n-meta py-2">{{ __('general.all-products-above-alert-level') }}</div>
-                        @endforelse
+            @can('show_month_overview')
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header">
+                        Overview of {{ now()->format('F, Y') }}
+                    </div>
+                    <div class="card-body d-flex justify-content-center">
+                        <div class="chart-container chart-container-sm">
+                            <canvas id="currentMonthChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
+            @endcan
         </div>
 
         {{-- Recent transactions --}}

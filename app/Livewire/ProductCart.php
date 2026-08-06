@@ -75,6 +75,7 @@ class ProductCart extends Component
 
         return view('livewire.product-cart', [
             'cart_items' => $cart_items,
+            'total_with_shipping' => Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
         ]);
     }
 
@@ -87,7 +88,7 @@ class ProductCart extends Component
         });
 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
+            session()->flash('error', trans('product.product-already-added-to-cart'));
 
             return;
         }
@@ -135,7 +136,7 @@ class ProductCart extends Component
     {
         if ($this->cart_instance == 'sale' || $this->cart_instance == 'purchase_return') {
             if ($this->check_quantity[$product_id] < $this->quantity[$product_id]) {
-                session()->flash('message', 'The requested quantity is not available in stock.');
+                session()->flash('error', trans('product.requested-quantity-not-available'));
 
                 return;
             }
@@ -193,7 +194,7 @@ class ProductCart extends Component
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
         }
 
-        session()->flash('discount_message'.$product_id, 'Discount added to the product!');
+        session()->flash('success', trans('product.discount-added-to-product'));
     }
 
     public function updatePrice($row_id, $product_id)

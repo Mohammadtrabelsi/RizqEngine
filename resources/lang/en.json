@@ -1,0 +1,19 @@
+{
+    "Confirm Password": "Confirm Password",
+    "Forgot Your Password?": "Forgot Your Password?",
+    "Go Home": "Go Home",
+    "Maybe, the CSRF token is missing.": "Maybe, the CSRF token is missing.",
+    "Oh no": "Oh no",
+    "Page Expired": "Page Expired",
+    "Page Not Found": "Page Not Found",
+    "Password": "Password",
+    "Please confirm your password before continuing.": "Please confirm your password before continuing.",
+    "Server Error": "Server Error",
+    "Something went wrong. Call the dev!!!": "Something went wrong. Call the dev!!!",
+    "Sorry, the page you are looking for could not be found.": "Sorry, the page you are looking for could not be found.",
+    "Sorry, you don't have the permission to visit this page.": "Sorry, you don't have the permission to visit this page.",
+    "Unauthorized": "Unauthorized",
+    "key": "key",
+    "sidebar.": "sidebar.",
+    "group.": "group."
+}

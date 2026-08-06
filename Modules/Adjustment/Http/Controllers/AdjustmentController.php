@@ -68,7 +68,7 @@ class AdjustmentController extends Controller
             }
         });
 
-        toast('Adjustment Created!', 'success');
+        session()->flash('success', 'Adjustment Created!');
 
         return redirect()->route('adjustments.index');
     }
@@ -145,7 +145,7 @@ class AdjustmentController extends Controller
             }
         });
 
-        toast('Adjustment Updated!', 'info');
+        session()->flash('info', 'Adjustment Updated!');
 
         return redirect()->route('adjustments.index');
     }
@@ -156,7 +156,7 @@ class AdjustmentController extends Controller
 
         $adjustment->delete();
 
-        toast('Adjustment Deleted!', 'warning');
+        session()->flash('warning', 'Adjustment Deleted!');
 
         return redirect()->route('adjustments.index');
     }
