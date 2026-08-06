@@ -13,13 +13,16 @@ use Modules\Product\Entities\Product;
 class ProductMovementReport extends Component
 {
     public $start_date;
+
     public $end_date;
+
     public $direction = 'fast'; // fast = best sellers first, slow = least sold first
+
     public $limit = 10;
 
     protected $rules = [
         'start_date' => 'required|date|before_or_equal:end_date',
-        'end_date'   => 'required|date|after_or_equal:start_date',
+        'end_date' => 'required|date|after_or_equal:start_date',
     ];
 
     public function mount()

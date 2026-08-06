@@ -35,9 +35,9 @@ class LowStockReport extends Component
         $lowStockCount = Product::whereColumn('product_quantity', '<=', 'product_stock_alert')->count();
 
         return view('livewire.reports.low-stock-report', [
-            'products'        => $query->paginate(15),
+            'products' => $query->paginate(15),
             'outOfStockCount' => $outOfStockCount,
-            'lowStockCount'   => $lowStockCount,
+            'lowStockCount' => $lowStockCount,
         ]);
     }
 }

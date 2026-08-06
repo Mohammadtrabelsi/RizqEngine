@@ -10,14 +10,15 @@ use Spatie\Activitylog\Models\Activity;
 
 class ActivityController extends Controller
 {
-    public function index(ActivitiesDataTable $dataTable) {
+    public function index(ActivitiesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_activity_logs'), 403);
 
         return $dataTable->render('activitylog::index');
     }
 
-
-    public function show(Activity $activity) {
+    public function show(Activity $activity)
+    {
         abort_if(Gate::denies('access_activity_logs'), 403);
 
         $activity->load(['causer', 'subject']);
@@ -25,8 +26,8 @@ class ActivityController extends Controller
         return view('activitylog::show', compact('activity'));
     }
 
-
-    public function destroy(Activity $activity) {
+    public function destroy(Activity $activity)
+    {
         abort_if(Gate::denies('delete_activity_logs'), 403);
 
         $activity->delete();
@@ -36,8 +37,8 @@ class ActivityController extends Controller
         return redirect()->route('activity-logs.index');
     }
 
-
-    public function clear(Request $request) {
+    public function clear(Request $request)
+    {
         abort_if(Gate::denies('delete_activity_logs'), 403);
 
         Activity::query()->delete();

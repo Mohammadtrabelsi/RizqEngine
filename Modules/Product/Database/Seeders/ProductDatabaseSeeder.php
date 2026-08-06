@@ -2,8 +2,8 @@
 
 namespace Modules\Product\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 use Modules\Product\Entities\Category;
 use Modules\Setting\Entities\Unit;
 
@@ -20,14 +20,14 @@ class ProductDatabaseSeeder extends Seeder
 
         Category::create([
             'category_code' => 'CA_01',
-            'category_name' => 'Random'
+            'category_name' => 'Random',
         ]);
 
         Unit::create([
             'name' => 'Piece',
             'short_name' => 'PC',
             'operator' => '*',
-            'operation_value' => 1
+            'operation_value' => 1,
         ]);
     }
 }

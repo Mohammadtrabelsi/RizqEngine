@@ -1,5 +1,8 @@
 <?php
 
+use Modules\People\Entities\Customer;
+use Modules\SalesReturn\Entities\SaleReturn;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,23 +15,23 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    //Generate PDF
+    // Generate PDF
     Route::get('/sale-returns/pdf/{id}', function ($id) {
-        $saleReturn = \Modules\SalesReturn\Entities\SaleReturn::findOrFail($id);
-        $customer = \Modules\People\Entities\Customer::findOrFail($saleReturn->customer_id);
+        $saleReturn = SaleReturn::findOrFail($id);
+        $customer = Customer::findOrFail($saleReturn->customer_id);
 
-        $pdf = \PDF::loadView('salesreturn::print', [
+        $pdf = PDF::loadView('salesreturn::print', [
             'sale_return' => $saleReturn,
             'customer' => $customer,
         ])->setPaper('a4');
 
-        return $pdf->stream('sale-return-'. $saleReturn->reference .'.pdf');
+        return $pdf->stream('sale-return-'.$saleReturn->reference.'.pdf');
     })->name('sale-returns.pdf');
 
-    //Sale Returns
+    // Sale Returns
     Route::resource('sale-returns', 'SalesReturnController');
 
-    //Payments
+    // Payments
     Route::get('/sale-return-payments/{sale_return_id}', 'SaleReturnPaymentsController@index')
         ->name('sale-return-payments.index');
     Route::get('/sale-return-payments/{sale_return_id}/create', 'SaleReturnPaymentsController@create')

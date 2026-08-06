@@ -14,13 +14,16 @@ class StockMovementReport extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $start_date;
+
     public $end_date;
+
     public $product_id = '';
+
     public $type = '';
 
     protected $rules = [
         'start_date' => 'required|date|before_or_equal:end_date',
-        'end_date'   => 'required|date|after_or_equal:start_date',
+        'end_date' => 'required|date|after_or_equal:start_date',
     ];
 
     public function mount()
@@ -47,7 +50,7 @@ class StockMovementReport extends Component
 
         return view('livewire.reports.stock-movement-report', [
             'movements' => $movements,
-            'products'  => Product::orderBy('product_name')->get(['id', 'product_name']),
+            'products' => Product::orderBy('product_name')->get(['id', 'product_name']),
         ]);
     }
 }

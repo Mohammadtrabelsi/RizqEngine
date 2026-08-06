@@ -21,12 +21,12 @@ class SuperUserSeeder extends Seeder
             [
                 'name' => 'Administrator',
                 'password' => Hash::make(12345678),
-                'is_active' => 1
+                'is_active' => 1,
             ]
         );
 
         $superAdmin = Role::firstOrCreate([
-            'name' => 'Super Admin'
+            'name' => 'Super Admin',
         ]);
 
         $user->assignRole($superAdmin);

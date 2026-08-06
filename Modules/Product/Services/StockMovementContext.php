@@ -2,12 +2,14 @@
 
 namespace Modules\Product\Services;
 
+use Modules\Product\Observers\ProductObserver;
+
 /**
  * A tiny per-request holder that lets callers attribute the *next* change to a
  * product's quantity to a business document (a Sale, a Purchase, a manual
  * adjustment, ...).
  *
- * Existing modules mutate `product_quantity` directly; the {@see \Modules\Product\Observers\ProductObserver}
+ * Existing modules mutate `product_quantity` directly; the {@see ProductObserver}
  * turns every one of those changes into a stock-ledger row. When a caller wants
  * the ledger row to be attributed to a source, it sets the context just before
  * saving the product. The observer consumes the context exactly once and then
@@ -20,10 +22,10 @@ class StockMovementContext
     public static function set(?string $type, ?string $referenceType = null, ?int $referenceId = null, ?string $note = null): void
     {
         static::$pending = [
-            'type'           => $type,
+            'type' => $type,
             'reference_type' => $referenceType,
-            'reference_id'   => $referenceId,
-            'note'           => $note,
+            'reference_id' => $referenceId,
+            'note' => $note,
         ];
     }
 

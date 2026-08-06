@@ -10,8 +10,8 @@ use Yajra\DataTables\Services\DataTable;
 
 class ActivitiesDataTable extends DataTable
 {
-
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('causer', function ($data) {
@@ -24,7 +24,7 @@ class ActivitiesDataTable extends DataTable
 
                 $model = Str::headline(class_basename($data->subject_type));
 
-                return '<span class="badge badge-light">' . $model . ' #' . $data->subject_id . '</span>';
+                return '<span class="badge badge-light">'.$model.' #'.$data->subject_id.'</span>';
             })
             ->addColumn('event', function ($data) {
                 $badges = [
@@ -36,7 +36,7 @@ class ActivitiesDataTable extends DataTable
 
                 $class = $badges[$data->event] ?? 'badge-secondary';
 
-                return '<span class="badge ' . $class . '">' . ($data->event ?? 'n/a') . '</span>';
+                return '<span class="badge '.$class.'">'.($data->event ?? 'n/a').'</span>';
             })
             ->addColumn('action', function ($data) {
                 return view('activitylog::partials.actions', compact('data'));
@@ -47,11 +47,13 @@ class ActivitiesDataTable extends DataTable
             ->rawColumns(['subject', 'event', 'action']);
     }
 
-    public function query(Activity $model) {
+    public function query(Activity $model)
+    {
         return $model->newQuery()->with('causer')->latest();
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('activity-logs-table')
             ->columns($this->getColumns())
@@ -72,7 +74,8 @@ class ActivitiesDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('created_at')
                 ->title('Date')
@@ -102,7 +105,8 @@ class ActivitiesDataTable extends DataTable
         ];
     }
 
-    protected function filename(): string {
-        return 'ActivityLogs_' . date('YmdHis');
+    protected function filename(): string
+    {
+        return 'ActivityLogs_'.date('YmdHis');
     }
 }

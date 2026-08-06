@@ -35,7 +35,7 @@ trait RecordsActivity
             ->dontLogEmptyChanges()
             ->useLogName(Str::headline(class_basename($this)))
             ->setDescriptionForEvent(
-                fn (string $eventName) => Str::headline(class_basename($this)) . " was {$eventName}"
+                fn (string $eventName) => Str::headline(class_basename($this))." was {$eventName}"
             );
     }
 }

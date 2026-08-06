@@ -5,14 +5,12 @@ namespace Modules\SalesReturn\DataTables;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class SaleReturnsDataTable extends DataTable
 {
-
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('total_amount', function ($data) {
@@ -35,11 +33,13 @@ class SaleReturnsDataTable extends DataTable
             });
     }
 
-    public function query(SaleReturn $model) {
+    public function query(SaleReturn $model)
+    {
         return $model->newQuery();
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('sale-returns-table')
             ->columns($this->getColumns())
@@ -60,7 +60,8 @@ class SaleReturnsDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('reference')
                 ->className('text-center align-middle'),
@@ -90,11 +91,12 @@ class SaleReturnsDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('created_at')
-                ->visible(false)
+                ->visible(false),
         ];
     }
 
-    protected function filename(): string {
-        return 'SaleReturns_' . date('YmdHis');
+    protected function filename(): string
+    {
+        return 'SaleReturns_'.date('YmdHis');
     }
 }

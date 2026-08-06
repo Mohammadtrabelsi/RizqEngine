@@ -23,12 +23,12 @@ class StockMovementTest extends TestCase
         ]);
 
         return Product::create([
-            'category_id'         => $category->id,
-            'product_name'        => 'Widget',
-            'product_code'        => 'W-' . uniqid(),
-            'product_quantity'    => $quantity,
-            'product_cost'        => 10,
-            'product_price'       => 15,
+            'category_id' => $category->id,
+            'product_name' => 'Widget',
+            'product_code' => 'W-'.uniqid(),
+            'product_quantity' => $quantity,
+            'product_cost' => 10,
+            'product_price' => 15,
             'product_stock_alert' => 5,
         ]);
     }
@@ -39,11 +39,11 @@ class StockMovementTest extends TestCase
         $product = $this->makeProduct(20);
 
         $this->assertDatabaseHas('stock_movements', [
-            'product_id'      => $product->id,
-            'type'            => 'opening',
-            'quantity'        => 20,
+            'product_id' => $product->id,
+            'type' => 'opening',
+            'quantity' => 20,
             'quantity_before' => 0,
-            'quantity_after'  => 20,
+            'quantity_after' => 20,
         ]);
     }
 
@@ -85,12 +85,12 @@ class StockMovementTest extends TestCase
 
         $this->assertEquals(15, $product->fresh()->product_quantity);
         $this->assertDatabaseHas('stock_movements', [
-            'product_id'     => $product->id,
-            'type'           => 'in',
-            'quantity'       => 5,
+            'product_id' => $product->id,
+            'type' => 'in',
+            'quantity' => 5,
             'reference_type' => 'Manual',
-            'reference_id'   => 99,
-            'note'           => 'Received shipment',
+            'reference_id' => 99,
+            'note' => 'Received shipment',
         ]);
     }
 
@@ -109,7 +109,7 @@ class StockMovementTest extends TestCase
         $this->assertEquals(3, $product->fresh()->product_quantity);
         $this->assertDatabaseMissing('stock_movements', [
             'product_id' => $product->id,
-            'type'       => 'out',
+            'type' => 'out',
         ]);
     }
 

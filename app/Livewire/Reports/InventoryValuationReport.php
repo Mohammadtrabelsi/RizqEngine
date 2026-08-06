@@ -4,6 +4,7 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 
 class InventoryValuationReport extends Component
@@ -13,6 +14,7 @@ class InventoryValuationReport extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $category_id = '';
+
     public $search = '';
 
     public function updating($field)
@@ -41,12 +43,12 @@ class InventoryValuationReport extends Component
             ->paginate(15);
 
         return view('livewire.reports.inventory-valuation-report', [
-            'products'          => $products,
-            'categories'        => \Modules\Product\Entities\Category::orderBy('category_name')->get(),
-            'totalQuantity'     => $totalQuantity,
-            'totalCostValue'    => $totalCostValue,
-            'totalRetailValue'  => $totalRetailValue,
-            'potentialProfit'   => $totalRetailValue - $totalCostValue,
+            'products' => $products,
+            'categories' => Category::orderBy('category_name')->get(),
+            'totalQuantity' => $totalQuantity,
+            'totalCostValue' => $totalCostValue,
+            'totalRetailValue' => $totalRetailValue,
+            'potentialProfit' => $totalRetailValue - $totalCostValue,
         ]);
     }
 }

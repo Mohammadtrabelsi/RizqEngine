@@ -2,8 +2,8 @@
 
 namespace Modules\Adjustment\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Product\Entities\Product;
 
 class AdjustedProduct extends Model
@@ -14,11 +14,13 @@ class AdjustedProduct extends Model
 
     protected $with = ['product'];
 
-    public function adjustment() {
+    public function adjustment()
+    {
         return $this->belongsTo(Adjustment::class, 'adjustment_id', 'id');
     }
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 }

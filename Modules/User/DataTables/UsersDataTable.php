@@ -5,19 +5,17 @@ namespace Modules\User\DataTables;
 use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
-
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('role', function ($data) {
                 return view('user::users.partials.roles', [
-                    'roles' => $data->getRoleNames()
+                    'roles' => $data->getRoleNames(),
                 ]);
             })
             ->addColumn('action', function ($data) {
@@ -35,12 +33,13 @@ class UsersDataTable extends DataTable
             ->addColumn('image', function ($data) {
                 $url = $data->getFirstMediaUrl('avatars');
 
-                return '<img src="' . $url . '" style="width:50px;height:50px;" class="img-thumbnail rounded-circle"/>';
+                return '<img src="'.$url.'" style="width:50px;height:50px;" class="img-thumbnail rounded-circle"/>';
             })
             ->rawColumns(['image', 'status']);
     }
 
-    public function query(User $model) {
+    public function query(User $model)
+    {
         return $model->newQuery()
             ->with(['roles' => function ($query) {
                 $query->select('name')->get();
@@ -48,7 +47,8 @@ class UsersDataTable extends DataTable
             ->where('id', '!=', auth()->id());
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('users-table')
             ->columns($this->getColumns())
@@ -69,7 +69,8 @@ class UsersDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::computed('image')
                 ->className('text-center align-middle'),
@@ -92,11 +93,12 @@ class UsersDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('created_at')
-                ->visible(false)
+                ->visible(false),
         ];
     }
 
-    protected function filename(): string {
-        return 'Users_' . date('YmdHis');
+    protected function filename(): string
+    {
+        return 'Users_'.date('YmdHis');
     }
 }

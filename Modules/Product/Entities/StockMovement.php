@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * A single, immutable entry in the stock ledger.
  *
- * @property int    $product_id
- * @property int    $quantity        Magnitude of the change (always positive)
- * @property int    $quantity_before
- * @property int    $quantity_after
- * @property string $type            in|out|opening|adjustment
+ * @property int $product_id
+ * @property int $quantity Magnitude of the change (always positive)
+ * @property int $quantity_before
+ * @property int $quantity_after
+ * @property string $type in|out|opening|adjustment
  */
 class StockMovement extends Model
 {
@@ -23,9 +23,9 @@ class StockMovement extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'quantity'        => 'integer',
+        'quantity' => 'integer',
         'quantity_before' => 'integer',
-        'quantity_after'  => 'integer',
+        'quantity_after' => 'integer',
     ];
 
     public function product()

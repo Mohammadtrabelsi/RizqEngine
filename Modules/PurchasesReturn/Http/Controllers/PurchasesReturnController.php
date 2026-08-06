@@ -2,13 +2,13 @@
 
 namespace Modules\PurchasesReturn\Http\Controllers;
 
-use Modules\PurchasesReturn\DataTables\PurchaseReturnsDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
+use Modules\PurchasesReturn\DataTables\PurchaseReturnsDataTable;
 use Modules\PurchasesReturn\Entities\PurchaseReturn;
 use Modules\PurchasesReturn\Entities\PurchaseReturnDetail;
 use Modules\PurchasesReturn\Entities\PurchaseReturnPayment;
@@ -17,15 +17,15 @@ use Modules\PurchasesReturn\Http\Requests\UpdatePurchaseReturnRequest;
 
 class PurchasesReturnController extends Controller
 {
-
-    public function index(PurchaseReturnsDataTable $dataTable) {
+    public function index(PurchaseReturnsDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_purchase_returns'), 403);
 
         return $dataTable->render('purchasesreturn::index');
     }
 
-
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_purchase_returns'), 403);
 
         Cart::instance('purchase_return')->destroy();
@@ -33,8 +33,8 @@ class PurchasesReturnController extends Controller
         return view('purchasesreturn::create');
     }
 
-
-    public function store(StorePurchaseReturnRequest $request) {
+    public function store(StorePurchaseReturnRequest $request)
+    {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -82,7 +82,7 @@ class PurchasesReturnController extends Controller
                 if ($request->status == 'Shipped' || $request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                        'product_quantity' => $product->product_quantity - $cart_item->qty,
                     ]);
                 }
             }
@@ -91,11 +91,11 @@ class PurchasesReturnController extends Controller
 
             if ($purchase_return->paid_amount > 0) {
                 PurchaseReturnPayment::create([
-                    'date'               => $request->date,
-                    'reference'          => 'INV/' . $purchase_return->reference,
-                    'amount'             => $purchase_return->paid_amount,
+                    'date' => $request->date,
+                    'reference' => 'INV/'.$purchase_return->reference,
+                    'amount' => $purchase_return->paid_amount,
                     'purchase_return_id' => $purchase_return->id,
-                    'payment_method'     => $request->payment_method
+                    'payment_method' => $request->payment_method,
                 ]);
             }
         });
@@ -105,8 +105,8 @@ class PurchasesReturnController extends Controller
         return redirect()->route('purchase-returns.index');
     }
 
-
-    public function show(PurchaseReturn $purchase_return) {
+    public function show(PurchaseReturn $purchase_return)
+    {
         abort_if(Gate::denies('show_purchase_returns'), 403);
 
         $supplier = Supplier::findOrFail($purchase_return->supplier_id);
@@ -114,8 +114,8 @@ class PurchasesReturnController extends Controller
         return view('purchasesreturn::show', compact('purchase_return', 'supplier'));
     }
 
-
-    public function edit(PurchaseReturn $purchase_return) {
+    public function edit(PurchaseReturn $purchase_return)
+    {
         abort_if(Gate::denies('edit_purchase_returns'), 403);
 
         $purchase_return_details = $purchase_return->purchaseReturnDetails;
@@ -126,28 +126,28 @@ class PurchasesReturnController extends Controller
 
         foreach ($purchase_return_details as $purchase_return_detail) {
             $cart->add([
-                'id'      => $purchase_return_detail->product_id,
-                'name'    => $purchase_return_detail->product_name,
-                'qty'     => $purchase_return_detail->quantity,
-                'price'   => $purchase_return_detail->price,
-                'weight'  => 1,
+                'id' => $purchase_return_detail->product_id,
+                'name' => $purchase_return_detail->product_name,
+                'qty' => $purchase_return_detail->quantity,
+                'price' => $purchase_return_detail->price,
+                'weight' => 1,
                 'options' => [
                     'product_discount' => $purchase_return_detail->product_discount_amount,
                     'product_discount_type' => $purchase_return_detail->product_discount_type,
-                    'sub_total'   => $purchase_return_detail->sub_total,
-                    'code'        => $purchase_return_detail->product_code,
-                    'stock'       => Product::findOrFail($purchase_return_detail->product_id)->product_quantity,
+                    'sub_total' => $purchase_return_detail->sub_total,
+                    'code' => $purchase_return_detail->product_code,
+                    'stock' => Product::findOrFail($purchase_return_detail->product_id)->product_quantity,
                     'product_tax' => $purchase_return_detail->product_tax_amount,
-                    'unit_price'  => $purchase_return_detail->unit_price
-                ]
+                    'unit_price' => $purchase_return_detail->unit_price,
+                ],
             ]);
         }
 
         return view('purchasesreturn::edit', compact('purchase_return'));
     }
 
-
-    public function update(UpdatePurchaseReturnRequest $request, PurchaseReturn $purchase_return) {
+    public function update(UpdatePurchaseReturnRequest $request, PurchaseReturn $purchase_return)
+    {
         DB::transaction(function () use ($request, $purchase_return) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -163,7 +163,7 @@ class PurchasesReturnController extends Controller
                 if ($purchase_return->status == 'Shipped' || $purchase_return->status == 'Completed') {
                     $product = Product::findOrFail($purchase_return_detail->product_id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity + $purchase_return_detail->quantity
+                        'product_quantity' => $product->product_quantity + $purchase_return_detail->quantity,
                     ]);
                 }
                 $purchase_return_detail->delete();
@@ -206,7 +206,7 @@ class PurchasesReturnController extends Controller
                 if ($request->status == 'Shipped' || $request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                        'product_quantity' => $product->product_quantity - $cart_item->qty,
                     ]);
                 }
             }
@@ -219,8 +219,8 @@ class PurchasesReturnController extends Controller
         return redirect()->route('purchase-returns.index');
     }
 
-
-    public function destroy(PurchaseReturn $purchase_return) {
+    public function destroy(PurchaseReturn $purchase_return)
+    {
         abort_if(Gate::denies('delete_purchase_returns'), 403);
 
         $purchase_return->delete();

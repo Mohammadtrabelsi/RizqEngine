@@ -26,13 +26,13 @@ class ProductObserver
         }
 
         $this->record($product, [
-            'type'            => $context['type'] ?? 'opening',
-            'quantity'        => $quantity,
+            'type' => $context['type'] ?? 'opening',
+            'quantity' => $quantity,
             'quantity_before' => 0,
-            'quantity_after'  => $quantity,
-            'reference_type'  => $context['reference_type'] ?? null,
-            'reference_id'    => $context['reference_id'] ?? null,
-            'note'            => $context['note'] ?? 'Opening stock',
+            'quantity_after' => $quantity,
+            'reference_type' => $context['reference_type'] ?? null,
+            'reference_id' => $context['reference_id'] ?? null,
+            'note' => $context['note'] ?? 'Opening stock',
         ]);
     }
 
@@ -50,21 +50,21 @@ class ProductObserver
         }
 
         $before = (int) $product->getOriginal('product_quantity');
-        $after  = (int) $product->product_quantity;
-        $delta  = $after - $before;
+        $after = (int) $product->product_quantity;
+        $delta = $after - $before;
 
         if ($delta === 0) {
             return;
         }
 
         $this->record($product, [
-            'type'            => $context['type'] ?? ($delta > 0 ? 'in' : 'out'),
-            'quantity'        => abs($delta),
+            'type' => $context['type'] ?? ($delta > 0 ? 'in' : 'out'),
+            'quantity' => abs($delta),
             'quantity_before' => $before,
-            'quantity_after'  => $after,
-            'reference_type'  => $context['reference_type'] ?? null,
-            'reference_id'    => $context['reference_id'] ?? null,
-            'note'            => $context['note'] ?? null,
+            'quantity_after' => $after,
+            'reference_type' => $context['reference_type'] ?? null,
+            'reference_id' => $context['reference_id'] ?? null,
+            'note' => $context['note'] ?? null,
         ]);
     }
 
@@ -72,7 +72,7 @@ class ProductObserver
     {
         StockMovement::create(array_merge($attributes, [
             'product_id' => $product->id,
-            'user_id'    => auth()->id(),
+            'user_id' => auth()->id(),
         ]));
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Modules\Expense\Entities;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\RecordsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ExpenseCategory extends Model
 {
@@ -12,7 +12,8 @@ class ExpenseCategory extends Model
 
     protected $guarded = [];
 
-    public function expenses() {
+    public function expenses()
+    {
         return $this->hasMany(Expense::class, 'category_id', 'id');
     }
 }

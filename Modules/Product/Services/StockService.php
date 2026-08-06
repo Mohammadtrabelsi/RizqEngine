@@ -5,12 +5,13 @@ namespace Modules\Product\Services;
 use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
 use Modules\Product\Exceptions\InsufficientStockException;
+use Modules\Product\Observers\ProductObserver;
 
 /**
  * Central place for programmatic stock changes.
  *
  * Every write runs inside a database transaction and mutates the product
- * through the model, so the {@see \Modules\Product\Observers\ProductObserver}
+ * through the model, so the {@see ProductObserver}
  * records a matching ledger entry. Callers should use this service instead of
  * touching `product_quantity` by hand whenever they need attribution and the
  * negative-stock guard.

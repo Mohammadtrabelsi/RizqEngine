@@ -3,8 +3,6 @@
 namespace Modules\Sale\Http\Controllers;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Modules\People\Entities\Customer;
@@ -17,8 +15,8 @@ use Modules\Sale\Http\Requests\StorePosSaleRequest;
 
 class PosController extends Controller
 {
-
-    public function index() {
+    public function index()
+    {
         Cart::instance('sale')->destroy();
 
         $customers = Customer::all();
@@ -27,8 +25,8 @@ class PosController extends Controller
         return view('sale::pos.index', compact('product_categories', 'customers'));
     }
 
-
-    public function store(StorePosSaleRequest $request) {
+    public function store(StorePosSaleRequest $request)
+    {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -76,7 +74,7 @@ class PosController extends Controller
 
                 $product = Product::findOrFail($cart_item->id);
                 $product->update([
-                    'product_quantity' => $product->product_quantity - $cart_item->qty
+                    'product_quantity' => $product->product_quantity - $cart_item->qty,
                 ]);
             }
 
@@ -88,7 +86,7 @@ class PosController extends Controller
                     'reference' => 'INV/'.$sale->reference,
                     'amount' => $sale->paid_amount,
                     'sale_id' => $sale->id,
-                    'payment_method' => $request->payment_method
+                    'payment_method' => $request->payment_method,
                 ]);
             }
         });

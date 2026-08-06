@@ -12,34 +12,34 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    //Profit Loss Report
+    // Profit Loss Report
     Route::get('/profit-loss-report', 'ReportsController@profitLossReport')
         ->name('profit-loss-report.index');
-    //Payments Report
+    // Payments Report
     Route::get('/payments-report', 'ReportsController@paymentsReport')
         ->name('payments-report.index');
-    //Sales Report
+    // Sales Report
     Route::get('/sales-report', 'ReportsController@salesReport')
         ->name('sales-report.index');
-    //Purchases Report
+    // Purchases Report
     Route::get('/purchases-report', 'ReportsController@purchasesReport')
         ->name('purchases-report.index');
-    //Sales Return Report
+    // Sales Return Report
     Route::get('/sales-return-report', 'ReportsController@salesReturnReport')
         ->name('sales-return-report.index');
-    //Purchases Return Report
+    // Purchases Return Report
     Route::get('/purchases-return-report', 'ReportsController@purchasesReturnReport')
         ->name('purchases-return-report.index');
-    //Inventory Valuation Report
+    // Inventory Valuation Report
     Route::get('/inventory-valuation-report', 'ReportsController@inventoryValuationReport')
         ->name('inventory-valuation-report.index');
-    //Low Stock Report
+    // Low Stock Report
     Route::get('/low-stock-report', 'ReportsController@lowStockReport')
         ->name('low-stock-report.index');
-    //Stock Movement Report
+    // Stock Movement Report
     Route::get('/stock-movement-report', 'ReportsController@stockMovementReport')
         ->name('stock-movement-report.index');
-    //Fast / Slow Moving Products Report
+    // Fast / Slow Moving Products Report
     Route::get('/product-movement-report', 'ReportsController@productMovementReport')
         ->name('product-movement-report.index');
 });

@@ -2,7 +2,6 @@
 
 namespace Modules\Upload\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -11,24 +10,24 @@ use Modules\Upload\Entities\Upload;
 
 class UploadController extends Controller
 {
-
-    public function filepondUpload(Request $request) {
+    public function filepondUpload(Request $request)
+    {
         $request->validate([
-            'image' => 'required|image|mimes:png,jpeg,jpg'
+            'image' => 'required|image|mimes:png,jpeg,jpg',
         ]);
 
         if ($request->hasFile('image')) {
             $uploaded_file = $request->file('image');
-            $filename = now()->timestamp . '.' . $uploaded_file->getClientOriginalExtension();
-            $folder = uniqid() . '-' . now()->timestamp;
+            $filename = now()->timestamp.'.'.$uploaded_file->getClientOriginalExtension();
+            $folder = uniqid().'-'.now()->timestamp;
 
             $file = Image::make($uploaded_file)->encode($uploaded_file->getClientOriginalExtension());
 
-            Storage::put('temp/' . $folder . '/' . $filename, $file);
+            Storage::put('temp/'.$folder.'/'.$filename, $file);
 
             Upload::create([
-                'folder'   => $folder,
-                'filename' => $filename
+                'folder' => $folder,
+                'filename' => $filename,
             ]);
 
             return $folder;
@@ -37,32 +36,33 @@ class UploadController extends Controller
         return false;
     }
 
-
-    public function filepondDelete(Request $request) {
+    public function filepondDelete(Request $request)
+    {
         $upload = Upload::where('folder', $request->getContent())->first();
 
-        Storage::deleteDirectory('temp/' . $upload->folder);
+        Storage::deleteDirectory('temp/'.$upload->folder);
         $upload->delete();
 
         return response(null);
     }
 
-
-    public function dropzoneUpload(Request $request) {
+    public function dropzoneUpload(Request $request)
+    {
         $file = $request->file('file');
 
-        $filename = now()->timestamp . '.' . trim($file->getClientOriginalExtension());
+        $filename = now()->timestamp.'.'.trim($file->getClientOriginalExtension());
 
         Storage::putFileAs('temp/dropzone/', $file, $filename);
 
         return response()->json([
-            'name'          => $filename,
+            'name' => $filename,
             'original_name' => $file->getClientOriginalName(),
         ]);
     }
 
-    public function dropzoneDelete(Request $request) {
-        Storage::delete('temp/dropzone/' . $request->file_name);
+    public function dropzoneDelete(Request $request)
+    {
+        Storage::delete('temp/dropzone/'.$request->file_name);
 
         return response()->json($request->file_name, 200);
     }

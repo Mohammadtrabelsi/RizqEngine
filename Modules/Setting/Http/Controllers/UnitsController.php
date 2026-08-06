@@ -6,31 +6,33 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Setting\Entities\Unit;
 
-class   UnitsController extends Controller
+class UnitsController extends Controller
 {
-
-    public function index() {
+    public function index()
+    {
         $units = Unit::all();
 
         return view('setting::units.index', [
-            'units' => $units
+            'units' => $units,
         ]);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('setting::units.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
-            'name'       => 'required|string|max:255',
-            'short_name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'short_name' => 'required|string|max:255',
         ]);
 
         Unit::create([
-            'name'            => $request->name,
-            'short_name'      => $request->short_name,
-            'operator'        => $request->operator,
+            'name' => $request->name,
+            'short_name' => $request->short_name,
+            'operator' => $request->operator,
             'operation_value' => $request->operation_value,
         ]);
 
@@ -39,22 +41,24 @@ class   UnitsController extends Controller
         return redirect()->route('units.index');
     }
 
-    public function edit(Unit $unit) {
+    public function edit(Unit $unit)
+    {
         return view('setting::units.edit', [
-            'unit' => $unit
+            'unit' => $unit,
         ]);
     }
 
-    public function update(Request $request, Unit $unit) {
+    public function update(Request $request, Unit $unit)
+    {
         $request->validate([
-            'name'       => 'required|string|max:255',
-            'short_name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'short_name' => 'required|string|max:255',
         ]);
 
         $unit->update([
-            'name'            => $request->name,
-            'short_name'      => $request->short_name,
-            'operator'        => $request->operator,
+            'name' => $request->name,
+            'short_name' => $request->short_name,
+            'operator' => $request->operator,
             'operation_value' => $request->operation_value,
         ]);
 
@@ -63,7 +67,8 @@ class   UnitsController extends Controller
         return redirect()->route('units.index');
     }
 
-    public function destroy(Unit $unit) {
+    public function destroy(Unit $unit)
+    {
         $unit->delete();
 
         toast('Unit Deleted!', 'warning');

@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\Reports\InventoryValuationReport;
+use App\Livewire\Reports\LowStockReport;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Modules\Currency\Entities\Currency;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
@@ -31,23 +34,23 @@ class InventoryReportsTest extends TestCase
     protected function seedSettings(): void
     {
         $currency = Currency::create([
-            'currency_name'      => 'US Dollar',
-            'code'               => 'USD',
-            'symbol'             => '$',
+            'currency_name' => 'US Dollar',
+            'code' => 'USD',
+            'symbol' => '$',
             'thousand_separator' => ',',
-            'decimal_separator'  => '.',
-            'exchange_rate'      => 1,
+            'decimal_separator' => '.',
+            'exchange_rate' => 1,
         ]);
 
         Setting::create([
-            'company_name'              => 'Test Co',
-            'company_email'             => 'test@example.com',
-            'company_phone'             => '000',
-            'default_currency_id'       => $currency->id,
+            'company_name' => 'Test Co',
+            'company_email' => 'test@example.com',
+            'company_phone' => '000',
+            'default_currency_id' => $currency->id,
             'default_currency_position' => 'prefix',
-            'notification_email'        => 'test@example.com',
-            'footer_text'               => 'footer',
-            'company_address'           => 'address',
+            'notification_email' => 'test@example.com',
+            'footer_text' => 'footer',
+            'company_address' => 'address',
         ]);
 
         cache()->forget('settings');
@@ -61,12 +64,12 @@ class InventoryReportsTest extends TestCase
         );
 
         return Product::create(array_merge([
-            'category_id'         => $category->id,
-            'product_name'        => 'Widget',
-            'product_code'        => 'W-' . uniqid(),
-            'product_quantity'    => 10,
-            'product_cost'        => 10,
-            'product_price'       => 15,
+            'category_id' => $category->id,
+            'product_name' => 'Widget',
+            'product_code' => 'W-'.uniqid(),
+            'product_quantity' => 10,
+            'product_cost' => 10,
+            'product_price' => 15,
             'product_stock_alert' => 5,
         ], $overrides));
     }
@@ -96,7 +99,7 @@ class InventoryReportsTest extends TestCase
         $low = $this->makeProduct(['product_quantity' => 3, 'product_stock_alert' => 5]);
         $out = $this->makeProduct(['product_quantity' => 0, 'product_stock_alert' => 5]);
 
-        $component = \Livewire\Livewire::test(\App\Livewire\Reports\LowStockReport::class);
+        $component = Livewire::test(LowStockReport::class);
 
         $component->assertSee($low->product_name);
         $component->assertViewHas('lowStockCount', 2);
@@ -109,7 +112,7 @@ class InventoryReportsTest extends TestCase
         // 10 units @ cost 10 => 100 cost value; @ price 15 => 150 retail value.
         $this->makeProduct(['product_quantity' => 10, 'product_cost' => 10, 'product_price' => 15]);
 
-        \Livewire\Livewire::test(\App\Livewire\Reports\InventoryValuationReport::class)
+        Livewire::test(InventoryValuationReport::class)
             ->assertViewHas('totalQuantity', 10)
             ->assertViewHas('totalCostValue', 100.0)
             ->assertViewHas('totalRetailValue', 150.0)

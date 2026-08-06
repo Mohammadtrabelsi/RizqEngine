@@ -3,7 +3,6 @@
 namespace Modules\Setting\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Modules\Setting\Entities\Setting;
 
 class SettingDatabaseSeeder extends Seeder
@@ -23,7 +22,7 @@ class SettingDatabaseSeeder extends Seeder
             'default_currency_id' => 1,
             'default_currency_position' => 'prefix',
             'footer_text' => 'Triangle Pos © 2021 || Developed by <strong><a target="_blank" href="https://fahimanzam.me">Fahim Anzam</a></strong>',
-            'company_address' => 'Tangail, Bangladesh'
+            'company_address' => 'Tangail, Bangladesh',
         ]);
     }
 }
