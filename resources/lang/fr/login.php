@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'contact-owner' => '[TODO] Contact-owner',
-    'contact-owner-message' => '[TODO] Contact-owner-message',
-    'description' => '[TODO] Description',
-    'email' => '[TODO] Email',
-    'email-placeholder' => '[TODO] Email-placeholder',
-    'forgot-password' => '[TODO] Forgot-password',
-    'password' => '[TODO] Password',
-    'password-placeholder' => '[TODO] Password-placeholder',
-    'remember-me' => '[TODO] Remember-me',
-    'sign-in' => '[TODO] Sign-in',
-    'welcome' => '[TODO] Welcome',
-    'welcome-back' => '[TODO] Welcome-back',
+    'contact-owner' => 'Contacter le propriétaire',
+    'contact-owner-message' => 'Message au propriétaire',
+    'description' => 'Description',
+    'email' => 'E-mail',
+    'email-placeholder' => 'Entrez votre e-mail',
+    'forgot-password' => 'Mot de passe oublié ?',
+    'password' => 'Mot de passe',
+    'password-placeholder' => 'Entrez votre mot de passe',
+    'remember-me' => 'Se souvenir de moi',
+    'sign-in' => 'Se connecter',
+    'welcome' => 'Bienvenue',
+    'welcome-back' => 'Bon retour parmi nous',
 ];

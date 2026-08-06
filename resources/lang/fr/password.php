@@ -1,14 +1,14 @@
 <?php
 
 return [
-    'confirm' => '[TODO] Confirm',
-    'confirm-message' => '[TODO] Confirm-message',
-    'confirm-password' => '[TODO] Confirm-password',
-    'confirmation' => '[TODO] Confirmation',
-    'email' => '[TODO] Email',
-    'forgot' => '[TODO] Forgot',
-    'password' => '[TODO] Password',
-    'reset' => '[TODO] Reset',
-    'reset-message' => '[TODO] Reset-message',
-    'send-reset-link' => '[TODO] Send-reset-link',
+    'confirm' => 'Confirmer',
+    'confirm-message' => 'Veuillez confirmer votre action pour continuer.',
+    'confirm-password' => 'Confirmer le mot de passe',
+    'confirmation' => 'Confirmation',
+    'email' => 'E-mail',
+    'forgot' => 'Mot de passe oublié',
+    'password' => 'Mot de passe',
+    'reset' => 'Réinitialiser',
+    'reset-message' => 'Entrez votre e-mail pour réinitialiser votre mot de passe.',
+    'send-reset-link' => 'Envoyer le lien de réinitialisation',
 ];
