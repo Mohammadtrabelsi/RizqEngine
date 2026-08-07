@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Modules\Setting\Entities\Setting;
 use Modules\Setting\Http\Requests\StoreSettingsRequest;
 use Modules\Setting\Http\Requests\StoreSmtpSettingsRequest;
@@ -23,15 +24,28 @@ class SettingController extends Controller
 
     public function update(StoreSettingsRequest $request)
     {
-        Setting::firstOrFail()->update([
+        $settings = Setting::firstOrFail();
+
+        $data = [
             'company_name' => $request->company_name,
+            'client_name' => $request->client_name,
             'company_email' => $request->company_email,
             'company_phone' => $request->company_phone,
             'notification_email' => $request->notification_email,
             'company_address' => $request->company_address,
             'default_currency_id' => $request->default_currency_id,
             'default_currency_position' => $request->default_currency_position,
-        ]);
+        ];
+
+        if ($request->hasFile('client_logo')) {
+            if ($settings->client_logo) {
+                Storage::disk('public')->delete($settings->client_logo);
+            }
+
+            $data['client_logo'] = $request->file('client_logo')->store('settings', 'public');
+        }
+
+        $settings->update($data);
 
         cache()->forget('settings');
 

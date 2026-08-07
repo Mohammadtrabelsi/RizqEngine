@@ -16,6 +16,7 @@ class SettingDatabaseSeeder extends Seeder
     {
         Setting::create([
             'company_name' => 'Triangle POS',
+            'client_name' => 'Triangle POS',
             'company_email' => 'company@test.com',
             'company_phone' => '012345678901',
             'notification_email' => 'notification@test.com',

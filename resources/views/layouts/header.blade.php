@@ -6,6 +6,18 @@
     <i class="bi bi-list icon-fs-2rem"></i>
 </button>
 
+@php($headerSettings = settings())
+@if($headerSettings->client_logo || $headerSettings->client_name)
+    <a href="{{ route('home') }}" class="c-header-nav-link d-flex align-items-center mfs-3" style="text-decoration:none; gap:8px;">
+        @if($headerSettings->client_logo)
+            <img src="{{ \Illuminate\Support\Facades\Storage::url($headerSettings->client_logo) }}" alt="{{ $headerSettings->client_name ?? 'Logo' }}" style="max-height:32px; max-width:140px;">
+        @endif
+        @if($headerSettings->client_name)
+            <span class="font-weight-bold d-md-down-none" style="font-size:1.05rem;">{{ $headerSettings->client_name }}</span>
+        @endif
+    </a>
+@endif
+
 <ul class="c-header-nav ml-auto">
 
 </ul>
