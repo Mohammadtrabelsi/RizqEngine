@@ -8,6 +8,7 @@ return [
     'dashboard' => 'Dashboard',
     'discount' => 'Discount',
     'get-started' => 'Get-started',
+    'home' => 'Home',
     'items' => 'Items',
     'load-more' => 'Load-more',
     'loading' => 'Loading',
