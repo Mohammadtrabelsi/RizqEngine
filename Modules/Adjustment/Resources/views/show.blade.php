@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Adjustment Details')
+@section('title', __('adjustment.adjustment_details'))
 
 @push('page_css')
     @livewireStyles
@@ -8,9 +8,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('adjustments.index') }}">Adjustments</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('adjustments.index') }}">{{ __('adjustment.adjustments') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('adjustment.details') }}</li>
     </ol>
 @endsection
 
@@ -21,8 +21,8 @@
                 <div class="card">
                     <div class="card-body">
                         <ul class="list-group list-group-horizontal mb-4">
-                            <li class="list-group-item flex-fill"><span class="fw-bold d-block">Date</span>{{ $adjustment->date }}</li>
-                            <li class="list-group-item flex-fill"><span class="fw-bold d-block">Reference</span>{{ $adjustment->reference }}</li>
+                            <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('adjustment.date') }}</span>{{ $adjustment->date }}</li>
+                            <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('adjustment.reference') }}</span>{{ $adjustment->reference }}</li>
                         </ul>
 
                         <div class="row">
@@ -38,9 +38,9 @@
                                                     <span>Type</span>
                                                     <span>
                                                         @if($adjustedProduct->type == 'add')
-                                                            <span class="badge badge-success">(+) Addition</span>
+                                                            <span class="badge badge-success">(+) {{ __('adjustment.addition') }}</span>
                                                         @else
-                                                            <span class="badge badge-danger">(-) Subtraction</span>
+                                                            <span class="badge badge-danger">(-) {{ __('adjustment.subtraction') }}</span>
                                                         @endif
                                                     </span>
                                                 </li>

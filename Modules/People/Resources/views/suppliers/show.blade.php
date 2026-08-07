@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Supplier Details')
+@section('title', __('supplier.supplier_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('suppliers.index') }}">Suppliers</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('suppliers.index') }}">{{ __('supplier.suppliers') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('supplier.supplier_details') }}    </li>
     </ol>
 @endsection
 
@@ -17,12 +17,12 @@
                 <div class="card">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Supplier Name</span><span>{{ $supplier->supplier_name }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Supplier Email</span><span>{{ $supplier->supplier_email }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Supplier Phone</span><span>{{ $supplier->supplier_phone }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">City</span><span>{{ $supplier->city }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Country</span><span>{{ $supplier->country }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Address</span><span>{{ $supplier->address }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.supplier_name') }}</span><span>{{ $supplier->supplier_name }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.supplier_email') }}</span><span>{{ $supplier->supplier_email }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.supplier_phone') }}</span><span>{{ $supplier->supplier_phone }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.city') }}</span><span>{{ $supplier->city }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.country') }}</span><span>{{ $supplier->country }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.address') }}</span><span>{{ $supplier->address }}</span></li>
                         </ul>
                     </div>
                 </div>
