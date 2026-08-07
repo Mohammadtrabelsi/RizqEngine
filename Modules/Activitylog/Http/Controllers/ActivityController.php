@@ -5,7 +5,6 @@ namespace Modules\Activitylog\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity;
 
 class ActivityController extends Controller
