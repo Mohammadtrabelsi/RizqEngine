@@ -5,16 +5,17 @@ namespace Modules\Expense\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use Modules\Expense\DataTables\ExpensesDataTable;
 use Modules\Expense\Entities\Expense;
 
 class ExpenseController extends Controller
 {
-    public function index(ExpensesDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_expenses'), 403);
 
-        return $dataTable->render('expense::expenses.index');
+        $expenses = Expense::with('category')->latest()->paginate(12);
+
+        return view('expense::expenses.index', compact('expenses'));
     }
 
     public function create()
