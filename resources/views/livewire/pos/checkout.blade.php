@@ -31,80 +31,66 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr class="text-center">
-                            <th class="align-middle">{{ __('sale.product') }}</th>
-                            <th class="align-middle">{{ __('sale.price') }}</th>
-                            <th class="align-middle">{{ __('sale.quantity') }}</th>
-                            <th class="align-middle">{{ __('sale.action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="row">
                         @if($cart_items->isNotEmpty())
                             @foreach($cart_items as $cart_item)
-                                <tr>
-                                    <td class="align-middle">
-                                        {{ $cart_item->name }} <br>
-                                        <span class="badge badge-success">
-                                        {{ $cart_item->options->code }}
-                                    </span>
-                                        @include('livewire.includes.product-cart-modal')
-                                    </td>
-
-                                    <td class="align-middle">
-                                        {{ format_currency($cart_item->price) }}
-                                    </td>
-
-                                    <td class="align-middle">
-                                        @include('livewire.includes.product-cart-quantity')
-                                    </td>
-
-                                    <td class="align-middle text-center">
-                                        <a href="#" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
-                                            <i class="bi bi-x-circle font-2xl text-danger"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <div class="col-lg-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-header d-flex justify-content-between align-items-start">
+                                            <div>
+                                                {{ $cart_item->name }} <br>
+                                                <span class="badge badge-success">{{ $cart_item->options->code }}</span>
+                                                @include('livewire.includes.product-cart-modal')
+                                            </div>
+                                            <a href="#" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
+                                                <i class="bi bi-x-circle font-2xl text-danger"></i>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                    <span>{{ __('sale.price') }}</span>
+                                                    <span>{{ format_currency($cart_item->price) }}</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                    <span>{{ __('sale.quantity') }}</span>
+                                                    <span>@include('livewire.includes.product-cart-quantity')</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         @else
-                            <tr>
-                                <td colspan="8" class="text-center">
-                        <span class="text-danger">
-                            Please search & select products!
-                        </span>
-                                </td>
-                            </tr>
+                            <div class="col-12 text-center">
+                                <span class="text-danger">Please search &amp; select products!</span>
+                            </div>
                         @endif
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tr>
-                                <th>Order Tax ({{ $global_tax }}%)</th>
-                                <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Discount ({{ $global_discount }}%)</th>
-                                <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Shipping</th>
-                                <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-                                <td>(+) {{ format_currency($shipping) }}</td>
-                            </tr>
-                            <tr class="text-primary">
-                                <th>Grand Total</th>
-                                <th>
-                                    (=) {{ format_currency($total_with_shipping) }}
-                                </th>
-                            </tr>
-                        </table>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Order Tax ({{ $global_tax }}%)</span><span>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Discount ({{ $global_discount }}%)</span><span>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Shipping</span>
+                                <span>
+                                    <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
+                                    (+) {{ format_currency($shipping) }}
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between text-primary">
+                                <span class="fw-bold">Grand Total</span><span class="fw-bold">(=) {{ format_currency($total_with_shipping) }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
