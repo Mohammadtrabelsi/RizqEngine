@@ -934,3 +934,106 @@ body:not(.c-dark-theme) .field > label { color: rgba(35, 40, 44, 0.7); }
 .c-sidebar-nav .ps__rail-y .ps__thumb-y {
     top: 0;
 }
+
+// ---------------------------------------------------------------------
+//  11. Polish & micro-interactions (site-wide style upgrade)
+//  A refinement layer over the Nocturne base: themed scrollbars, tactile
+//  hover/press feedback, accessible focus rings and a gentle content
+//  fade-in. Everything degrades gracefully and honours prefers-reduced-
+//  motion so the experience stays comfortable and accessible.
+// ---------------------------------------------------------------------
+
+// Themed scrollbars — replace the OS default with a subtle on-brand rail.
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba($n-accent, 0.45) transparent;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba($n-accent, 0.38);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba($n-accent, 0.6); background-clip: content-box; }
+
+// Consistent, on-brand text selection.
+::selection { background: rgba($n-accent, 0.32); color: #fff; }
+
+// Accessible focus ring — a soft accent halo only for keyboard users.
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.form-control:focus-visible,
+.custom-select:focus-visible,
+.c-sidebar-nav-link:focus-visible,
+.page-link:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.18rem rgba($n-accent, 0.45);
+}
+
+// Cards gain a quiet lift on hover for a more responsive, layered feel.
+.card {
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+    border-color: rgba($n-accent, 0.35);
+}
+
+// Tactile button feedback — smooth transitions and a subtle press.
+.btn {
+    transition: color 0.15s ease, background-color 0.15s ease,
+        border-color 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+}
+.btn:not(:disabled):not(.disabled):active { transform: translateY(1px); }
+
+// Filled buttons get a touch of depth on hover.
+.btn-success:hover,
+.btn-info:hover,
+.btn-warning:hover,
+.btn-danger:hover,
+.btn-secondary:hover { box-shadow: $shadow-sm; }
+
+// Inputs ease into their focused state instead of snapping.
+.form-control,
+.custom-select {
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+// Table rows respond smoothly to hover.
+.table tbody tr { transition: background-color 0.12s ease; }
+
+// Dashboard bars: give them an on-brand gradient and a lively hover.
+.n-bar {
+    background: linear-gradient(180deg, $n-accent-2, $n-accent);
+    transition: filter 0.18s ease, transform 0.18s ease;
+    transform-origin: bottom;
+}
+.n-bar-col:hover .n-bar { filter: brightness(1.15); transform: scaleY(1.03); }
+
+// Status tags nudge upward when hovered inside interactive rows.
+.n-tag { transition: transform 0.15s ease, filter 0.15s ease; }
+
+// Gentle content fade-in on load — keeps navigation feeling smooth.
+.c-main > .container-fluid,
+.c-main > .fade-in-content { animation: n-fade-in 0.35s ease both; }
+@keyframes n-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+// Respect users who prefer reduced motion — disable all of the above.
+@media (prefers-reduced-motion: reduce) {
+    *,
+    .card,
+    .btn,
+    .n-bar {
+        animation: none !important;
+        transition: none !important;
+    }
+    .card:hover { transform: none; }
+    .n-bar-col:hover .n-bar { transform: none; }
+}
