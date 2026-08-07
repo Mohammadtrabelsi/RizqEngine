@@ -5,68 +5,70 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Reset password | {{ config('app.name') }}</title>
+    <title>{{ __('password.reset') }} | {{ config('app.name') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/favicon.png') }}">
-    <!-- CoreUI CSS -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
+    <!-- CoreUI CSS (Nocturne theme) -->
     @vite('resources/sass/app.scss')
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-          crossorigin="anonymous"/>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
-<body class="c-app flex-row align-items-center">
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mx-4">
-                <div class="card-body p-4">
-                    <form method="post" action="{{ url('/password/reset') }}">
-                        @csrf
-                        <h1>{{ __('password.reset') }}</h1>
-                        <p class="text-muted">{{ __('password.reset-message') }}</p>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                <i class="cil-envelope-open"></i>
-                                </span>
-                            </div>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                                   value="{{ $email ?? old('email') }}" placeholder="{{ __('password.email') }}">
-                            @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="cil-lock-locked"></i>
-                              </span>
-                            </div>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                   name="password" placeholder="Password">
-                            @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-4">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="cil-lock-locked"></i>
-                              </span>
-                            </div>
-                            <input type="password" name="password_confirmation" class="form-control"
-                                   placeholder="{{ __('password.confirm-password') }}">
-                        </div>
-                        <button type="submit" class="btn btn-block btn-primary btn-block btn-flat">
-                            <i class="fa fa-btn fa-refresh"></i> {{ __('password.reset') }}
-                        </button>
-                    </form>
-                </div>
-            </div>
+<body class="c-dark-theme">
+<div class="login-grid">
+
+    <div class="login-brand login-brand-copy">
+        <a href="{{ route('welcome') }}" style="text-decoration:none; color:var(--color-text);">
+            @include('layouts.logo', ['size' => 26, 'label' => 'Triangle POS', 'labelSize' => 15])
+        </a>
+
+        <div style="max-width:420px">
+            <div class="login-brand-lead">{{ __('login.welcome') }}</div>
+            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">{{ __('login.description') }}</div>
         </div>
+
+        <div class="text-muted" style="font-size:12px">© {{ date('Y') }} Triangle POS</div>
     </div>
+
+    <div class="login-form-wrap">
+        <form class="login-form" method="post" action="{{ url('/password/reset') }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token ?? request()->route('token') }}">
+
+            <div>
+                <div class="login-title">{{ __('password.reset') }}</div>
+                <div class="text-muted" style="font-size:14px">{{ __('password.reset-message') }}</div>
+            </div>
+
+            <div class="field">
+                <label for="email">{{ __('password.email') }}</label>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                       name="email" value="{{ $email ?? old('email') }}" placeholder="you@store.com" autofocus>
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="field">
+                <label for="password">{{ __('password.password') }}</label>
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                       name="password" placeholder="••••••••">
+                @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="field">
+                <label for="password_confirmation">{{ __('password.confirm-password') }}</label>
+                <input id="password_confirmation" type="password" name="password_confirmation"
+                       class="form-control" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">{{ __('password.reset') }}</button>
+        </form>
+    </div>
+
 </div>
 
 <!-- CoreUI -->

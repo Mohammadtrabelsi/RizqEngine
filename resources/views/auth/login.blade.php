@@ -5,16 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Sign in | {{ config('app.name') }}</title>
+    <title>{{ __('login.sign-in') }} | {{ config('app.name') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/favicon.png') }}">
-    <!-- CoreUI CSS -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
+    <!-- CoreUI CSS (Nocturne theme) -->
     @vite('resources/sass/app.scss')
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="c-dark-theme">
 <div class="login-grid">
 
     {{-- Brand panel --}}
