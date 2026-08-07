@@ -5,18 +5,19 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use Modules\Product\DataTables\ProductDataTable;
 use Modules\Product\Entities\Product;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
-    public function index(ProductDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_products'), 403);
 
-        return $dataTable->render('product::products.index');
+        $products = Product::with('category')->latest()->paginate(12);
+
+        return view('product::products.index', compact('products'));
     }
 
     public function create()

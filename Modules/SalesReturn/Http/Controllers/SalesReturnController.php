@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
-use Modules\SalesReturn\DataTables\SaleReturnsDataTable;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Modules\SalesReturn\Entities\SaleReturnDetail;
 use Modules\SalesReturn\Entities\SaleReturnPayment;
@@ -17,11 +16,13 @@ use Modules\SalesReturn\Http\Requests\UpdateSaleReturnRequest;
 
 class SalesReturnController extends Controller
 {
-    public function index(SaleReturnsDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_sale_returns'), 403);
 
-        return $dataTable->render('salesreturn::index');
+        $sale_returns = SaleReturn::latest()->paginate(12);
+
+        return view('salesreturn::index', compact('sale_returns'));
     }
 
     public function create()

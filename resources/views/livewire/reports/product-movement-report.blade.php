@@ -58,30 +58,24 @@
                 <div class="card-body">
                     <h5 class="mb-3">{{ $direction === 'slow' ? __('report.slow-moving-products') : __('report.fast-moving-products') }}</h5>
                     <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ __('report.product') }}</th>
-                                    <th class="text-right">{{ __('report.units-sold') }}</th>
-                                    <th class="text-right">{{ __('report.current-stock') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($products as $index => $product)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $product->product_name }} <span class="text-muted small">{{ $product->product_code }}</span></td>
-                                        <td class="text-right">{{ $product->units_sold }}</td>
-                                        <td class="text-right">{{ $product->product_quantity }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">{{ __('report.no-sales-data') }}</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            @forelse($products as $index => $product)
+                                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                                    <div class="card border h-100">
+                                        <div class="card-body">
+                                            <h6 class="mb-1">{{ $index + 1 }}. {{ $product->product_name }}</h6>
+                                            <p class="text-muted small mb-2">{{ $product->product_code }}</p>
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.units-sold') }}</span><span>{{ $product->units_sold }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.current-stock') }}</span><span>{{ $product->product_quantity }}</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12 text-center">{{ __('report.no-sales-data') }}</div>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
             </div>

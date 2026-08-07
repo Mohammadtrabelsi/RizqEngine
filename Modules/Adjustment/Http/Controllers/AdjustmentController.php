@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Modules\Adjustment\DataTables\AdjustmentsDataTable;
 use Modules\Adjustment\Entities\AdjustedProduct;
 use Modules\Adjustment\Entities\Adjustment;
 use Modules\Product\Entities\Product;
 
 class AdjustmentController extends Controller
 {
-    public function index(AdjustmentsDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_adjustments'), 403);
 
-        return $dataTable->render('adjustment::index');
+        $adjustments = Adjustment::withCount('adjustedProducts')->latest()->paginate(12);
+
+        return view('adjustment::index', compact('adjustments'));
     }
 
     public function create()

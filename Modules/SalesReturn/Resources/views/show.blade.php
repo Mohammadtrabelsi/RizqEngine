@@ -58,72 +58,35 @@
 
                         </div>
 
-                        <div class="table-responsive-sm">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="align-middle">Product</th>
-                                    <th class="align-middle">Net Unit Price</th>
-                                    <th class="align-middle">Quantity</th>
-                                    <th class="align-middle">Discount</th>
-                                    <th class="align-middle">Tax</th>
-                                    <th class="align-middle">Sub Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($sale_return->saleReturnDetails as $item)
-                                    <tr>
-                                        <td class="align-middle">
-                                            {{ $item->product_name }} <br>
-                                            <span class="badge badge-success">
-                                                {{ $item->product_code }}
-                                            </span>
-                                        </td>
-
-                                        <td class="align-middle">{{ format_currency($item->unit_price) }}</td>
-
-                                        <td class="align-middle">
-                                            {{ $item->quantity }}
-                                        </td>
-
-                                        <td class="align-middle">
-                                            {{ format_currency($item->product_discount_amount) }}
-                                        </td>
-
-                                        <td class="align-middle">
-                                            {{ format_currency($item->product_tax_amount) }}
-                                        </td>
-
-                                        <td class="align-middle">
-                                            {{ format_currency($item->sub_total) }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                        <div class="row">
+                            @foreach($sale_return->saleReturnDetails as $item)
+                                <div class="col-xl-4 col-lg-6 mb-4">
+                                    <div class="card border h-100">
+                                        <div class="card-header">
+                                            {{ $item->product_name }}
+                                            <span class="badge badge-success">{{ $item->product_code }}</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Net Unit Price</span><span>{{ format_currency($item->unit_price) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Quantity</span><span>{{ $item->quantity }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Discount</span><span>{{ format_currency($item->product_discount_amount) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Tax</span><span>{{ format_currency($item->product_tax_amount) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Sub Total</span><span class="fw-bold">{{ format_currency($item->sub_total) }}</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-sm-5 ml-md-auto">
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <td class="left"><strong>Discount ({{ $sale_return->discount_percentage }}%)</strong></td>
-                                        <td class="right">{{ format_currency($sale_return->discount_amount) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left"><strong>Tax ({{ $sale_return->tax_percentage }}%)</strong></td>
-                                        <td class="right">{{ format_currency($sale_return->tax_amount) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left"><strong>Shipping)</strong></td>
-                                        <td class="right">{{ format_currency($sale_return->shipping_amount) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left"><strong>Grand Total</strong></td>
-                                        <td class="right"><strong>{{ format_currency($sale_return->total_amount) }}</strong></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between"><strong>Discount ({{ $sale_return->discount_percentage }}%)</strong><span>{{ format_currency($sale_return->discount_amount) }}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>Tax ({{ $sale_return->tax_percentage }}%)</strong><span>{{ format_currency($sale_return->tax_amount) }}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>Shipping</strong><span>{{ format_currency($sale_return->shipping_amount) }}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>Grand Total</strong><strong>{{ format_currency($sale_return->total_amount) }}</strong></li>
+                                </ul>
                             </div>
                         </div>
                     </div>

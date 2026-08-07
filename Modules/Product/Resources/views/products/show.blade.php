@@ -21,69 +21,57 @@
             <div class="col-lg-9">
                 <div class="card h-100">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped mb-0">
-                                <tr>
-                                    <th>Product Code</th>
-                                    <td>{{ $product->product_code }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Barcode Symbology</th>
-                                    <td>{{ $product->product_barcode_symbology }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Name</th>
-                                    <td>{{ $product->product_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Category</th>
-                                    <td>{{ $product->category->category_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Cost</th>
-                                    <td>{{ format_currency($product->product_cost) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Price</th>
-                                    <td>{{ format_currency($product->product_price) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Quantity</th>
-                                    <td>{{ $product->product_quantity . ' ' . $product->product_unit }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Stock Worth</th>
-                                    <td>
-                                        COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
-                                        PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Alert Quantity</th>
-                                    <td>{{ $product->product_stock_alert }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Tax (%)</th>
-                                    <td>{{ $product->product_order_tax ?? 'N/A' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Tax Type</th>
-                                    <td>
-                                        @if($product->product_tax_type == 1)
-                                            Exclusive
-                                        @elseif($product->product_tax_type == 2)
-                                            Inclusive
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Note</th>
-                                    <td>{{ $product->product_note ?? 'N/A' }}</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Product Code</span><span>{{ $product->product_code }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Barcode Symbology</span><span>{{ $product->product_barcode_symbology }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Name</span><span>{{ $product->product_name }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Category</span><span>{{ $product->category->category_name }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Cost</span><span>{{ format_currency($product->product_cost) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Price</span><span>{{ format_currency($product->product_price) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Quantity</span><span>{{ $product->product_quantity . ' ' . $product->product_unit }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Stock Worth</span>
+                                <span>
+                                    COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
+                                    PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Alert Quantity</span><span>{{ $product->product_stock_alert }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Tax (%)</span><span>{{ $product->product_order_tax ?? 'N/A' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Tax Type</span>
+                                <span>
+                                    @if($product->product_tax_type == 1)
+                                        Exclusive
+                                    @elseif($product->product_tax_type == 2)
+                                        Inclusive
+                                    @else
+                                        N/A
+                                    @endif
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Note</span><span>{{ $product->product_note ?? 'N/A' }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
