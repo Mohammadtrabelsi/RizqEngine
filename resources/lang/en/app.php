@@ -7,6 +7,7 @@ return [
     'no-notifications' => 'No-notifications',
     'notifications' => 'Notifications',
     'online' => 'Online',
+    'pos_system' => 'Pos system',
     'profile' => 'Profile',
     'version' => 'Version',
 ];

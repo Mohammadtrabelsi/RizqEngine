@@ -7,6 +7,7 @@ return [
     'no-notifications' => 'لا توجد إشعارات',
     'notifications' => 'الإشعارات',
     'online' => 'متصل',
+    'pos_system' => 'نظام نقاط البيع',
     'profile' => 'الملف الشخصي',
     'version' => 'الإصدار',
 ];
