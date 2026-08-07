@@ -46,7 +46,33 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="default_currency_id">{{ __('settings.default_currency') }} <span class="text-danger">*</span></label>
+                                        <label for="client_name">Client Name</label>
+                                        <input type="text" class="form-control" name="client_name" value="{{ $settings->client_name }}" placeholder="Displayed in the navbars">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="client_logo">Client Logo</label>
+                                        <input type="file" class="form-control-file" name="client_logo" id="client_logo" accept="image/*">
+                                        <small class="form-text text-muted">Displayed in the navbars. Max 2MB (jpeg, png, gif, svg, webp).</small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="d-block">Current Logo</label>
+                                        @if($settings->client_logo)
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($settings->client_logo) }}" alt="Client Logo" style="max-height: 48px; max-width: 160px;">
+                                        @else
+                                            <span class="text-muted">No logo uploaded</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="default_currency_id">Default Currency <span class="text-danger">*</span></label>
                                         <select name="default_currency_id" id="default_currency_id" class="form-control" required>
                                             @foreach(\Modules\Currency\Entities\Currency::all() as $currency)
                                                 <option {{ $settings->default_currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}</option>

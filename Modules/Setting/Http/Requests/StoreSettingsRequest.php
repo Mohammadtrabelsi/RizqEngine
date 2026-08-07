@@ -16,6 +16,8 @@ class StoreSettingsRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:255',
+            'client_name' => 'nullable|string|max:255',
+            'client_logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg,webp|max:2048',
             'company_email' => 'required|email|max:255',
             'company_phone' => 'required|string|max:255',
             'notification_email' => 'required|email|max:255',

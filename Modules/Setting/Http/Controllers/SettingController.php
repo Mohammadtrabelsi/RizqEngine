@@ -28,6 +28,7 @@ class SettingController extends Controller
 
         $data = [
             'company_name' => $request->company_name,
+            'client_name' => $request->client_name,
             'company_email' => $request->company_email,
             'company_phone' => $request->company_phone,
             'notification_email' => $request->notification_email,
