@@ -10,6 +10,8 @@ class SyncTranslationKeys extends Command
     /**
      * The name and signature of the console command.
      *
+     * Scans resources/, Livewire component classes & blade views, and app/Services.
+     *
      * php artisan translations:sync
      *   --locales=en,fr,ar   Override which locales to sync (default: auto-detect)
      *   --base=en            The reference locale to use as the source of truth
@@ -22,7 +24,7 @@ class SyncTranslationKeys extends Command
                             {--dry-run  : Show changes without writing files}
                             {--clean    : Remove keys from files that are not found in views}';
 
-    protected $description = 'Scan resources/, app/Livewire, and app/Services for translation keys, create missing lang files, and sync keys across all locales.';
+    protected $description = 'Scan resources/, Livewire components & views, and app/Services for translation keys, create missing lang files, and sync keys across all locales.';
 
     // ── Patterns ──────────────────────────────────────────────────────────────
     // Matches: __('key'), __("key"), trans('key'), trans("key"),
@@ -51,9 +53,13 @@ class SyncTranslationKeys extends Command
         $this->line("\n  📂 Scanning: <fg=yellow>{$resPath}</>");
         $foundKeys = $this->extractKeysFromDirectory($resPath);
 
-        foreach (['Livewire', 'Services'] as $appDir) {
-            $path = app_path($appDir);
-            if (File::isDirectory($path)) {
+        // Also scan Livewire components (classes + blade views) and app/Services.
+        // Livewire paths are resolved from Livewire's own config so the command keeps
+        // working even when the class namespace or view path have been customised.
+        $extraPaths = array_merge($this->livewireScanPaths(), [app_path('Services')]);
+
+        foreach ($extraPaths as $path) {
+            if ($path !== '' && File::isDirectory($path)) {
                 $this->line("  📂 Scanning: <fg=yellow>{$path}</>");
                 $foundKeys = array_values(array_unique(array_merge($foundKeys, $this->extractKeysFromDirectory($path))));
             }
@@ -129,9 +135,9 @@ class SyncTranslationKeys extends Command
         $files = File::allFiles($directory);
 
         foreach ($files as $file) {
-            $ext = $file->getExtension();
-            // Accept .php and .blade.php
-            if (! in_array($ext, ['php', 'twig'])) {
+            // Accept PHP source and Blade templates (e.g. Livewire component classes
+            // and `*.blade.php` views). Both end in ".php".
+            if (! str_ends_with($file->getFilename(), '.php')) {
                 continue;
             }
 
@@ -146,6 +152,32 @@ class SyncTranslationKeys extends Command
         }
 
         return array_values(array_filter(array_keys($allKeys), fn (string $k): bool => $k !== ''));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Resolve the directories that hold Livewire components (classes + views)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    private function livewireScanPaths(): array
+    {
+        // Livewire component classes — derived from the configured class namespace
+        // (defaults to "App\Livewire"). The leading "App" root maps to the app/ path.
+        $namespace = trim((string) config('livewire.class_namespace', 'App\\Livewire'), '\\');
+
+        if ($namespace === 'App' || str_starts_with($namespace, 'App\\')) {
+            $relative = trim(substr($namespace, strlen('App')), '\\');
+            $classPath = $relative === ''
+                ? app_path()
+                : app_path(str_replace('\\', DIRECTORY_SEPARATOR, $relative));
+        } else {
+            $classPath = base_path(str_replace('\\', DIRECTORY_SEPARATOR, $namespace));
+        }
+
+        // Livewire component blade views — from the configured view path
+        // (defaults to resources/views/livewire).
+        $viewPath = (string) config('livewire.view_path', resource_path('views'.DIRECTORY_SEPARATOR.'livewire'));
+
+        return [$classPath, $viewPath];
     }
 
     // ──────────────────────────────────────────────────────────────────────────
