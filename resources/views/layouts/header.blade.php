@@ -10,8 +10,8 @@
 
 </ul>
 <ul class="c-header-nav ml-auto mr-4">
-    <li class="c-header-nav-item mr-3 d-flex align-items-center">
-        <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link px-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
+    <li class="c-header-nav-item m-3 d-flex align-items-center">
+        <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link p-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
             <i class="bi bi-moon-stars theme-toggle-dark icon-fs-1-3rem"></i>
             <i class="bi bi-sun theme-toggle-light icon-fs-1-3rem"></i>
         </button>
