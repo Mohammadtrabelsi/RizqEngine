@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Quotation Details')
+@section('title', __('quotations.quotation_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('quotations.index') }}">Quotations</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('quotations.index') }}">{{ __('quotations.quotations') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('quotations.details') }}</li>
     </ol>
 @endsection
 
@@ -20,39 +20,39 @@
                             Reference: <strong>{{ $quotation->reference }}</strong>
                         </div>
                         <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('quotations.pdf', $quotation->id) }}">
-                            <i class="bi bi-printer"></i> Print
+                            <i class="bi bi-printer"></i> {{ __('quotations.print') }}
                         </a>
                         <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('quotations.pdf', $quotation->id) }}">
-                            <i class="bi bi-save"></i> Save
+                            <i class="bi bi-save"></i> {{ __('quotations.save') }}
                         </a>
                     </div>
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-sm-4 mb-3 mb-md-0">
-                                <h5 class="mb-2 border-bottom pb-2">Company Info:</h5>
+                                <h5 class="mb-2 border-bottom pb-2">{{ __('quotations.company_info') }}</h5>
                                 <div><strong>{{ settings()->company_name }}</strong></div>
                                 <div>{{ settings()->company_address }}</div>
-                                <div>Email: {{ settings()->company_email }}</div>
-                                <div>Phone: {{ settings()->company_phone }}</div>
+                                <div>{{ __('quotations.email') }}: {{ settings()->company_email }}</div>
+                                <div>{{ __('quotations.phone') }}: {{ settings()->company_phone }}</div>
                             </div>
 
                             <div class="col-sm-4 mb-3 mb-md-0">
-                                <h5 class="mb-2 border-bottom pb-2">Customer Info:</h5>
+                                <h5 class="mb-2 border-bottom pb-2">{{ __('quotations.customer_info') }}</h5>
                                 <div><strong>{{ $customer->customer_name }}</strong></div>
                                 <div>{{ $customer->address }}</div>
-                                <div>Email: {{ $customer->customer_email }}</div>
-                                <div>Phone: {{ $customer->customer_phone }}</div>
+                                <div>{{ __('quotations.email') }}: {{ $customer->customer_email }}</div>
+                                <div>{{ __('quotations.phone') }}: {{ $customer->customer_phone }}</div>
                             </div>
 
                             <div class="col-sm-4 mb-3 mb-md-0">
-                                <h5 class="mb-2 border-bottom pb-2">Invoice Info:</h5>
-                                <div>Invoice: <strong>INV/{{ $quotation->reference }}</strong></div>
-                                <div>Date: {{ \Carbon\Carbon::parse($quotation->date)->format('d M, Y') }}</div>
+                                <h5 class="mb-2 border-bottom pb-2">{{ __('quotations.invoice_info') }}</h5>
+                                <div>{{ __('quotations.invoice') }}: <strong>INV/{{ $quotation->reference }}</strong></div>
+                                <div>{{ __('quotations.date') }}: {{ \Carbon\Carbon::parse($quotation->date)->format('d M, Y') }}</div>
                                 <div>
-                                    Status: <strong>{{ $quotation->status }}</strong>
+                                    {{ __('quotations.status') }}: <strong>{{ $quotation->status }}</strong>
                                 </div>
                                 <div>
-                                    Payment Status: <strong>{{ $quotation->payment_status }}</strong>
+                                    {{ __('quotations.payment_status') }}: <strong>{{ $quotation->payment_status }}</strong>
                                 </div>
                             </div>
 
@@ -68,11 +68,11 @@
                                         </div>
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush mb-0">
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Net Unit Price</span><span>{{ format_currency($item->unit_price) }}</span></li>
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Quantity</span><span>{{ $item->quantity }}</span></li>
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Discount</span><span>{{ format_currency($item->product_discount_amount) }}</span></li>
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Tax</span><span>{{ format_currency($item->product_tax_amount) }}</span></li>
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Sub Total</span><span class="fw-bold">{{ format_currency($item->sub_total) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.net_unit_price') }}</span><span>{{ format_currency($item->unit_price) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.quantity') }}</span><span>{{ $item->quantity }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.discount') }}</span><span>{{ format_currency($item->product_discount_amount) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.tax') }}</span><span>{{ format_currency($item->product_tax_amount) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.sub_total') }}</span><span class="fw-bold">{{ format_currency($item->sub_total) }}</span></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -82,10 +82,10 @@
                         <div class="row">
                             <div class="col-lg-4 col-sm-5 ml-md-auto">
                                 <ul class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Discount ({{ $quotation->discount_percentage }}%)</strong><span>{{ format_currency($quotation->discount_amount) }}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Tax ({{ $quotation->tax_percentage }}%)</strong><span>{{ format_currency($quotation->tax_amount) }}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Shipping</strong><span>{{ format_currency($quotation->shipping_amount) }}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Grand Total</strong><strong>{{ format_currency($quotation->total_amount) }}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>{{ __('quotations.discount') }} ({{ $quotation->discount_percentage }}%)</strong><span>{{ format_currency($quotation->discount_amount) }}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>{{ __('quotations.tax') }} ({{ $quotation->tax_percentage }}%)</strong><span>{{ format_currency($quotation->tax_amount) }}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>{{ __('quotations.shipping') }}</strong><span>{{ format_currency($quotation->shipping_amount) }}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>{{ __('quotations.grand_total') }}</strong><strong>{{ format_currency($quotation->total_amount) }}</strong></li>
                                 </ul>
                             </div>
                         </div>

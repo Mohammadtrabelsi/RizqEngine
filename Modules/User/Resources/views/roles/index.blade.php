@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Roles & Permissions')
+@section('title', __('roles.roles_and_permissions'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Roles & Permissions</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('roles.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('roles.roles_and_permissions') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('roles.create') }}" class="btn btn-primary">
-                    Add Role <i class="bi bi-plus"></i>
+                    {{ __('roles.add_role') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -28,7 +28,7 @@
                             <span class="badge bg-secondary">#{{ $role->id }}</span>
                         </div>
                         <div class="card-body">
-                            <p class="fw-bold mb-2">Permissions</p>
+                            <p class="fw-bold mb-2">{{ __('roles.permissions') }}</p>
                             <div class="mb-3">
                                 @include('user::roles.partials.permissions', ['data' => $role])
                             </div>
@@ -40,7 +40,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No roles found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('roles.no_roles_found') }}</div></div>
                 </div>
             @endforelse
         </div>

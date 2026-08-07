@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Quotations')
+@section('title', __('quotations.add_quotation'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Quotations</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('quotations.quotations') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('quotations.create') }}" class="btn btn-primary">
-                    Add Quotation <i class="bi bi-plus"></i>
+                    {{ __('quotations.add_quotation') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -30,8 +30,8 @@
                         <div class="card-body">
                             <h6 class="mb-3"><i class="bi bi-person"></i> {{ $quotation->customer_name }}</h6>
                             <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Date</span><span>{{ $quotation->date }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Total</span><span>{{ format_currency($quotation->total_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.date') }}</span><span>{{ $quotation->date }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.total') }}</span><span>{{ format_currency($quotation->total_amount) }}</span></li>
                             </ul>
                         </div>
                         <div class="card-footer text-center">
@@ -41,7 +41,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No quotations found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('quotations.no_quotations_found') }}</div></div>
                 </div>
             @endforelse
         </div>

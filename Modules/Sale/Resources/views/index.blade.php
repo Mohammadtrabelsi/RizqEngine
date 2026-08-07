@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Sales')
+@section('title', __('sales.title'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Sales</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('sales.title') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('sales.create') }}" class="btn btn-primary">
-                    Add Sale <i class="bi bi-plus"></i>
+                    {{ __('sales.add_sale') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -30,10 +30,10 @@
                         <div class="card-body">
                             <h6 class="mb-3"><i class="bi bi-person"></i> {{ $sale->customer_name }}</h6>
                             <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Total</span><span>{{ format_currency($sale->total_amount) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Paid</span><span>{{ format_currency($sale->paid_amount) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Due</span><span>{{ format_currency($sale->due_amount) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Payment Status</span>@include('sale::partials.payment-status', ['data' => $sale])</li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.total') }}</span><span>{{ format_currency($sale->total_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.paid') }}</span><span>{{ format_currency($sale->paid_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.due') }}</span><span>{{ format_currency($sale->due_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.payment_status') }}</span>@include('sale::partials.payment-status', ['data' => $sale])</li>
                             </ul>
                         </div>
                         <div class="card-footer text-center">
@@ -43,7 +43,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No sales found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('sales.no_sales_found') }}</div></div>
                 </div>
             @endforelse
         </div>

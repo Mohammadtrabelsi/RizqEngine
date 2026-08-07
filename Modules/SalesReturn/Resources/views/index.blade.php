@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Sale Returns')
+@section('title', __('sales.sale_returns'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Sale Returns</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('sales.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('sales.sale_returns') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('sale-returns.create') }}" class="btn btn-primary">
-                    Add Sale Return <i class="bi bi-plus"></i>
+                    {{ __('sales.add_sale_return') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -30,10 +30,10 @@
                         <div class="card-body">
                             <h6 class="mb-3"><i class="bi bi-person"></i> {{ $sale_return->customer_name }}</h6>
                             <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Total</span><span>{{ format_currency($sale_return->total_amount) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Paid</span><span>{{ format_currency($sale_return->paid_amount) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Due</span><span>{{ format_currency($sale_return->due_amount) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Payment Status</span>@include('salesreturn::partials.payment-status', ['data' => $sale_return])</li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.total') }}</span><span>{{ format_currency($sale_return->total_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.paid') }}</span><span>{{ format_currency($sale_return->paid_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.due') }}</span><span>{{ format_currency($sale_return->due_amount) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.payment_status') }}</span>@include('salesreturn::partials.payment-status', ['data' => $sale_return])</li>
                             </ul>
                         </div>
                         <div class="card-footer text-center">
@@ -43,7 +43,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No sale returns found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('sales.no_sale_returns_found') }}</div></div>
                 </div>
             @endforelse
         </div>

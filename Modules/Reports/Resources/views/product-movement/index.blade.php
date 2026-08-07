@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Fast / Slow Moving Products Report')
+@section('title', __('reports.product_movement'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Fast / Slow Moving Products</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('reports.product_movement') }}</li>
     </ol>
 @endsection
 
