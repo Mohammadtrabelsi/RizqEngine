@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
-use Modules\Purchase\DataTables\PurchaseDataTable;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Purchase\Entities\PurchaseDetail;
 use Modules\Purchase\Entities\PurchasePayment;
@@ -17,11 +16,13 @@ use Modules\Purchase\Http\Requests\UpdatePurchaseRequest;
 
 class PurchaseController extends Controller
 {
-    public function index(PurchaseDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_purchases'), 403);
 
-        return $dataTable->render('purchase::index');
+        $purchases = Purchase::latest()->paginate(12);
+
+        return view('purchase::index', compact('purchases'));
     }
 
     public function create()

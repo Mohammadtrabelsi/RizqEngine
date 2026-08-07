@@ -5,16 +5,17 @@ namespace Modules\People\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use Modules\People\DataTables\SuppliersDataTable;
 use Modules\People\Entities\Supplier;
 
 class SuppliersController extends Controller
 {
-    public function index(SuppliersDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_suppliers'), 403);
 
-        return $dataTable->render('people::suppliers.index');
+        $suppliers = Supplier::latest()->paginate(12);
+
+        return view('people::suppliers.index', compact('suppliers'));
     }
 
     public function create()

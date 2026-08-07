@@ -6,19 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Modules\SalesReturn\DataTables\SaleReturnPaymentsDataTable;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Modules\SalesReturn\Entities\SaleReturnPayment;
 
 class SaleReturnPaymentsController extends Controller
 {
-    public function index($sale_return_id, SaleReturnPaymentsDataTable $dataTable)
+    public function index($sale_return_id)
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
         $sale_return = SaleReturn::findOrFail($sale_return_id);
 
-        return $dataTable->render('salesreturn::payments.index', compact('sale_return'));
+        $payments = SaleReturnPayment::where('sale_return_id', $sale_return_id)->latest()->paginate(12);
+
+        return view('salesreturn::payments.index', compact('sale_return', 'payments'));
     }
 
     public function create($sale_return_id)

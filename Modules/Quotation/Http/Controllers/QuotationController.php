@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
-use Modules\Quotation\DataTables\QuotationsDataTable;
 use Modules\Quotation\Entities\Quotation;
 use Modules\Quotation\Entities\QuotationDetails;
 use Modules\Quotation\Http\Requests\StoreQuotationRequest;
@@ -16,11 +15,13 @@ use Modules\Quotation\Http\Requests\UpdateQuotationRequest;
 
 class QuotationController extends Controller
 {
-    public function index(QuotationsDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_quotations'), 403);
 
-        return $dataTable->render('quotation::index');
+        $quotations = Quotation::latest()->paginate(12);
+
+        return view('quotation::index', compact('quotations'));
     }
 
     public function create()

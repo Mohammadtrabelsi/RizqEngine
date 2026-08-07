@@ -16,34 +16,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Supplier Name</th>
-                                    <td>{{ $supplier->supplier_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Supplier Email</th>
-                                    <td>{{ $supplier->supplier_email }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Supplier Phone</th>
-                                    <td>{{ $supplier->supplier_phone }}</td>
-                                </tr>
-                                <tr>
-                                    <th>City</th>
-                                    <td>{{ $supplier->city }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Country</th>
-                                    <td>{{ $supplier->country }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Address</th>
-                                    <td>{{ $supplier->address }}</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Supplier Name</span><span>{{ $supplier->supplier_name }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Supplier Email</span><span>{{ $supplier->supplier_email }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Supplier Phone</span><span>{{ $supplier->supplier_phone }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">City</span><span>{{ $supplier->city }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Country</span><span>{{ $supplier->country }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Address</span><span>{{ $supplier->address }}</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>

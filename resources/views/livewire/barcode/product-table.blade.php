@@ -11,34 +11,26 @@
     @endif
     <div class="card">
         <div class="card-body">
-            <div class="table-responsive-md">
-                <table class="table table-bordered mb-0">
-                    <thead>
-                    <tr class="align-middle">
-                        <th class="align-middle">{{ __('product.name') }}</th>
-                        <th class="align-middle">{{ __('product.code') }}</th>
-                        <th class="align-middle">
+            @if(!empty($product))
+                <ul class="list-group list-group-flush mb-0">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">{{ __('product.name') }}</span>
+                        <span>{{ $product->product_name }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">{{ __('product.code') }}</span>
+                        <span>{{ $product->product_code }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center barcode-cell">
+                        <span class="fw-bold">
                             {{ __('product.quantity') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Quantity: 100"></i>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        @if(!empty($product))
-                            <td class="align-middle">{{ $product->product_name }}</td>
-                            <td class="align-middle">{{ $product->product_code }}</td>
-                            <td class="align-middle text-center barcode-cell">
-                                <input wire:model.live="quantity" class="form-control" type="number" min="1" max="100" value="{{ $quantity }}">
-                            </td>
-                        @else
-                            <td colspan="3" class="text-center">
-                                <span class="text-danger">{{ __('product.no-products-found') }}</span>
-                            </td>
-                        @endif
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </span>
+                        <input wire:model.live="quantity" class="form-control w-auto" type="number" min="1" max="100" value="{{ $quantity }}">
+                    </li>
+                </ul>
+            @else
+                <p class="text-center text-danger mb-0">{{ __('product.no-products-found') }}</p>
+            @endif
             <div class="mt-3">
                 <button wire:click="generateBarcodes({{ $product }}, {{ $quantity }})" type="button" class="btn btn-primary">
                     <i class="bi bi-upc-scan"></i> {{ __('product.generate-barcodes') }}
