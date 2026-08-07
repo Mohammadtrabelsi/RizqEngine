@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Products')
+@section('title', __('product.products'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Products</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('product.products') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('products.create') }}" class="btn btn-primary">
-                    Add Product <i class="bi bi-plus"></i>
+                    {{ __('product.add_product') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No products found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('product.no_products_found') }}</div></div>
                 </div>
             @endforelse
         </div>

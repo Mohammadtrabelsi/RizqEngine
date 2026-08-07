@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Product')
+@section('title', __('product.edit_product'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">

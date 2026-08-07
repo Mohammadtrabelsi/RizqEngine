@@ -20,6 +20,7 @@ return [
     'no-transactions' => 'No-transactions',
     'order' => 'Order',
     'orders-today' => 'Orders-today',
+    'overview' => 'Overview',
     'please-search-and-select-products' => 'Please-search-and-select-products',
     'privacy' => 'Privacy',
     'product' => 'Product',

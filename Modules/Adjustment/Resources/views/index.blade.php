@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Adjustments')
+@section('title', __('adjustment.adjustments'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Adjustments</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('adjustment.adjustments') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('adjustments.create') }}" class="btn btn-primary">
-                    Add Adjustment <i class="bi bi-plus"></i>
+                    {{ __('adjustment.add_adjustment') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -26,8 +26,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $adjustment->reference }}</h5>
                             <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Date</span><span>{{ $adjustment->date }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Products</span><span class="badge bg-info">{{ $adjustment->adjusted_products_count }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('adjustment.date') }}</span><span>{{ $adjustment->date }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('adjustment.products') }}</span><span class="badge bg-info">{{ $adjustment->adjusted_products_count }}</span></li>
                             </ul>
                             <div class="btn-group">
                                 @include('adjustment::partials.actions', ['data' => $adjustment])
@@ -37,7 +37,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No adjustments found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('adjustment.no_adjustments_found') }}</div></div>
                 </div>
             @endforelse
         </div>

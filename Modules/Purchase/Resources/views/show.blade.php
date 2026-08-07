@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Purchases Details')
+@section('title', __('purchase.purchase_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('purchases.index') }}">Purchases</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('purchase.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('purchases.index') }}">{{ __('purchase.purchases') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('purchase.details') }}</li>
     </ol>
 @endsection
 
@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-sm-4 mb-3 mb-md-0">
-                                <h5 class="mb-2 border-bottom pb-2">Company Info:</h5>
+                                <h5 class="mb-2 border-bottom pb-2">{{ __('purchase.company_info') }}</h5>
                                 <div><strong>{{ settings()->company_name }}</strong></div>
                                 <div>{{ settings()->company_address }}</div>
                                 <div>Email: {{ settings()->company_email }}</div>
@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="col-sm-4 mb-3 mb-md-0">
-                                <h5 class="mb-2 border-bottom pb-2">Supplier Info:</h5>
+                                <h5 class="mb-2 border-bottom pb-2">{{ __('purchase.supplier_info') }}</h5>
                                 <div><strong>{{ $supplier->supplier_name }}</strong></div>
                                 <div>{{ $supplier->address }}</div>
                                 <div>Email: {{ $supplier->supplier_email }}</div>
@@ -45,14 +45,14 @@
                             </div>
 
                             <div class="col-sm-4 mb-3 mb-md-0">
-                                <h5 class="mb-2 border-bottom pb-2">Invoice Info:</h5>
-                                <div>Invoice: <strong>INV/{{ $purchase->reference }}</strong></div>
-                                <div>Date: {{ \Carbon\Carbon::parse($purchase->date)->format('d M, Y') }}</div>
+                                <h5 class="mb-2 border-bottom pb-2">{{ __('purchase.invoice_info') }}</h5>
+                                <div>{{ __('purchase.invoice_number') }}: <strong>INV/{{ $purchase->reference }}</strong></div>
+                                <div>{{ __('purchase.date') }}: {{ \Carbon\Carbon::parse($purchase->date)->format('d M, Y') }}</div>
                                 <div>
-                                    Status: <strong>{{ $purchase->status }}</strong>
+                                    {{ __('purchase.status') }}: <strong>{{ $purchase->status }}</strong>
                                 </div>
                                 <div>
-                                    Payment Status: <strong>{{ $purchase->payment_status }}</strong>
+                                    {{ __('purchase.payment_status') }}: <strong>{{ $purchase->payment_status }}</strong>
                                 </div>
                             </div>
 

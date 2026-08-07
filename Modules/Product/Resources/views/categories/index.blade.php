@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Product Categories')
+@section('title', __('product.categories'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
-        <li class="breadcrumb-item active">Categories</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">{{ __('product.products') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('product.categories') }}</li>
     </ol>
 @endsection
 
@@ -37,7 +37,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No categories found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('product.no_categories_found') }}</div></div>
                 </div>
             @endforelse
         </div>

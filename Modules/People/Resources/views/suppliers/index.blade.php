@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Suppliers')
+@section('title', __('supplier.suppliers'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Suppliers</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('supplier.suppliers') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('suppliers.create') }}" class="btn btn-primary">
-                    Add Supplier <i class="bi bi-plus"></i>
+                    {{ __('supplier.create_supplier') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No suppliers found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('supplier.no_suppliers_found') }}</div></div>
                 </div>
             @endforelse
         </div>

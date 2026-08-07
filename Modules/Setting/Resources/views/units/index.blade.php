@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Units')
+@section('title', __('units.units'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Units</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('units.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('units.units') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('units.create') }}" class="btn btn-primary">
-                    Add Unit <i class="bi bi-plus"></i>
+                    {{ __('units.add_unit') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -26,8 +26,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $unit->name }} <small class="text-muted">({{ $unit->short_name }})</small></h5>
                             <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Operator</span><span>{{ $unit->operator }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>Operation Value</span><span>{{ $unit->operation_value }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('units.operator') }}</span><span>{{ $unit->operator }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('units.operation_value') }}</span><span>{{ $unit->operation_value }}</span></li>
                             </ul>
                             <div class="btn-group">
                                 <a href="{{ route('units.edit', $unit) }}" class="btn btn-primary btn-sm">
@@ -51,7 +51,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No units found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('units.no_units_found') }}</div></div>
                 </div>
             @endforelse
         </div>

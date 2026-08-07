@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Product Details')
+@section('title', __('product.product_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">{{ __('product.products') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('product.product_details') }}</li>
     </ol>
 @endsection
 
@@ -23,41 +23,41 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Product Code</span><span>{{ $product->product_code }}</span>
+                                <span class="fw-bold">{{ __('product.product_code') }}</span><span>{{ $product->product_code }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Barcode Symbology</span><span>{{ $product->product_barcode_symbology }}</span>
+                                <span class="fw-bold">{{ __('product.barcode_symbology') }}</span><span>{{ $product->product_barcode_symbology }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Name</span><span>{{ $product->product_name }}</span>
+                                <span class="fw-bold">{{ __('product.product_name') }}</span><span>{{ $product->product_name }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Category</span><span>{{ $product->category->category_name }}</span>
+                                <span class="fw-bold">{{ __('product.category') }}</span><span>{{ $product->category->category_name }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Cost</span><span>{{ format_currency($product->product_cost) }}</span>
+                                <span class="fw-bold">{{ __('product.product_cost') }}</span><span>{{ format_currency($product->product_cost) }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Price</span><span>{{ format_currency($product->product_price) }}</span>
+                                <span class="fw-bold">{{ __('product.product_price') }}</span><span>{{ format_currency($product->product_price) }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Quantity</span><span>{{ $product->product_quantity . ' ' . $product->product_unit }}</span>
+                                <span class="fw-bold">{{ __('product.product_quantity') }}</span><span>{{ $product->product_quantity . ' ' . $product->product_unit }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Stock Worth</span>
+                                <span class="fw-bold">{{ __('product.stock_worth') }}</span>
                                 <span>
                                     COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
                                     PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Alert Quantity</span><span>{{ $product->product_stock_alert }}</span>
+                                <span class="fw-bold">{{ __('product.alert_quantity') }}</span><span>{{ $product->product_stock_alert }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Tax (%)</span><span>{{ $product->product_order_tax ?? 'N/A' }}</span>
+                                <span class="fw-bold">{{ __('product.tax') }} (%)</span><span>{{ $product->product_order_tax ?? 'N/A' }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Tax Type</span>
+                                <span class="fw-bold">{{ __('product.tax_type') }}</span>
                                 <span>
                                     @if($product->product_tax_type == 1)
                                         Exclusive
@@ -69,7 +69,7 @@
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Note</span><span>{{ $product->product_note ?? 'N/A' }}</span>
+                                <span class="fw-bold">{{ __('product.note') }}</span><span>{{ $product->product_note ?? 'N/A' }}</span>
                             </li>
                         </ul>
                     </div>

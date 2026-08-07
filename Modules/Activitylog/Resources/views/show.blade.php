@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Activity Log Details')
+@section('title', __('activitylog.activity_log_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('activity-logs.index') }}">Activity Logs</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('activity-logs.index') }}">{{ __('activitylog.activity_logs') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('activitylog.activity_log_details') }}</li>
     </ol>
 @endsection
 
@@ -23,15 +23,15 @@
             <div class="col-lg-5">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Activity Details</h5>
+                        <h5 class="mb-0">{{ __('activitylog.activity_details') }}</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Description</span><span>{{ ucfirst($activity->description) }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Event</span><span>{{ ucfirst($activity->event ?? 'n/a') }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Module</span><span>{{ $activity->log_name ?? 'default' }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.description') }}</span><span>{{ ucfirst($activity->description) }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.event') }}</span><span>{{ ucfirst($activity->event ?? 'n/a') }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.module') }}</span><span>{{ $activity->log_name ?? 'default' }}</span></li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Subject</span>
+                                <span class="fw-bold">{{ __('activitylog.subject') }}</span>
                                 <span>
                                     @if($activity->subject_type)
                                         {{ \Illuminate\Support\Str::headline(class_basename($activity->subject_type)) }}
@@ -41,8 +41,8 @@
                                     @endif
                                 </span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Performed By</span><span>{{ $activity->causer?->name ?? 'System' }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">Date &amp; Time</span><span>{{ $activity->created_at->format('d M, Y H:i:s') }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.performed_by') }}</span><span>{{ $activity->causer?->name ?? 'System' }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.date_time') }}</span><span>{{ $activity->created_at->format('d M, Y H:i:s') }}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
             <div class="col-lg-7">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Attribute Changes</h5>
+                        <h5 class="mb-0">{{ __('activitylog.attribute_changes') }}</h5>
                     </div>
                     <div class="card-body">
                         @if(count($attributeKeys))
@@ -81,7 +81,7 @@
                                 @endforeach
                             </div>
                         @else
-                            <p class="text-muted mb-0">No attribute changes were recorded for this activity.</p>
+                            <p class="text-muted mb-0">{{ __('activitylog.no_attribute_changes') }}</p>
                         @endif
                     </div>
                 </div>
@@ -91,7 +91,7 @@
         <div class="row mt-2">
             <div class="col-12">
                 <a href="{{ route('activity-logs.index') }}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Back to Activity Logs
+                    <i class="bi bi-arrow-left"></i> {{ __('activitylog.back_to_activity_logs') }}
                 </a>
             </div>
         </div>

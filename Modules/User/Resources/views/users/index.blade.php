@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title',   __('users.users'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Users</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('users.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('users.users') }}</li>
     </ol>
 @endsection
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
-                    Add User <i class="bi bi-plus"></i>
+                    {{ __('users.add_user') }} <i class="bi bi-plus"></i>
                 </a>
             </div>
         </div>
@@ -32,9 +32,9 @@
                             </div>
                             <div class="mb-3">
                                 @if($user->is_active == 1)
-                                    <span class="badge badge-success">Active</span>
+                                    <span class="badge badge-success">{{ __('users.active') }}</span>
                                 @else
-                                    <span class="badge badge-warning">Deactivated</span>
+                                    <span class="badge badge-warning">{{ __('users.deactivated') }}</span>
                                 @endif
                             </div>
                             <div class="btn-group">
@@ -45,7 +45,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">No users found.</div></div>
+                    <div class="card"><div class="card-body text-center text-muted">{{ __('users.no_users_found') }}</div></div>
                 </div>
             @endforelse
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', __('general.dashboard'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
@@ -61,7 +61,7 @@
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
-                        Overview of {{ now()->format('F, Y') }}
+                        {{ __('general.overview') }} of {{ now()->format('F, Y') }}
                     </div>
                     <div class="card-body d-flex justify-content-center">
                         <div class="chart-container chart-container-sm">
