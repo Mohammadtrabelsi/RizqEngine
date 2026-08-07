@@ -4,10 +4,10 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Purchase\Entities\PurchasePayment;
-use Modules\PurchasesReturn\Entities\PurchaseReturnPayment;
-use Modules\Sale\Entities\SalePayment;
-use Modules\SalesReturn\Entities\SaleReturnPayment;
+use App\Models\PurchasePayment;
+use App\Models\PurchaseReturnPayment;
+use App\Models\SalePayment;
+use App\Models\SaleReturnPayment;
 
 class PaymentsReport extends Component
 {

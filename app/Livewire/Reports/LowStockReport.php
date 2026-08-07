@@ -4,7 +4,7 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Product\Entities\Product;
+use App\Models\Product;
 
 class LowStockReport extends Component
 {

@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\People\Entities\Customer;
-use Modules\People\Entities\Supplier;
-use Modules\Product\Entities\Category;
-use Modules\Product\Entities\Product;
+use App\Models\Customer;
+use App\Models\Supplier;
+use App\Models\Category;
+use App\Models\Product;
 
 /**
  * Seeds a representative set of dummy records (categories, products,

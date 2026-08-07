@@ -4,7 +4,7 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Purchase\Entities\Purchase;
+use App\Models\Purchase;
 
 class PurchasesReport extends Component
 {

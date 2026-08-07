@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Observers\ProductObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Modules\Product\Entities\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Model::preventLazyLoading(! app()->isProduction());
+
+        Product::observe(ProductObserver::class);
 
         // Provide low-stock products to the header notifications dropdown so the
         // query lives here instead of an inline @php block in the view.
