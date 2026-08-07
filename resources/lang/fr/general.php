@@ -20,6 +20,7 @@ return [
     'no-transactions' => 'Aucune transaction',
     'order' => 'Commande',
     'orders-today' => 'Commandes d\'aujourd\'hui',
+    'overview' => '[TODO] Overview',
     'please-search-and-select-products' => 'Veuillez rechercher et sélectionner des produits',
     'privacy' => 'Confidentialité',
     'product' => 'Produit',

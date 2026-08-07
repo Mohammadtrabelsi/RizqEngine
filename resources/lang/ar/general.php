@@ -20,6 +20,7 @@ return [
     'no-transactions' => 'لا توجد معاملات',
     'order' => 'الطلب',
     'orders-today' => 'طلبات اليوم',
+    'overview' => '[TODO] Overview',
     'please-search-and-select-products' => 'يرجى البحث وتحديد المنتجات',
     'privacy' => 'الخصوصية',
     'product' => 'المنتج',
