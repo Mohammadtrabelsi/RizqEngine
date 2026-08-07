@@ -18,71 +18,87 @@
 <body class="c-dark-theme">
 <div class="login-grid">
 
-    <div class="login-brand login-brand-copy">
-        <a href="{{ route('welcome') }}" style="text-decoration:none; color:var(--color-text);">
-            @include('layouts.logo', ['size' => 26, 'label' => 'Triangle POS', 'labelSize' => 15])
-        </a>
-
-        <div style="max-width:420px">
-            <div class="login-brand-lead">{{ __('login.welcome') }}</div>
-            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">{{ __('login.description') }}</div>
+    {{-- Brand panel --}}
+    <div class="login-brand">
+        <div class="login-brand__logo">
+            <svg width="26" height="23" viewBox="0 0 100 90">
+                <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="var(--color-text)" stroke-width="7"></polygon>
+                <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="7"></polygon>
+                <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="7"></polygon>
+                <polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="7"></polygon>
+            </svg>
+            <span class="login-brand__name">Triangle POS</span>
         </div>
 
-        <div class="text-muted" style="font-size:12px">© {{ date('Y') }} Triangle POS</div>
+        <div class="login-brand__copy">
+            <h1 class="login-brand__title">{{ __('login.welcome') }}</h1>
+            <p class="login-brand__text">{{ __('login.description') }}</p>
+        </div>
+
+        <div class="login-brand__footer">© {{ date('Y') }} Triangle POS</div>
     </div>
 
+    {{-- Form panel --}}
     <div class="login-form-wrap">
         <form id="login" class="login-form" method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
-                <div class="login-title">{{ __('login.sign-in') }}</div>
-                <div class="text-muted" style="font-size:14px">{{ __('login.welcome-back') }}</div>
+            <div class="login-form__heading">
+                <h2 class="login-form__title">{{ __('login.sign-in') }}</h2>
+                <p class="login-form__subtitle">{{ __('login.welcome-back') }}</p>
             </div>
 
             @if(Session::has('account_deactivated'))
-                <div class="card elev-sm" style="border:1px solid var(--color-accent); color:#e0645f; padding:var(--space-3); font-size:13px">
+                <div class="login-form__alert">
                     {{ Session::get('account_deactivated') }}
                 </div>
             @endif
 
-            <div class="field">
-                <label for="email">{{ __('login.email') }}</label>
-                <input id="email" type="email"
-                       class="form-control @error('email') is-invalid @enderror"
-                       name="email" value="{{ old('email') }}"
-                       placeholder="you@store.com" autofocus>
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="field">
-                <label for="password">{{ __('login.password') }}</label>
-                <input id="password" type="password"
-                       class="form-control @error('password') is-invalid @enderror"
-                       name="password" placeholder="••••••••">
-                @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="d-flex align-items-center justify-content-between" style="font-size:13px">
-                <label class="d-inline-flex align-items-center mb-0" style="gap:6px; cursor:pointer">
-                    <input type="checkbox" name="remember"> {{ __('login.remember-me') }}
-                </label>
-                <a href="{{ route('password.request') }}">{{ __('login.forgot-password') }}</a>
-            </div>
-
-            <button id="submit" class="btn btn-primary btn-block d-flex align-items-center justify-content-center" type="submit">
-                {{ __('login.sign-in') }}
-                <div id="spinner" class="spinner-border login-spinner" role="status">
-                    <span class="sr-only">Loading...</span>
+            <div class="login-form__field">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    </div>
+                    <input id="email" type="email"
+                           class="form-control @error('email') is-invalid @enderror"
+                           name="email" value="{{ old('email') }}"
+                           placeholder="{{ __('login.email') }}" autocomplete="email" autofocus>
                 </div>
-            </button>
+                @error('email')
+                    <div class="login-form__error">{{ $message }}</div>
+                @enderror
+            </div>
 
-            <div class="text-muted" style="font-size:13px; text-align:center">
-                {{ __('login.contact-owner-message') }} <a href="{{ route('welcome') }}">{{ __('login.contact-owner') }}</a>
+            <div class="login-form__field">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    </div>
+                    <input id="password" type="password"
+                           class="form-control @error('password') is-invalid @enderror"
+                           name="password"
+                           placeholder="{{ __('login.password') }}" autocomplete="current-password">
+                </div>
+                @error('password')
+                    <div class="login-form__error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="login-form__actions">
+                <button id="submit" class="btn btn-primary login-form__submit" type="submit">
+                    {{ __('login.sign-in') }}
+                    <span id="spinner" class="spinner-border text-info login-spinner" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </span>
+                </button>
+                <a class="btn btn-link login-form__forgot" href="{{ route('password.request') }}">
+                    {{ __('login.forgot-password') }}
+                </a>
+            </div>
+
+            <div class="login-form__contact">
+                {{ __('login.contact-owner-message') }}
+                <a href="{{ route('welcome') }}">{{ __('login.contact-owner') }}</a>
             </div>
         </form>
     </div>
