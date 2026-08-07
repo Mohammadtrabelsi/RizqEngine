@@ -7,7 +7,6 @@ use Modules\Currency\Database\Seeders\CurrencyDatabaseSeeder;
 use Modules\Product\Database\Seeders\ProductDatabaseSeeder;
 use Modules\Setting\Database\Seeders\SettingDatabaseSeeder;
 use Modules\User\Database\Seeders\PermissionsTableSeeder;
-use Database\Seeders\TestDataSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +25,5 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductDatabaseSeeder::class);
         $this->call(TestDataSeeder::class);
 
-         
     }
 }
