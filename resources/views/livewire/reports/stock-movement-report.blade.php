@@ -61,25 +61,12 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('report.date') }}</th>
-                                    <th>{{ __('report.product') }}</th>
-                                    <th class="text-center">{{ __('report.type') }}</th>
-                                    <th class="text-right">{{ __('report.change') }}</th>
-                                    <th class="text-right">{{ __('report.before') }}</th>
-                                    <th class="text-right">{{ __('report.after') }}</th>
-                                    <th>{{ __('report.reference') }}</th>
-                                    <th>{{ __('report.user') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($movements as $movement)
-                                    <tr>
-                                        <td>{{ $movement->created_at->format('d M Y H:i') }}</td>
-                                        <td>{{ optional($movement->product)->product_name ?? '—' }}</td>
-                                        <td class="text-center">
+                        <div class="row">
+                            @forelse($movements as $movement)
+                                <div class="col-xl-4 col-lg-6 mb-4">
+                                    <div class="card border h-100">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <span>{{ optional($movement->product)->product_name ?? '—' }}</span>
                                             @if($movement->type === 'out')
                                                 <span class="badge badge-danger">Out</span>
                                             @elseif($movement->type === 'in')
@@ -89,25 +76,32 @@
                                             @else
                                                 <span class="badge badge-info">Adjustment</span>
                                             @endif
-                                        </td>
-                                        <td class="text-right {{ $movement->signed_quantity < 0 ? 'text-danger' : 'text-success' }}">
-                                            {{ $movement->signed_quantity > 0 ? '+' : '' }}{{ $movement->signed_quantity }}
-                                        </td>
-                                        <td class="text-right">{{ $movement->quantity_before }}</td>
-                                        <td class="text-right">{{ $movement->quantity_after }}</td>
-                                        <td>
-                                            {{ $movement->reference_type }}{{ $movement->reference_id ? ' #' . $movement->reference_id : '' }}
-                                            @if($movement->note)<div class="text-muted small">{{ $movement->note }}</div>@endif
-                                        </td>
-                                        <td>{{ optional($movement->user)->name ?? 'System' }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="8" class="text-center">{{ __('report.no-movements') }}</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.date') }}</span><span>{{ $movement->created_at->format('d M Y H:i') }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0">
+                                                    <span>{{ __('report.change') }}</span>
+                                                    <span class="{{ $movement->signed_quantity < 0 ? 'text-danger' : 'text-success' }}">{{ $movement->signed_quantity > 0 ? '+' : '' }}{{ $movement->signed_quantity }}</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.before') }}</span><span>{{ $movement->quantity_before }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.after') }}</span><span>{{ $movement->quantity_after }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0">
+                                                    <span>{{ __('report.reference') }}</span>
+                                                    <span class="text-end">
+                                                        {{ $movement->reference_type }}{{ $movement->reference_id ? ' #' . $movement->reference_id : '' }}
+                                                        @if($movement->note)<div class="text-muted small">{{ $movement->note }}</div>@endif
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.user') }}</span><span>{{ optional($movement->user)->name ?? 'System' }}</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12 text-center">{{ __('report.no-movements') }}</div>
+                            @endforelse
+                        </div>
                     </div>
                     {{ $movements->links() }}
                 </div>

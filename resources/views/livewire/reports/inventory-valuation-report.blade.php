@@ -72,34 +72,26 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('report.product') }}</th>
-                                    <th>{{ __('report.category') }}</th>
-                                    <th class="text-right">{{ __('report.quantity') }}</th>
-                                    <th class="text-right">{{ __('report.unit-cost') }}</th>
-                                    <th class="text-right">{{ __('report.stock-value-cost') }}</th>
-                                    <th class="text-right">{{ __('report.stock-value-retail') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($products as $product)
-                                    <tr>
-                                        <td>{{ $product->product_name }} <span class="text-muted small">{{ $product->product_code }}</span></td>
-                                        <td>{{ optional($product->category)->category_name }}</td>
-                                        <td class="text-right">{{ $product->product_quantity }}</td>
-                                        <td class="text-right">{{ format_currency($product->product_cost) }}</td>
-                                        <td class="text-right">{{ format_currency($product->product_quantity * $product->product_cost) }}</td>
-                                        <td class="text-right">{{ format_currency($product->product_quantity * $product->product_price) }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">{{ __('report.no-products-found') }}</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            @forelse($products as $product)
+                                <div class="col-xl-4 col-lg-6 mb-4">
+                                    <div class="card border h-100">
+                                        <div class="card-body">
+                                            <h6 class="mb-1">{{ $product->product_name }}</h6>
+                                            <p class="text-muted small mb-2">{{ $product->product_code }} &middot; {{ optional($product->category)->category_name }}</p>
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.quantity') }}</span><span>{{ $product->product_quantity }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.unit-cost') }}</span><span>{{ format_currency($product->product_cost) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.stock-value-cost') }}</span><span>{{ format_currency($product->product_quantity * $product->product_cost) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.stock-value-retail') }}</span><span>{{ format_currency($product->product_quantity * $product->product_price) }}</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12 text-center">{{ __('report.no-products-found') }}</div>
+                            @endforelse
+                        </div>
                     </div>
                     {{ $products->links() }}
                 </div>
