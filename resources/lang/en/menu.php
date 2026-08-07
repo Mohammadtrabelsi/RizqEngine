@@ -23,6 +23,7 @@ return [
     'create-user' => 'Create-user',
     'currencies' => 'Currencies',
     'customers' => 'Customers',
+    'documentation' => 'Documentation',
     'expenses' => 'Expenses',
     'inventory-valuation-report' => 'Inventory-valuation-report',
     'low-stock-report' => 'Low-stock-report',
