@@ -22,6 +22,7 @@ return [
     'create-sale-return' => 'Créer un retour de vente',
     'create-user' => 'Créer un utilisateur',
     'currencies' => 'Devises',
+    'documentation' => 'Documentation',
     'customers' => 'Clients',
     'expenses' => 'Dépenses',
     'inventory-valuation-report' => 'Rapport d\'évaluation des stocks',

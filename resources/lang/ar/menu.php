@@ -22,6 +22,7 @@ return [
     'create-sale-return' => 'إنشاء مرتجع مبيعات',
     'create-user' => 'إنشاء مستخدم',
     'currencies' => 'العملات',
+    'documentation' => 'التوثيق',
     'customers' => 'العملاء',
     'expenses' => 'المصروفات',
     'inventory-valuation-report' => 'تقرير تقييم المخزون',
