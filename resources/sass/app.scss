@@ -625,6 +625,26 @@ body:not(.c-dark-theme) {
     background: $l-bg;
     color: $l-text;
 
+    // Re-point the Nocturne custom properties at the light palette. The base
+    // styles and several blade templates read text/surface colours straight
+    // from these `--color-*` variables (e.g. the sidebar logo uses
+    // `var(--color-text)`), so without this they keep resolving to the dark
+    // near-white values and render as white/grey text on the light surfaces.
+    --color-bg: #{$l-bg};
+    --color-surface: #{$l-surface};
+    --color-surface-2: #{$l-surface-2};
+    --color-text: #{$l-text};
+    --color-divider: #{$l-divider};
+    --color-muted: #{$l-muted};
+    --color-neutral-100: #2b2f36; // used as strong text on light bg
+    --color-neutral-300: #5c6370; // secondary text
+    --color-neutral-500: #6b7280;
+
+    // Bootstrap compiles `.text-muted` to a fixed near-white colour (from the
+    // dark `$text-muted` token) with `!important`, so it survives into light
+    // mode and disappears against white. Re-assert a readable muted grey.
+    .text-muted { color: $l-muted !important; }
+
     .c-app { background-color: $l-bg; }
 
     // Shell -----------------------------------------------------------
@@ -823,6 +843,11 @@ body:not(.c-dark-theme) {
     .n-value { color: $l-text; }
     .n-meta { color: $l-muted; }
     .n-tag-neutral { background: $l-surface-2; color: $l-text; }
+    // The lightened tints used on the dark theme are near-invisible on the
+    // pale tinted backgrounds; darken them for readable contrast in light mode.
+    .n-tag-success { background: rgba($n-success, 0.14); color: darken($n-success, 12%); }
+    .n-tag-danger { background: rgba($n-danger, 0.14); color: darken($n-danger, 12%); }
+    .n-tag-warning { background: rgba($n-warning, 0.14); color: darken($n-warning, 20%); }
 }
 
 // ---------------------------------------------------------------------
