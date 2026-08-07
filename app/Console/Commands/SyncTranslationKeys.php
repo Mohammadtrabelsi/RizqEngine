@@ -10,7 +10,8 @@ class SyncTranslationKeys extends Command
     /**
      * The name and signature of the console command.
      *
-     * Scans resources/, Livewire component classes & blade views, and app/Services.
+     * Scans resources/, Livewire component classes & blade views, app/Services,
+     * and every module under the laravel-modules Modules/ tree.
      *
      * php artisan translations:sync
      *   --locales=en,fr,ar   Override which locales to sync (default: auto-detect)
@@ -24,7 +25,7 @@ class SyncTranslationKeys extends Command
                             {--dry-run  : Show changes without writing files}
                             {--clean    : Remove keys from files that are not found in views}';
 
-    protected $description = 'Scan resources/, Livewire components & views, and app/Services for translation keys, create missing lang files, and sync keys across all locales.';
+    protected $description = 'Scan resources/, Livewire components & views, app/Services, and the Modules/ tree for translation keys, create missing lang files, and sync keys across all locales.';
 
     // ── Patterns ──────────────────────────────────────────────────────────────
     // Matches: __('key'), __("key"), trans('key'), trans("key"),
@@ -53,10 +54,14 @@ class SyncTranslationKeys extends Command
         $this->line("\n  📂 Scanning: <fg=yellow>{$resPath}</>");
         $foundKeys = $this->extractKeysFromDirectory($resPath);
 
-        // Also scan Livewire components (classes + blade views) and app/Services.
-        // Livewire paths are resolved from Livewire's own config so the command keeps
-        // working even when the class namespace or view path have been customised.
-        $extraPaths = array_merge($this->livewireScanPaths(), [app_path('Services')]);
+        // Also scan Livewire components (classes + blade views), app/Services, and
+        // every laravel-modules module. Livewire and module paths are resolved from
+        // their own config so the command keeps working when those paths are customised.
+        $extraPaths = array_merge(
+            $this->livewireScanPaths(),
+            $this->moduleScanPaths(),
+            [app_path('Services')]
+        );
 
         foreach ($extraPaths as $path) {
             if ($path !== '' && File::isDirectory($path)) {
@@ -178,6 +183,27 @@ class SyncTranslationKeys extends Command
         $viewPath = (string) config('livewire.view_path', resource_path('views'.DIRECTORY_SEPARATOR.'livewire'));
 
         return [$classPath, $viewPath];
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Resolve each module directory under the laravel-modules Modules/ tree
+    // ──────────────────────────────────────────────────────────────────────────
+
+    private function moduleScanPaths(): array
+    {
+        // The modules root is resolved from laravel-modules' own config
+        // (defaults to base_path('Modules')) so a customised path still works.
+        $root = (string) config('modules.paths.modules', base_path('Modules'));
+
+        if ($root === '' || ! File::isDirectory($root)) {
+            return [];
+        }
+
+        // Return each module directory individually so the scan is logged per
+        // module. extractKeysFromDirectory() recurses, so this covers every
+        // module's PHP classes (controllers, services, entities, …) and its
+        // Resources/views blade templates.
+        return array_map(fn ($dir): string => (string) $dir, File::directories($root));
     }
 
     // ──────────────────────────────────────────────────────────────────────────
