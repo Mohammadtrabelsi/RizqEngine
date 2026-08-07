@@ -19,7 +19,7 @@
                         <h5 class="mb-0">General Settings</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('settings.update') }}" method="POST">
+                        <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('patch')
                             <div class="form-row">
@@ -39,6 +39,32 @@
                                     <div class="form-group">
                                         <label for="company_phone">Company Phone <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="company_phone" value="{{ $settings->company_phone }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="client_name">Client Name</label>
+                                        <input type="text" class="form-control" name="client_name" value="{{ $settings->client_name }}" placeholder="Displayed in the navbars">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="client_logo">Client Logo</label>
+                                        <input type="file" class="form-control-file" name="client_logo" id="client_logo" accept="image/*">
+                                        <small class="form-text text-muted">Displayed in the navbars. Max 2MB (jpeg, png, gif, svg, webp).</small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="d-block">Current Logo</label>
+                                        @if($settings->client_logo)
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($settings->client_logo) }}" alt="Client Logo" style="max-height: 48px; max-width: 160px;">
+                                        @else
+                                            <span class="text-muted">No logo uploaded</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
