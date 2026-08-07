@@ -13,4 +13,5 @@ return [
     'profile' => 'الملف الشخصي',
     'update' => 'تحديث',
     'version' => 'الإصدار',
+    'language' => 'اللغة',
 ];

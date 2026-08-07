@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,6 +53,7 @@
         <a href="#features">Features</a>
         <a href="#access">Access control</a>
         <a href="#reporting">Reporting</a>
+        @include('includes.language-switcher')
         <a href="{{ route('login') }}" class="btn btn-secondary">Sign in</a>
     </div>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,6 +40,9 @@
 
     {{-- Form panel --}}
     <div class="login-form-wrap">
+        <div class="login-lang" style="display:flex; justify-content:flex-end; margin-bottom:1rem;">
+            @include('includes.language-switcher')
+        </div>
         <form id="login" class="login-form" method="POST" action="{{ route('login') }}">
             @csrf
 

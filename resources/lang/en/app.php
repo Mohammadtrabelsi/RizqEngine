@@ -13,4 +13,5 @@ return [
     'profile' => 'Profile',
     'update' => 'Update',
     'version' => 'Version',
+    'language' => 'Language',
 ];
