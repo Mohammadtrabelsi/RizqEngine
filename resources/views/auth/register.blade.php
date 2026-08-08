@@ -11,7 +11,7 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
     <!-- CoreUI CSS (Nocturne theme) -->
-    @vite('resources/sass/app.scss')
+    @vite('resources/css/app.css')
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>

@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        @vite('resources/sass/errors.scss')
+        @vite('resources/css/errors.css')
     </head>
     <body class="antialiased font-sans">
         <div class="md:flex min-h-screen">
