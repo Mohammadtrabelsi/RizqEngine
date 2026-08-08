@@ -27,7 +27,7 @@ return [
     'product' => 'المنتج',
     'quantity' => 'الكمية',
     'ready-to-run-your-store' => 'جاهز لإدارة متجرك؟',
-    'recent' => '[TODO] Recent',
+    'recent' => 'الأحدث',
     'reporting' => 'التقارير',
     'reporting-dashboard-screenshot' => 'لقطة شاشة للوحة تحكم التقارير',
     'reporting-description' => 'وصف التقارير',

@@ -107,6 +107,6 @@ return [
             ],
         ],
     ],
-    'sections.' => '[TODO] Sections.',
+    'sections.' => 'أنحاء',
     'toc' => 'المحتويات',
 ];
