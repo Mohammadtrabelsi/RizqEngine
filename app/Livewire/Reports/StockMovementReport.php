@@ -4,8 +4,8 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Product\Entities\Product;
-use Modules\Product\Entities\StockMovement;
+use App\Models\Product;
+use App\Models\StockMovement;
 
 class StockMovementReport extends Component
 {
