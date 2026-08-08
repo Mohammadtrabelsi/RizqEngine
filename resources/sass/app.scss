@@ -245,51 +245,114 @@ body:before {
 //  5. Shell — sidebar & header (dark)
 // ---------------------------------------------------------------------
 .c-sidebar {
-    background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
-    box-shadow: inset -1px 0 0 $n-divider;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fcfdff 0%, #f4f7ff 100%);
+    box-shadow: inset -1px 0 0 rgba(15, 23, 42, 0.06), 0 24px 60px rgba(15, 23, 42, 0.06);
+    border-right: 1px solid rgba(15, 23, 42, 0.06);
     color: $n-text;
 }
+.c-sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 180px;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.09), rgba(6, 182, 212, 0.06));
+    pointer-events: none;
+}
 .c-sidebar .c-sidebar-brand {
+    position: relative;
     background: transparent;
-    padding: 0.9rem 0.75rem;
+    padding: 0.95rem 0.85rem 0.7rem;
     justify-content: flex-start;
+}
+.c-sidebar .c-sidebar-brand-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0;
+    text-decoration: none;
+    color: $n-text;
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(79, 70, 229, 0.08);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+.c-sidebar .c-sidebar-nav {
+    position: relative;
+    padding: 0.3rem 0.75rem 1rem;
+}
+.c-sidebar .c-sidebar-nav::before {
+    content: 'Navigation';
+    display: block;
+    margin: 0.35rem 0.35rem 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(15, 23, 42, 0.45);
 }
 .c-sidebar .c-sidebar-nav-link,
 .c-sidebar .c-sidebar-nav-dropdown-toggle {
-    margin: 2px 10px;
-    border-radius: var(--radius-sm);
-    font-weight: 500;
+    margin: 2px 0;
+    padding: 0.72rem 0.85rem;
+    border-radius: 0;
+    font-weight: 600;
     font-size: 0.85rem;
     color: rgba(20, 33, 61, 0.82);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    border-left: 3px solid transparent;
 }
 .c-sidebar .c-sidebar-nav-link:hover,
 .c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
     color: $n-accent;
     background: rgba(79, 70, 229, 0.08);
+    transform: translateX(2px);
+    box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.08);
 }
 .c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon,
 .c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
-    color: rgba(20, 33, 61, 0.55);
+    color: rgba(20, 33, 61, 0.58);
+    margin-right: 0.65rem;
+    font-size: 0.95rem;
 }
 .c-sidebar .c-sidebar-nav-link:hover .c-sidebar-nav-icon,
-.c-sidebar .c-sidebar-nav-link.c-active .c-sidebar-nav-icon { color: inherit; }
+.c-sidebar .c-sidebar-nav-link.c-active .c-sidebar-nav-icon,
+.c-sidebar .c-active.c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
+    color: inherit;
+}
 .c-sidebar .c-sidebar-nav-link.c-active,
 .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
     color: $n-accent-800;
-    font-weight: 600;
-    background: linear-gradient(90deg, rgba(79, 70, 229, 0.12), rgba(6, 182, 212, 0.12));
+    font-weight: 700;
+    background: linear-gradient(90deg, rgba(79, 70, 229, 0.12), rgba(6, 182, 212, 0.1));
+    box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.12), 0 10px 24px rgba(79, 70, 229, 0.08);
+    border-left-color: $n-accent;
 }
 .c-sidebar .c-sidebar-nav-dropdown.c-show > .c-sidebar-nav-dropdown-toggle {
-    background: rgba(79, 70, 229, 0.08);
+    background: rgba(79, 70, 229, 0.09);
     color: $n-accent;
+    box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.12);
+}
+.c-sidebar .c-sidebar-nav-dropdown-items {
+    padding-left: 0.2rem;
 }
 .c-sidebar .c-sidebar-nav-dropdown-items .c-sidebar-nav-link {
-    margin: 1px 10px 1px 14px;
-    font-size: 0.8rem;
+    margin: 1px 0 1px 0.9rem;
+    padding: 0.58rem 0.75rem;
+    font-size: 0.78rem;
+    border-radius: 0;
 }
-.c-sidebar-minimizer { background: transparent; }
-.c-sidebar-minimizer:hover { background: rgba(79, 70, 229, 0.08); }
+.c-sidebar-minimizer {
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(79, 70, 229, 0.12);
+    border-radius: 999px;
+    margin: 0.4rem 0.9rem 0.9rem;
+    color: $n-accent;
+}
+.c-sidebar-minimizer:hover {
+    background: rgba(79, 70, 229, 0.08);
+}
 
 .c-header {
     background: rgba(255, 255, 255, 0.9);

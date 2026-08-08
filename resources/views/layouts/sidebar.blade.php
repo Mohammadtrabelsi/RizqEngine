@@ -1,7 +1,7 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show {{ request()->routeIs('app.pos.*') ? 'c-sidebar-minimized' : '' }}" id="sidebar">
     @php($appSettings = settings())
     <div class="c-sidebar-brand d-md-down-none">
-        <a href="{{ route('home') }}" style="text-decoration:none; color:var(--color-text);">
+        <a class="c-sidebar-brand-link" href="{{ route('home') }}">
             <span class="c-sidebar-brand-full">
                 @if($appSettings->client_logo || $appSettings->client_name)
                     <span style="display:inline-flex; align-items:center; gap:6px; line-height:1;">

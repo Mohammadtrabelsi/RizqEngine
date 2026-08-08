@@ -1,32 +1,44 @@
 {
   "resources/js/app.js": {
-    "file": "assets/app-6182b509.js",
-    "isEntry": true,
-    "src": "resources/js/app.js"
+    "file": "assets/app-Bq0lSZkO.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
   },
   "resources/js/chart-config.js": {
-    "file": "assets/chart-config-5c99e0a8.js",
-    "isEntry": true,
-    "src": "resources/js/chart-config.js"
+    "file": "assets/chart-config-COCZ-o_P.js",
+    "name": "chart-config",
+    "src": "resources/js/chart-config.js",
+    "isEntry": true
   },
   "resources/js/filepond.js": {
-    "file": "assets/filepond-9aa6d4eb.js",
-    "isEntry": true,
-    "src": "resources/js/filepond.js"
+    "file": "assets/filepond-BvYIltf1.js",
+    "name": "filepond",
+    "src": "resources/js/filepond.js",
+    "isEntry": true
   },
   "resources/js/login.js": {
-    "file": "assets/login-af75e073.js",
-    "isEntry": true,
-    "src": "resources/js/login.js"
+    "file": "assets/login-wlYLim_F.js",
+    "name": "login",
+    "src": "resources/js/login.js",
+    "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-ef21b85d.css",
-    "isEntry": true,
-    "src": "resources/sass/app.scss"
+    "file": "assets/app-DMXj9XX1.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/sass/app.scss",
+    "isEntry": true
   },
   "resources/sass/errors.scss": {
-    "file": "assets/errors-1d859143.css",
-    "isEntry": true,
-    "src": "resources/sass/errors.scss"
+    "file": "assets/errors-D9Pvgfxm.css",
+    "name": "errors",
+    "names": [
+      "errors.css"
+    ],
+    "src": "resources/sass/errors.scss",
+    "isEntry": true
   }
 }
