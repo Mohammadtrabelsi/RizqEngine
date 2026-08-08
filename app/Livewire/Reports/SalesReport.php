@@ -4,7 +4,7 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Sale\Entities\Sale;
+use App\Models\Sale;
 
 class SalesReport extends Component
 {

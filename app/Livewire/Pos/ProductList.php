@@ -4,7 +4,7 @@ namespace App\Livewire\Pos;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Product\Entities\Product;
+use App\Models\Product;
 
 class ProductList extends Component
 {

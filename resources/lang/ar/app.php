@@ -14,4 +14,6 @@ return [
     'update' => 'تحديث',
     'version' => 'الإصدار',
     'language' => 'اللغة',
+    'search' => 'بحث',
+    'are_you_sure' => 'هل أنت متأكد؟',
 ];

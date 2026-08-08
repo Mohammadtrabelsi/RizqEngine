@@ -14,4 +14,6 @@ return [
     'update' => 'Update',
     'version' => 'Version',
     'language' => 'Language',
+    'search' => 'Search',
+    'are_you_sure' => 'Are you sure?',
 ];

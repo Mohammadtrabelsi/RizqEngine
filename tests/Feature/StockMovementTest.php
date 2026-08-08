@@ -4,11 +4,11 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Product\Entities\Category;
-use Modules\Product\Entities\Product;
-use Modules\Product\Entities\StockMovement;
-use Modules\Product\Exceptions\InsufficientStockException;
-use Modules\Product\Services\StockService;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\StockMovement;
+use App\Exceptions\InsufficientStockException;
+use App\Services\StockService;
 use Tests\TestCase;
 
 class StockMovementTest extends TestCase

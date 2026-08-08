@@ -4,8 +4,8 @@ namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Product\Entities\Category;
-use Modules\Product\Entities\Product;
+use App\Models\Category;
+use App\Models\Product;
 
 class InventoryValuationReport extends Component
 {
