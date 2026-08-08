@@ -47,22 +47,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('expense-categories.store') }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="category_name">{{ __('expense-category.category_name') }} <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="category_name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="category_description">{{ __('expense-category.description') }}</label>
-                            <textarea class="form-control" name="category_description" id="category_description" rows="5"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">{{ __('app.create') }} <i class="bi bi-check"></i></button>
-                    </div>
-                </form>
+                <div class="modal-body">
+                    <livewire:expense-categories.expense-category-form/>
+                </div>
             </div>
         </div>
     </div>

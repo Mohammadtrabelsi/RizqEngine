@@ -15,28 +15,12 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-7">
-                @include('utils.alerts')
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('expense-categories.update', $expenseCategory) }}" method="POST">
-                            @csrf
-                            @method('patch')
-                            <div class="form-group">
-                                <label for="category_name">{{ __('expense-category.category_name') }} <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="category_name" required value="{{ $expenseCategory->category_name }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="category_description">{{ __('expense-category.description') }}</label>
-                                <textarea class="form-control" name="category_description" id="category_description" rows="5">{{ $expenseCategory->category_description }}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">{{ __('app.update') }} <i class="bi bi-check"></i></button>
-                            </div>
-                        </form>
+                        <livewire:expense-categories.expense-category-form :expense-category="$expenseCategory"/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
