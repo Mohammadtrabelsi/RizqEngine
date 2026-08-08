@@ -36,3 +36,39 @@ window.jQuery && $(function () {
         document.getElementById('logout-form').submit();
     });
 })
+
+// ---------------------------------------------------------------------
+// Keep the fixed-header offset in sync with the header's real height.
+//
+// CoreUI offsets the page content with a hardcoded 104px margin that assumes
+// a single-row navbar plus breadcrumb subheader. On small screens the header
+// can be taller (or shorter), which left the page content hidden underneath
+// the breadcrumb. Measure the header and expose its height as a CSS variable
+// (--c-header-height) that the layout uses for the content offset.
+// ---------------------------------------------------------------------
+(function () {
+    function syncHeaderHeight() {
+        const header = document.querySelector('.c-header.c-header-fixed');
+        if (!header) return;
+        document.documentElement.style.setProperty(
+            '--c-header-height',
+            header.offsetHeight + 'px'
+        );
+    }
+
+    window.addEventListener('DOMContentLoaded', syncHeaderHeight);
+    window.addEventListener('load', syncHeaderHeight);
+    window.addEventListener('resize', syncHeaderHeight);
+    window.addEventListener('orientationchange', syncHeaderHeight);
+
+    // Recalculate when the header size changes for reasons other than a window
+    // resize (e.g. the breadcrumb content swapping, fonts loading).
+    if (window.ResizeObserver) {
+        const observe = function () {
+            const header = document.querySelector('.c-header.c-header-fixed');
+            if (header) new ResizeObserver(syncHeaderHeight).observe(header);
+        };
+        if (document.readyState !== 'loading') observe();
+        else window.addEventListener('DOMContentLoaded', observe);
+    }
+})();

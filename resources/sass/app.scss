@@ -1037,3 +1037,54 @@ button:focus-visible,
     .card:hover { transform: none; }
     .n-bar-col:hover .n-bar { transform: none; }
 }
+
+// ---------------------------------------------------------------------
+//  12. Mobile header / breadcrumb fix
+//  The header is fixed and stacks the navbar on top of the breadcrumb
+//  subheader. CoreUI offsets the content with a hardcoded 104px margin,
+//  which assumes a single-row navbar. On small screens the roomy nav-item
+//  spacing and verbose profile text push the navbar onto a second row, so
+//  the fixed header grows past 104px and the page content slides up
+//  underneath the breadcrumb.
+//
+//  Two things keep it clean: trim the navbar so it stays a single, compact
+//  row on phones, and let JS (see resources/js/app.js) sync the content
+//  offset to the header's real height via the --c-header-height variable so
+//  the content can never hide behind the breadcrumb, whatever the height.
+// ---------------------------------------------------------------------
+.c-header-fixed ~ .c-body {
+    margin-top: var(--c-header-height, 104px);
+}
+
+@media (max-width: 991.98px) {
+    // Keep the navbar on one row and let long content ellipsize instead of
+    // wrapping onto a second line.
+    .c-header > .c-header-nav {
+        flex-wrap: nowrap;
+    }
+
+    // The default `m-3` on every nav item eats ~2rem of width per item; tighten
+    // it so the essentials fit a phone-width row.
+    .c-header .c-header-nav-item.m-3 {
+        margin: 0 0.35rem !important;
+    }
+    .c-header .c-header-nav.mr-4 { margin-right: 0.5rem !important; }
+
+    // The profile block's name / "Online" text is the main space hog — hide the
+    // text and keep just the avatar as a compact menu trigger.
+    .c-header .c-header-nav-item.dropdown .c-header-nav-link .d-flex.flex-column {
+        display: none !important;
+    }
+    .c-header .c-header-nav-item.dropdown .c-avatar.mr-2 {
+        margin-right: 0 !important;
+    }
+
+    // The breadcrumb subheader can wrap on narrow screens; let it scroll
+    // horizontally rather than growing taller.
+    .c-subheader {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .c-subheader .breadcrumb { flex-wrap: nowrap; white-space: nowrap; }
+}
