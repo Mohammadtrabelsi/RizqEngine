@@ -1184,6 +1184,9 @@ button:focus-visible,
 }
 
 // Mobile toggler + collapse behaviour.
+// On desktop the menu is always visible — override Bootstrap's `.collapse`
+// (which defaults to display:none) so the bar shows without the toggler.
+.app-topnav .app-topnav-collapse { display: block !important; }
 .app-topnav-toggler {
     display: none;
     align-items: center;
@@ -1196,7 +1199,9 @@ button:focus-visible,
 }
 @media (max-width: 991.98px) {
     .app-topnav-toggler { display: inline-flex; }
-    .app-topnav .app-topnav-collapse:not(.show) { display: none; }
+    // Below the breakpoint, honour the collapse state again.
+    .app-topnav .app-topnav-collapse { display: none !important; }
+    .app-topnav .app-topnav-collapse.show { display: block !important; }
     .app-topnav-list {
         flex-direction: column;
         align-items: stretch;
