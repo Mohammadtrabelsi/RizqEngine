@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Pos;
 
+use App\Services\ProductCatalogService;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Product\Entities\Product;
 
 class ProductList extends Component
 {
@@ -29,13 +29,10 @@ class ProductList extends Component
         $this->category_id = '';
     }
 
-    public function render()
+    public function render(ProductCatalogService $service)
     {
         return view('livewire.pos.product-list', [
-            'products' => Product::when($this->category_id, function ($query) {
-                return $query->where('category_id', $this->category_id);
-            })
-                ->paginate($this->limit),
+            'products' => $service->paginateByCategory($this->category_id, $this->limit),
         ]);
     }
 

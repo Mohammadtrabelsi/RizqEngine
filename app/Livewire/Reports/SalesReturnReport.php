@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Reports;
 
+use App\Services\Reports\SalesReturnReportService;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\SalesReturn\Entities\SaleReturn;
 
 class SalesReturnReport extends Component
 {
@@ -39,29 +39,22 @@ class SalesReturnReport extends Component
         $this->payment_status = '';
     }
 
-    public function render()
+    public function render(SalesReturnReportService $service)
     {
-        $sale_returns = SaleReturn::whereDate('date', '>=', $this->start_date)
-            ->whereDate('date', '<=', $this->end_date)
-            ->when($this->customer_id, function ($query) {
-                return $query->where('customer_id', $this->customer_id);
-            })
-            ->when($this->sale_return_status, function ($query) {
-                return $query->where('status', $this->sale_return_status);
-            })
-            ->when($this->payment_status, function ($query) {
-                return $query->where('payment_status', $this->payment_status);
-            })
-            ->orderBy('date', 'desc')->paginate(10);
-
         return view('livewire.reports.sales-return-report', [
-            'sale_returns' => $sale_returns,
+            'sale_returns' => $service->paginate(
+                $this->start_date,
+                $this->end_date,
+                $this->customer_id,
+                $this->sale_return_status,
+                $this->payment_status,
+                10
+            ),
         ]);
     }
 
     public function generateReport()
     {
         $this->validate();
-        $this->render();
     }
 }

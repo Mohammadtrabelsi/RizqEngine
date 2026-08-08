@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Reports;
 
+use App\Services\Reports\SalesReportService;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Sale\Entities\Sale;
 
 class SalesReport extends Component
 {
@@ -39,29 +39,22 @@ class SalesReport extends Component
         $this->payment_status = '';
     }
 
-    public function render()
+    public function render(SalesReportService $service)
     {
-        $sales = Sale::whereDate('date', '>=', $this->start_date)
-            ->whereDate('date', '<=', $this->end_date)
-            ->when($this->customer_id, function ($query) {
-                return $query->where('customer_id', $this->customer_id);
-            })
-            ->when($this->sale_status, function ($query) {
-                return $query->where('status', $this->sale_status);
-            })
-            ->when($this->payment_status, function ($query) {
-                return $query->where('payment_status', $this->payment_status);
-            })
-            ->orderBy('date', 'desc')->paginate(10);
-
         return view('livewire.reports.sales-report', [
-            'sales' => $sales,
+            'sales' => $service->paginate(
+                $this->start_date,
+                $this->end_date,
+                $this->customer_id,
+                $this->sale_status,
+                $this->payment_status,
+                10
+            ),
         ]);
     }
 
     public function generateReport()
     {
         $this->validate();
-        $this->render();
     }
 }

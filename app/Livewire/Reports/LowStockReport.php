@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Reports;
 
+use App\Services\Reports\LowStockService;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Product\Entities\Product;
 
 class LowStockReport extends Component
 {
@@ -19,25 +19,12 @@ class LowStockReport extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(LowStockService $service)
     {
-        $query = Product::with('category')
-            ->when(
-                $this->only_out_of_stock,
-                fn ($q) => $q->where('product_quantity', '<=', 0),
-                // Alert threshold: on-hand quantity has reached or dropped below
-                // the per-product alert level configured on the product.
-                fn ($q) => $q->whereColumn('product_quantity', '<=', 'product_stock_alert')
-            )
-            ->orderBy('product_quantity');
-
-        $outOfStockCount = Product::where('product_quantity', '<=', 0)->count();
-        $lowStockCount = Product::whereColumn('product_quantity', '<=', 'product_stock_alert')->count();
-
         return view('livewire.reports.low-stock-report', [
-            'products' => $query->paginate(15),
-            'outOfStockCount' => $outOfStockCount,
-            'lowStockCount' => $lowStockCount,
+            'products' => $service->paginate($this->only_out_of_stock, 15),
+            'outOfStockCount' => $service->outOfStockCount(),
+            'lowStockCount' => $service->lowStockCount(),
         ]);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Services\ProductCatalogService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Modules\Product\Entities\Product;
 
 class SearchProduct extends Component
 {
@@ -28,9 +28,8 @@ class SearchProduct extends Component
 
     public function updatedQuery()
     {
-        $this->search_results = Product::where('product_name', 'like', '%'.$this->query.'%')
-            ->orWhere('product_code', 'like', '%'.$this->query.'%')
-            ->take($this->how_many)->get();
+        $this->search_results = app(ProductCatalogService::class)
+            ->search($this->query, $this->how_many);
     }
 
     public function loadMore()
