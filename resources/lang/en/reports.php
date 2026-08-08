@@ -1,8 +1,16 @@
 <?php
 
 return [
+    'bank_transfer' => 'Bank transfer',
+    'cash' => 'Cash',
+    'cheque' => 'Cheque',
+    'credit_card' => 'Credit card',
+    'end_date' => 'End date',
+    'filter_report' => 'Filter report',
     'inventory_valuation' => 'Inventory valuation',
     'low_stock' => 'Low stock',
+    'other' => 'Other',
+    'payment_method' => 'Payment method',
     'payments' => 'Payments',
     'product_movement' => 'Product movement',
     'profit_loss' => 'Profit loss',
@@ -10,5 +18,8 @@ return [
     'purchases_return' => 'Purchases return',
     'sales' => 'Sales',
     'sales_return' => 'Sales return',
+    'select_payment_method' => 'Select payment method',
+    'select_payments' => 'Select payments',
+    'start_date' => 'Start date',
     'stock_movement' => 'Stock movement',
 ];

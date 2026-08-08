@@ -7,21 +7,21 @@
                         <div class="form-row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>Start Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control">
                                     @error('start_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>End Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control">
                                     @error('end_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>Ranking</label>
+                                    <label>{{ __('report.ranking') }}</label>
                                     <select wire:model="direction" class="form-control">
                                         <option value="fast">{{ __('report.fast-moving') }}</option>
                                         <option value="slow">{{ __('report.slow-moving') }}</option>
@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label>Show Top</label>
+                                    <label>{{ __('report.show-top') }}</label>
                                     <select wire:model="limit" class="form-control">
                                         <option value="10">{{ __('report.top-10') }}</option>
                                         <option value="25">{{ __('report.top-25') }}</option>

@@ -1,8 +1,16 @@
 <?php
 
 return [
+    'bank_transfer' => '[TODO] Bank transfer',
+    'cash' => '[TODO] Cash',
+    'cheque' => '[TODO] Cheque',
+    'credit_card' => '[TODO] Credit card',
+    'end_date' => '[TODO] End date',
+    'filter_report' => '[TODO] Filter report',
     'inventory_valuation' => 'تقييم المخزون',
     'low_stock' => 'انخفاض المخزون',
+    'other' => '[TODO] Other',
+    'payment_method' => '[TODO] Payment method',
     'payments' => 'الدفعات',
     'product_movement' => 'حركة المنتجات',
     'profit_loss' => 'الأرباح والخسائر',
@@ -10,5 +18,8 @@ return [
     'purchases_return' => 'مرتجعات المشتريات',
     'sales' => 'المبيعات',
     'sales_return' => 'مرتجعات المبيعات',
+    'select_payment_method' => '[TODO] Select payment method',
+    'select_payments' => '[TODO] Select payments',
+    'start_date' => '[TODO] Start date',
     'stock_movement' => 'حركة المخزون',
 ];

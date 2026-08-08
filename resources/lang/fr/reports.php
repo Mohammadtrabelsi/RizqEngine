@@ -1,8 +1,16 @@
 <?php
 
 return [
+    'bank_transfer' => '[TODO] Bank transfer',
+    'cash' => '[TODO] Cash',
+    'cheque' => '[TODO] Cheque',
+    'credit_card' => '[TODO] Credit card',
+    'end_date' => '[TODO] End date',
+    'filter_report' => '[TODO] Filter report',
     'inventory_valuation' => 'Évaluation des stocks',
     'low_stock' => 'Stock faible',
+    'other' => '[TODO] Other',
+    'payment_method' => '[TODO] Payment method',
     'payments' => 'Paiements',
     'product_movement' => 'Mouvement de produit',
     'profit_loss' => 'Pertes et profits',
@@ -10,5 +18,8 @@ return [
     'purchases_return' => 'Retours d\'achats',
     'sales' => 'Ventes',
     'sales_return' => 'Retours de ventes',
+    'select_payment_method' => '[TODO] Select payment method',
+    'select_payments' => '[TODO] Select payments',
+    'start_date' => '[TODO] Start date',
     'stock_movement' => 'Mouvement de stock',
 ];
