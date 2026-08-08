@@ -3,9 +3,9 @@
 return [
     'add_adjustment' => 'Add adjustment',
     'addition' => 'Addition',
-    'adjustment-created' => 'Adjustment-created',
-    'adjustment-deleted' => 'Adjustment-deleted',
-    'adjustment-updated' => 'Adjustment-updated',
+    'adjustment-created' => 'Adjustment created',
+    'adjustment-deleted' => 'Adjustment deleted',
+    'adjustment-updated' => 'Adjustment updated',
     'adjustment_details' => 'Adjustment details',
     'adjustments' => 'Adjustments',
     'create_adjustment' => 'Create adjustment',

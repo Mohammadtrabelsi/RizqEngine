@@ -32,35 +32,39 @@
     </div>
 
     <div class="login-form-wrap">
-        <form class="login-form" method="post" action="{{ url('/password/email') }}">
-            @csrf
+        <div class="login-form-card card">
+            <div class="card-body">
+                <form class="login-form" method="post" action="{{ url('/password/email') }}">
+                    @csrf
 
-            <div>
-                <div class="login-title">{{ __('password.reset') }}</div>
-                <div class="text-muted" style="font-size:14px">{{ __('password.reset-message') }}</div>
+                    <div class="login-form__heading">
+                        <h2 class="login-form__title">{{ __('password.reset') }}</h2>
+                        <p class="login-form__subtitle">{{ __('password.reset-message') }}</p>
+                    </div>
+
+                    @if (session('status'))
+                        <div class="login-form__alert" style="border-color: var(--color-accent); color: var(--color-accent); background: rgba(145, 132, 217, 0.1);">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <div class="login-form__field">
+                        <label for="email">{{ __('password.email') }}</label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                               name="email" value="{{ old('email') }}" placeholder="you@store.com" autofocus>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <button class="btn btn-primary btn-block" type="submit">{{ __('password.send-reset-link') }}</button>
+
+                    <div class="text-muted" style="font-size:13px; text-align:center">
+                        <a href="{{ route('login') }}">{{ __('login.sign-in') }}</a>
+                    </div>
+                </form>
             </div>
-
-            @if (session('status'))
-                <div class="card elev-sm" style="border:1px solid var(--color-accent); color:var(--color-accent); padding:var(--space-3); font-size:13px">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <div class="field">
-                <label for="email">{{ __('password.email') }}</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                       name="email" value="{{ old('email') }}" placeholder="you@store.com" autofocus>
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <button class="btn btn-primary btn-block" type="submit">{{ __('password.send-reset-link') }}</button>
-
-            <div class="text-muted" style="font-size:13px; text-align:center">
-                <a href="{{ route('login') }}">{{ __('login.sign-in') }}</a>
-            </div>
-        </form>
+        </div>
     </div>
 
 </div>

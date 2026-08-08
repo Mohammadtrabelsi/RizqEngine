@@ -40,70 +40,74 @@
 
     {{-- Form panel --}}
     <div class="login-form-wrap">
-        <div class="login-lang" style="display:flex; justify-content:flex-end; margin-bottom:1rem;">
-            @include('includes.language-switcher')
+        <div class="login-form-card card">
+            <div class="card-body">
+                <div class="login-lang" style="display:flex; justify-content:flex-end; margin-bottom:1rem;">
+                    @include('includes.language-switcher')
+                </div>
+                <form id="login" class="login-form" method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <div class="login-form__heading">
+                        <h2 class="login-form__title">{{ __('login.sign-in') }}</h2>
+                        <p class="login-form__subtitle">{{ __('login.welcome-back') }}</p>
+                    </div>
+
+                    @if(Session::has('account_deactivated'))
+                        <div class="login-form__alert">
+                            {{ Session::get('account_deactivated') }}
+                        </div>
+                    @endif
+
+                    <div class="login-form__field">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            </div>
+                            <input id="email" type="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   name="email" value="{{ old('email') }}"
+                                   placeholder="{{ __('login.email') }}" autocomplete="email" autofocus>
+                        </div>
+                        @error('email')
+                            <div class="login-form__error">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="login-form__field">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            </div>
+                            <input id="password" type="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   name="password"
+                                   placeholder="{{ __('login.password') }}" autocomplete="current-password">
+                        </div>
+                        @error('password')
+                            <div class="login-form__error">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="login-form__actions">
+                        <button id="submit" class="btn btn-primary login-form__submit" type="submit">
+                            {{ __('login.sign-in') }}
+                            <span id="spinner" class="spinner-border text-info login-spinner" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </span>
+                        </button>
+                        <a class="btn btn-link login-form__forgot" href="{{ route('password.request') }}">
+                            {{ __('login.forgot-password') }}
+                        </a>
+                    </div>
+
+                    <div class="login-form__contact">
+                        {{ __('login.contact-owner-message') }}
+                        <a href="{{ route('welcome') }}">{{ __('login.contact-owner') }}</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form id="login" class="login-form" method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div class="login-form__heading">
-                <h2 class="login-form__title">{{ __('login.sign-in') }}</h2>
-                <p class="login-form__subtitle">{{ __('login.welcome-back') }}</p>
-            </div>
-
-            @if(Session::has('account_deactivated'))
-                <div class="login-form__alert">
-                    {{ Session::get('account_deactivated') }}
-                </div>
-            @endif
-
-            <div class="login-form__field">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    </div>
-                    <input id="email" type="email"
-                           class="form-control @error('email') is-invalid @enderror"
-                           name="email" value="{{ old('email') }}"
-                           placeholder="{{ __('login.email') }}" autocomplete="email" autofocus>
-                </div>
-                @error('email')
-                    <div class="login-form__error">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="login-form__field">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    </div>
-                    <input id="password" type="password"
-                           class="form-control @error('password') is-invalid @enderror"
-                           name="password"
-                           placeholder="{{ __('login.password') }}" autocomplete="current-password">
-                </div>
-                @error('password')
-                    <div class="login-form__error">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="login-form__actions">
-                <button id="submit" class="btn btn-primary login-form__submit" type="submit">
-                    {{ __('login.sign-in') }}
-                    <span id="spinner" class="spinner-border text-info login-spinner" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </span>
-                </button>
-                <a class="btn btn-link login-form__forgot" href="{{ route('password.request') }}">
-                    {{ __('login.forgot-password') }}
-                </a>
-            </div>
-
-            <div class="login-form__contact">
-                {{ __('login.contact-owner-message') }}
-                <a href="{{ route('welcome') }}">{{ __('login.contact-owner') }}</a>
-            </div>
-        </form>
     </div>
 
 </div>
