@@ -17,6 +17,7 @@
     <div class="c-wrapper">
         <header class="c-header c-header-light c-header-fixed">
             @include('layouts.header')
+            @include('layouts.menu-horizontal')
             <div class="c-subheader justify-content-between px-3">
                 @yield('breadcrumb')
             </div>
@@ -24,7 +25,6 @@
 
         <div class="c-body">
             <main class="c-main">
-                @include('layouts.menu-horizontal')
                 <div class="container-fluid">
                     @include('utils.flash')
                 </div>
