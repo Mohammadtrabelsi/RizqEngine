@@ -32,53 +32,57 @@
     </div>
 
     <div class="login-form-wrap">
-        <form class="login-form" method="post" action="{{ url('/register') }}">
-            @csrf
+        <div class="login-form-card card">
+            <div class="card-body">
+                <form class="login-form" method="post" action="{{ url('/register') }}">
+                    @csrf
 
-            <div>
-                <div class="login-title">{{ __('auth.register') }}</div>
-                <div class="text-muted" style="font-size:14px">{{ __('auth.create-account') }}</div>
+                    <div class="login-form__heading">
+                        <h2 class="login-form__title">{{ __('auth.register') }}</h2>
+                        <p class="login-form__subtitle">{{ __('auth.create-account') }}</p>
+                    </div>
+
+                    <div class="login-form__field">
+                        <label for="name">{{ __('auth.full-name') }}</label>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                               name="name" value="{{ old('name') }}" placeholder="{{ __('auth.full-name') }}" autofocus>
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="login-form__field">
+                        <label for="email">{{ __('auth.email') }}</label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                               name="email" value="{{ old('email') }}" placeholder="you@store.com">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="login-form__field">
+                        <label for="password">{{ __('login.password') }}</label>
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                               name="password" placeholder="••••••••">
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="login-form__field">
+                        <label for="password_confirmation">{{ __('auth.confirm-password') }}</label>
+                        <input id="password_confirmation" type="password" name="password_confirmation"
+                               class="form-control" placeholder="••••••••">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">{{ __('auth.register') }}</button>
+
+                    <div class="text-muted" style="font-size:13px; text-align:center">
+                        <a href="{{ route('login') }}">{{ __('auth.already-have-account') }}</a>
+                    </div>
+                </form>
             </div>
-
-            <div class="field">
-                <label for="name">{{ __('auth.full-name') }}</label>
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                       name="name" value="{{ old('name') }}" placeholder="{{ __('auth.full-name') }}" autofocus>
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="field">
-                <label for="email">{{ __('auth.email') }}</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                       name="email" value="{{ old('email') }}" placeholder="you@store.com">
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="field">
-                <label for="password">{{ __('login.password') }}</label>
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                       name="password" placeholder="••••••••">
-                @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="field">
-                <label for="password_confirmation">{{ __('auth.confirm-password') }}</label>
-                <input id="password_confirmation" type="password" name="password_confirmation"
-                       class="form-control" placeholder="••••••••">
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block">{{ __('auth.register') }}</button>
-
-            <div class="text-muted" style="font-size:13px; text-align:center">
-                <a href="{{ route('login') }}">{{ __('auth.already-have-account') }}</a>
-            </div>
-        </form>
+        </div>
     </div>
 
 </div>
