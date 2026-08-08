@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Customer Details')
+@section('title', {{ __('customer.customer_details') }})
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">Customers</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">{{ __('customer.customers') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('customer.customer_details') }}</li>
     </ol>
 @endsection
 
@@ -16,34 +16,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Customer Name</th>
-                                    <td>{{ $customer->customer_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Customer Email</th>
-                                    <td>{{ $customer->customer_email }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Customer Phone</th>
-                                    <td>{{ $customer->customer_phone }}</td>
-                                </tr>
-                                <tr>
-                                    <th>City</th>
-                                    <td>{{ $customer->city }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Country</th>
-                                    <td>{{ $customer->country }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Address</th>
-                                    <td>{{ $customer->address }}</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_name') }}</span><span>{{ $customer->customer_name }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_email') }}</span><span>{{ $customer->customer_email }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_phone') }}</span><span>{{ $customer->customer_phone }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.city') }}</span><span>{{ $customer->city }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.country') }}</span><span>{{ $customer->country }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.address') }}</span><span>{{ $customer->address }}</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,17 @@
 <?php
 
 return [
-    'account' => 'الحساب',
-    'developed-by' => 'تم التطوير بواسطة',
-    'logout' => 'تسجيل الخروج',
-    'no-notifications' => 'لا توجد إشعارات',
-    'notifications' => 'الإشعارات',
-    'online' => 'متصل',
-    'profile' => 'الملف الشخصي',
-    'version' => 'الإصدار',
+    'account' => 'Compte',
+    'create' => 'Créer',
+    'developed-by' => 'Développé par',
+    'home' => 'Accueil',
+    'logout' => 'Déconnexion',
+    'no-notifications' => 'Aucune notification',
+    'notifications' => 'Notifications',
+    'online' => 'En ligne',
+    'pos_system' => 'Système de point de vente',
+    'profile' => 'Profil',
+    'update' => 'Mettre à jour',
+    'version' => 'Version',
+    'language' => 'Langue',
 ];

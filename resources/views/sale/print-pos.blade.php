@@ -69,61 +69,43 @@
             Reference: {{ $sale->reference }}<br>
             Name: {{ $sale->customer_name }}
         </p>
-        <table class="table-data">
-            <tbody>
+        <div class="receipt-items">
             @foreach($sale->saleDetails as $saleDetail)
-                <tr>
-                    <td colspan="2">
-                        {{ $saleDetail->product->product_name }}
-                        ({{ $saleDetail->quantity }} x {{ format_currency($saleDetail->price) }})
-                    </td>
-                    <td style="text-align:right;vertical-align:bottom">{{ format_currency($saleDetail->sub_total) }}</td>
-                </tr>
+                <div style="display:flex;justify-content:space-between;border-bottom:1px dashed #ddd;padding:5px 0;">
+                    <span>{{ $saleDetail->product->product_name }}
+                        ({{ $saleDetail->quantity }} x {{ format_currency($saleDetail->price) }})</span>
+                    <span style="text-align:right;">{{ format_currency($saleDetail->sub_total) }}</span>
+                </div>
             @endforeach
 
             @if($sale->tax_percentage)
-                <tr>
-                    <th colspan="2" style="text-align:left">Tax ({{ $sale->tax_percentage }}%)</th>
-                    <th style="text-align:right">{{ format_currency($sale->tax_amount) }}</th>
-                </tr>
+                <div style="display:flex;justify-content:space-between;border-bottom:1px dashed #ddd;padding:5px 0;font-weight:bold;">
+                    <span>Tax ({{ $sale->tax_percentage }}%)</span><span>{{ format_currency($sale->tax_amount) }}</span>
+                </div>
             @endif
             @if($sale->discount_percentage)
-                <tr>
-                    <th colspan="2" style="text-align:left">Discount ({{ $sale->discount_percentage }}%)</th>
-                    <th style="text-align:right">{{ format_currency($sale->discount_amount) }}</th>
-                </tr>
+                <div style="display:flex;justify-content:space-between;border-bottom:1px dashed #ddd;padding:5px 0;font-weight:bold;">
+                    <span>Discount ({{ $sale->discount_percentage }}%)</span><span>{{ format_currency($sale->discount_amount) }}</span>
+                </div>
             @endif
             @if($sale->shipping_amount)
-                <tr>
-                    <th colspan="2" style="text-align:left">Shipping</th>
-                    <th style="text-align:right">{{ format_currency($sale->shipping_amount) }}</th>
-                </tr>
+                <div style="display:flex;justify-content:space-between;border-bottom:1px dashed #ddd;padding:5px 0;font-weight:bold;">
+                    <span>Shipping</span><span>{{ format_currency($sale->shipping_amount) }}</span>
+                </div>
             @endif
-            <tr>
-                <th colspan="2" style="text-align:left">Grand Total</th>
-                <th style="text-align:right">{{ format_currency($sale->total_amount) }}</th>
-            </tr>
-            </tbody>
-        </table>
-        <table>
-            <tbody>
-                <tr style="background-color:#ddd;">
-                    <td class="centered" style="padding: 5px;">
-                        Paid By: {{ $sale->payment_method }}
-                    </td>
-                    <td class="centered" style="padding: 5px;">
-                        Amount: {{ format_currency($sale->paid_amount) }}
-                    </td>
-                </tr>
-                <tr style="border-bottom: 0;">
-                    <td class="centered" colspan="3">
-                        <div style="margin-top: 10px;">
-                            {!! \Milon\Barcode\Facades\DNS1DFacade::getBarcodeSVG($sale->reference, 'C128', 1, 25, 'black', false) !!}
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px dashed #ddd;padding:5px 0;font-weight:bold;">
+                <span>Grand Total</span><span>{{ format_currency($sale->total_amount) }}</span>
+            </div>
+        </div>
+        <div class="receipt-payment" style="margin-top:10px;">
+            <div style="display:flex;background-color:#ddd;">
+                <div class="centered" style="padding:5px;width:50%;">Paid By: {{ $sale->payment_method }}</div>
+                <div class="centered" style="padding:5px;width:50%;">Amount: {{ format_currency($sale->paid_amount) }}</div>
+            </div>
+            <div class="centered" style="margin-top:10px;">
+                {!! \Milon\Barcode\Facades\DNS1DFacade::getBarcodeSVG($sale->reference, 'C128', 1, 25, 'black', false) !!}
+            </div>
+        </div>
     </div>
 </div>
 

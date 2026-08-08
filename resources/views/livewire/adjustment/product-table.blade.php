@@ -9,77 +9,59 @@
             </div>
         </div>
     @endif
-    <div class="table-responsive">
+    <div class="position-relative">
         <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
             <div class="spinner-border text-primary" role="status">
                 <span class="sr-only">{{ __('product.loading') }}</span>
             </div>
         </div>
-        <table class="table table-bordered">
-            <thead>
-            <tr class="align-middle">
-                <th class="align-middle">#</th>
-                <th class="align-middle">{{ __('product.name') }}</th>
-                <th class="align-middle">{{ __('product.code') }}</th>
-                <th class="align-middle">{{ __('product.stock') }}</th>
-                <th class="align-middle">{{ __('product.quantity') }}</th>
-                <th class="align-middle">{{ __('product.type') }}</th>
-                <th class="align-middle">{{ __('product.action') }}</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="row">
             @if(!empty($products))
                 @foreach($products as $key => $product)
-                    <tr>
-                        <td class="align-middle">{{ $key + 1 }}</td>
-                        <td class="align-middle">{{ $product['product_name'] ?? $product['product']['product_name'] }}</td>
-                        <td class="align-middle">{{ $product['product_code'] ?? $product['product']['product_code'] }}</td>
-                        <td class="align-middle text-center">
-                            <span class="badge badge-info">
-                                {{ $product['product_quantity'] ?? $product['product']['product_quantity'] }} {{ $product['product_unit'] ?? $product['product']['product_unit'] }}
-                            </span>
-                        </td>
-                        <input type="hidden" name="product_ids[]" value="{{ $product['product']['id'] ?? $product['id'] }}">
-                        <td class="align-middle">
-                            <input type="number" name="quantities[]" min="1" class="form-control" value="{{ $product['quantity'] ?? 1 }}">
-                        </td>
-                        <td class="align-middle">
-                            @if(isset($product['type']))
-                                @if($product['type'] == 'add')
-                                    <select name="types[]" class="form-control">
-                                        <option value="add" selected>(+) {{ __('product.addition') }}</option>
-                                        <option value="sub">(-) {{ __('product.subtraction') }}</option>
-                                    </select>
-                                @elseif($product['type'] == 'sub')
-                                    <select name="types[]" class="form-control">
-                                        <option value="sub" selected>(-) {{ __('product.subtraction') }}</option>
-                                        <option value="add">(+) {{ __('product.addition') }}</option>
-                                    </select>
-                                @endif
-                            @else
-                                <select name="types[]" class="form-control">
-                                    <option value="add">(+) {{ __('product.addition') }}</option>
-                                    <option value="sub">(-) {{ __('product.subtraction') }}</option>
-                                </select>
-                            @endif
-                        </td>
-                        <td class="align-middle text-center">
-                            <button type="button" class="btn btn-danger" wire:click="removeProduct({{ $key }})">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">#{{ $key + 1 }} {{ $product['product_name'] ?? $product['product']['product_name'] }}</span>
+                                <button type="button" class="btn btn-danger btn-sm" wire:click="removeProduct({{ $key }})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2"><span class="fw-bold">{{ __('product.code') }}:</span> {{ $product['product_code'] ?? $product['product']['product_code'] }}</p>
+                                <p class="mb-3">
+                                    <span class="fw-bold">{{ __('product.stock') }}:</span>
+                                    <span class="badge badge-info">
+                                        {{ $product['product_quantity'] ?? $product['product']['product_quantity'] }} {{ $product['product_unit'] ?? $product['product']['product_unit'] }}
+                                    </span>
+                                </p>
+                                <input type="hidden" name="product_ids[]" value="{{ $product['product']['id'] ?? $product['id'] }}">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ __('product.quantity') }}</label>
+                                    <input type="number" name="quantities[]" min="1" class="form-control" value="{{ $product['quantity'] ?? 1 }}">
+                                </div>
+                                <div>
+                                    <label class="form-label fw-bold">{{ __('product.type') }}</label>
+                                    @if(isset($product['type']) && $product['type'] == 'sub')
+                                        <select name="types[]" class="form-control">
+                                            <option value="sub" selected>(-) {{ __('product.subtraction') }}</option>
+                                            <option value="add">(+) {{ __('product.addition') }}</option>
+                                        </select>
+                                    @else
+                                        <select name="types[]" class="form-control">
+                                            <option value="add">(+) {{ __('product.addition') }}</option>
+                                            <option value="sub">(-) {{ __('product.subtraction') }}</option>
+                                        </select>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             @else
-                <tr>
-                    <td colspan="7" class="text-center">
-                        <span class="text-danger">
-                            {{ __('product.no-products-found') }}
-                        </span>
-                    </td>
-                </tr>
+                <div class="col-12">
+                    <div class="card"><div class="card-body text-center text-danger">{{ __('product.no-products-found') }}</div></div>
+                </div>
             @endif
-            </tbody>
-        </table>
+        </div>
     </div>
 </div>

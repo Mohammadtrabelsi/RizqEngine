@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\RolesDataTable;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
-    public function index(RolesDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        return $dataTable->render('user.roles.index');
+        $roles = Role::latest()->paginate(12);
+
+        return view('user.roles.index', compact('roles'));
     }
 
     public function create()

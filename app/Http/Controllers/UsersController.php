@@ -9,15 +9,16 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Upload;
-use App\DataTables\UsersDataTable;
 
 class UsersController extends Controller
 {
-    public function index(UsersDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        return $dataTable->render('user.users.index');
+        $users = User::latest()->paginate(12);
+
+        return view('user.users.index', compact('users'));
     }
 
     public function create()

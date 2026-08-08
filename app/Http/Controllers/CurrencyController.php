@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use App\DataTables\CurrencyDataTable;
 use App\Models\Currency;
 
 class CurrencyController extends Controller
 {
-    public function index(CurrencyDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_currencies'), 403);
 
-        return $dataTable->render('currency.index');
+        $currencies = Currency::latest()->paginate(12);
+
+        return view('currency.index', compact('currencies'));
     }
 
     public function create()

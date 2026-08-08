@@ -22,7 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
         base_path('routes/console.php'),
     ])
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

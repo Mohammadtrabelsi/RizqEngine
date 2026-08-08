@@ -6,19 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\SalePaymentsDataTable;
 use App\Models\Sale;
 use App\Models\SalePayment;
 
 class SalePaymentsController extends Controller
 {
-    public function index($sale_id, SalePaymentsDataTable $dataTable)
+    public function index($sale_id)
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
 
-        return $dataTable->render('sale.payments.index', compact('sale'));
+        $payments = SalePayment::where('sale_id', $sale_id)->with('sale')->latest()->paginate(12);
+
+        return view('sale.payments.index', compact('sale', 'payments'));
     }
 
     public function create($sale_id)

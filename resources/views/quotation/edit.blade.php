@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Quotation')
+@section('title', __('quotations.edit_quotation'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('quotations.index') }}">Quotations</a></li>
-        <li class="breadcrumb-item active">Edit</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('quotations.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('quotations.index') }}">{{ __('quotations.quotations') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('quotations.edit') }}</li>
     </ol>
 @endsection
 
@@ -29,14 +29,14 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="reference">Reference <span class="text-danger">*</span></label>
+                                        <label for="reference">{{ __('quotations.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required value="{{ $quotation->reference }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="customer_id">Customer <span class="text-danger">*</span></label>
+                                            <label for="customer_id">{{ __('quotations.customer') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="customer_id" id="customer_id" required>
                                                 @foreach(\App\Models\Customer::all() as $customer)
                                                     <option {{ $quotation->customer_id == $customer->id ? 'selected' : '' }} value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
@@ -48,7 +48,7 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="date">Date <span class="text-danger">*</span></label>
+                                            <label for="date">{{ __('quotations.date') }} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ $quotation->getAttributes()['date'] }}">
                                         </div>
                                     </div>
@@ -60,23 +60,23 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="status">Status <span class="text-danger">*</span></label>
+                                        <label for="status">{{ __('quotations.status') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="status" id="status" required>
-                                            <option {{ $quotation->status == 'Pending' ? 'selected' : '' }} value="Pending">Pending</option>
-                                            <option {{ $quotation->status == 'Sent' ? 'selected' : '' }} value="Sent">Sent</option>
+                                            <option {{ $quotation->status == 'Pending' ? 'selected' : '' }} value="Pending">{{ __('quotations.pending') }}</option>
+                                            <option {{ $quotation->status == 'Sent' ? 'selected' : '' }} value="Sent">{{ __('quotations.sent') }}</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="note">Note (If Needed)</label>
+                                <label for="note">{{ __('quotations.note') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control">{{ $quotation->note }}</textarea>
                             </div>
 
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary">
-                                    Update Quotation <i class="bi bi-check"></i>
+                                    {{ __('quotations.update') }} <i class="bi bi-check"></i>
                                 </button>
                             </div>
                         </form>

@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\CustomersDataTable;
 use App\Models\Customer;
 
 class CustomersController extends Controller
 {
-    public function index(CustomersDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_customers'), 403);
 
-        return $dataTable->render('people.customers.index');
+        $customers = Customer::latest()->paginate(12);
+
+        return view('people.customers.index', compact('customers'));
     }
 
     public function create()

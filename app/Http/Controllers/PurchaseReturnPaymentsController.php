@@ -6,19 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\PurchaseReturnPaymentsDataTable;
 use App\Models\PurchaseReturn;
 use App\Models\PurchaseReturnPayment;
 
 class PurchaseReturnPaymentsController extends Controller
 {
-    public function index($purchase_return_id, PurchaseReturnPaymentsDataTable $dataTable)
+    public function index($purchase_return_id)
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
         $purchase_return = PurchaseReturn::findOrFail($purchase_return_id);
 
-        return $dataTable->render('purchasesreturn.payments.index', compact('purchase_return'));
+        $payments = PurchaseReturnPayment::where('purchase_return_id', $purchase_return_id)->latest()->paginate(12);
+
+        return view('purchasesreturn.payments.index', compact('purchase_return', 'payments'));
     }
 
     public function create($purchase_return_id)

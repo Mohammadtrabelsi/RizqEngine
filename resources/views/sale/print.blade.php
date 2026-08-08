@@ -51,72 +51,34 @@
 
                     </div>
 
-                    <div class="table-responsive-sm" style="margin-top: 30px;">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th class="align-middle">Product</th>
-                                <th class="align-middle">Net Unit Price</th>
-                                <th class="align-middle">Quantity</th>
-                                <th class="align-middle">Discount</th>
-                                <th class="align-middle">Tax</th>
-                                <th class="align-middle">Sub Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($sale->saleDetails as $item)
-                                <tr>
-                                    <td class="align-middle">
-                                        {{ $item->product_name }} <br>
-                                        <span class="badge badge-success">
-                                                {{ $item->product_code }}
-                                            </span>
-                                    </td>
-
-                                    <td class="align-middle">{{ format_currency($item->unit_price) }}</td>
-
-                                    <td class="align-middle">
-                                        {{ $item->quantity }}
-                                    </td>
-
-                                    <td class="align-middle">
-                                        {{ format_currency($item->product_discount_amount) }}
-                                    </td>
-
-                                    <td class="align-middle">
-                                        {{ format_currency($item->product_tax_amount) }}
-                                    </td>
-
-                                    <td class="align-middle">
-                                        {{ format_currency($item->sub_total) }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                    <div class="row" style="margin-top: 30px;">
+                        @foreach($sale->saleDetails as $item)
+                            <div class="col-xs-6" style="margin-bottom: 20px;">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div><strong>{{ $item->product_name }}</strong>
+                                            <span class="badge badge-success">{{ $item->product_code }}</span>
+                                        </div>
+                                        <ul class="list-group" style="margin-top: 10px;">
+                                            <li class="list-group-item">Net Unit Price <span class="pull-right">{{ format_currency($item->unit_price) }}</span></li>
+                                            <li class="list-group-item">Quantity <span class="pull-right">{{ $item->quantity }}</span></li>
+                                            <li class="list-group-item">Discount <span class="pull-right">{{ format_currency($item->product_discount_amount) }}</span></li>
+                                            <li class="list-group-item">Tax <span class="pull-right">{{ format_currency($item->product_tax_amount) }}</span></li>
+                                            <li class="list-group-item">Sub Total <span class="pull-right"><strong>{{ format_currency($item->sub_total) }}</strong></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="row">
                         <div class="col-xs-4 col-xs-offset-8">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td class="left"><strong>Discount ({{ $sale->discount_percentage }}%)</strong></td>
-                                    <td class="right">{{ format_currency($sale->discount_amount) }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="left"><strong>Tax ({{ $sale->tax_percentage }}%)</strong></td>
-                                    <td class="right">{{ format_currency($sale->tax_amount) }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="left"><strong>Shipping</strong></td>
-                                    <td class="right">{{ format_currency($sale->shipping_amount) }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="left"><strong>Grand Total</strong></td>
-                                    <td class="right"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Discount ({{ $sale->discount_percentage }}%)</strong> <span class="pull-right">{{ format_currency($sale->discount_amount) }}</span></li>
+                                <li class="list-group-item"><strong>Tax ({{ $sale->tax_percentage }}%)</strong> <span class="pull-right">{{ format_currency($sale->tax_amount) }}</span></li>
+                                <li class="list-group-item"><strong>Shipping</strong> <span class="pull-right">{{ format_currency($sale->shipping_amount) }}</span></li>
+                                <li class="list-group-item"><strong>Grand Total</strong> <span class="pull-right"><strong>{{ format_currency($sale->total_amount) }}</strong></span></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 25px;">

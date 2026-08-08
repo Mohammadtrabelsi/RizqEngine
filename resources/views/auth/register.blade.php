@@ -8,75 +8,79 @@
     <title>{{ __('auth.register') }} | {{ config('app.name') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/favicon.png') }}">
-    <!-- CoreUI CSS -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
+    <!-- CoreUI CSS (Nocturne theme) -->
     @vite('resources/sass/app.scss')
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
-<body class="c-app flex-row align-items-center">
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mx-4">
-                <div class="card-body p-4">
-                    <form method="post" action="{{ url('/register') }}">
-                        @csrf
-                        <h1>{{ __('auth.register') }}</h1>
-                        <p class="text-muted">{{ __('auth.create-account') }}</p>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="bi bi-person"></i>
-                              </span>
-                            </div>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                   name="name" value="{{ old('name') }}"
-                                   placeholder="{{ __('auth.full-name') }}">
-                            @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="bi bi-envelope"></i>
-                                </span>
-                            </div>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                   name="email" value="{{ old('email') }}" placeholder="{{ __('auth.email') }}">
-                            @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="bi bi-lock"></i>
-                              </span>
-                            </div>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                   name="password" placeholder="Password">
-                            @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="bi bi-lock"></i>
-                              </span>
-                            </div>
-                            <input type="password" name="password_confirmation" class="form-control"
-                                   placeholder="{{ __('auth.confirm-password') }}">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block btn-flat mb-3">{{ __('auth.register') }}</button>
-                        <a href="{{ route('login') }}" class="text-center">{{ __('auth.already-have-account') }}</a>
-                    </form>
-                </div>
-            </div>
+<body class="c-dark-theme">
+<div class="login-grid">
+
+    <div class="login-brand login-brand-copy">
+        <a href="{{ route('welcome') }}" style="text-decoration:none; color:var(--color-text);">
+            @include('layouts.logo', ['size' => 26, 'label' => 'Triangle POS', 'labelSize' => 15])
+        </a>
+
+        <div style="max-width:420px">
+            <div class="login-brand-lead">{{ __('login.welcome') }}</div>
+            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">{{ __('login.description') }}</div>
         </div>
+
+        <div class="text-muted" style="font-size:12px">© {{ date('Y') }} Triangle POS</div>
     </div>
+
+    <div class="login-form-wrap">
+        <form class="login-form" method="post" action="{{ url('/register') }}">
+            @csrf
+
+            <div>
+                <div class="login-title">{{ __('auth.register') }}</div>
+                <div class="text-muted" style="font-size:14px">{{ __('auth.create-account') }}</div>
+            </div>
+
+            <div class="field">
+                <label for="name">{{ __('auth.full-name') }}</label>
+                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                       name="name" value="{{ old('name') }}" placeholder="{{ __('auth.full-name') }}" autofocus>
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="field">
+                <label for="email">{{ __('auth.email') }}</label>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                       name="email" value="{{ old('email') }}" placeholder="you@store.com">
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="field">
+                <label for="password">{{ __('login.password') }}</label>
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                       name="password" placeholder="••••••••">
+                @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="field">
+                <label for="password_confirmation">{{ __('auth.confirm-password') }}</label>
+                <input id="password_confirmation" type="password" name="password_confirmation"
+                       class="form-control" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">{{ __('auth.register') }}</button>
+
+            <div class="text-muted" style="font-size:13px; text-align:center">
+                <a href="{{ route('login') }}">{{ __('auth.already-have-account') }}</a>
+            </div>
+        </form>
+    </div>
+
 </div>
 
 <!-- CoreUI -->

@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\ProductCategoriesDataTable;
 use App\Models\Category;
 
 class CategoriesController extends Controller
 {
-    public function index(ProductCategoriesDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
-        return $dataTable->render('product.categories.index');
+        $categories = Category::withCount('products')->latest()->paginate(12);
+
+        return view('product.categories.index', compact('categories'));
     }
 
     public function store(Request $request)

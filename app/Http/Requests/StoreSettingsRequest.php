@@ -16,6 +16,8 @@ class StoreSettingsRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:255',
+            'client_name' => 'nullable|string|max:255',
+            'client_logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg,webp|max:2048',
             'company_email' => 'required|email|max:255',
             'company_phone' => 'required|string|max:255',
             'notification_email' => 'required|email|max:255',
@@ -23,6 +25,8 @@ class StoreSettingsRequest extends FormRequest
             'default_currency_id' => 'required|numeric',
             'default_currency_position' => 'required|string|max:255',
             'footer_text' => 'nullable|string|max:255',
+            'default_product_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'default_category_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
         ];
     }
 

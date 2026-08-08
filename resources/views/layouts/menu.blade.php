@@ -360,3 +360,9 @@
         @endcan
     </li>
 @endcan
+
+<li class="c-sidebar-nav-item {{ request()->routeIs('documentation.*') ? 'c-active' : '' }}">
+    <a class="c-sidebar-nav-link" href="{{ route('documentation.index') }}">
+        <i class="c-sidebar-nav-icon bi bi-book" style="line-height: 1;"></i> {{ __('menu.documentation') }}
+    </a>
+</li>

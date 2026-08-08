@@ -6,19 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\PurchasePaymentsDataTable;
 use App\Models\Purchase;
 use App\Models\PurchasePayment;
 
 class PurchasePaymentsController extends Controller
 {
-    public function index($purchase_id, PurchasePaymentsDataTable $dataTable)
+    public function index($purchase_id)
     {
         abort_if(Gate::denies('access_purchase_payments'), 403);
 
         $purchase = Purchase::findOrFail($purchase_id);
 
-        return $dataTable->render('purchase.payments.index', compact('purchase'));
+        $payments = PurchasePayment::where('purchase_id', $purchase_id)->with('purchase')->latest()->paginate(12);
+
+        return view('purchase.payments.index', compact('purchase', 'payments'));
     }
 
     public function create($purchase_id)

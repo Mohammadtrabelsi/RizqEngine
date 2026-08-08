@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User')
+@section('title', __('users.edit_user'))
 
 @section('third_party_stylesheets')
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"/>
@@ -10,9 +10,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
-        <li class="breadcrumb-item active">Edit</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('users.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">{{ __('users.users') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('users.edit') }}</li>
     </ol>
 @endsection
 
@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Update User <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('users.update_user') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -34,20 +34,20 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="name">Name <span class="text-danger">*</span></label>
+                                        <label for="name">{{ __('users.name') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="name" required value="{{ $user->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="email">Email <span class="text-danger">*</span></label>
+                                        <label for="email">{{ __('users.email') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="email" name="email" required value="{{ $user->email }}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="role">Role <span class="text-danger">*</span></label>
+                                <label for="role">{{ __('users.role') }} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="role" id="role" required>
                                     @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
                                         <option {{ $user->hasRole($role->name) ? 'selected' : '' }} value="{{ $role->name }}">{{ $role->name }}</option>
@@ -56,10 +56,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="is_active">Status <span class="text-danger">*</span></label>
+                                <label for="is_active">{{ __('users.status') }} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="is_active" id="is_active" required>
-                                    <option value="1" {{ $user->is_active == 1 ? 'selected' : ''}}>Active</option>
-                                    <option value="2" {{ $user->is_active == 2 ? 'selected' : ''}}>Deactive</option>
+                                    <option value="1" {{ $user->is_active == 1 ? 'selected' : ''}}>{{ __('users.active') }}</option>
+                                    <option value="2" {{ $user->is_active == 2 ? 'selected' : ''}}>{{ __('users.deactivated') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Profile Image <span class="text-danger">*</span></label>
+                                <label for="image">{{ __('users.profile_image') }} <span class="text-danger">*</span></label>
                                 <img style="width: 100px;height: 100px;" class="d-block mx-auto img-thumbnail img-fluid rounded-circle mb-2" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="Profile Image">
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">
                             </div>

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Setting;
 
 if (! function_exists('settings')) {
@@ -10,6 +11,32 @@ if (! function_exists('settings')) {
         });
 
         return $settings;
+    }
+}
+
+if (! function_exists('default_product_image')) {
+    function default_product_image()
+    {
+        try {
+            $path = settings()->default_product_image;
+        } catch (\Throwable $e) {
+            $path = null;
+        }
+
+        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_product_image.png');
+    }
+}
+
+if (! function_exists('default_category_image')) {
+    function default_category_image()
+    {
+        try {
+            $path = settings()->default_category_image;
+        } catch (\Throwable $e) {
+            $path = null;
+        }
+
+        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_product_image.png');
     }
 }
 

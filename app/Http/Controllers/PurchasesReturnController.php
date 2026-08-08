@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Supplier;
 use App\Models\Product;
-use App\DataTables\PurchaseReturnsDataTable;
 use App\Models\PurchaseReturn;
 use App\Models\PurchaseReturnDetail;
 use App\Models\PurchaseReturnPayment;
@@ -17,11 +16,13 @@ use App\Http\Requests\UpdatePurchaseReturnRequest;
 
 class PurchasesReturnController extends Controller
 {
-    public function index(PurchaseReturnsDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_purchase_returns'), 403);
 
-        return $dataTable->render('purchasesreturn.index');
+        $purchase_returns = PurchaseReturn::latest()->paginate(12);
+
+        return view('purchasesreturn.index', compact('purchase_returns'));
     }
 
     public function create()

@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Setting;
 use App\Http\Requests\StoreSettingsRequest;
 use App\Http\Requests\StoreSmtpSettingsRequest;
@@ -23,15 +24,34 @@ class SettingController extends Controller
 
     public function update(StoreSettingsRequest $request)
     {
-        Setting::firstOrFail()->update([
+        $settings = Setting::firstOrFail();
+
+        $data = [
             'company_name' => $request->company_name,
+            'client_name' => $request->client_name,
             'company_email' => $request->company_email,
             'company_phone' => $request->company_phone,
             'notification_email' => $request->notification_email,
             'company_address' => $request->company_address,
             'default_currency_id' => $request->default_currency_id,
             'default_currency_position' => $request->default_currency_position,
-        ]);
+        ];
+
+        if ($request->hasFile('default_product_image')) {
+            if ($settings->default_product_image) {
+                Storage::disk('public')->delete($settings->default_product_image);
+            }
+            $data['default_product_image'] = $request->file('default_product_image')->store('settings', 'public');
+        }
+
+        if ($request->hasFile('default_category_image')) {
+            if ($settings->default_category_image) {
+                Storage::disk('public')->delete($settings->default_category_image);
+            }
+            $data['default_category_image'] = $request->file('default_category_image')->store('settings', 'public');
+        }
+
+        $settings->update($data);
 
         cache()->forget('settings');
 

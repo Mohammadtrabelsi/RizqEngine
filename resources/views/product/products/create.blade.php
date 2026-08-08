@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Create Product')
+@section('title', __('product.add_product'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">{{ __('product.products') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('product.add_product') }}</li>
     </ol>
 @endsection
 
@@ -18,7 +18,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Product <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('product.create_product') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -27,13 +27,13 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_name">Product Name <span class="text-danger">*</span></label>
+                                        <label for="product_name">{{ __('product.product_name') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="product_name" required value="{{ old('product_name') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_code">Code <span class="text-danger">*</span></label>
+                                        <label for="product_code">{{ __('product.product_code') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="product_code" required value="{{ old('product_code') }}">
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
 
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <label for="category_id">Category <span class="text-danger">*</span></label>
+                                    <label for="category_id">{{ __('product.category') }} <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <select class="form-control" name="category_id" id="category_id" required>
                                             <option value="" selected disabled>Select Category</option>
@@ -58,14 +58,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="barcode_symbology">Barcode Symbology <span class="text-danger">*</span></label>
+                                        <label for="barcode_symbology">{{ __('product.barcode_symbology') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="product_barcode_symbology" id="barcode_symbology" required>
-                                            <option value="" selected disabled>Select Symbology</option>
-                                            <option value="C128">Code 128</option>
-                                            <option value="C39">Code 39</option>
-                                            <option value="UPCA">UPC-A</option>
-                                            <option value="UPCE">UPC-E</option>
-                                            <option selected value="EAN13">EAN-13</option><option value="EAN8">EAN-8</option>
+                                            <option value="" selected disabled>{{ __('product.select_symbology') }}</option>
+                                            <option value="C128">{{ __('product.code_128') }}</option>
+                                            <option value="C39">{{ __('product.code_39') }}</option>
+                                            <option value="UPCA">{{ __('product.upc_a') }}</option>
+                                            <option value="UPCE">{{ __('product.upc_e') }}</option>
+                                            <option selected value="EAN13">{{ __('product.ean_13') }}</option>
+                                            <option value="EAN8">{{ __('product.ean_8') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -74,13 +75,13 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_cost">Cost <span class="text-danger">*</span></label>
+                                        <label for="product_cost">{{ __('product.cost') }} <span class="text-danger">*</span></label>
                                         <input id="product_cost" type="text" class="form-control" name="product_cost" required value="{{ old('product_cost') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_price">Price <span class="text-danger">*</span></label>
+                                        <label for="product_price">{{ __('product.price') }} <span class="text-danger">*</span></label>
                                         <input id="product_price" type="text" class="form-control" name="product_price" required value="{{ old('product_price') }}">
                                     </div>
                                 </div>
@@ -89,13 +90,13 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_quantity">Quantity <span class="text-danger">*</span></label>
+                                        <label for="product_quantity">{{ __('product.quantity') }} <span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="product_quantity" required value="{{ old('product_quantity') }}" min="1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_stock_alert">Alert Quantity <span class="text-danger">*</span></label>
+                                        <label for="product_stock_alert">{{ __('product.stock_alert') }} <span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('product_stock_alert', 0) }}" min="0" max="100">
                                     </div>
                                 </div>
@@ -104,25 +105,25 @@
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="product_order_tax">Tax (%)</label>
+                                        <label for="product_order_tax">{{ __('product.order_tax') }} (%)</label>
                                         <input type="number" class="form-control" name="product_order_tax" value="{{ old('product_order_tax') }}" min="1">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="product_tax_type">Tax type</label>
+                                        <label for="product_tax_type">{{ __('product.tax_type') }}</label>
                                         <select class="form-control" name="product_tax_type" id="product_tax_type">
-                                            <option value="" selected >Select Tax Type</option>
-                                            <option value="1">Exclusive</option>
-                                            <option value="2">Inclusive</option>
+                                            <option value="" selected >{{ __('product.select_tax_type') }}</option>
+                                            <option value="1">{{ __('product.exclusive') }}</option>
+                                            <option value="2">{{ __('product.inclusive') }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="product_unit">Unit <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This short text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
+                                        <label for="product_unit">{{ __('product.unit') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This short text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
                                         <select class="form-control" name="product_unit" id="product_unit">
-                                            <option value="" selected >Select Unit</option>
+                                            <option value="" selected >{{ __('product.select_unit') }}</option>
                                             @foreach(\App\Models\Unit::all() as $unit)
                                                 <option value="{{ $unit->short_name }}">{{ $unit->name . ' | ' . $unit->short_name }}</option>
                                             @endforeach
@@ -132,7 +133,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="product_note">Note</label>
+                                <label for="product_note">{{ __('product.note') }}</label>
                                 <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>
                             </div>
                         </div>
@@ -143,7 +144,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
+                                <label for="image">{{ __('product.images') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                     <div class="dz-message" data-dz-message>
                                         <i class="bi bi-cloud-arrow-up"></i>

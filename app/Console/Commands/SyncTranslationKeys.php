@@ -10,6 +10,9 @@ class SyncTranslationKeys extends Command
     /**
      * The name and signature of the console command.
      *
+     * Scans resources/, Livewire component classes & blade views, app/Services,
+     * and every module under the laravel-modules Modules/ tree.
+     *
      * php artisan translations:sync
      *   --locales=en,fr,ar   Override which locales to sync (default: auto-detect)
      *   --base=en            The reference locale to use as the source of truth
@@ -22,7 +25,7 @@ class SyncTranslationKeys extends Command
                             {--dry-run  : Show changes without writing files}
                             {--clean    : Remove keys from files that are not found in views}';
 
-    protected $description = 'Scan resources/, app/Livewire, and app/Services for translation keys, create missing lang files, and sync keys across all locales.';
+    protected $description = 'Scan resources/, Livewire components & views, app/Services, and the Modules/ tree for translation keys, create missing lang files, and sync keys across all locales.';
 
     // ── Patterns ──────────────────────────────────────────────────────────────
     // Matches: __('key'), __("key"), trans('key'), trans("key"),
@@ -51,9 +54,17 @@ class SyncTranslationKeys extends Command
         $this->line("\n  📂 Scanning: <fg=yellow>{$resPath}</>");
         $foundKeys = $this->extractKeysFromDirectory($resPath);
 
-        foreach (['Livewire', 'Services'] as $appDir) {
-            $path = app_path($appDir);
-            if (File::isDirectory($path)) {
+        // Also scan Livewire components (classes + blade views), app/Services, and
+        // every laravel-modules module. Livewire and module paths are resolved from
+        // their own config so the command keeps working when those paths are customised.
+        $extraPaths = array_merge(
+            $this->livewireScanPaths(),
+            $this->moduleScanPaths(),
+            [app_path('Services')]
+        );
+
+        foreach ($extraPaths as $path) {
+            if ($path !== '' && File::isDirectory($path)) {
                 $this->line("  📂 Scanning: <fg=yellow>{$path}</>");
                 $foundKeys = array_values(array_unique(array_merge($foundKeys, $this->extractKeysFromDirectory($path))));
             }
@@ -129,9 +140,9 @@ class SyncTranslationKeys extends Command
         $files = File::allFiles($directory);
 
         foreach ($files as $file) {
-            $ext = $file->getExtension();
-            // Accept .php and .blade.php
-            if (! in_array($ext, ['php', 'twig'])) {
+            // Accept PHP source and Blade templates (e.g. Livewire component classes
+            // and `*.blade.php` views). Both end in ".php".
+            if (! str_ends_with($file->getFilename(), '.php')) {
                 continue;
             }
 
@@ -146,6 +157,53 @@ class SyncTranslationKeys extends Command
         }
 
         return array_values(array_filter(array_keys($allKeys), fn (string $k): bool => $k !== ''));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Resolve the directories that hold Livewire components (classes + views)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    private function livewireScanPaths(): array
+    {
+        // Livewire component classes — derived from the configured class namespace
+        // (defaults to "App\Livewire"). The leading "App" root maps to the app/ path.
+        $namespace = trim((string) config('livewire.class_namespace', 'App\\Livewire'), '\\');
+
+        if ($namespace === 'App' || str_starts_with($namespace, 'App\\')) {
+            $relative = trim(substr($namespace, strlen('App')), '\\');
+            $classPath = $relative === ''
+                ? app_path()
+                : app_path(str_replace('\\', DIRECTORY_SEPARATOR, $relative));
+        } else {
+            $classPath = base_path(str_replace('\\', DIRECTORY_SEPARATOR, $namespace));
+        }
+
+        // Livewire component blade views — from the configured view path
+        // (defaults to resources/views/livewire).
+        $viewPath = (string) config('livewire.view_path', resource_path('views'.DIRECTORY_SEPARATOR.'livewire'));
+
+        return [$classPath, $viewPath];
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Resolve each module directory under the laravel-modules Modules/ tree
+    // ──────────────────────────────────────────────────────────────────────────
+
+    private function moduleScanPaths(): array
+    {
+        // The modules root is resolved from laravel-modules' own config
+        // (defaults to base_path('Modules')) so a customised path still works.
+        $root = (string) config('modules.paths.modules', base_path('Modules'));
+
+        if ($root === '' || ! File::isDirectory($root)) {
+            return [];
+        }
+
+        // Return each module directory individually so the scan is logged per
+        // module. extractKeysFromDirectory() recurses, so this covers every
+        // module's PHP classes (controllers, services, entities, …) and its
+        // Resources/views blade templates.
+        return array_map(fn ($dir): string => (string) $dir, File::directories($root));
     }
 
     // ──────────────────────────────────────────────────────────────────────────

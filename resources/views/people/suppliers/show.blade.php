@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Supplier Details')
+@section('title', __('supplier.supplier_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('suppliers.index') }}">Suppliers</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('suppliers.index') }}">{{ __('supplier.suppliers') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('supplier.supplier_details') }}    </li>
     </ol>
 @endsection
 
@@ -16,34 +16,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Supplier Name</th>
-                                    <td>{{ $supplier->supplier_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Supplier Email</th>
-                                    <td>{{ $supplier->supplier_email }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Supplier Phone</th>
-                                    <td>{{ $supplier->supplier_phone }}</td>
-                                </tr>
-                                <tr>
-                                    <th>City</th>
-                                    <td>{{ $supplier->city }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Country</th>
-                                    <td>{{ $supplier->country }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Address</th>
-                                    <td>{{ $supplier->address }}</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.supplier_name') }}</span><span>{{ $supplier->supplier_name }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.supplier_email') }}</span><span>{{ $supplier->supplier_email }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.supplier_phone') }}</span><span>{{ $supplier->supplier_phone }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.city') }}</span><span>{{ $supplier->city }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.country') }}</span><span>{{ $supplier->country }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('supplier.address') }}</span><span>{{ $supplier->address }}</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
