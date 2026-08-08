@@ -1,4 +1,22 @@
 {
+  "resources/css/app.css": {
+    "file": "assets/app-DSMDlO1j.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/errors.css": {
+    "file": "assets/errors-D9Pvgfxm.css",
+    "name": "errors",
+    "names": [
+      "errors.css"
+    ],
+    "src": "resources/css/errors.css",
+    "isEntry": true
+  },
   "resources/js/app.js": {
     "file": "assets/app-Bq0lSZkO.js",
     "name": "app",
@@ -21,24 +39,6 @@
     "file": "assets/login-wlYLim_F.js",
     "name": "login",
     "src": "resources/js/login.js",
-    "isEntry": true
-  },
-  "resources/sass/app.scss": {
-    "file": "assets/app-TZ8wljv-.css",
-    "name": "app",
-    "names": [
-      "app.css"
-    ],
-    "src": "resources/sass/app.scss",
-    "isEntry": true
-  },
-  "resources/sass/errors.scss": {
-    "file": "assets/errors-D9Pvgfxm.css",
-    "name": "errors",
-    "names": [
-      "errors.css"
-    ],
-    "src": "resources/sass/errors.scss",
     "isEntry": true
   }
 }
