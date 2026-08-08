@@ -1,0 +1,44 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-DSMDlO1j.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/errors.css": {
+    "file": "assets/errors-D9Pvgfxm.css",
+    "name": "errors",
+    "names": [
+      "errors.css"
+    ],
+    "src": "resources/css/errors.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-Bq0lSZkO.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/chart-config.js": {
+    "file": "assets/chart-config-COCZ-o_P.js",
+    "name": "chart-config",
+    "src": "resources/js/chart-config.js",
+    "isEntry": true
+  },
+  "resources/js/filepond.js": {
+    "file": "assets/filepond-BvYIltf1.js",
+    "name": "filepond",
+    "src": "resources/js/filepond.js",
+    "isEntry": true
+  },
+  "resources/js/login.js": {
+    "file": "assets/login-wlYLim_F.js",
+    "name": "login",
+    "src": "resources/js/login.js",
+    "isEntry": true
+  }
+}
