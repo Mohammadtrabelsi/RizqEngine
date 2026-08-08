@@ -15,9 +15,8 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('access_products'), 403);
 
-        $products = Product::with('category')->latest()->paginate(12);
+        return view('product.products.index');
 
-        return view('product.products.index', compact('products'));
     }
 
     public function create()

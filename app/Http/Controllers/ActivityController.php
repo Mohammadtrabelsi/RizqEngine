@@ -13,9 +13,8 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('access_activity_logs'), 403);
 
-        $activities = Activity::with('causer')->latest()->paginate(15);
+        return view('activitylog.index');
 
-        return view('activitylog.index', compact('activities'));
     }
 
     public function show(Activity $activity)

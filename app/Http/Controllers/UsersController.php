@@ -16,9 +16,8 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        $users = User::latest()->paginate(12);
+        return view('user.users.index');
 
-        return view('user.users.index', compact('users'));
     }
 
     public function create()

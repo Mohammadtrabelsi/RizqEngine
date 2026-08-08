@@ -10,11 +10,8 @@ class UnitsController extends Controller
 {
     public function index()
     {
-        $units = Unit::all();
+        return view('setting.units.index');
 
-        return view('setting.units.index', [
-            'units' => $units,
-        ]);
     }
 
     public function create()
