@@ -16,9 +16,8 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('access_adjustments'), 403);
 
-        $adjustments = Adjustment::withCount('adjustedProducts')->latest()->paginate(12);
+        return view('adjustment.index');
 
-        return view('adjustment.index', compact('adjustments'));
     }
 
     public function create()

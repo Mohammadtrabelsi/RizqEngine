@@ -13,9 +13,8 @@ class SuppliersController extends Controller
     {
         abort_if(Gate::denies('access_suppliers'), 403);
 
-        $suppliers = Supplier::latest()->paginate(12);
+        return view('people.suppliers.index');
 
-        return view('people.suppliers.index', compact('suppliers'));
     }
 
     public function create()

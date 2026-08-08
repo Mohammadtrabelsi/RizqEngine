@@ -13,9 +13,8 @@ class CategoriesController extends Controller
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
-        $categories = Category::withCount('products')->latest()->paginate(12);
+        return view('product.categories.index');
 
-        return view('product.categories.index', compact('categories'));
     }
 
     public function store(Request $request)

@@ -20,9 +20,8 @@ class SalesReturnController extends Controller
     {
         abort_if(Gate::denies('access_sale_returns'), 403);
 
-        $sale_returns = SaleReturn::latest()->paginate(12);
+        return view('salesreturn.index');
 
-        return view('salesreturn.index', compact('sale_returns'));
     }
 
     public function create()

@@ -20,9 +20,8 @@ class PurchasesReturnController extends Controller
     {
         abort_if(Gate::denies('access_purchase_returns'), 403);
 
-        $purchase_returns = PurchaseReturn::latest()->paginate(12);
+        return view('purchasesreturn.index');
 
-        return view('purchasesreturn.index', compact('purchase_returns'));
     }
 
     public function create()

@@ -13,9 +13,8 @@ class CustomersController extends Controller
     {
         abort_if(Gate::denies('access_customers'), 403);
 
-        $customers = Customer::latest()->paginate(12);
+        return view('people.customers.index');
 
-        return view('people.customers.index', compact('customers'));
     }
 
     public function create()

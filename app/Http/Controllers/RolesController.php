@@ -13,9 +13,8 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        $roles = Role::latest()->paginate(12);
+        return view('user.roles.index');
 
-        return view('user.roles.index', compact('roles'));
     }
 
     public function create()

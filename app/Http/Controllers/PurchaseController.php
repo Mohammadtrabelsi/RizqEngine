@@ -20,9 +20,8 @@ class PurchaseController extends Controller
     {
         abort_if(Gate::denies('access_purchases'), 403);
 
-        $purchases = Purchase::latest()->paginate(12);
+        return view('purchase.index');
 
-        return view('purchase.index', compact('purchases'));
     }
 
     public function create()

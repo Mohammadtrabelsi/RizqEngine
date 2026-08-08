@@ -20,9 +20,8 @@ class SaleController extends Controller
     {
         abort_if(Gate::denies('access_sales'), 403);
 
-        $sales = Sale::latest()->paginate(12);
+        return view('sale.index');
 
-        return view('sale.index', compact('sales'));
     }
 
     public function create()

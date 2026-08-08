@@ -19,9 +19,8 @@ class QuotationController extends Controller
     {
         abort_if(Gate::denies('access_quotations'), 403);
 
-        $quotations = Quotation::latest()->paginate(12);
+        return view('quotation.index');
 
-        return view('quotation.index', compact('quotations'));
     }
 
     public function create()

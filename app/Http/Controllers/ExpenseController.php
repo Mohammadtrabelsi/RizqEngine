@@ -13,9 +13,8 @@ class ExpenseController extends Controller
     {
         abort_if(Gate::denies('access_expenses'), 403);
 
-        $expenses = Expense::with('category')->latest()->paginate(12);
+        return view('expense.expenses.index');
 
-        return view('expense.expenses.index', compact('expenses'));
     }
 
     public function create()
