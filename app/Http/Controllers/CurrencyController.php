@@ -14,9 +14,7 @@ class CurrencyController extends Controller
     {
         abort_if(Gate::denies('access_currencies'), 403);
 
-        $currencies = Currency::latest()->paginate(12);
-
-        return view('currency.index', compact('currencies'));
+        return view('currency.index');
     }
 
     public function create()
