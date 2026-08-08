@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/language/{locale}', function (string $locale) {
-    if (in_array($locale, \App\Http\Middleware\SetLocale::SUPPORTED_LOCALES, true)) {
+    if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
         session()->put('locale', $locale);
     }
 

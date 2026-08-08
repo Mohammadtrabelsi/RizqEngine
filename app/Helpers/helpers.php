@@ -19,7 +19,7 @@ if (! function_exists('default_product_image')) {
     {
         try {
             $path = settings()->default_product_image;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $path = null;
         }
 
@@ -32,7 +32,7 @@ if (! function_exists('default_category_image')) {
     {
         try {
             $path = settings()->default_category_image;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $path = null;
         }
 
