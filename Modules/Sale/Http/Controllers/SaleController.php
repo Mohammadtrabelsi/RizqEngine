@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
-use Modules\Sale\DataTables\SalesDataTable;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
@@ -17,11 +16,13 @@ use Modules\Sale\Http\Requests\UpdateSaleRequest;
 
 class SaleController extends Controller
 {
-    public function index(SalesDataTable $dataTable)
+    public function index()
     {
         abort_if(Gate::denies('access_sales'), 403);
 
-        return $dataTable->render('sale::index');
+        $sales = Sale::latest()->paginate(12);
+
+        return view('sale::index', compact('sales'));
     }
 
     public function create()

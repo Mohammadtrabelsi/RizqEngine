@@ -37,12 +37,18 @@ class SettingController extends Controller
             'default_currency_position' => $request->default_currency_position,
         ];
 
-        if ($request->hasFile('client_logo')) {
-            if ($settings->client_logo) {
-                Storage::disk('public')->delete($settings->client_logo);
+        if ($request->hasFile('default_product_image')) {
+            if ($settings->default_product_image) {
+                Storage::disk('public')->delete($settings->default_product_image);
             }
+            $data['default_product_image'] = $request->file('default_product_image')->store('settings', 'public');
+        }
 
-            $data['client_logo'] = $request->file('client_logo')->store('settings', 'public');
+        if ($request->hasFile('default_category_image')) {
+            if ($settings->default_category_image) {
+                Storage::disk('public')->delete($settings->default_category_image);
+            }
+            $data['default_category_image'] = $request->file('default_category_image')->store('settings', 'public');
         }
 
         $settings->update($data);

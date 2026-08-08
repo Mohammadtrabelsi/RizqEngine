@@ -72,49 +72,43 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped text-center mb-0">
-                            <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                        <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
                             </div>
-                            <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Reference</th>
-                                <th>{{ ucwords(str_replace('_', ' ', $payments)) }}</th>
-                                <th>Total</th>
-                                <th>Payment Method</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        </div>
+                        <div class="row">
                             @forelse($information as $data)
-                                <tr>
-                                    <td>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
-                                    <td>{{ $data->reference }}</td>
-                                    <td>
-                                        @if($payments == 'sale')
-                                            {{ $data->sale->reference }}
-                                        @elseif($payments == 'purchase')
-                                            {{ $data->purchase->reference }}
-                                        @elseif($payments == 'sale_return')
-                                            {{ $data->saleReturn->reference }}
-                                        @elseif($payments == 'purchase_return')
-                                            {{ $data->purchaseReturn->reference }}
-                                        @endif
-                                    </td>
-                                    <td>{{ format_currency($data->amount) }}</td>
-                                    <td>{{ $data->payment_method }}</td>
-                                </tr>
+                                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                                    <div class="card border h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $data->reference }}</h5>
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Date</span><span>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0">
+                                                    <span>{{ ucwords(str_replace('_', ' ', $payments)) }}</span>
+                                                    <span>
+                                                        @if($payments == 'sale')
+                                                            {{ $data->sale->reference }}
+                                                        @elseif($payments == 'purchase')
+                                                            {{ $data->purchase->reference }}
+                                                        @elseif($payments == 'sale_return')
+                                                            {{ $data->saleReturn->reference }}
+                                                        @elseif($payments == 'purchase_return')
+                                                            {{ $data->purchaseReturn->reference }}
+                                                        @endif
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Total</span><span>{{ format_currency($data->amount) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Payment Method</span><span>{{ $data->payment_method }}</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             @empty
-                                <tr>
-                                    <td colspan="8">
-                                        <span class="text-danger">No Data Available!</span>
-                                    </td>
-                                </tr>
+                                <div class="col-12"><span class="text-danger">No Data Available!</span></div>
                             @endforelse
-                            </tbody>
-                        </table>
+                        </div>
                         <div @class(['mt-3' => $information->hasPages()])>
                             {{ $information->links() }}
                         </div>

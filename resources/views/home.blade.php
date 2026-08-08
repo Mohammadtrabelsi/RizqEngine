@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', __('general.dashboard'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
@@ -61,7 +61,7 @@
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
-                        Overview of {{ now()->format('F, Y') }}
+                        {{ __('general.overview') }} of {{ now()->format('F, Y') }}
                     </div>
                     <div class="card-body d-flex justify-content-center">
                         <div class="chart-container chart-container-sm">
@@ -80,39 +80,34 @@
                     <div class="card-body">
                         <div class="n-card-title mb-4">Recent transactions</div>
                         <div class="table-responsive">
-                            <table class="table mb-0" style="width:100% !important">
-                                <thead>
-                                    <tr>
-                                        <th>{{ __('general.order') }}</th>
-                                        <th>{{ __('general.customer') }}</th>
-                                        <th>{{ __('general.items') }}</th>
-                                        <th>{{ __('general.total') }}</th>
-                                        <th>{{ __('general.status') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($recent_sales as $sale)
-                                        @php
-                                            $ps = $sale->payment_status;
-                                            $tagClass = $ps === 'Paid' ? 'n-tag-success'
-                                                : ($ps === 'Unpaid' ? 'n-tag-danger' : 'n-tag-neutral');
-                                        @endphp
-                                        <tr>
-                                            <td>
-                                                <a href="{{ route('sales.show', $sale->id) }}" style="color:var(--color-accent)">
-                                                    {{ $sale->reference }}
-                                                </a>
-                                            </td>
-                                            <td>{{ $sale->customer_name }}</td>
-                                            <td>{{ $sale->sale_details_count }}</td>
-                                            <td>{{ format_currency($sale->total_amount) }}</td>
-                                            <td><span class="n-tag {{ $tagClass }}">{{ $ps }}</span></td>
-                                        </tr>
-                                    @empty
-                                        <tr><td colspan="5" class="n-meta">{{ __('general.no-transactions') }}</td></tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                @forelse($recent_sales as $sale)
+                                    @php
+                                        $ps = $sale->payment_status;
+                                        $tagClass = $ps === 'Paid' ? 'n-tag-success'
+                                            : ($ps === 'Unpaid' ? 'n-tag-danger' : 'n-tag-neutral');
+                                    @endphp
+                                    <div class="col-xl-4 col-lg-6 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <a href="{{ route('sales.show', $sale->id) }}" style="color:var(--color-accent)">
+                                                        {{ $sale->reference }}
+                                                    </a>
+                                                    <span class="n-tag {{ $tagClass }}">{{ $ps }}</span>
+                                                </div>
+                                                <ul class="list-group list-group-flush mb-0">
+                                                    <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('general.customer') }}</span><span>{{ $sale->customer_name }}</span></li>
+                                                    <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('general.items') }}</span><span>{{ $sale->sale_details_count }}</span></li>
+                                                    <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('general.total') }}</span><span>{{ format_currency($sale->total_amount) }}</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-12 n-meta">{{ __('general.no-transactions') }}</div>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>

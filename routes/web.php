@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/language/{locale}', function (string $locale) {
+    if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
+        session()->put('locale', $locale);
+    }
+
+    return redirect()->back();
+})->name('language.switch');
+
 Auth::routes(['register' => false]);
 
 Route::group(['middleware' => 'auth'], function () {
@@ -30,4 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/payment-flow/chart-data', 'HomeController@paymentChart')
         ->name('payment-flow.chart');
+
+    Route::get('/documentation', 'DocumentationController@index')
+        ->name('documentation.index');
 });

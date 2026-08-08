@@ -15,7 +15,13 @@ class ProductCategoriesDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('action', function ($data) {
                 return view('product::categories.partials.actions', compact('data'));
-            });
+            })
+            ->addColumn('category_image', function ($data) {
+                $url = default_category_image();
+
+                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+            })
+            ->rawColumns(['category_image', 'action']);
     }
 
     public function query(Category $model)
@@ -32,7 +38,7 @@ class ProductCategoriesDataTable extends DataTable
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(4)
+            ->orderBy(5)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -48,6 +54,10 @@ class ProductCategoriesDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            Column::computed('category_image')
+                ->title('Image')
+                ->addClass('text-center'),
+
             Column::make('category_code')
                 ->addClass('text-center'),
 

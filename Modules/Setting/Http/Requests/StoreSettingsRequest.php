@@ -25,6 +25,8 @@ class StoreSettingsRequest extends FormRequest
             'default_currency_id' => 'required|numeric',
             'default_currency_position' => 'required|string|max:255',
             'footer_text' => 'nullable|string|max:255',
+            'default_product_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'default_category_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
         ];
     }
 

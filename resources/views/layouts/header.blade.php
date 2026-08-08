@@ -22,8 +22,11 @@
 
 </ul>
 <ul class="c-header-nav ml-auto mr-4">
-    <li class="c-header-nav-item mr-3 d-flex align-items-center">
-        <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link px-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
+    <li class="c-header-nav-item m-3 d-flex align-items-center">
+        @include('includes.language-switcher')
+    </li>
+    <li class="c-header-nav-item m-3 d-flex align-items-center">
+        <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link p-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
             <i class="bi bi-moon-stars theme-toggle-dark icon-fs-1-3rem"></i>
             <i class="bi bi-sun theme-toggle-light icon-fs-1-3rem"></i>
         </button>
@@ -32,7 +35,7 @@
     @can('create_pos_sales')
     <li class="c-header-nav-item mr-3">
         <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
-            <i class="bi bi-cart mr-1"></i> POS System
+            <i class="bi bi-cart mr-1"></i> {{ __('app.pos_system') }}
         </a>
     </li>
     @endcan
@@ -77,7 +80,7 @@
                 <i class="mfe-2  bi bi-person icon-fs-1-2rem"></i> Profile
             </a>
             <a id="logout-link" class="dropdown-item" href="#">
-                <i class="mfe-2  bi bi-box-arrow-left icon-fs-1-2rem"></i> Logout
+                <i class="mfe-2  bi bi-box-arrow-left icon-fs-1-2rem"></i> {{ __('app.logout') }}   
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

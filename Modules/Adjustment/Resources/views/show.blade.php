@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Adjustment Details')
+@section('title', __('adjustment.adjustment_details'))
 
 @push('page_css')
     @livewireStyles
@@ -8,9 +8,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('adjustments.index') }}">Adjustments</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('adjustments.index') }}">{{ __('adjustment.adjustments') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('adjustment.details') }}</li>
     </ol>
 @endsection
 
@@ -20,47 +20,35 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th colspan="2">
-                                        Date
-                                    </th>
-                                    <th colspan="2">
-                                        Reference
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        {{ $adjustment->date }}
-                                    </td>
-                                    <td colspan="2">
-                                        {{ $adjustment->reference }}
-                                    </td>
-                                </tr>
+                        <ul class="list-group list-group-horizontal mb-4">
+                            <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('adjustment.date') }}</span>{{ $adjustment->date }}</li>
+                            <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('adjustment.reference') }}</span>{{ $adjustment->reference }}</li>
+                        </ul>
 
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Code</th>
-                                    <th>Quantity</th>
-                                    <th>Type</th>
-                                </tr>
-
-                                @foreach($adjustment->adjustedProducts as $adjustedProduct)
-                                    <tr>
-                                        <td>{{ $adjustedProduct->product->product_name }}</td>
-                                        <td>{{ $adjustedProduct->product->product_code }}</td>
-                                        <td>{{ $adjustedProduct->quantity }}</td>
-                                        <td>
-                                            @if($adjustedProduct->type == 'add')
-                                                (+) Addition
-                                            @else
-                                                (-) Subtraction
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
+                        <div class="row">
+                            @foreach($adjustment->adjustedProducts as $adjustedProduct)
+                                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                                    <div class="card border h-100">
+                                        <div class="card-body">
+                                            <h6 class="mb-1">{{ $adjustedProduct->product->product_name }}</h6>
+                                            <p class="text-muted small mb-2">{{ $adjustedProduct->product->product_code }}</p>
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Quantity</span><span>{{ $adjustedProduct->quantity }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0">
+                                                    <span>Type</span>
+                                                    <span>
+                                                        @if($adjustedProduct->type == 'add')
+                                                            <span class="badge badge-success">(+) {{ __('adjustment.addition') }}</span>
+                                                        @else
+                                                            <span class="badge badge-danger">(-) {{ __('adjustment.subtraction') }}</span>
+                                                        @endif
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

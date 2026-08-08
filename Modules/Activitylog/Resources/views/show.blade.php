@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Activity Log Details')
+@section('title', __('activitylog.activity_log_details'))
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('activity-logs.index') }}">Activity Logs</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('activity-logs.index') }}">{{ __('activitylog.activity_logs') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('activitylog.activity_log_details') }}</li>
     </ol>
 @endsection
 
@@ -23,44 +23,27 @@
             <div class="col-lg-5">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Activity Details</h5>
+                        <h5 class="mb-0">{{ __('activitylog.activity_details') }}</h5>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped mb-0">
-                            <tbody>
-                                <tr>
-                                    <th style="width: 40%;">Description</th>
-                                    <td>{{ ucfirst($activity->description) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Event</th>
-                                    <td>{{ ucfirst($activity->event ?? 'n/a') }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Module</th>
-                                    <td>{{ $activity->log_name ?? 'default' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Subject</th>
-                                    <td>
-                                        @if($activity->subject_type)
-                                            {{ \Illuminate\Support\Str::headline(class_basename($activity->subject_type)) }}
-                                            #{{ $activity->subject_id }}
-                                        @else
-                                            &mdash;
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Performed By</th>
-                                    <td>{{ $activity->causer?->name ?? 'System' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Date &amp; Time</th>
-                                    <td>{{ $activity->created_at->format('d M, Y H:i:s') }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.description') }}</span><span>{{ ucfirst($activity->description) }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.event') }}</span><span>{{ ucfirst($activity->event ?? 'n/a') }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.module') }}</span><span>{{ $activity->log_name ?? 'default' }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">{{ __('activitylog.subject') }}</span>
+                                <span>
+                                    @if($activity->subject_type)
+                                        {{ \Illuminate\Support\Str::headline(class_basename($activity->subject_type)) }}
+                                        #{{ $activity->subject_id }}
+                                    @else
+                                        &mdash;
+                                    @endif
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.performed_by') }}</span><span>{{ $activity->causer?->name ?? 'System' }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.date_time') }}</span><span>{{ $activity->created_at->format('d M, Y H:i:s') }}</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -68,42 +51,37 @@
             <div class="col-lg-7">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Attribute Changes</h5>
+                        <h5 class="mb-0">{{ __('activitylog.attribute_changes') }}</h5>
                     </div>
                     <div class="card-body">
                         @if(count($attributeKeys))
-                            <div class="table-responsive">
-                                <table class="table table-bordered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Attribute</th>
-                                            <th>Old Value</th>
-                                            <th>New Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($attributeKeys as $key)
-                                            <tr>
-                                                <td><strong>{{ \Illuminate\Support\Str::headline($key) }}</strong></td>
-                                                <td>
-                                                    @php $old = $oldAttributes[$key] ?? null; @endphp
-                                                    <span class="text-danger">
-                                                        {{ is_array($old) ? json_encode($old) : ($old ?? '—') }}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    @php $new = $newAttributes[$key] ?? null; @endphp
-                                                    <span class="text-success">
-                                                        {{ is_array($new) ? json_encode($new) : ($new ?? '—') }}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                @foreach($attributeKeys as $key)
+                                    @php
+                                        $old = $oldAttributes[$key] ?? null;
+                                        $new = $newAttributes[$key] ?? null;
+                                    @endphp
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card border h-100">
+                                            <div class="card-header py-2">
+                                                <strong>{{ \Illuminate\Support\Str::headline($key) }}</strong>
+                                            </div>
+                                            <div class="card-body py-2">
+                                                <div class="mb-1">
+                                                    <small class="text-muted d-block">Old Value</small>
+                                                    <span class="text-danger">{{ is_array($old) ? json_encode($old) : ($old ?? '—') }}</span>
+                                                </div>
+                                                <div>
+                                                    <small class="text-muted d-block">New Value</small>
+                                                    <span class="text-success">{{ is_array($new) ? json_encode($new) : ($new ?? '—') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         @else
-                            <p class="text-muted mb-0">No attribute changes were recorded for this activity.</p>
+                            <p class="text-muted mb-0">{{ __('activitylog.no_attribute_changes') }}</p>
                         @endif
                     </div>
                 </div>
@@ -113,7 +91,7 @@
         <div class="row mt-2">
             <div class="col-12">
                 <a href="{{ route('activity-logs.index') }}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Back to Activity Logs
+                    <i class="bi bi-arrow-left"></i> {{ __('activitylog.back_to_activity_logs') }}
                 </a>
             </div>
         </div>

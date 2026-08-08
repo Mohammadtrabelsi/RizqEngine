@@ -59,38 +59,31 @@
                         </div>
                         <div class="col-lg-5">
                             <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>{{ __('sale.total-products') }}</th>
-                                        <td>
-                                                <span class="badge badge-success">
-                                                    {{ Cart::instance($cart_instance)->count() }}
-                                                </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>{{ __('sale.order-tax') }} ({{ $global_tax }}%)</th>
-                                        <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>{{ __('sale.discount') }} ({{ $global_discount }}%)</th>
-                                        <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>{{ __('sale.shipping') }}</th>
-                                        <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-                                        <td>(+) {{ format_currency($shipping) }}</td>
-                                    </tr>
-                                    <tr class="text-primary">
-                                        <th>{{ __('sale.grand-total') }}</th>
-                                        @php
-                                            $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
-                                        @endphp
-                                        <th>
-                                            (=) {{ format_currency($total_with_shipping) }}
-                                        </th>
-                                    </tr>
-                                </table>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span class="fw-bold">{{ __('sale.total-products') }}</span>
+                                        <span class="badge badge-success">{{ Cart::instance($cart_instance)->count() }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span class="fw-bold">{{ __('sale.order-tax') }} ({{ $global_tax }}%)</span><span>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span class="fw-bold">{{ __('sale.discount') }} ({{ $global_discount }}%)</span><span>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span class="fw-bold">{{ __('sale.shipping') }}</span>
+                                        <span>
+                                            <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
+                                            (+) {{ format_currency($shipping) }}
+                                        </span>
+                                    </li>
+                                    @php
+                                        $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
+                                    @endphp
+                                    <li class="list-group-item d-flex justify-content-between text-primary">
+                                        <span class="fw-bold">{{ __('sale.grand-total') }}</span><span class="fw-bold">(=) {{ format_currency($total_with_shipping) }}</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
