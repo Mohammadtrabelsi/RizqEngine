@@ -17,9 +17,8 @@ class SalePaymentsController extends Controller
 
         $sale = Sale::findOrFail($sale_id);
 
-        $payments = SalePayment::where('sale_id', $sale_id)->with('sale')->latest()->paginate(12);
+        return view('sale.payments.index', compact('sale'));
 
-        return view('sale.payments.index', compact('sale', 'payments'));
     }
 
     public function create($sale_id)

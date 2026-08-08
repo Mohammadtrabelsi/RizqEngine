@@ -17,9 +17,8 @@ class PurchasePaymentsController extends Controller
 
         $purchase = Purchase::findOrFail($purchase_id);
 
-        $payments = PurchasePayment::where('purchase_id', $purchase_id)->with('purchase')->latest()->paginate(12);
+        return view('purchase.payments.index', compact('purchase'));
 
-        return view('purchase.payments.index', compact('purchase', 'payments'));
     }
 
     public function create($purchase_id)

@@ -17,9 +17,8 @@ class PurchaseReturnPaymentsController extends Controller
 
         $purchase_return = PurchaseReturn::findOrFail($purchase_return_id);
 
-        $payments = PurchaseReturnPayment::where('purchase_return_id', $purchase_return_id)->latest()->paginate(12);
+        return view('purchasesreturn.payments.index', compact('purchase_return'));
 
-        return view('purchasesreturn.payments.index', compact('purchase_return', 'payments'));
     }
 
     public function create($purchase_return_id)

@@ -17,9 +17,8 @@ class SaleReturnPaymentsController extends Controller
 
         $sale_return = SaleReturn::findOrFail($sale_return_id);
 
-        $payments = SaleReturnPayment::where('sale_return_id', $sale_return_id)->latest()->paginate(12);
+        return view('salesreturn.payments.index', compact('sale_return'));
 
-        return view('salesreturn.payments.index', compact('sale_return', 'payments'));
     }
 
     public function create($sale_return_id)
