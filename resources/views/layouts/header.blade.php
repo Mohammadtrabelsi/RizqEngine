@@ -26,10 +26,10 @@
         @include('includes.language-switcher')
     </li>
     <li class="c-header-nav-item m-3 d-flex align-items-center">
-        <button id="theme-toggle" class="btn btn-ghost-secondary c-header-nav-link p-2" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
-            <i class="bi bi-moon-stars theme-toggle-dark icon-fs-1-3rem"></i>
-            <i class="bi bi-sun theme-toggle-light icon-fs-1-3rem"></i>
-        </button>
+        <span class="badge badge-pill badge-light text-primary d-flex align-items-center" style="gap:6px;">
+            <i class="bi bi-sun-fill"></i>
+            <span>Light mode</span>
+        </span>
     </li>
 
     @can('create_pos_sales')
