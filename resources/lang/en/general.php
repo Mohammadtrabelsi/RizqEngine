@@ -27,6 +27,7 @@ return [
     'product' => 'Product',
     'quantity' => 'Quantity',
     'ready-to-run-your-store' => 'Ready to run your store?',
+    'recent' => 'Recent',
     'reporting' => 'Reporting',
     'reporting-dashboard-screenshot' => 'Reporting dashboard screenshot',
     'reporting-description' => 'Reporting description',
@@ -41,7 +42,7 @@ return [
     'sub-total' => 'Subtotal',
     'tax' => 'Tax',
     'terms' => 'Terms',
-    'todays-expenses' => "Today's expenses",
+    'todays-expenses' => 'Today\'s expenses',
     'total' => 'Total',
     'transactions' => 'Transactions',
 ];

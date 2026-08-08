@@ -27,6 +27,7 @@ return [
     'product' => 'Produit',
     'quantity' => 'Quantité',
     'ready-to-run-your-store' => 'Prêt à gérer votre magasin ?',
+    'recent' => 'Récent',
     'reporting' => 'Rapports',
     'reporting-dashboard-screenshot' => 'Capture d\'écran du tableau de bord des rapports',
     'reporting-description' => 'Description des rapports',
