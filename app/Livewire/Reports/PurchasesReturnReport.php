@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Reports;
 
-use App\Models\PurchaseReturn;
+use App\Services\Reports\PurchasesReturnReportService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -39,29 +39,22 @@ class PurchasesReturnReport extends Component
         $this->payment_status = '';
     }
 
-    public function render()
+    public function render(PurchasesReturnReportService $service)
     {
-        $purchase_returns = PurchaseReturn::whereDate('date', '>=', $this->start_date)
-            ->whereDate('date', '<=', $this->end_date)
-            ->when($this->supplier_id, function ($query) {
-                return $query->where('supplier_id', $this->supplier_id);
-            })
-            ->when($this->purchase_return_status, function ($query) {
-                return $query->where('status', $this->purchase_return_status);
-            })
-            ->when($this->payment_status, function ($query) {
-                return $query->where('payment_status', $this->payment_status);
-            })
-            ->orderBy('date', 'desc')->paginate(10);
-
         return view('livewire.reports.purchases-return-report', [
-            'purchase_returns' => $purchase_returns,
+            'purchase_returns' => $service->paginate(
+                $this->start_date,
+                $this->end_date,
+                $this->supplier_id,
+                $this->purchase_return_status,
+                $this->payment_status,
+                10
+            ),
         ]);
     }
 
     public function generateReport()
     {
         $this->validate();
-        $this->render();
     }
 }
