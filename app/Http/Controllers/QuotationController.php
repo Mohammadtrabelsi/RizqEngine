@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreQuotationRequest;
+use App\Http\Requests\UpdateQuotationRequest;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\QuotationDetails;
-use App\Http\Requests\StoreQuotationRequest;
-use App\Http\Requests\UpdateQuotationRequest;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class QuotationController extends Controller
 {

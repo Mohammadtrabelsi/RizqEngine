@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
-use App\Models\Product;
 
 class ProductCart extends Component
 {

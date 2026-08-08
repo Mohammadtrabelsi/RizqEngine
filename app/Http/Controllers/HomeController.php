@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -14,6 +12,8 @@ use App\Models\Sale;
 use App\Models\SalePayment;
 use App\Models\SaleReturn;
 use App\Models\SaleReturnPayment;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {

@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Reports;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Category;
 use App\Models\Product;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class InventoryValuationReport extends Component
 {

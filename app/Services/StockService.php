@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
-use App\Models\Product;
 use App\Exceptions\InsufficientStockException;
+use App\Models\Product;
 use App\Observers\ProductObserver;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Central place for programmatic stock changes.

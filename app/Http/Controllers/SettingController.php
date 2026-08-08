@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSettingsRequest;
+use App\Http\Requests\StoreSmtpSettingsRequest;
+use App\Models\Setting;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Setting;
-use App\Http\Requests\StoreSettingsRequest;
-use App\Http\Requests\StoreSmtpSettingsRequest;
 
 class SettingController extends Controller
 {

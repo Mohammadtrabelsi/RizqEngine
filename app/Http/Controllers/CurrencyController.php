@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use App\Models\Currency;
 
 class CurrencyController extends Controller
 {

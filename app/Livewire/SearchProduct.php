@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Product;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use App\Models\Product;
 
 class SearchProduct extends Component
 {

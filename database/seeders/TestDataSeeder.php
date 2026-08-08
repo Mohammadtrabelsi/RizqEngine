@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Customer;
-use App\Models\Supplier;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Supplier;
+use Illuminate\Database\Seeder;
 
 /**
  * Seeds a representative set of dummy records (categories, products,

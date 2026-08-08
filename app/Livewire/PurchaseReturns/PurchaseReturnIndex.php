@@ -33,8 +33,7 @@ class PurchaseReturnIndex extends Component
             ->when($this->search, function ($query) {
                 $term = '%'.$this->search.'%';
                 $query->where('reference', 'like', $term)
-                    ->orWhere('supplier_name', 'like', $term)
-;
+                    ->orWhere('supplier_name', 'like', $term);
             })
             ->latest()
             ->paginate(12);

@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Pos;
 
+use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Product;
 
 class ProductList extends Component
 {

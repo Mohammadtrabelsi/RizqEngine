@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
+use App\Models\PurchasePayment;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Purchase;
-use App\Models\PurchasePayment;
 
 class PurchasePaymentsController extends Controller
 {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExpenseCategory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Models\ExpenseCategory;
 
 class ExpenseCategoriesController extends Controller
 {

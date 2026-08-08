@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Reports;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\PurchasePayment;
 use App\Models\PurchaseReturnPayment;
 use App\Models\SalePayment;
 use App\Models\SaleReturnPayment;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class PaymentsReport extends Component
 {

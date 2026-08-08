@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdjustedProduct;
+use App\Models\Adjustment;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Models\AdjustedProduct;
-use App\Models\Adjustment;
-use App\Models\Product;
 
 class AdjustmentController extends Controller
 {

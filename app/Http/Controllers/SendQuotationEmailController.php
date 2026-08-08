@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\QuotationMail;
+use App\Models\Quotation;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\QuotationMail;
-use App\Models\Quotation;
 
 class SendQuotationEmailController extends Controller
 {

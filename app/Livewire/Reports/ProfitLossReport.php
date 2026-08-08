@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Reports;
 
-use Livewire\Component;
 use App\Models\Expense;
 use App\Models\Purchase;
 use App\Models\PurchasePayment;
@@ -12,6 +11,7 @@ use App\Models\Sale;
 use App\Models\SalePayment;
 use App\Models\SaleReturn;
 use App\Models\SaleReturnPayment;
+use Livewire\Component;
 
 class ProfitLossReport extends Component
 {

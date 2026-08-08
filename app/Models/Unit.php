@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\UnitFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Database\Factories\UnitFactory;
 
 class Unit extends Model
 {

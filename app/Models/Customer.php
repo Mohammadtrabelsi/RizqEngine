@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Traits\RecordsActivity;
+use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Database\Factories\CustomerFactory;
 
 /**
  * @property int $id

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Upload;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Upload;
 
 class UploadController extends Controller
 {

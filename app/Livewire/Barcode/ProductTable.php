@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Barcode;
 
+use App\Models\Product;
 use Livewire\Component;
 use Milon\Barcode\Facades\DNS1DFacade;
-use App\Models\Product;
 
 class ProductTable extends Component
 {

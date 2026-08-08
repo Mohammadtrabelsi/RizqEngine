@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('settings')) {
     function settings()

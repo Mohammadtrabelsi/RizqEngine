@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Reports;
 
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use App\Models\Product;
 
 /**
  * Ranks products by how much stock left the business (completed sales) over a

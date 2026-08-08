@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use App\Models\Customer;
+use App\Http\Requests\StorePosSaleRequest;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\SalePayment;
-use App\Http\Requests\StorePosSaleRequest;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class PosController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Currency;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use App\Models\Currency;
 
 class CurrencyDatabaseSeeder extends Seeder
 {

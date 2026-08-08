@@ -33,8 +33,7 @@ class SaleIndex extends Component
             ->when($this->search, function ($query) {
                 $term = '%'.$this->search.'%';
                 $query->where('reference', 'like', $term)
-                    ->orWhere('customer_name', 'like', $term)
-;
+                    ->orWhere('customer_name', 'like', $term);
             })
             ->latest()
             ->paginate(12);

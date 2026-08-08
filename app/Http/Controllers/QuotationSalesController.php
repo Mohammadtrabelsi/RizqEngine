@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Quotation;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Product;
-use App\Models\Quotation;
 
 class QuotationSalesController extends Controller
 {

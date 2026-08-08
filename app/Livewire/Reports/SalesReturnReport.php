@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Reports;
 
+use App\Models\SaleReturn;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\SaleReturn;
 
 class SalesReturnReport extends Component
 {

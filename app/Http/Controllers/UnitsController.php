@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Models\Unit;
 
 class UnitsController extends Controller
 {

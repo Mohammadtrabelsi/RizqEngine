@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Reports;
 
+use App\Models\Purchase;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Purchase;
 
 class PurchasesReport extends Component
 {

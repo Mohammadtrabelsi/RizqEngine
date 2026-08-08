@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use App\Models\Supplier;
+use App\Http\Requests\StorePurchaseReturnRequest;
+use App\Http\Requests\UpdatePurchaseReturnRequest;
 use App\Models\Product;
 use App\Models\PurchaseReturn;
 use App\Models\PurchaseReturnDetail;
 use App\Models\PurchaseReturnPayment;
-use App\Http\Requests\StorePurchaseReturnRequest;
-use App\Http\Requests\UpdatePurchaseReturnRequest;
+use App\Models\Supplier;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class PurchasesReturnController extends Controller
 {

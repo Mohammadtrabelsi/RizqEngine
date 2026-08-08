@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\PurchaseReturn;
@@ -8,7 +9,6 @@ use App\Models\Sale;
 use App\Models\SaleReturn;
 use App\Models\Supplier;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
             'purchase' => $purchase,
             'supplier' => $supplier,
         ])->setPaper('a4');
+
         return $pdf->stream('purchase-'.$purchase->reference.'.pdf');
     })->name('purchases.pdf');
     // Sales
@@ -131,6 +132,7 @@ Route::group(['middleware' => 'auth'], function () {
             'purchase_return' => $purchaseReturn,
             'supplier' => $supplier,
         ])->setPaper('a4');
+
         return $pdf->stream('purchase-return-'.$purchaseReturn->reference.'.pdf');
     })->name('purchase-returns.pdf');
     // Purchase Returns
@@ -162,6 +164,7 @@ Route::group(['middleware' => 'auth'], function () {
             'sale' => $sale,
             'customer' => $customer,
         ])->setPaper('a4');
+
         return $pdf->stream('sale-'.$sale->reference.'.pdf');
     })->name('sales.pdf');
     Route::get('/sales/pos/pdf/{id}', function ($id) {
@@ -173,6 +176,7 @@ Route::group(['middleware' => 'auth'], function () {
             ->setOption('margin-bottom', 8)
             ->setOption('margin-left', 5)
             ->setOption('margin-right', 5);
+
         return $pdf->stream('sale-'.$sale->reference.'.pdf');
     })->name('sales.pos.pdf');
     // Sales
@@ -195,6 +199,7 @@ Route::group(['middleware' => 'auth'], function () {
             'sale_return' => $saleReturn,
             'customer' => $customer,
         ])->setPaper('a4');
+
         return $pdf->stream('sale-return-'.$saleReturn->reference.'.pdf');
     })->name('sale-returns.pdf');
     // Sale Returns
@@ -223,6 +228,7 @@ Route::group(['middleware' => 'auth'], function () {
             'quotation' => $quotation,
             'customer' => $customer,
         ])->setPaper('a4');
+
         return $pdf->stream('quotation-'.$quotation->reference.'.pdf');
     })->name('quotations.pdf');
     // Send Quotation Mail
@@ -293,4 +299,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/filepond/upload', 'UploadController@filepondUpload')->name('filepond.upload');
     Route::delete('/filepond/delete', 'UploadController@filepondDelete')->name('filepond.delete');
 });
-

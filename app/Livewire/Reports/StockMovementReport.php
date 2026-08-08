@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Reports;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\StockMovement;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class StockMovementReport extends Component
 {

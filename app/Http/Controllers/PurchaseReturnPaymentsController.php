@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PurchaseReturn;
+use App\Models\PurchaseReturnPayment;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Models\PurchaseReturn;
-use App\Models\PurchaseReturnPayment;
 
 class PurchaseReturnPaymentsController extends Controller
 {

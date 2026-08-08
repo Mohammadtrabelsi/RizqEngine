@@ -4,13 +4,13 @@ namespace Tests\Feature;
 
 use App\Livewire\Reports\InventoryValuationReport;
 use App\Livewire\Reports\LowStockReport;
+use App\Models\Category;
+use App\Models\Currency;
+use App\Models\Product;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
-use App\Models\Currency;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\Setting;
 use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
