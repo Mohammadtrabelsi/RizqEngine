@@ -1,22 +1,22 @@
-<button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
-    <i class="bi bi-list icon-fs-2rem"></i>
-</button>
-
-<button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
+<button class="c-header-toggler app-nav-toggler d-lg-none mfe-auto" type="button"
+        data-toggle="collapse" data-target="#app-topnav-collapse"
+        aria-controls="app-topnav-collapse" aria-expanded="false" aria-label="Toggle navigation">
     <i class="bi bi-list icon-fs-2rem"></i>
 </button>
 
 @php($headerSettings = settings())
-@if($headerSettings->client_logo || $headerSettings->client_name)
-    <a href="{{ route('home') }}" class="c-header-nav-link d-flex align-items-center mfs-3" style="text-decoration:none; gap:8px;">
+<a href="{{ route('home') }}" class="c-header-brand d-flex align-items-center mfs-3" style="text-decoration:none; gap:8px;">
+    @if($headerSettings->client_logo || $headerSettings->client_name)
         @if($headerSettings->client_logo)
             <img src="{{ \Illuminate\Support\Facades\Storage::url($headerSettings->client_logo) }}" alt="{{ $headerSettings->client_name ?? 'Logo' }}" style="max-height:32px; max-width:140px;">
         @endif
         @if($headerSettings->client_name)
             <span class="font-weight-bold d-md-down-none" style="font-size:1.05rem;">{{ $headerSettings->client_name }}</span>
         @endif
-    </a>
-@endif
+    @else
+        @include('layouts.logo', ['size' => 24, 'label' => 'Triangle POS', 'labelSize' => 15])
+    @endif
+</a>
 
 <ul class="c-header-nav ml-auto">
 

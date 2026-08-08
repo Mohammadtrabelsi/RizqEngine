@@ -1073,3 +1073,212 @@ button:focus-visible,
     .card:hover { transform: none; }
     .n-bar-col:hover .n-bar { transform: none; }
 }
+
+// ---------------------------------------------------------------------
+//  12. Horizontal navigation (replaces the vertical sidebar)
+//  The primary menu now lives inside the content area as a horizontal bar
+//  built on Bootstrap 4 navbar + dropdowns. The sidebar shell is removed,
+//  so the wrapper reclaims the full page width.
+// ---------------------------------------------------------------------
+
+// Reclaim the space the sidebar used to occupy.
+.app-no-sidebar .c-wrapper { margin-left: 0 !important; }
+.app-no-sidebar .c-body,
+.app-no-sidebar .c-header { left: 0 !important; }
+
+// Header brand (moved out of the sidebar).
+.c-header .c-header-brand {
+    color: $n-text;
+    font-family: var(--font-heading);
+}
+.c-header .app-nav-toggler { color: $n-text; }
+
+// The horizontal menu bar itself — a raised, rounded surface that sits at
+// the top of the content column.
+.app-topnav {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    margin: 0 0 1.25rem;
+    padding: 0.35rem 0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid $n-divider;
+    box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.28);
+}
+
+.app-topnav-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.app-topnav-item { position: relative; }
+
+.app-topnav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 1;
+    color: rgba(20, 33, 61, 0.78);
+    white-space: nowrap;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: color 0.15s ease, background-color 0.15s ease,
+        border-color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+}
+.app-topnav-link i { font-size: 0.95rem; }
+.app-topnav-link .dropdown-toggle::after,
+.app-topnav-link.dropdown-toggle::after { margin-left: 0.35rem; }
+
+.app-topnav-link:hover,
+.app-topnav-link:focus {
+    color: $n-accent;
+    background: rgba(79, 70, 229, 0.08);
+    border-color: rgba(79, 70, 229, 0.12);
+    text-decoration: none;
+}
+.app-topnav-link:active { transform: translateY(1px); }
+
+.app-topnav-item.is-active > .app-topnav-link {
+    color: #fff;
+    background: linear-gradient(135deg, $n-accent, $n-accent-2);
+    border-color: transparent;
+    box-shadow: 0 10px 22px -10px rgba($n-accent, 0.55);
+}
+.app-topnav-item.is-active > .app-topnav-link i { color: #fff; }
+
+// Dropdown panels opened from the bar.
+.app-topnav .dropdown-menu {
+    margin-top: 0.4rem;
+    border: 1px solid $n-divider;
+    border-radius: var(--radius-md);
+    box-shadow: $shadow-md;
+    padding: 0.4rem;
+    min-width: 13rem;
+}
+.app-topnav .dropdown-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+}
+.app-topnav .dropdown-menu .dropdown-item:hover,
+.app-topnav .dropdown-menu .dropdown-item:focus {
+    background: rgba(79, 70, 229, 0.08);
+    color: $n-accent;
+}
+.app-topnav .dropdown-menu .dropdown-item.active {
+    background: linear-gradient(135deg, $n-accent, $n-accent-2);
+    color: #fff;
+}
+
+// Mobile toggler + collapse behaviour.
+.app-topnav-toggler {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: $n-text;
+    background: rgba(79, 70, 229, 0.06);
+    border: 1px solid $n-divider;
+    border-radius: 999px;
+}
+@media (max-width: 991.98px) {
+    .app-topnav-toggler { display: inline-flex; }
+    .app-topnav .app-topnav-collapse:not(.show) { display: none; }
+    .app-topnav-list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.15rem;
+        padding: 0.5rem 0 0.25rem;
+    }
+    .app-topnav-link { justify-content: flex-start; border-radius: var(--radius-md); }
+    // On mobile the dropdowns expand inline rather than floating.
+    .app-topnav .dropdown-menu {
+        position: static !important;
+        float: none;
+        transform: none !important;
+        box-shadow: none;
+        border: 0;
+        padding-left: 1.5rem;
+        margin: 0;
+        min-width: 0;
+    }
+}
+
+// ---------------------------------------------------------------------
+//  13. Button system upgrade
+//  A cohesive, tactile button family across every Bootstrap variant —
+//  consistent pill radius, comfortable hit-area, soft depth on the solid
+//  colours and clean outline/soft treatments.
+// ---------------------------------------------------------------------
+.btn {
+    padding: 0.5rem 1.15rem;
+    letter-spacing: 0.01em;
+    border-radius: 999px;
+}
+.btn-sm { padding: 0.35rem 0.85rem; font-size: 0.8rem; }
+.btn-lg { padding: 0.7rem 1.6rem; font-size: 1rem; }
+
+// Solid coloured buttons get subtle depth + a lift on hover.
+.btn-success, .btn-info, .btn-warning, .btn-danger, .btn-dark {
+    color: #fff;
+    border: 1px solid transparent;
+    box-shadow: 0 10px 24px -14px rgba(15, 23, 42, 0.5);
+}
+.btn-success:hover, .btn-info:hover, .btn-warning:hover,
+.btn-danger:hover, .btn-dark:hover {
+    color: #fff;
+    filter: brightness(1.05);
+    box-shadow: 0 14px 30px -14px rgba(15, 23, 42, 0.55);
+}
+.btn-warning, .btn-warning:hover { color: #1f2937; }
+
+// Outline buttons — crisp border that fills on hover.
+[class*='btn-outline-'] {
+    border-width: 1.5px;
+    font-weight: 600;
+}
+
+// Icon-only / pill utility buttons keep a perfect circle.
+.btn-pill { border-radius: 999px; }
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border-radius: 999px;
+}
+.btn-group > .btn { border-radius: 999px; }
+.btn-group > .btn:not(:last-child) { margin-right: 0.25rem; }
+
+// ---------------------------------------------------------------------
+//  14. Light-theme overrides for the horizontal nav
+// ---------------------------------------------------------------------
+body:not(.c-dark-theme) {
+    .app-topnav {
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid $l-divider;
+    }
+    .app-topnav-link { color: rgba(35, 40, 44, 0.8); }
+    .app-topnav-link:hover,
+    .app-topnav-link:focus {
+        color: $n-accent;
+        background: rgba(79, 70, 229, 0.08);
+    }
+    .app-topnav .dropdown-menu { border-color: $l-divider; }
+    .c-header .c-header-brand { color: $l-text; }
+}

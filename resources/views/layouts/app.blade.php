@@ -13,9 +13,7 @@
     @include('includes.main-css')
 </head>
 
-<body class="c-app {{ request()->cookie('theme') === 'dark' ? 'c-dark-theme' : '' }}">
-    @include('layouts.sidebar')
-
+<body class="c-app app-no-sidebar {{ request()->cookie('theme') === 'dark' ? 'c-dark-theme' : '' }}">
     <div class="c-wrapper">
         <header class="c-header c-header-light c-header-fixed">
             @include('layouts.header')
@@ -26,6 +24,7 @@
 
         <div class="c-body">
             <main class="c-main">
+                @include('layouts.menu-horizontal')
                 <div class="container-fluid">
                     @include('utils.flash')
                 </div>
