@@ -3,6 +3,10 @@
 return [
     'action' => 'الإجراء',
     'all-products-above-alert-level' => 'جميع المنتجات أعلى من مستوى التنبيه',
+    'apply-filter' => 'تطبيق',
+    'from-date' => 'من تاريخ',
+    'reset' => 'إعادة تعيين',
+    'to-date' => 'إلى تاريخ',
     'completed-sales-today' => 'المبيعات المكتملة اليوم',
     'customer' => 'العميل',
     'dashboard' => 'لوحة التحكم',
