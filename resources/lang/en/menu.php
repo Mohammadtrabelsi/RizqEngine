@@ -25,6 +25,7 @@ return [
     'customers' => 'Customers',
     'documentation' => 'Documentation',
     'expenses' => 'Expenses',
+    'home' => 'Home',
     'inventory-valuation-report' => 'Inventory-valuation-report',
     'low-stock-report' => 'Low-stock-report',
     'parties' => 'Parties',
