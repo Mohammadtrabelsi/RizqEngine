@@ -847,8 +847,6 @@ body {
         display: flex;
         align-items: center;
         min-height: 48px;
-        padding: 0 0.5rem;
-        border-top: 1px solid var(--border);
         color: var(--muted);
     }
     .c-body { display: flex; flex-direction: column; flex: 1; }
@@ -877,12 +875,9 @@ body {
     position: sticky;
     top: 0;
     z-index: 1020;
-    margin: 0 0 1.25rem;
-    padding: 0.5rem 0;
     background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.28);
 }
 .app-topnav-list {
     display: flex;
@@ -959,17 +954,27 @@ body {
 }
 @media (max-width: 991.98px) {
     .app-topnav-toggler { display: inline-flex; }
+    /* Collapse is hidden by default; when shown it becomes an inline
+       horizontal row so the mobile menu appears inside the header. */
     .app-topnav .app-topnav-collapse { display: none; }
-    .app-topnav .app-topnav-collapse.show { display: block; }
-    .app-topnav-list { flex-direction: column; align-items: stretch; gap: 0.15rem; padding: 0.5rem 0 0.25rem; }
-    .app-topnav-link { justify-content: flex-start; border-radius: 0; }
+    .app-topnav .app-topnav-collapse.show {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.25rem;
+        overflow-x: auto;
+        padding: 0.35rem 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+    .app-topnav-list { flex-direction: row; align-items: center; gap: 0.4rem; padding: 0; margin: 0; }
+    .app-topnav-link { justify-content: center; border-radius: 0.25rem; padding: 0.45rem 0.75rem; }
     .app-topnav .dropdown-menu {
         position: static;
         float: none;
         transform: none;
         box-shadow: none;
         border: 0;
-        padding-left: 1.5rem;
+        padding-left: 0.75rem;
         margin: 0;
         min-width: 0;
     }

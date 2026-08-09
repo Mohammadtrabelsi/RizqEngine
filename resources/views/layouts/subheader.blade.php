@@ -1,4 +1,4 @@
-<div class="c-subheader justify-content-between px-3">
+<div class="c-subheader">
     <div class="container">
         @yield('breadcrumb')
     </div>

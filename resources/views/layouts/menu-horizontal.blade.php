@@ -4,7 +4,7 @@
     vertical sidebar. Authored with Tailwind CSS utilities and components.
 --}}
 <nav class="app-topnav" aria-label="{{ __('menu.products') }}">
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="app-topnav-collapse" id="app-topnav-collapse">
             <ul class="app-topnav-list">
