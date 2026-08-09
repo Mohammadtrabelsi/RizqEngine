@@ -3,7 +3,8 @@
 return [
     'account' => 'Account',
     'create' => 'Create',
-    'developed-by' => 'Developed-by',
+    'developed-by' => 'origin project',
+    'developed' => 'developed by',
     'home' => 'Home',
     'logout' => 'Logout',
     'no-notifications' => 'No-notifications',
