@@ -5,8 +5,8 @@
         <meta charset="UTF-8">
         <meta name=description content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Print stylesheet -->
+        <link href="{{ public_path("css/print.css") }}" rel="stylesheet">
         <style>
             body {margin: 20px}
         </style>

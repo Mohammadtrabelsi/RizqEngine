@@ -1,0 +1,76 @@
+/*
+ * Triangle POS — print / PDF stylesheet.
+ *
+ * Standalone documents (invoices, quotations, barcode sheets, DataTables
+ * exports) are rendered outside the Vite/Tailwind build, so this file is a
+ * small self-contained stylesheet that provides just the grid, table and
+ * card classes those templates use. It replaces the former Bootstrap 3
+ * dependency (public/b3/bootstrap.min.css).
+ */
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #23282c;
+    background: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem; font-weight: 600; line-height: 1.2; }
+h4 { font-size: 1.1rem; }
+strong { font-weight: 700; }
+img { max-width: 100%; }
+
+/* --- Grid --- */
+.container,
+.container-fluid { width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; }
+.container { max-width: 1140px; }
+
+.row { display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px; }
+.row > [class*='col-'] { position: relative; padding-right: 15px; padding-left: 15px; }
+
+.col-xs-3, .col-md-3 { flex: 0 0 25%; max-width: 25%; }
+.col-xs-4, .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.col-xs-6, .col-md-6 { flex: 0 0 50%; max-width: 50%; }
+.col-xs-12, .col-md-12 { flex: 0 0 100%; max-width: 100%; }
+.col-xs-offset-8, .offset-md-8 { margin-left: 66.666667%; }
+
+/* --- Spacing --- */
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.pull-right { float: right !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+
+/* --- Cards --- */
+.card { border: 1px solid #d8dbe0; border-radius: 6px; margin-bottom: 1rem; background: #fff; }
+.card-body { padding: 1.25rem; }
+
+/* --- Badges --- */
+.badge { display: inline-block; padding: 0.3em 0.55em; font-size: 75%; font-weight: 600; line-height: 1; color: #fff; text-align: center; white-space: nowrap; border-radius: 0.35rem; background-color: #768192; }
+.badge-success { background-color: #10b981; }
+.badge-danger { background-color: #ef4444; }
+.badge-warning { background-color: #f59e0b; color: #1f2937; }
+.badge-info { background-color: #0ea5e9; }
+
+/* --- List groups --- */
+.list-group { padding-left: 0; margin-bottom: 0; list-style: none; }
+.list-group-item { position: relative; display: block; padding: 0.6rem 1rem; background: #fff; border: 1px solid #d8dbe0; }
+.list-group-item + .list-group-item { border-top-width: 0; }
+
+/* --- Tables --- */
+.table { width: 100%; margin-bottom: 1rem; border-collapse: collapse; }
+.table th, .table td { padding: 0.5rem; vertical-align: top; text-align: left; }
+.table-bordered, .table-bordered th, .table-bordered td { border: 1px solid #d8dbe0; }
+.table-striped tbody tr:nth-of-type(odd) { background-color: #f6f7fb; }
+.table-condensed th, .table-condensed td { padding: 0.3rem; }
+
+@media print {
+    body { margin: 0; }
+    .card { border-color: #ccc; }
+}

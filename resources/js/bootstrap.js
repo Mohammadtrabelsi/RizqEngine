@@ -1,14 +1,10 @@
-import Popper from "popper.js";
-import * as bootstrap from 'bootstrap';
-
 /**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
+ * Application bootstrap.
+ *
+ * Historically this file wired up Popper.js and the Bootstrap 4 jQuery
+ * plugin. The UI has been migrated to Tailwind CSS, so those dependencies
+ * were removed. jQuery is still loaded from the CDN in the authenticated
+ * layout for the third-party DataTables / perfect-scrollbar plugins, and
+ * the interactive widgets that CoreUI used to provide (dropdowns, modals,
+ * collapsible navigation, tooltips) are now handled in `app.js`.
  */
-
-try {
-    window.Popper = Popper;
-} catch (e) {
-    console.log(e);
-}
