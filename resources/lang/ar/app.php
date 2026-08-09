@@ -3,7 +3,8 @@
 return [
     'account' => 'الحساب',
     'create' => 'إنشاء',
-    'developed-by' => 'تم التطوير بواسطة',
+    'developed-by' => 'المشروع الأصلي',
+    'developed' => 'تطوير',
     'home' => 'الرئيسية',
     'logout' => 'تسجيل الخروج',
     'no-notifications' => 'لا توجد إشعارات',

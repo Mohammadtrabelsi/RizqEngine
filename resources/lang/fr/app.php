@@ -3,7 +3,8 @@
 return [
     'account' => 'Compte',
     'create' => 'Créer',
-    'developed-by' => 'Développé par',
+    'developed-by' => 'projet d\'origine',
+    'developed' => 'développé par',
     'home' => 'Accueil',
     'logout' => 'Déconnexion',
     'no-notifications' => 'Aucune notification',
