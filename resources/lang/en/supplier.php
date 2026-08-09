@@ -8,6 +8,7 @@ return [
     'create_supplier' => 'Create supplier',
     'edit_supplier' => 'Edit supplier',
     'no_suppliers_found' => 'No suppliers found',
+    'profile_image' => 'Profile image',
     'supplier_details' => 'Supplier details',
     'supplier_email' => 'Supplier email',
     'supplier_name' => 'Supplier name',

@@ -13,5 +13,6 @@ return [
     'customers' => 'Clients',
     'edit' => 'Modifier',
     'no_customers_found' => 'Aucun client trouvé',
+    'profile_image' => '[TODO] Profile image',
     'update' => 'Mettre à jour',
 ];

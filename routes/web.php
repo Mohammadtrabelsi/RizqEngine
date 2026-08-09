@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['namespace' => null], function () {
+    Route::group(['namespace' => '\\'], function () {
         // Currencies (full-page Livewire components)
         Route::get('/currencies', CurrencyIndex::class)->name('currencies.index');
         Route::get('/currencies/create', CurrencyForm::class)->name('currencies.create');
@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     // General Settings
     Route::get('/settings', 'SettingController@index')->name('settings.index');
     Route::patch('/settings', 'SettingController@update')->name('settings.update');
-    Route::group(['namespace' => null], function () {
+    Route::group(['namespace' => '\\'], function () {
         // Units (full-page Livewire components)
         Route::get('/units', UnitIndex::class)->name('units.index');
         Route::get('/units/create', UnitForm::class)->name('units.create');

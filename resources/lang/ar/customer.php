@@ -13,5 +13,6 @@ return [
     'customers' => 'العملاء',
     'edit' => 'تعديل',
     'no_customers_found' => 'لم يتم العثور على عملاء',
+    'profile_image' => '[TODO] Profile image',
     'update' => 'تحديث',
 ];

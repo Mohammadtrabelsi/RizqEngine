@@ -8,6 +8,7 @@ return [
     'create_supplier' => 'Créer un fournisseur',
     'edit_supplier' => 'Modifier le fournisseur',
     'no_suppliers_found' => 'Aucun fournisseur trouvé',
+    'profile_image' => '[TODO] Profile image',
     'supplier_details' => 'Détails du fournisseur',
     'supplier_email' => 'E-mail du fournisseur',
     'supplier_name' => 'Nom du fournisseur',

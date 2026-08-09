@@ -13,5 +13,6 @@ return [
     'customers' => 'Customers',
     'edit' => 'Edit',
     'no_customers_found' => 'No customers found',
+    'profile_image' => 'Profile image',
     'update' => 'Update',
 ];
