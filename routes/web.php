@@ -115,12 +115,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Sales
     Route::resource('purchases', 'PurchaseController');
     // Payments
-    Route::get('/purchase-payments/{purchase_id}', 'PurchasePaymentsController@index')->name('purchase-payments.index');
-    Route::get('/purchase-payments/{purchase_id}/create', 'PurchasePaymentsController@create')->name('purchase-payments.create');
-    Route::post('/purchase-payments/store', 'PurchasePaymentsController@store')->name('purchase-payments.store');
-    Route::get('/purchase-payments/{purchase_id}/edit/{purchasePayment}', 'PurchasePaymentsController@edit')->name('purchase-payments.edit');
-    Route::patch('/purchase-payments/update/{purchasePayment}', 'PurchasePaymentsController@update')->name('purchase-payments.update');
-    Route::delete('/purchase-payments/destroy/{purchasePayment}', 'PurchasePaymentsController@destroy')->name('purchase-payments.destroy');
+    Route::group(['prefix' => 'purchase-payments', 'as' => 'purchase-payments.'], function () {
+        Route::get('/{purchase_id}', 'PurchasePaymentsController@index')->name('index');
+        Route::get('/{purchase_id}/create', 'PurchasePaymentsController@create')->name('create');
+        Route::post('/store', 'PurchasePaymentsController@store')->name('store');
+        Route::get('/{purchase_id}/edit/{purchasePayment}', 'PurchasePaymentsController@edit')->name('edit');
+        Route::patch('/update/{purchasePayment}', 'PurchasePaymentsController@update')->name('update');
+        Route::delete('/destroy/{purchasePayment}', 'PurchasePaymentsController@destroy')->name('destroy');
+    });
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -138,18 +140,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Purchase Returns
     Route::resource('purchase-returns', 'PurchasesReturnController');
     // Payments
-    Route::get('/purchase-return-payments/{purchase_return_id}', 'PurchaseReturnPaymentsController@index')
-        ->name('purchase-return-payments.index');
-    Route::get('/purchase-return-payments/{purchase_return_id}/create', 'PurchaseReturnPaymentsController@create')
-        ->name('purchase-return-payments.create');
-    Route::post('/purchase-return-payments/store', 'PurchaseReturnPaymentsController@store')
-        ->name('purchase-return-payments.store');
-    Route::get('/purchase-return-payments/{purchase_return_id}/edit/{purchaseReturnPayment}', 'PurchaseReturnPaymentsController@edit')
-        ->name('purchase-return-payments.edit');
-    Route::patch('/purchase-return-payments/update/{purchaseReturnPayment}', 'PurchaseReturnPaymentsController@update')
-        ->name('purchase-return-payments.update');
-    Route::delete('/purchase-return-payments/destroy/{purchaseReturnPayment}', 'PurchaseReturnPaymentsController@destroy')
-        ->name('purchase-return-payments.destroy');
+    Route::group(['prefix' => 'purchase-return-payments', 'as' => 'purchase-return-payments.'], function () {
+        Route::get('/{purchase_return_id}', 'PurchaseReturnPaymentsController@index')->name('index');
+        Route::get('/{purchase_return_id}/create', 'PurchaseReturnPaymentsController@create')->name('create');
+        Route::post('/store', 'PurchaseReturnPaymentsController@store')->name('store');
+        Route::get('/{purchase_return_id}/edit/{purchaseReturnPayment}', 'PurchaseReturnPaymentsController@edit')->name('edit');
+        Route::patch('/update/{purchaseReturnPayment}', 'PurchaseReturnPaymentsController@update')->name('update');
+        Route::delete('/destroy/{purchaseReturnPayment}', 'PurchaseReturnPaymentsController@destroy')->name('destroy');
+    });
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -182,12 +180,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Sales
     Route::resource('sales', 'SaleController');
     // Payments
-    Route::get('/sale-payments/{sale_id}', 'SalePaymentsController@index')->name('sale-payments.index');
-    Route::get('/sale-payments/{sale_id}/create', 'SalePaymentsController@create')->name('sale-payments.create');
-    Route::post('/sale-payments/store', 'SalePaymentsController@store')->name('sale-payments.store');
-    Route::get('/sale-payments/{sale_id}/edit/{salePayment}', 'SalePaymentsController@edit')->name('sale-payments.edit');
-    Route::patch('/sale-payments/update/{salePayment}', 'SalePaymentsController@update')->name('sale-payments.update');
-    Route::delete('/sale-payments/destroy/{salePayment}', 'SalePaymentsController@destroy')->name('sale-payments.destroy');
+    Route::group(['prefix' => 'sale-payments', 'as' => 'sale-payments.'], function () {
+        Route::get('/{sale_id}', 'SalePaymentsController@index')->name('index');
+        Route::get('/{sale_id}/create', 'SalePaymentsController@create')->name('create');
+        Route::post('/store', 'SalePaymentsController@store')->name('store');
+        Route::get('/{sale_id}/edit/{salePayment}', 'SalePaymentsController@edit')->name('edit');
+        Route::patch('/update/{salePayment}', 'SalePaymentsController@update')->name('update');
+        Route::delete('/destroy/{salePayment}', 'SalePaymentsController@destroy')->name('destroy');
+    });
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -205,18 +205,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Sale Returns
     Route::resource('sale-returns', 'SalesReturnController');
     // Payments
-    Route::get('/sale-return-payments/{sale_return_id}', 'SaleReturnPaymentsController@index')
-        ->name('sale-return-payments.index');
-    Route::get('/sale-return-payments/{sale_return_id}/create', 'SaleReturnPaymentsController@create')
-        ->name('sale-return-payments.create');
-    Route::post('/sale-return-payments/store', 'SaleReturnPaymentsController@store')
-        ->name('sale-return-payments.store');
-    Route::get('/sale-return-payments/{sale_return_id}/edit/{saleReturnPayment}', 'SaleReturnPaymentsController@edit')
-        ->name('sale-return-payments.edit');
-    Route::patch('/sale-return-payments/update/{saleReturnPayment}', 'SaleReturnPaymentsController@update')
-        ->name('sale-return-payments.update');
-    Route::delete('/sale-return-payments/destroy/{saleReturnPayment}', 'SaleReturnPaymentsController@destroy')
-        ->name('sale-return-payments.destroy');
+    Route::group(['prefix' => 'sale-return-payments', 'as' => 'sale-return-payments.'], function () {
+        Route::get('/{sale_return_id}', 'SaleReturnPaymentsController@index')->name('index');
+        Route::get('/{sale_return_id}/create', 'SaleReturnPaymentsController@create')->name('create');
+        Route::post('/store', 'SaleReturnPaymentsController@store')->name('store');
+        Route::get('/{sale_return_id}/edit/{saleReturnPayment}', 'SaleReturnPaymentsController@edit')->name('edit');
+        Route::patch('/update/{saleReturnPayment}', 'SaleReturnPaymentsController@update')->name('update');
+        Route::delete('/destroy/{saleReturnPayment}', 'SaleReturnPaymentsController@destroy')->name('destroy');
+    });
 });
 
 Route::group(['middleware' => 'auth'], function () {

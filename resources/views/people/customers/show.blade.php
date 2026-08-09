@@ -16,6 +16,11 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        @if ($customer->getFirstMediaUrl('images'))
+                            <div class="text-center mb-4">
+                                <img src="{{ $customer->getFirstMediaUrl('images') }}" class="img-fluid img-thumbnail rounded-circle" alt="Customer Image" style="max-width: 180px;">
+                            </div>
+                        @endif
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_name') }}</span><span>{{ $customer->customer_name }}</span></li>
                             <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_email') }}</span><span>{{ $customer->customer_email }}</span></li>

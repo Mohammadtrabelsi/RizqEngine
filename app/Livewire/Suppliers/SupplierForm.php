@@ -5,10 +5,15 @@ namespace App\Livewire\Suppliers;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class SupplierForm extends Component
 {
+    use WithFileUploads;
+
     public ?int $supplierId = null;
+
+    public ?Supplier $supplier = null;
 
     public string $supplier_name = '';
 
@@ -22,11 +27,14 @@ class SupplierForm extends Component
 
     public string $address = '';
 
+    public $image;
+
     public function mount(?Supplier $supplier = null): void
     {
         if ($supplier && $supplier->exists) {
             abort_if(Gate::denies('edit_suppliers'), 403);
 
+            $this->supplier = $supplier;
             $this->supplierId = $supplier->id;
             $this->supplier_name = (string) $supplier->supplier_name;
             $this->supplier_email = (string) $supplier->supplier_email;
@@ -48,6 +56,7 @@ class SupplierForm extends Component
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'address' => 'required|string|max:500',
+            'image' => 'nullable|image|max:2048',
         ];
     }
 
@@ -55,13 +64,35 @@ class SupplierForm extends Component
     {
         $data = $this->validate();
 
+        $image = $data['image'] ?? null;
+        unset($data['image']);
+
         if ($this->supplierId) {
             abort_if(Gate::denies('edit_suppliers'), 403);
-            Supplier::findOrFail($this->supplierId)->update($data);
+            $supplier = Supplier::findOrFail($this->supplierId);
+            $supplier->update($data);
+
+            if ($image) {
+                if ($supplier->getFirstMedia('images')) {
+                    $supplier->getFirstMedia('images')->delete();
+                }
+
+                $supplier->addMedia($image->getRealPath())
+                    ->usingFileName($image->getClientOriginalName())
+                    ->toMediaCollection('images');
+            }
+
             session()->flash('info', trans('people.supplier-updated'));
         } else {
             abort_if(Gate::denies('create_suppliers'), 403);
-            Supplier::create($data);
+            $supplier = Supplier::create($data);
+
+            if ($image) {
+                $supplier->addMedia($image->getRealPath())
+                    ->usingFileName($image->getClientOriginalName())
+                    ->toMediaCollection('images');
+            }
+
             session()->flash('success', trans('people.supplier-created'));
         }
 
