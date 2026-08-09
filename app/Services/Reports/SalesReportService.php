@@ -2,8 +2,8 @@
 
 namespace App\Services\Reports;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Models\Sale;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Data access for the sales report.

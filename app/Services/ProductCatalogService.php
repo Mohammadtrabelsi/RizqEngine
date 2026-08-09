@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use App\Models\Product;
 
 /**
  * Read access to the product catalogue for Livewire components.

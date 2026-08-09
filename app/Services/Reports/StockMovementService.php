@@ -2,10 +2,10 @@
 
 namespace App\Services\Reports;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use App\Models\Product;
 use App\Models\StockMovement;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Data access for the stock movement report.

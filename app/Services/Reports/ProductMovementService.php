@@ -2,9 +2,9 @@
 
 namespace App\Services\Reports;
 
+use App\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
 
 /**
  * Data access for the product movement report.

@@ -2,11 +2,11 @@
 
 namespace App\Services\Reports;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Models\Category;
-use App\Models\Product;
 
 /**
  * Data access for the inventory valuation report.

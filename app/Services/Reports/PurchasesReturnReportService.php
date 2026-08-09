@@ -2,8 +2,8 @@
 
 namespace App\Services\Reports;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Models\PurchaseReturn;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Data access for the purchases return report.

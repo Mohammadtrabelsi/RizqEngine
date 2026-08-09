@@ -2,12 +2,12 @@
 
 namespace App\Services\Reports;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use App\Models\PurchasePayment;
 use App\Models\PurchaseReturnPayment;
 use App\Models\SalePayment;
 use App\Models\SaleReturnPayment;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Data access for the payments report.
