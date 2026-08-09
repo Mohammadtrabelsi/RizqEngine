@@ -24,6 +24,6 @@
         <polygon points="27.5,47.5 72.5,47.5 50,90" fill="{{ $accent }}" stroke="{{ $accent }}" stroke-width="{{ $sw }}" stroke-linejoin="round"></polygon>
     </svg>
     @isset($label)
-        <span style="font-family:var(--font-heading, 'Inter',sans-serif); font-weight:500; font-size:{{ $labelSize ?? 15 }}px; letter-spacing:0.01em;">{{ $label }}</span>
+        <span class="logo-wordmark" style="font-family:var(--font-heading, 'Inter',sans-serif); font-weight:500; font-size:{{ $labelSize ?? 15 }}px; letter-spacing:0.01em;">{{ $label }}</span>
     @endisset
 </span>

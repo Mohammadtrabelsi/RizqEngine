@@ -1,37 +1,31 @@
-<button class="c-header-toggler app-nav-toggler d-lg-none mfe-auto" type="button"
-        data-toggle="collapse" data-target="#app-topnav-collapse"
-        aria-controls="app-topnav-collapse" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="bi bi-list icon-fs-2rem"></i>
-</button>
+<div class="container-fluid">
+    <button class="c-header-toggler app-nav-toggler d-lg-none mfe-auto" type="button"
+            data-toggle="collapse" data-target="#app-topnav-collapse"
+            aria-controls="app-topnav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list icon-fs-2rem"></i>
+    </button>
+    <ul class="c-header-nav mx-auto">
 
-@php($headerSettings = settings())
-<a href="{{ route('home') }}" class="c-header-brand d-flex align-items-center mfs-3" style="text-decoration:none; gap:8px;">
-    @if($headerSettings->client_logo || $headerSettings->client_name)
-        @if($headerSettings->client_logo)
-            <img src="{{ \Illuminate\Support\Facades\Storage::url($headerSettings->client_logo) }}" alt="{{ $headerSettings->client_name ?? 'Logo' }}" style="max-height:32px; max-width:140px;">
+    @php($headerSettings = settings())
+      <li class="c-header-nav-item mr-3">
+  <a href="{{ route('home') }}" class="c-header-brand d-flex align-items-center mfs-3" style="text-decoration:none; gap:8px;">
+        @if($headerSettings->client_logo || $headerSettings->client_name)
+            @if($headerSettings->client_logo)
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($headerSettings->client_logo) }}" alt="{{ $headerSettings->client_name ?? 'Logo' }}" style="max-height:32px; max-width:140px;">
+            @endif
+            @if($headerSettings->client_name)
+                <span class="font-weight-bold d-md-down-none" style="font-size:1.05rem;">{{ $headerSettings->client_name }}</span>
+            @endif
+        @else
+            @include('layouts.logo', ['size' => 24, 'label' => 'Triangle POS', 'labelSize' => 15])
         @endif
-        @if($headerSettings->client_name)
-            <span class="font-weight-bold d-md-down-none" style="font-size:1.05rem;">{{ $headerSettings->client_name }}</span>
-        @endif
-    @else
-        @include('layouts.logo', ['size' => 24, 'label' => 'Triangle POS', 'labelSize' => 15])
-    @endif
-</a>
+            </li>
 
-<ul class="c-header-nav ml-auto">
+    </a>
 
-</ul>
-<ul class="c-header-nav ml-auto mr-4">
     <li class="c-header-nav-item m-3 d-flex align-items-center">
         @include('includes.language-switcher')
     </li>
-    <li class="c-header-nav-item m-3 d-flex align-items-center">
-        <span class="badge badge-pill badge-light text-primary d-flex align-items-center" style="gap:6px;">
-            <i class="bi bi-sun-fill"></i>
-            <span>Light mode</span>
-        </span>
-    </li>
-
     @can('create_pos_sales')
     <li class="c-header-nav-item mr-3">
         <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
@@ -88,3 +82,4 @@
         </div>
     </li>
 </ul>
+</div>

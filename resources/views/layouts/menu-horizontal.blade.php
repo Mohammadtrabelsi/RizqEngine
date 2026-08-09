@@ -5,19 +5,13 @@
 --}}
 <nav class="app-topnav" aria-label="{{ __('menu.products') }}">
     <div class="container">
-        <button class="app-topnav-toggler btn btn-sm" type="button"
-                data-toggle="collapse" data-target="#app-topnav-collapse"
-                aria-controls="app-topnav-collapse" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <i class="bi bi-list"></i> <span>Menu</span>
-        </button>
 
         <div class="app-topnav-collapse" id="app-topnav-collapse">
             <ul class="app-topnav-list">
                 {{-- Home --}}
                 <li class="app-topnav-item {{ request()->routeIs('home') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ route('home') }}">
-                        <i class="bi bi-house"></i> <span>Home</span>
+                        <i class="bi bi-house"></i> <span>{{ __('menu.home') }}</span>
                     </a>
                 </li>
 

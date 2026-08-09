@@ -18,11 +18,7 @@
         <header class="c-header c-header-light c-header-fixed">
             @include('layouts.header')
             @include('layouts.menu-horizontal')
-            <div class="c-subheader justify-content-between px-3">
-                <div class="container">
-                    @yield('breadcrumb')
-                </div>
-            </div>
+            @include('layouts.subheader')
         </header>
 
         <div class="c-body">
