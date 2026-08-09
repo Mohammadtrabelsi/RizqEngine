@@ -15,11 +15,11 @@
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="quotation-{{ $quotation->id }}">
                 <div class="card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span class="fw-bold">{{ $quotation->reference }}</span>
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center">
+                            <span class="fw-bold me-2">{{ $quotation->reference }}</span>
                             @include('quotation.partials.status', ['data' => $quotation])
-                            @include('quotation.partials.actions', ['data' => $quotation])
                         </div>
+                        @include('quotation.partials.actions', ['data' => $quotation])
                     </div>
                     <div class="card-body">
                         <h6 class="mb-3"><i class="bi bi-person"></i> {{ $quotation->customer_name }}</h6>
