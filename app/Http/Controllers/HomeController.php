@@ -35,12 +35,36 @@ class HomeController extends Controller
         $revenue = ($sales - $sale_returns) / 100;
         $profit = $revenue - $product_costs;
 
+        // --- Date range filter -----------------------------------------
         $today = Carbon::today()->toDateString();
 
-        // --- KPI tiles -------------------------------------------------
-        $todays_sales = Sale::completed()->whereDate('date', $today)->sum('total_amount') / 100;
-        $todays_transactions = Sale::completed()->whereDate('date', $today)->count();
-        $todays_expenses = Expense::whereDate('date', $today)->sum('amount') / 100;
+        try {
+            $from_date = request('from_date')
+                ? Carbon::parse(request('from_date'))->toDateString()
+                : $today;
+        } catch (\Exception $e) {
+            $from_date = $today;
+        }
+
+        try {
+            $to_date = request('to_date')
+                ? Carbon::parse(request('to_date'))->toDateString()
+                : $today;
+        } catch (\Exception $e) {
+            $to_date = $today;
+        }
+
+        // Ensure the range is ordered correctly.
+        if ($from_date > $to_date) {
+            [$from_date, $to_date] = [$to_date, $from_date];
+        }
+
+        // --- KPI tiles (for the selected range) ------------------------
+        $range = [$from_date.' 00:00:00', $to_date.' 23:59:59'];
+
+        $todays_sales = Sale::completed()->whereBetween('date', $range)->sum('total_amount') / 100;
+        $todays_transactions = Sale::completed()->whereBetween('date', $range)->count();
+        $todays_expenses = Expense::whereBetween('date', $range)->sum('amount') / 100;
 
         $low_stock_products = Product::select('id', 'product_name', 'product_code', 'product_quantity', 'product_stock_alert')
             ->whereColumn('product_quantity', '<=', 'product_stock_alert')
@@ -75,6 +99,7 @@ class HomeController extends Controller
 
         // --- Recent transactions --------------------------------------
         $recent_sales = Sale::withCount('saleDetails')
+            ->whereBetween('date', $range)
             ->latest()
             ->take(6)
             ->get(['id', 'reference', 'customer_name', 'total_amount', 'status', 'payment_status']);
@@ -91,6 +116,8 @@ class HomeController extends Controller
             'week_bars' => $week_bars,
             'week_max' => $week_max,
             'recent_sales' => $recent_sales,
+            'from_date' => $from_date,
+            'to_date' => $to_date,
         ]);
     }
 

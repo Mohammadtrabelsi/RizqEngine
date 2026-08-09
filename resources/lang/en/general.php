@@ -3,6 +3,10 @@
 return [
     'action' => 'Action',
     'all-products-above-alert-level' => 'All products above alert level',
+    'apply-filter' => 'Apply',
+    'from-date' => 'From date',
+    'reset' => 'Reset',
+    'to-date' => 'To date',
     'completed-sales-today' => 'Completed sales today',
     'customer' => 'Customer',
     'dashboard' => 'Dashboard',

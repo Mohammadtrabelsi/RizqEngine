@@ -3,6 +3,10 @@
 return [
     'action' => 'Action',
     'all-products-above-alert-level' => 'Tous les produits sont au-dessus du niveau d\'alerte',
+    'apply-filter' => 'Appliquer',
+    'from-date' => 'Date de début',
+    'reset' => 'Réinitialiser',
+    'to-date' => 'Date de fin',
     'completed-sales-today' => 'Ventes effectuées aujourd\'hui',
     'customer' => 'Client',
     'dashboard' => 'Tableau de bord',

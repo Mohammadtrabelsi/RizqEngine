@@ -11,6 +11,32 @@
 @section('content')
     <div class="container-fluid">
 
+        {{-- Date range filter --}}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <form method="GET" action="{{ route('home') }}" class="row g-3 align-items-end">
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <label for="from_date" class="form-label n-meta mb-1">{{ __('general.from-date') }}</label>
+                                <input type="date" id="from_date" name="from_date" class="form-control"
+                                       value="{{ $from_date }}" max="{{ $to_date }}">
+                            </div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <label for="to_date" class="form-label n-meta mb-1">{{ __('general.to-date') }}</label>
+                                <input type="date" id="to_date" name="to_date" class="form-control"
+                                       value="{{ $to_date }}" min="{{ $from_date }}">
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-6 d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">{{ __('general.apply-filter') }}</button>
+                                <a href="{{ route('home') }}" class="btn btn-outline-secondary">{{ __('general.reset') }}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- KPI tiles --}}
         @can('show_total_stats')
         <div class="row g-4 mb-4">
