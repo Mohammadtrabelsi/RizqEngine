@@ -12,8 +12,10 @@ return [
     'description' => 'الوصف',
     'event' => 'الحدث',
     'module' => 'الوحدة',
+    'new_value' => 'القيمة الجديدة',
     'no_activity_logs' => 'لا توجد سجلات نشاط',
     'no_attribute_changes' => 'لا توجد تغييرات في السمات',
+    'old_value' => 'القيمة القديمة',
     'performed_by' => 'تم التنفيد بواسطة',
     'subject' => 'الموضوع',
 ];

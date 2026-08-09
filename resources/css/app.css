@@ -406,7 +406,7 @@ body {
         padding: 0.5rem 1.15rem;
         font-size: 0.9rem;
         line-height: 1.5;
-        border-radius: 999px;
+        border-radius: 0;
         letter-spacing: 0.01em;
         text-decoration: none;
         transition: color 0.15s ease, background-color 0.15s ease,
@@ -447,10 +447,10 @@ body {
     .btn-sm { padding: 0.35rem 0.85rem; font-size: 0.8rem; }
     .btn-lg { padding: 0.7rem 1.6rem; font-size: 1rem; }
     .btn-block { display: block; width: 100%; }
-    .btn-pill { border-radius: 999px; }
+    .btn-pill { border-radius: 0; }
     .btn-icon {
         display: inline-flex; align-items: center; justify-content: center;
-        width: 2.25rem; height: 2.25rem; padding: 0; border-radius: 999px;
+        width: 2.25rem; height: 2.25rem; padding: 0; border-radius: 0;
     }
 
     .btn-group { position: relative; display: inline-flex; vertical-align: middle; }

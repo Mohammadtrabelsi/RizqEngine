@@ -68,11 +68,11 @@
                                             </div>
                                             <div class="card-body py-2">
                                                 <div class="mb-1">
-                                                    <small class="text-muted d-block">Old Value</small>
+                                                    <small class="text-muted d-block">{{ __('activitylog.old_value') }}</small>
                                                     <span class="text-danger">{{ is_array($old) ? json_encode($old) : ($old ?? '—') }}</span>
                                                 </div>
                                                 <div>
-                                                    <small class="text-muted d-block">New Value</small>
+                                                    <small class="text-muted d-block">{{ __('activitylog.new_value') }}</small>
                                                     <span class="text-success">{{ is_array($new) ? json_encode($new) : ($new ?? '—') }}</span>
                                                 </div>
                                             </div>

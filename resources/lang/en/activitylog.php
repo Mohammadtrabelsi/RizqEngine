@@ -12,8 +12,10 @@ return [
     'description' => 'Description',
     'event' => 'Event',
     'module' => 'Module',
+    'new_value' => 'New value',
     'no_activity_logs' => 'No activity logs',
     'no_attribute_changes' => 'No attribute changes',
+    'old_value' => 'Old value',
     'performed_by' => 'Performed by',
     'subject' => 'Subject',
 ];
