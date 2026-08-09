@@ -32,7 +32,7 @@ class SalesReport extends Component
     public function mount($customers)
     {
         $this->customers = $customers;
-        $this->start_date = today()->subDays(30)->format('Y-m-d');
+        $this->start_date = today()->subMonths(3)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
         $this->customer_id = '';
         $this->sale_status = '';
