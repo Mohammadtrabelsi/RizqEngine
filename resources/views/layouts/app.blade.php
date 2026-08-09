@@ -19,7 +19,9 @@
             @include('layouts.header')
             @include('layouts.menu-horizontal')
             <div class="c-subheader justify-content-between px-3">
-                @yield('breadcrumb')
+                <div class="container">
+                    @yield('breadcrumb')
+                </div>
             </div>
         </header>
 

@@ -4,7 +4,7 @@
     vertical sidebar. Authored with Tailwind CSS utilities and components.
 --}}
 <nav class="app-topnav" aria-label="{{ __('menu.products') }}">
-    <div class="container-fluid">
+    <div class="container">
         <button class="app-topnav-toggler btn btn-sm" type="button"
                 data-toggle="collapse" data-target="#app-topnav-collapse"
                 aria-controls="app-topnav-collapse" aria-expanded="false"
@@ -12,7 +12,7 @@
             <i class="bi bi-list"></i> <span>Menu</span>
         </button>
 
-        <div class="collapse app-topnav-collapse" id="app-topnav-collapse">
+        <div class="app-topnav-collapse" id="app-topnav-collapse">
             <ul class="app-topnav-list">
                 {{-- Home --}}
                 <li class="app-topnav-item {{ request()->routeIs('home') ? 'is-active' : '' }}">
