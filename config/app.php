@@ -155,6 +155,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Available Locales
+    |--------------------------------------------------------------------------
+    |
+    | The locales the application ships translations for. Translatable models
+    | keep a value per locale in this list, and newly created records fall
+    | back to copying the primary value into every other locale so nothing is
+    | ever displayed blank in a language the user has switched to.
+    |
+    */
+
+    'available_locales' => ['en', 'ar', 'fr'],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |

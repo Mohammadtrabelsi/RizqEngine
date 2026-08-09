@@ -59,6 +59,7 @@
         "spatie/laravel-activitylog": "^5.0",
         "spatie/laravel-medialibrary": "^11.0",
         "spatie/laravel-permission": "^8.0",
+        "spatie/laravel-translatable": "^6.0",
         "yajra/laravel-datatables": "^13.0"
     },
     "require-dev": {
