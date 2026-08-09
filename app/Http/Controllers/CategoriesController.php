@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class CategoriesController extends Controller
 {
+    public function __construct(private readonly CategoryService $categories) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         return view('product.categories.index');
-
     }
 
     public function store(Request $request)
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'category_code' => 'required|unique:categories,category_code',
             'category_name' => 'required',
         ]);
 
-        Category::create([
-            'category_code' => $request->category_code,
-            'category_name' => $request->category_name,
-        ]);
+        $this->categories->create($data);
 
         session()->flash('success', trans('product.product-category-created'));
 
@@ -40,7 +38,7 @@ class CategoriesController extends Controller
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
-        $category = Category::findOrFail($id);
+        $category = $this->categories->findOrFail($id);
 
         return view('product.categories.edit', compact('category'));
     }
@@ -49,15 +47,12 @@ class CategoriesController extends Controller
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'category_code' => 'required|unique:categories,category_code,'.$id,
             'category_name' => 'required',
         ]);
 
-        Category::findOrFail($id)->update([
-            'category_code' => $request->category_code,
-            'category_name' => $request->category_name,
-        ]);
+        $this->categories->update((int) $id, $data);
 
         session()->flash('info', trans('product.product-category-updated'));
 
@@ -68,13 +63,9 @@ class CategoriesController extends Controller
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
-        $category = Category::findOrFail($id);
-
-        if ($category->products()->exists()) {
+        if (! $this->categories->delete((int) $id)) {
             return back()->withErrors('Can\'t delete because there are products associated with this category.');
         }
-
-        $category->delete();
 
         session()->flash('warning', trans('product.product-category-deleted'));
 

@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Services\SupplierService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class SuppliersController extends Controller
 {
+    public function __construct(private readonly SupplierService $suppliers) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_suppliers'), 403);
 
         return view('people.suppliers.index');
-
     }
 
     public function create()
@@ -28,23 +30,9 @@ class SuppliersController extends Controller
     {
         abort_if(Gate::denies('create_suppliers'), 403);
 
-        $request->validate([
-            'supplier_name' => 'required|string|max:255',
-            'supplier_phone' => 'required|max:255',
-            'supplier_email' => 'required|email|max:255',
-            'city' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-        ]);
+        $data = $this->validated($request);
 
-        Supplier::create([
-            'supplier_name' => $request->supplier_name,
-            'supplier_phone' => $request->supplier_phone,
-            'supplier_email' => $request->supplier_email,
-            'city' => $request->city,
-            'country' => $request->country,
-            'address' => $request->address,
-        ]);
+        $this->suppliers->create($data, $request->file('image'));
 
         session()->flash('success', trans('people.supplier-created'));
 
@@ -69,23 +57,9 @@ class SuppliersController extends Controller
     {
         abort_if(Gate::denies('edit_suppliers'), 403);
 
-        $request->validate([
-            'supplier_name' => 'required|string|max:255',
-            'supplier_phone' => 'required|max:255',
-            'supplier_email' => 'required|email|max:255',
-            'city' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-        ]);
+        $data = $this->validated($request);
 
-        $supplier->update([
-            'supplier_name' => $request->supplier_name,
-            'supplier_phone' => $request->supplier_phone,
-            'supplier_email' => $request->supplier_email,
-            'city' => $request->city,
-            'country' => $request->country,
-            'address' => $request->address,
-        ]);
+        $this->suppliers->update($supplier->id, $data, $request->file('image'));
 
         session()->flash('info', trans('people.supplier-updated'));
 
@@ -96,10 +70,22 @@ class SuppliersController extends Controller
     {
         abort_if(Gate::denies('delete_suppliers'), 403);
 
-        $supplier->delete();
+        $this->suppliers->delete($supplier->id);
 
         session()->flash('warning', trans('people.supplier-deleted'));
 
         return redirect()->route('suppliers.index');
+    }
+
+    private function validated(Request $request): array
+    {
+        return $request->validate([
+            'supplier_name' => 'required|string|max:255',
+            'supplier_phone' => 'required|max:255',
+            'supplier_email' => 'required|email|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'address' => 'required|string|max:500',
+        ]);
     }
 }

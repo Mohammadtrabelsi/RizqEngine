@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Customers;
 
-use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -22,27 +22,19 @@ class CustomerIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, CustomerService $customers): void
     {
         abort_if(Gate::denies('delete_customers'), 403);
 
-        Customer::findOrFail($id)->delete();
+        $customers->delete($id);
 
         session()->flash('warning', trans('people.customer-deleted'));
     }
 
-    public function render()
+    public function render(CustomerService $customers)
     {
-        $customers = Customer::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('customer_name', 'like', $term)
-                    ->orWhere('customer_email', 'like', $term)
-                    ->orWhere('customer_phone', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.customers.customer-index', compact('customers'));
+        return view('livewire.customers.customer-index', [
+            'customers' => $customers->paginate($this->search),
+        ]);
     }
 }

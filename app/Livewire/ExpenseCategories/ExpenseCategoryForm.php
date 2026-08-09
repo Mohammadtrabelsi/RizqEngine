@@ -3,6 +3,7 @@
 namespace App\Livewire\ExpenseCategories;
 
 use App\Models\ExpenseCategory;
+use App\Services\ExpenseCategoryService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -37,17 +38,17 @@ class ExpenseCategoryForm extends Component
         ];
     }
 
-    public function save()
+    public function save(ExpenseCategoryService $categories)
     {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
         $data = $this->validate();
 
         if ($this->categoryId) {
-            ExpenseCategory::findOrFail($this->categoryId)->update($data);
+            $categories->update($this->categoryId, $data);
             session()->flash('info', trans('expense.expense-category-updated'));
         } else {
-            ExpenseCategory::create($data);
+            $categories->create($data);
             session()->flash('success', trans('expense.expense-category-created'));
         }
 

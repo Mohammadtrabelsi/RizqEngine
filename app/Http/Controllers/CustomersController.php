@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class CustomersController extends Controller
 {
+    public function __construct(private readonly CustomerService $customers) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_customers'), 403);
 
         return view('people.customers.index');
-
     }
 
     public function create()
@@ -28,23 +30,9 @@ class CustomersController extends Controller
     {
         abort_if(Gate::denies('create_customers'), 403);
 
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_phone' => 'required|max:255',
-            'customer_email' => 'required|email|max:255',
-            'city' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-        ]);
+        $data = $this->validated($request);
 
-        Customer::create([
-            'customer_name' => $request->customer_name,
-            'customer_phone' => $request->customer_phone,
-            'customer_email' => $request->customer_email,
-            'city' => $request->city,
-            'country' => $request->country,
-            'address' => $request->address,
-        ]);
+        $this->customers->create($data, $request->file('image'));
 
         session()->flash('success', trans('people.customer-created'));
 
@@ -69,23 +57,9 @@ class CustomersController extends Controller
     {
         abort_if(Gate::denies('update_customers'), 403);
 
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_phone' => 'required|max:255',
-            'customer_email' => 'required|email|max:255',
-            'city' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-        ]);
+        $data = $this->validated($request);
 
-        $customer->update([
-            'customer_name' => $request->customer_name,
-            'customer_phone' => $request->customer_phone,
-            'customer_email' => $request->customer_email,
-            'city' => $request->city,
-            'country' => $request->country,
-            'address' => $request->address,
-        ]);
+        $this->customers->update($customer->id, $data, $request->file('image'));
 
         session()->flash('info', trans('people.customer-updated'));
 
@@ -96,10 +70,22 @@ class CustomersController extends Controller
     {
         abort_if(Gate::denies('delete_customers'), 403);
 
-        $customer->delete();
+        $this->customers->delete($customer->id);
 
         session()->flash('warning', trans('people.customer-deleted'));
 
         return redirect()->route('customers.index');
+    }
+
+    private function validated(Request $request): array
+    {
+        return $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_phone' => 'required|max:255',
+            'customer_email' => 'required|email|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'address' => 'required|string|max:500',
+        ]);
     }
 }

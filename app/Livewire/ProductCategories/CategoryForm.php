@@ -3,6 +3,7 @@
 namespace App\Livewire\ProductCategories;
 
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -15,7 +16,7 @@ class CategoryForm extends Component
 
     public string $category_name = '';
 
-    public function mount(?Category $category = null): void
+    public function mount(?Category $category = null, ?CategoryService $categories = null): void
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
@@ -24,7 +25,7 @@ class CategoryForm extends Component
             $this->category_code = (string) $category->category_code;
             $this->category_name = (string) $category->category_name;
         } else {
-            $this->category_code = 'CA_'.str_pad((string) (Category::max('id') + 1), 2, '0', STR_PAD_LEFT);
+            $this->category_code = ($categories ?? app(CategoryService::class))->nextCode();
         }
     }
 
@@ -39,17 +40,17 @@ class CategoryForm extends Component
         ];
     }
 
-    public function save()
+    public function save(CategoryService $categories)
     {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         $data = $this->validate();
 
         if ($this->categoryId) {
-            Category::findOrFail($this->categoryId)->update($data);
+            $categories->update($this->categoryId, $data);
             session()->flash('info', trans('product.product-category-updated'));
         } else {
-            Category::create($data);
+            $categories->create($data);
             session()->flash('success', trans('product.product-category-created'));
         }
 

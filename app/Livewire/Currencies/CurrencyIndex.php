@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Currencies;
 
-use App\Models\Currency;
+use App\Services\CurrencyService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,26 +27,19 @@ class CurrencyIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, CurrencyService $currencies): void
     {
         abort_if(Gate::denies('delete_currencies'), 403);
 
-        Currency::findOrFail($id)->delete();
+        $currencies->delete($id);
 
         session()->flash('warning', trans('currency.currency-deleted'));
     }
 
-    public function render()
+    public function render(CurrencyService $currencies)
     {
-        $currencies = Currency::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('currency_name', 'like', $term)
-                    ->orWhere('code', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.currencies.currency-index', compact('currencies'));
+        return view('livewire.currencies.currency-index', [
+            'currencies' => $currencies->paginate($this->search),
+        ]);
     }
 }

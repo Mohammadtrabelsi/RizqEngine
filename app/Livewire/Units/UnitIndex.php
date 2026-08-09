@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Units;
 
-use App\Models\Unit;
+use App\Services\UnitService;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -21,24 +21,17 @@ class UnitIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, UnitService $units): void
     {
-        Unit::findOrFail($id)->delete();
+        $units->delete($id);
 
         session()->flash('warning', trans('setting.unit-deleted'));
     }
 
-    public function render()
+    public function render(UnitService $units)
     {
-        $units = Unit::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('name', 'like', $term)
-                    ->orWhere('short_name', 'like', $term);
-            })
-            ->orderByDesc('id')
-            ->paginate(12);
-
-        return view('livewire.units.unit-index', compact('units'));
+        return view('livewire.units.unit-index', [
+            'units' => $units->paginate($this->search),
+        ]);
     }
 }
