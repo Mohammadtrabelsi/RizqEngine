@@ -797,7 +797,16 @@ body {
  * ====================================================================== */
 @layer components {
     .c-app { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg); color: var(--text); }
-    .c-wrapper { display: flex; flex-direction: column; min-height: 100vh; flex: 1; }
+    .c-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        flex: 1;
+        padding: 0 1rem;
+    }
+    @media (min-width: 992px) {
+        .c-wrapper { padding-left: 2rem; padding-right: 2rem; }
+    }
     .c-header {
         position: relative;
         display: flex;
