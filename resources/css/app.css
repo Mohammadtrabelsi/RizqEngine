@@ -813,7 +813,6 @@ body {
         flex-wrap: wrap;
         align-items: center;
         gap: 0.5rem 1rem;
-        padding: 0.5rem 1rem;
         background: var(--surface);
         border-bottom: 1px solid var(--border);
     }
