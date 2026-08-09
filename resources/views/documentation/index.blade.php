@@ -27,9 +27,9 @@
             <div class="col-12 mb-4">
                 <div class="card">
                     <div class="card-body px-3 py-2">
-                        <nav class="nav nav-pills flex-row flex-wrap gap-2 overflow-auto">
+                        <nav class="nav nav-pills flex-row flex-nowrap gap-2 overflow-auto">
                             @foreach ($sections as $section)
-                                <a href="#{{ $section }}" class="nav-link py-2 px-3">
+                                <a href="#{{ $section }}" class="nav-link py-2 px-3 text-nowrap">
                                     {{ __('documentation.sections.' . $section . '.title') }}
                                 </a>
                             @endforeach
