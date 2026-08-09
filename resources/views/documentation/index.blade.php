@@ -24,34 +24,43 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 mb-4">
-                <div class="card sticky-top" style="top: 80px;">
-                    <div class="card-header bg-primary text-white">
-                        <h6 class="mb-0"><i class="bi bi-list-ul"></i> {{ __('documentation.toc') }}</h6>
-                    </div>
-                    <div class="list-group list-group-flush">
-                        @foreach ($sections as $section)
-                            <a href="#{{ $section }}" class="list-group-item list-group-item-action">
-                                {{ __('documentation.sections.' . $section . '.title') }}
-                            </a>
-                        @endforeach
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-body px-3 py-2">
+                        <nav class="nav nav-pills flex-row flex-wrap gap-2 overflow-auto">
+                            @foreach ($sections as $section)
+                                <a href="#{{ $section }}" class="nav-link py-2 px-3">
+                                    {{ __('documentation.sections.' . $section . '.title') }}
+                                </a>
+                            @endforeach
+                        </nav>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-9">
-                @foreach ($sections as $section)
-                    <div class="card" id="{{ $section }}">
-                        <div class="card-header">
-                            <h5 class="mb-0">{{ __('documentation.sections.' . $section . '.title') }}</h5>
-                        </div>
-                        <div class="card-body">
-                            @foreach (__('documentation.sections.' . $section . '.body') as $paragraph)
-                                <p class="{{ $loop->last ? 'mb-0' : '' }}">{{ $paragraph }}</p>
+            <div class="col-12">
+                @php
+                    $sectionChunks = collect($sections)->chunk(ceil(count($sections) / 2));
+                @endphp
+
+                <div class="row">
+                    @foreach ($sectionChunks as $chunk)
+                        <div class="col-lg-6">
+                            @foreach ($chunk as $section)
+                                <div class="card mb-4" id="{{ $section }}">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">{{ __('documentation.sections.' . $section . '.title') }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        @foreach (__('documentation.sections.' . $section . '.body') as $paragraph)
+                                            <p class="{{ $loop->last ? 'mb-0' : '' }}">{{ $paragraph }}</p>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
 
                 <div class="card border-primary">
                     <div class="card-body">
