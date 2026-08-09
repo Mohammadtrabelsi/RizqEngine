@@ -3,6 +3,7 @@
 namespace App\Livewire\Customers;
 
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -60,7 +61,7 @@ class CustomerForm extends Component
         ];
     }
 
-    public function save()
+    public function save(CustomerService $customers)
     {
         $data = $this->validate();
 
@@ -69,29 +70,12 @@ class CustomerForm extends Component
 
         if ($this->customerId) {
             abort_if(Gate::denies('update_customers'), 403);
-            $customer = Customer::findOrFail($this->customerId);
-            $customer->update($data);
-
-            if ($image) {
-                if ($customer->getFirstMedia('images')) {
-                    $customer->getFirstMedia('images')->delete();
-                }
-
-                $customer->addMedia($image->getRealPath())
-                    ->usingFileName($image->getClientOriginalName())
-                    ->toMediaCollection('images');
-            }
+            $customers->update($this->customerId, $data, $image);
 
             session()->flash('info', trans('people.customer-updated'));
         } else {
             abort_if(Gate::denies('create_customers'), 403);
-            $customer = Customer::create($data);
-
-            if ($image) {
-                $customer->addMedia($image->getRealPath())
-                    ->usingFileName($image->getClientOriginalName())
-                    ->toMediaCollection('images');
-            }
+            $customers->create($data, $image);
 
             session()->flash('success', trans('people.customer-created'));
         }

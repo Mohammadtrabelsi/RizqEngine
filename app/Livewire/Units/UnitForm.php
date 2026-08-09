@@ -3,6 +3,7 @@
 namespace App\Livewire\Units;
 
 use App\Models\Unit;
+use App\Services\UnitService;
 use Livewire\Component;
 
 class UnitForm extends Component
@@ -38,15 +39,15 @@ class UnitForm extends Component
         ];
     }
 
-    public function save()
+    public function save(UnitService $units)
     {
         $data = $this->validate();
 
         if ($this->unitId) {
-            Unit::findOrFail($this->unitId)->update($data);
+            $units->update($this->unitId, $data);
             session()->flash('info', trans('setting.unit-updated'));
         } else {
-            Unit::create($data);
+            $units->create($data);
             session()->flash('success', trans('setting.unit-created'));
         }
 

@@ -3,8 +3,8 @@
 namespace App\Livewire\Currencies;
 
 use App\Models\Currency;
+use App\Services\CurrencyService;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class CurrencyForm extends Component
@@ -48,21 +48,20 @@ class CurrencyForm extends Component
         ];
     }
 
-    public function save()
+    public function save(CurrencyService $currencies)
     {
         $data = $this->validate();
-        $data['code'] = Str::upper($this->code);
 
         if ($this->currencyId) {
             abort_if(Gate::denies('edit_currencies'), 403);
 
-            Currency::findOrFail($this->currencyId)->update($data);
+            $currencies->update($this->currencyId, $data);
 
             session()->flash('info', trans('currency.currency-updated'));
         } else {
             abort_if(Gate::denies('create_currencies'), 403);
 
-            Currency::create($data);
+            $currencies->create($data);
 
             session()->flash('success', trans('currency.currency-created'));
         }

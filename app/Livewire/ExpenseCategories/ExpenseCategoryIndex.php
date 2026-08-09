@@ -2,7 +2,7 @@
 
 namespace App\Livewire\ExpenseCategories;
 
-use App\Models\ExpenseCategory;
+use App\Services\ExpenseCategoryService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -22,33 +22,23 @@ class ExpenseCategoryIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, ExpenseCategoryService $categories): void
     {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
-        $category = ExpenseCategory::findOrFail($id);
-
-        if ($category->expenses()->exists()) {
+        if (! $categories->delete($id)) {
             session()->flash('error', "Can't delete because there are expenses associated with this category.");
 
             return;
         }
 
-        $category->delete();
-
         session()->flash('warning', trans('expense.expense-category-deleted'));
     }
 
-    public function render()
+    public function render(ExpenseCategoryService $categories)
     {
-        $categories = ExpenseCategory::query()
-            ->withCount('expenses')
-            ->when($this->search, function ($query) {
-                $query->where('category_name', 'like', '%'.$this->search.'%');
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.expense-categories.expense-category-index', compact('categories'));
+        return view('livewire.expense-categories.expense-category-index', [
+            'categories' => $categories->paginate($this->search),
+        ]);
     }
 }

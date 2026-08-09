@@ -3,6 +3,7 @@
 namespace App\Livewire\Suppliers;
 
 use App\Models\Supplier;
+use App\Services\SupplierService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -60,7 +61,7 @@ class SupplierForm extends Component
         ];
     }
 
-    public function save()
+    public function save(SupplierService $suppliers)
     {
         $data = $this->validate();
 
@@ -69,29 +70,12 @@ class SupplierForm extends Component
 
         if ($this->supplierId) {
             abort_if(Gate::denies('edit_suppliers'), 403);
-            $supplier = Supplier::findOrFail($this->supplierId);
-            $supplier->update($data);
-
-            if ($image) {
-                if ($supplier->getFirstMedia('images')) {
-                    $supplier->getFirstMedia('images')->delete();
-                }
-
-                $supplier->addMedia($image->getRealPath())
-                    ->usingFileName($image->getClientOriginalName())
-                    ->toMediaCollection('images');
-            }
+            $suppliers->update($this->supplierId, $data, $image);
 
             session()->flash('info', trans('people.supplier-updated'));
         } else {
             abort_if(Gate::denies('create_suppliers'), 403);
-            $supplier = Supplier::create($data);
-
-            if ($image) {
-                $supplier->addMedia($image->getRealPath())
-                    ->usingFileName($image->getClientOriginalName())
-                    ->toMediaCollection('images');
-            }
+            $suppliers->create($data, $image);
 
             session()->flash('success', trans('people.supplier-created'));
         }

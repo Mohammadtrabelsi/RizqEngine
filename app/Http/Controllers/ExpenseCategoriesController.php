@@ -3,33 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExpenseCategory;
+use App\Services\ExpenseCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class ExpenseCategoriesController extends Controller
 {
+    public function __construct(private readonly ExpenseCategoryService $categories) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
         return view('expense.categories.index');
-
     }
 
     public function store(Request $request)
     {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'category_name' => 'required|string|max:255|unique:expense_categories,category_name',
             'category_description' => 'nullable|string|max:1000',
         ]);
 
-        ExpenseCategory::create([
-            'category_name' => $request->category_name,
-            'category_description' => $request->category_description,
-        ]);
+        $this->categories->create($data);
 
         session()->flash('success', trans('expense.expense-category-created'));
 
@@ -47,15 +46,12 @@ class ExpenseCategoriesController extends Controller
     {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'category_name' => 'required|string|max:255|unique:expense_categories,category_name,'.$expenseCategory->id,
             'category_description' => 'nullable|string|max:1000',
         ]);
 
-        $expenseCategory->update([
-            'category_name' => $request->category_name,
-            'category_description' => $request->category_description,
-        ]);
+        $this->categories->update($expenseCategory->id, $data);
 
         session()->flash('info', trans('expense.expense-category-updated'));
 
@@ -66,11 +62,9 @@ class ExpenseCategoriesController extends Controller
     {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
-        if ($expenseCategory->expenses()->isNotEmpty()) {
+        if (! $this->categories->delete($expenseCategory->id)) {
             return back()->withErrors('Can\'t delete beacuse there are expenses associated with this category.');
         }
-
-        $expenseCategory->delete();
 
         session()->flash('warning', trans('expense.expense-category-deleted'));
 
