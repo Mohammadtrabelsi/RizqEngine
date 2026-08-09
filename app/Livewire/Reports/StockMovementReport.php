@@ -2,8 +2,7 @@
 
 namespace App\Livewire\Reports;
 
-use App\Models\Product;
-use App\Models\StockMovement;
+use App\Services\Reports\StockMovementService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -38,19 +37,17 @@ class StockMovementReport extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(StockMovementService $service)
     {
-        $movements = StockMovement::with(['product', 'user'])
-            ->whereDate('created_at', '>=', $this->start_date)
-            ->whereDate('created_at', '<=', $this->end_date)
-            ->when($this->product_id, fn ($q) => $q->where('product_id', $this->product_id))
-            ->when($this->type, fn ($q) => $q->where('type', $this->type))
-            ->latest()
-            ->paginate(20);
-
         return view('livewire.reports.stock-movement-report', [
-            'movements' => $movements,
-            'products' => Product::orderBy('product_name')->get(['id', 'product_name']),
+            'movements' => $service->paginate(
+                $this->start_date,
+                $this->end_date,
+                $this->product_id,
+                $this->type,
+                20
+            ),
+            'products' => $service->products(),
         ]);
     }
 }

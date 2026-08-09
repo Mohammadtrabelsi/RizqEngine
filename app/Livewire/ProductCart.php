@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Product;
+use App\Services\ProductCatalogService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
@@ -199,7 +199,7 @@ class ProductCart extends Component
 
     public function updatePrice($row_id, $product_id)
     {
-        $product = Product::findOrFail($product_id);
+        $product = app(ProductCatalogService::class)->findOrFail($product_id);
 
         $cart_item = Cart::instance($this->cart_instance)->get($row_id);
 
