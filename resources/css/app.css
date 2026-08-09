@@ -1159,3 +1159,93 @@ div.dataTables_wrapper div.dataTables_length select { width: 65px; display: inli
     *, .card, .btn, .n-bar { animation: none !important; transition: none !important; }
     .card:hover { transform: none; }
 }
+
+/* =========================================================================
+ * TRIANGLE POS THEME — landing page
+ * Shares the login/admin design language: Inter, the indigo→cyan brand
+ * gradient, soft cards and generous, consistent gaps between sections.
+ * ====================================================================== */
+.lp { background: var(--bg); color: var(--text); }
+
+/* Shared centered content column */
+.lp-wrap { max-width: 1180px; margin: 0 auto; padding-left: var(--space-6); padding-right: var(--space-6); }
+
+/* Top navigation */
+.lp-nav {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+.lp-nav__inner { display: flex; align-items: center; gap: var(--space-6); padding-top: var(--space-4); padding-bottom: var(--space-4); }
+.lp-brand { display: flex; align-items: center; gap: var(--space-3); font-family: var(--font-heading); font-weight: 700; font-size: 17px; letter-spacing: 0.02em; color: var(--text); }
+.lp-nav__links { display: flex; align-items: center; gap: var(--space-6); margin-left: auto; }
+.lp-nav__links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.15s ease; }
+.lp-nav__links a:hover { color: var(--primary); }
+
+/* Hero */
+.lp-hero { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: calc(var(--space-8) * 1.5); padding: calc(var(--space-8) * 2.4) 0; }
+.lp-hero__copy { display: flex; flex-direction: column; gap: var(--space-5); }
+.lp-kicker { display: inline-flex; align-items: center; gap: 0.5rem; align-self: flex-start; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); background: rgba(79, 70, 229, 0.08); border: 1px solid rgba(79, 70, 229, 0.16); border-radius: 999px; padding: 0.4rem 0.9rem; }
+.lp-title { font-family: var(--font-heading); font-weight: 700; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 1.06; letter-spacing: -0.02em; margin: 0; max-width: 15ch; }
+.lp-title__grad { background: linear-gradient(120deg, #4f46e5 0%, #06b6d4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.lp-lead { font-size: 1.0625rem; line-height: 1.75; color: var(--muted); margin: 0; max-width: 52ch; }
+.lp-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-2); }
+
+/* Screenshot placeholders */
+.lp-shot { position: relative; aspect-ratio: 16 / 11; border-radius: var(--radius-lg); overflow: hidden; background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%); box-shadow: 0 30px 70px -30px rgba(79, 70, 229, 0.5); display: flex; align-items: center; justify-content: center; }
+.lp-shot::after { content: ""; position: absolute; inset: 14px; border-radius: calc(var(--radius-lg) - 4px); background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(2px); }
+.lp-shot span { position: relative; z-index: 1; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.9); }
+
+/* Generic section rhythm */
+.lp-section { padding: calc(var(--space-8) * 2) 0; }
+.lp-section__head { display: flex; flex-direction: column; gap: var(--space-3); max-width: 640px; margin-bottom: calc(var(--space-8) * 1.25); }
+.lp-section__head h2 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.7rem, 2.4vw, 2.25rem); line-height: 1.15; letter-spacing: -0.01em; margin: 0; }
+.lp-section__head p { font-size: 1.0625rem; line-height: 1.7; color: var(--muted); margin: 0; }
+
+/* Feature grid */
+.lp-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.lp-feature { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); }
+.lp-feature__icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(79, 70, 229, 0.09); margin-bottom: var(--space-2); }
+.lp-feature h3 { font-family: var(--font-heading); font-weight: 600; font-size: 1.0625rem; margin: 0; color: var(--text); }
+.lp-feature p { font-size: 0.9375rem; line-height: 1.65; color: var(--muted); margin: 0; }
+
+/* Role-based access band */
+.lp-band { background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%); color: #fff; }
+.lp-band__inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: calc(var(--space-8) * 1.5); padding: calc(var(--space-8) * 2) 0; }
+.lp-band__copy { display: flex; flex-direction: column; gap: var(--space-4); }
+.lp-band__copy h2 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.7rem, 2.4vw, 2.25rem); line-height: 1.15; margin: 0; }
+.lp-band__copy p { font-size: 1.0625rem; line-height: 1.7; color: rgba(255, 255, 255, 0.85); margin: 0; max-width: 46ch; }
+.lp-roles { display: flex; flex-direction: column; gap: var(--space-4); }
+.lp-role { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); }
+.lp-role__name { font-weight: 600; font-size: 0.95rem; }
+.lp-role__access { font-size: 0.875rem; color: rgba(255, 255, 255, 0.82); }
+
+/* Reporting */
+.lp-split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: calc(var(--space-8) * 1.5); }
+.lp-split__copy { display: flex; flex-direction: column; gap: var(--space-4); }
+.lp-split__copy h2 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.7rem, 2.4vw, 2.25rem); line-height: 1.15; margin: 0; }
+.lp-split__copy p { font-size: 1.0625rem; line-height: 1.7; color: var(--muted); margin: 0; max-width: 46ch; }
+
+/* CTA */
+.lp-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 24px 60px -30px rgba(79, 70, 229, 0.28); padding: calc(var(--space-8) * 1.25); }
+.lp-cta h2 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.6rem, 2.2vw, 2.1rem); line-height: 1.15; margin: 0; }
+
+/* Footer */
+.lp-footer { border-top: 1px solid var(--border); }
+.lp-footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); padding: calc(var(--space-8) * 1.25) 0; }
+.lp-footer__inner .text-muted { font-size: 13px; }
+.lp-footer__links { display: flex; gap: var(--space-6); }
+.lp-footer__links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+.lp-footer__links a:hover { color: var(--primary); }
+
+@media (max-width: 900px) {
+    .lp-hero, .lp-band__inner, .lp-split { grid-template-columns: 1fr; }
+    .lp-hero { padding: calc(var(--space-8) * 1.5) 0; gap: var(--space-8); }
+    .lp-features { grid-template-columns: repeat(2, 1fr); }
+    .lp-hero__media { order: -1; }
+}
+@media (max-width: 620px) {
+    .lp-features { grid-template-columns: 1fr; }
+    .lp-nav__links a:not(.btn) { display: none; }
+}
