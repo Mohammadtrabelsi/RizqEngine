@@ -1,5 +1,11 @@
 import './bootstrap.js';
-import '@coreui/coreui/dist/js/coreui.bundle.min.js';
+
+import Alpine from 'alpinejs';
+import collapse from '@alpinejs/collapse';
+
+Alpine.plugin(collapse);
+window.Alpine = Alpine;
+Alpine.start();
 
 const THEME_COOKIE = 'theme';
 
@@ -7,18 +13,159 @@ function writeThemeCookie(value) {
     document.cookie = `${THEME_COOKIE}=${value};path=/;max-age=31536000;samesite=lax`;
 }
 
-// jQuery is provided globally by the CDN script in the authenticated layout.
-// The standalone auth pages load this bundle without jQuery, so guard against
-// its absence instead of throwing.
-window.jQuery && $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+/*
+ * Lightweight replacements for the interactive widgets that the CoreUI /
+ * Bootstrap 4 JavaScript bundle used to provide. The markup still uses the
+ * familiar `data-toggle` / `data-dismiss` / `.show` API, so these handlers
+ * keep every existing view working without the Bootstrap dependency.
+ */
 
+// --- Dropdowns -------------------------------------------------------------
+function closeAllDropdowns(except) {
+    document.querySelectorAll('.dropdown.show, .c-header-nav-item.show, .app-topnav-item.show')
+        .forEach((parent) => {
+            if (parent === except) return;
+            parent.classList.remove('show');
+            const menu = parent.querySelector('.dropdown-menu');
+            if (menu) menu.classList.remove('show');
+        });
+}
+
+document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('[data-toggle="dropdown"]');
+    if (toggle) {
+        event.preventDefault();
+        const parent = toggle.closest('.dropdown, .c-header-nav-item, .app-topnav-item');
+        if (!parent) return;
+        const isOpen = parent.classList.contains('show');
+        closeAllDropdowns(isOpen ? null : parent);
+        parent.classList.toggle('show', !isOpen);
+        const menu = parent.querySelector('.dropdown-menu');
+        if (menu) menu.classList.toggle('show', !isOpen);
+        return;
+    }
+
+    // Clicking inside an open menu should not close it (unless it's a link).
+    if (event.target.closest('.dropdown-menu') && !event.target.closest('a, button')) {
+        return;
+    }
+    closeAllDropdowns(null);
+});
+
+// --- Collapse (e.g. the mobile navigation) ---------------------------------
+document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-toggle="collapse"]');
+    if (!trigger) return;
+    event.preventDefault();
+    const selector = trigger.getAttribute('data-target') || trigger.getAttribute('href');
+    if (!selector) return;
+    const target = document.querySelector(selector);
+    if (!target) return;
+    const willShow = !target.classList.contains('show');
+    target.classList.toggle('show', willShow);
+    trigger.setAttribute('aria-expanded', String(willShow));
+});
+
+// --- Modals ----------------------------------------------------------------
+function openModal(modal) {
+    if (!modal) return;
+    modal.classList.add('show');
+    modal.style.display = 'block';
+    modal.removeAttribute('aria-hidden');
+    document.body.classList.add('modal-open');
+    if (!document.querySelector('.modal-backdrop')) {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop show';
+        document.body.appendChild(backdrop);
+    }
+}
+
+function closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.remove();
+}
+
+document.addEventListener('click', (event) => {
+    const opener = event.target.closest('[data-toggle="modal"]');
+    if (opener) {
+        event.preventDefault();
+        const selector = opener.getAttribute('data-target');
+        if (selector) openModal(document.querySelector(selector));
+        return;
+    }
+    const dismiss = event.target.closest('[data-dismiss="modal"]');
+    if (dismiss) {
+        event.preventDefault();
+        closeModal(dismiss.closest('.modal'));
+        return;
+    }
+    // Click on the backdrop area of a modal.
+    if (event.target.classList.contains('modal') && event.target.classList.contains('show')) {
+        closeModal(event.target);
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        closeModal(document.querySelector('.modal.show'));
+        closeAllDropdowns(null);
+    }
+});
+
+// --- Dismissible alerts ----------------------------------------------------
+document.addEventListener('click', (event) => {
+    const closer = event.target.closest('[data-dismiss="alert"]');
+    if (!closer) return;
+    const alert = closer.closest('.alert');
+    if (alert) alert.remove();
+});
+
+// --- jQuery plugin shims ---------------------------------------------------
+// Some inline view scripts still call the Bootstrap jQuery API (e.g.
+// `$('#checkoutModal').modal('show')`). Bridge those calls to the vanilla
+// handlers above so the markup keeps working without the Bootstrap bundle.
+if (window.jQuery) {
+    const $ = window.jQuery;
+    $.fn.modal = function (action) {
+        this.each((_, el) => {
+            if (action === 'hide') closeModal(el);
+            else if (action === 'toggle') {
+                el.classList.contains('show') ? closeModal(el) : openModal(el);
+            } else openModal(el);
+        });
+        return this;
+    };
+    // Tooltips were decorative only; expose a no-op to avoid errors.
+    $.fn.tooltip = function () { return this; };
+    $.fn.dropdown = function (action) {
+        this.each((_, el) => {
+            const parent = el.closest('.dropdown, .c-header-nav-item, .app-topnav-item');
+            if (!parent) return;
+            const show = action === 'show' || (action !== 'hide' && !parent.classList.contains('show'));
+            parent.classList.toggle('show', show);
+            const menu = parent.querySelector('.dropdown-menu');
+            if (menu) menu.classList.toggle('show', show);
+        });
+        return this;
+    };
+}
+
+// --- Force the light theme (parity with the previous behaviour) ------------
+document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('c-dark-theme');
     writeThemeCookie('light');
 
-    // Logout link (replaces the previous inline onclick handler).
-    $(document).on('click', '#logout-link', function (e) {
-        e.preventDefault();
-        document.getElementById('logout-form').submit();
-    });
-})
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = document.getElementById('logout-form');
+            if (form) form.submit();
+        });
+    }
+});

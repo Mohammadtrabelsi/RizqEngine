@@ -1,7 +1,7 @@
 {{--
     Triangle POS — primary navigation as a horizontal menu bar.
     Rendered inside the content area (below the header) instead of a
-    vertical sidebar. Built on Bootstrap 4 navbar + dropdowns.
+    vertical sidebar. Authored with Tailwind CSS utilities and components.
 --}}
 <nav class="app-topnav" aria-label="{{ __('menu.products') }}">
     <div class="container-fluid">
