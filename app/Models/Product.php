@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasDefaultTranslations;
 use App\Traits\RecordsActivity;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @property int $id
@@ -30,11 +32,14 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  */
 class Product extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, RecordsActivity;
+    use HasDefaultTranslations, HasFactory, HasTranslations, InteractsWithMedia, RecordsActivity;
 
     protected $guarded = [];
 
     protected $with = ['media'];
+
+    /** @var array<int, string> */
+    public array $translatable = ['product_name', 'product_note'];
 
     protected static function newFactory()
     {

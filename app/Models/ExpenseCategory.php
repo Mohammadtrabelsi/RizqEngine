@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\HasDefaultTranslations;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class ExpenseCategory extends Model
 {
-    use HasFactory, RecordsActivity;
+    use HasDefaultTranslations, HasFactory, HasTranslations, RecordsActivity;
 
     protected $guarded = [];
+
+    /** @var array<int, string> */
+    public array $translatable = ['category_name', 'category_description'];
 
     public function expenses()
     {
