@@ -65,7 +65,7 @@ class Checkout extends Component
     public function proceed()
     {
         if ($this->customer_id != null) {
-            $this->dispatchBrowserEvent('showCheckoutModal');
+            $this->dispatch('showCheckoutModal');
         } else {
             session()->flash('error', trans('sale.select-customer'));
         }

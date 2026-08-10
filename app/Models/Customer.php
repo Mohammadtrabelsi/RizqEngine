@@ -6,15 +6,17 @@ use App\Traits\RecordsActivity;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @property int $id
  * @property string $customer_name
  * @property string $customer_email
  */
-class Customer extends Model
+class Customer extends Model implements HasMedia
 {
-    use HasFactory, RecordsActivity;
+    use HasFactory, InteractsWithMedia, RecordsActivity;
 
     protected $guarded = [];
 
