@@ -95,7 +95,7 @@ class ProductCart extends Component
 
         $cart->add([
             'id' => $product['id'],
-            'name' => $product['product_name'],
+            'name' => translatable_string($product['product_name']),
             'qty' => 1,
             'price' => $this->calculate($product)['price'],
             'weight' => 1,

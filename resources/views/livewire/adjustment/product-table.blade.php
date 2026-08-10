@@ -21,7 +21,7 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">#{{ $key + 1 }} {{ $product['product_name'] ?? $product['product']['product_name'] }}</span>
+                                <span class="fw-bold">#{{ $key + 1 }} {{ translatable_string($product['product_name'] ?? $product['product']['product_name']) }}</span>
                                 <button type="button" class="btn btn-danger btn-sm" wire:click="removeProduct({{ $key }})">
                                     <i class="bi bi-trash"></i>
                                 </button>
