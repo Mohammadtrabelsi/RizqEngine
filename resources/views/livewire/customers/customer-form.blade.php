@@ -27,21 +27,30 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>{{ __('customer.customer_phone') }} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('customer_phone') is-invalid @enderror" wire:model="customer_phone">
                                 @error('customer_phone') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ __('customer.tax_identification_number') }}</label>
+                                <input type="text" class="form-control @error('tax_identification_number') is-invalid @enderror" wire:model="tax_identification_number">
+                                @error('tax_identification_number') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>{{ __('customer.city') }} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('city') is-invalid @enderror" wire:model="city">
                                 @error('city') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>{{ __('customer.country') }} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('country') is-invalid @enderror" wire:model="country">

@@ -19,6 +19,9 @@
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item px-0"><i class="bi bi-envelope"></i> {{ $supplier->supplier_email }}</li>
                             <li class="list-group-item px-0"><i class="bi bi-telephone"></i> {{ $supplier->supplier_phone }}</li>
+                            @if ($supplier->tax_identification_number)
+                                <li class="list-group-item px-0"><i class="bi bi-receipt"></i> {{ $supplier->tax_identification_number }}</li>
+                            @endif
                         </ul>
                         <div class="btn-group">
                             @can('edit_suppliers')

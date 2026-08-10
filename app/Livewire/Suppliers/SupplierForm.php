@@ -22,6 +22,8 @@ class SupplierForm extends Component
 
     public string $supplier_phone = '';
 
+    public string $tax_identification_number = '';
+
     public string $city = '';
 
     public string $country = '';
@@ -40,6 +42,7 @@ class SupplierForm extends Component
             $this->supplier_name = (string) $supplier->supplier_name;
             $this->supplier_email = (string) $supplier->supplier_email;
             $this->supplier_phone = (string) $supplier->supplier_phone;
+            $this->tax_identification_number = (string) $supplier->tax_identification_number;
             $this->city = (string) $supplier->city;
             $this->country = (string) $supplier->country;
             $this->address = (string) $supplier->address;
@@ -54,6 +57,7 @@ class SupplierForm extends Component
             'supplier_name' => 'required|string|max:255',
             'supplier_phone' => 'required|max:255',
             'supplier_email' => 'required|email|max:255',
+            'tax_identification_number' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'address' => 'required|string|max:500',

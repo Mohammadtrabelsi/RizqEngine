@@ -10,6 +10,7 @@ return [
     'no_suppliers_found' => 'Aucun fournisseur trouvé',
     'profile_image' => '[TODO] Profile image',
     'supplier_details' => 'Détails du fournisseur',
+    'tax_identification_number' => "Numéro d'identification fiscale (NIF)",
     'supplier_email' => 'E-mail du fournisseur',
     'supplier_name' => 'Nom du fournisseur',
     'supplier_phone' => 'Téléphone du fournisseur',

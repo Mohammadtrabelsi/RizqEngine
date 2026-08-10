@@ -22,6 +22,8 @@ class CustomerForm extends Component
 
     public string $customer_phone = '';
 
+    public string $tax_identification_number = '';
+
     public string $city = '';
 
     public string $country = '';
@@ -40,6 +42,7 @@ class CustomerForm extends Component
             $this->customer_name = (string) $customer->customer_name;
             $this->customer_email = (string) $customer->customer_email;
             $this->customer_phone = (string) $customer->customer_phone;
+            $this->tax_identification_number = (string) $customer->tax_identification_number;
             $this->city = (string) $customer->city;
             $this->country = (string) $customer->country;
             $this->address = (string) $customer->address;
@@ -54,6 +57,7 @@ class CustomerForm extends Component
             'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
+            'tax_identification_number' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'address' => 'required|string|max:500',

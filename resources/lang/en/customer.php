@@ -14,5 +14,6 @@ return [
     'edit' => 'Edit',
     'no_customers_found' => 'No customers found',
     'profile_image' => 'Profile image',
+    'tax_identification_number' => 'Tax identification number (TIN)',
     'update' => 'Update',
 ];
