@@ -28,6 +28,8 @@ return [
     'fixed' => 'Fixe',
     'generate-barcodes' => 'Générer des codes-barres',
     'images' => 'Images',
+    'choose_image' => 'Choisir une image',
+    'drop_image_hint' => 'Déposez les fichiers ici ou cliquez pour téléverser',
     'inclusive' => 'Inclusif',
     'invalid-product-code' => 'Code produit invalide',
     'loading' => 'Chargement...',
