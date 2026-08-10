@@ -37,7 +37,7 @@ return [
     'reporting-description' => 'Reporting description',
     'role-based-access' => 'Role-based access',
     'role-based-access-description' => 'Role-based access description',
-    'sales-this-week' => 'Sales this week',
+    'sales-this-week' => 'Sale this period',
     'sales-today' => 'Sales today',
     'search-product' => 'Search product',
     'shipping' => 'Shipping',

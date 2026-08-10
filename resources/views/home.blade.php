@@ -92,7 +92,7 @@
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
-                        {{ __('general.overview') }} of {{ now()->format('F, Y') }}
+                        {{ __('general.overview') }} this period
                     </div>
                     <div class="card-body d-flex justify-content-center align-items-center">
                         <div class="chart-container chart-container-sm">
