@@ -25,6 +25,7 @@ class SupplierFactory extends Factory
             'supplier_name' => $this->faker->name(),
             'supplier_email' => $this->faker->safeEmail(),
             'supplier_phone' => $this->faker->phoneNumber(),
+            'tax_identification_number' => $this->faker->numerify('TIN-#########'),
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
             'address' => $this->faker->streetAddress(),

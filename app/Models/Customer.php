@@ -13,6 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int $id
  * @property string $customer_name
  * @property string $customer_email
+ * @property string|null $tax_identification_number
  */
 class Customer extends Model implements HasMedia
 {

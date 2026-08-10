@@ -10,6 +10,7 @@ return [
     'no_suppliers_found' => 'No suppliers found',
     'profile_image' => 'Profile image',
     'supplier_details' => 'Supplier details',
+    'tax_identification_number' => 'Tax identification number (TIN)',
     'supplier_email' => 'Supplier email',
     'supplier_name' => 'Supplier name',
     'supplier_phone' => 'Supplier phone',
