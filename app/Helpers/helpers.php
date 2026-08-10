@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Setting;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('settings')) {
@@ -82,7 +83,7 @@ if (! function_exists('translatable_string')) {
         if (is_array($value)) {
             $resolved = $value[app()->getLocale()]
                 ?? $value[config('app.fallback_locale')]
-                ?? \Illuminate\Support\Arr::first($value);
+                ?? Arr::first($value);
 
             return (string) ($resolved ?? '');
         }
