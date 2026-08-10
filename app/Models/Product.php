@@ -17,6 +17,7 @@ use Spatie\Translatable\HasTranslations;
 /**
  * @property int $id
  * @property int $category_id
+ * @property int|null $supplier_id
  * @property string $product_name
  * @property string $product_code
  * @property string $product_barcode_symbology
@@ -52,6 +53,14 @@ class Product extends Model implements HasMedia
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo<Supplier, $this>
+     */
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
     }
 
     /**

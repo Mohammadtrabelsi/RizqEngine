@@ -39,7 +39,7 @@ class ProductIndex extends Component
     public function render()
     {
         $products = Product::query()
-            ->with('category')
+            ->with('category', 'supplier')
             ->when($this->search, function ($query) {
                 $term = '%'.$this->search.'%';
                 $query->where('product_name', 'like', $term)

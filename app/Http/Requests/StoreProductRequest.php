@@ -27,6 +27,7 @@ class StoreProductRequest extends FormRequest
             'product_tax_type' => ['nullable', 'integer'],
             'product_note' => ['nullable', 'string', 'max:1000'],
             'category_id' => ['required', 'integer'],
+            'supplier_id' => ['nullable', 'integer', 'exists:suppliers,id'],
         ];
     }
 

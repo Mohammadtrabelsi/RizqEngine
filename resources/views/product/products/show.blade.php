@@ -35,6 +35,9 @@
                                 <span class="fw-bold">{{ __('product.category') }}</span><span>{{ $product->category->category_name }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">{{ __('product.supplier') }}</span><span>{{ optional($product->supplier)->supplier_name ?? 'N/A' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
                                 <span class="fw-bold">{{ __('product.product_cost') }}</span><span>{{ format_currency($product->product_cost) }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">

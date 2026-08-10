@@ -8,6 +8,8 @@ return [
     'barcode_symbology' => 'ترميز الباركود',
     'categories' => 'الفئات',
     'category' => 'الفئة',
+    'supplier' => 'المورد',
+    'select_supplier' => 'اختر المورد',
     'category_code' => 'رمز الفئة',
     'category_name' => 'اسم الفئة',
     'close' => 'إغلاق',

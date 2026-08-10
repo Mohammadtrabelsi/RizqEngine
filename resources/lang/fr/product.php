@@ -8,6 +8,8 @@ return [
     'barcode_symbology' => 'Symbologie du code-barres',
     'categories' => 'Catégories',
     'category' => 'Catégorie',
+    'supplier' => 'Fournisseur',
+    'select_supplier' => 'Sélectionner un fournisseur',
     'category_code' => 'Code de la catégorie',
     'category_name' => 'Nom de la catégorie',
     'close' => 'Fermer',
