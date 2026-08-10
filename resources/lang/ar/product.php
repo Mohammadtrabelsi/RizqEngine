@@ -28,6 +28,8 @@ return [
     'fixed' => 'ثابت',
     'generate-barcodes' => 'إنشاء الباركود',
     'images' => 'الصور',
+    'choose_image' => 'اختر صورة',
+    'drop_image_hint' => 'أفلت الملفات هنا أو انقر للرفع',
     'inclusive' => 'شامل',
     'invalid-product-code' => 'رمز المنتج غير صالحة',
     'loading' => 'جاري التحميل...',
