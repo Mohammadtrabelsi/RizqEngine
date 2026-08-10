@@ -49,7 +49,7 @@
                 </li>
                 @endcan
 
-                @can('access_stock_exits')
+                @canany(['access_stock_exits', 'create_stock_exits'])
                 <li class="app-topnav-item dropdown {{ request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="bi bi-box-arrow-up"></i> <span>{{ __('menu.stock-exits') }}</span>
@@ -58,10 +58,12 @@
                         @can('create_stock_exits')
                             <a class="dropdown-item {{ request()->routeIs('stock-exits.create') ? 'active' : '' }}" href="{{ route('stock-exits.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-stock-exit') }}</a>
                         @endcan
-                        <a class="dropdown-item {{ request()->routeIs('stock-exits.index') ? 'active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-stock-exits') }}</a>
+                        @can('access_stock_exits')
+                            <a class="dropdown-item {{ request()->routeIs('stock-exits.index') ? 'active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-stock-exits') }}</a>
+                        @endcan
                     </div>
                 </li>
-                @endcan
+                @endcanany
 
                 @can('access_quotations')
                 <li class="app-topnav-item dropdown {{ request()->routeIs('quotations.*') ? 'is-active' : '' }}">
