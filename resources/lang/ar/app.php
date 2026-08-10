@@ -2,6 +2,7 @@
 
 return [
     'account' => 'الحساب',
+    'back' => 'رجوع',
     'create' => 'إنشاء',
     'developed-by' => 'المشروع الأصلي',
     'developed' => 'تطوير',

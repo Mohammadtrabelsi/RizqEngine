@@ -114,6 +114,18 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    // Sortie-Retour: Bon de Sortie (BS)
+    Route::resource('stock-exits', 'StockExitController')
+        ->parameters(['stock-exits' => 'stockExit'])
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
+
+    // Sortie-Retour: Bon d'Entrée (BE) — always tied to an origin BS
+    Route::get('stock-exits/{stockExit}/return', 'StockEntryController@create')->name('stock-entries.create');
+    Route::post('stock-exits/{stockExit}/return', 'StockEntryController@store')->name('stock-entries.store');
+    Route::get('stock-entries/{stockEntry}', 'StockEntryController@show')->name('stock-entries.show');
+});
+
+Route::group(['middleware' => 'auth'], function () {
     // Generate PDF
     Route::get('/purchases/pdf/{id}', function ($id) {
         $purchase = Purchase::findOrFail($id);

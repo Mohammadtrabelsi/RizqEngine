@@ -2,6 +2,7 @@
 
 return [
     'account' => 'Compte',
+    'back' => 'Retour',
     'create' => 'Créer',
     'developed-by' => 'projet d\'origine',
     'developed' => 'développé par',

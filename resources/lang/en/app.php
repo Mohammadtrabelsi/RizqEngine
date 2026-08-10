@@ -2,6 +2,7 @@
 
 return [
     'account' => 'Account',
+    'back' => 'Back',
     'create' => 'Create',
     'developed-by' => 'origin project',
     'developed' => 'developed by',

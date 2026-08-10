@@ -41,6 +41,12 @@ class PermissionsTableSeeder extends Seeder
             'show_adjustments',
             'edit_adjustments',
             'delete_adjustments',
+            // Stock Exits / Entries (Sortie-Retour)
+            'access_stock_exits',
+            'create_stock_exits',
+            'show_stock_exits',
+            'delete_stock_exits',
+            'create_stock_entries',
             // Quotaions
             'access_quotations',
             'create_quotations',
