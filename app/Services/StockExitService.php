@@ -81,7 +81,7 @@ class StockExitService
      * Create a Bon d'Entrée that closes a Bon de Sortie.
      *
      * @param  array<int, array{detail_id:int, returned:int}>  $received
-     *                        The physically confirmed quantity per exit line.
+     *                                                                    The physically confirmed quantity per exit line.
      *
      * @throws StockInconsistencyException when a returned quantity exceeds the
      *                                     quantity originally taken out.
