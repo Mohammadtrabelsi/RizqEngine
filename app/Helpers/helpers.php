@@ -63,6 +63,34 @@ if (! function_exists('format_currency')) {
     }
 }
 
+if (! function_exists('translatable_string')) {
+    /**
+     * Resolve a translatable attribute value to a plain string.
+     *
+     * Spatie's HasTranslations serialises translatable attributes to the full
+     * array of locale translations (e.g. ['en' => '...', 'ar' => '...']) when a
+     * model is cast to an array/JSON — which happens when products are passed
+     * through Livewire event payloads. This helper collapses such an array back
+     * to a single string for the current locale (falling back to the app
+     * fallback locale, then the first available translation), while leaving
+     * plain strings and other scalars untouched.
+     *
+     * @param  mixed  $value
+     */
+    function translatable_string($value): string
+    {
+        if (is_array($value)) {
+            $resolved = $value[app()->getLocale()]
+                ?? $value[config('app.fallback_locale')]
+                ?? \Illuminate\Support\Arr::first($value);
+
+            return (string) ($resolved ?? '');
+        }
+
+        return (string) ($value ?? '');
+    }
+}
+
 if (! function_exists('make_reference_id')) {
     function make_reference_id($prefix, $number)
     {
