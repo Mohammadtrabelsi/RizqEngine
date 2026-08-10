@@ -8,6 +8,8 @@ return [
     'barcode_symbology' => 'Barcode Symbology',
     'categories' => 'Categories',
     'category' => 'Category',
+    'supplier' => 'Supplier',
+    'select_supplier' => 'Select supplier',
     'category_code' => 'Category code',
     'category_name' => 'Category name',
     'close' => 'Close',

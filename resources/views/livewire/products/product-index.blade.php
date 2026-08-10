@@ -20,6 +20,9 @@
                         <h5 class="card-title mb-1">{{ $product->product_name }}</h5>
                         <p class="text-muted mb-2"><small>{{ $product->product_code }}</small></p>
                         <span class="badge bg-secondary mb-3">{{ optional($product->category)->category_name }}</span>
+                        @if($product->supplier)
+                            <p class="text-muted mb-3"><small><i class="bi bi-truck"></i> {{ $product->supplier->supplier_name }}</small></p>
+                        @endif
                         <ul class="list-group list-group-flush text-start mb-3">
                             <li class="list-group-item d-flex justify-content-between">
                                 <span>Cost</span><span>{{ format_currency($product->product_cost) }}</span>

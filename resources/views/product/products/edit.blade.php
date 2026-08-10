@@ -53,6 +53,20 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="supplier_id">{{ __('product.supplier') }}</label>
+                                        <select class="form-control" name="supplier_id" id="supplier_id">
+                                            <option value="">{{ __('product.select_supplier') }}</option>
+                                            @foreach(\App\Models\Supplier::all() as $supplier)
+                                                <option value="{{ $supplier->id }}" {{ $product->supplier_id == $supplier->id ? 'selected' : '' }}>{{ $supplier->supplier_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="barcode_symbology">{{ __('product.barcode_symbology') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="product_barcode_symbology" id="barcode_symbology" required>
                                             <option {{ $product->product_barcode_symbology == 'C128' ? 'selected' : '' }} value="C128">Code 128</option>

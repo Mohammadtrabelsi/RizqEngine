@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -26,6 +27,7 @@ class ProductFactory extends Factory
 
         return [
             'category_id' => Category::factory(),
+            'supplier_id' => Supplier::factory(),
             'product_name' => $this->faker->words(3, true),
             'product_code' => (string) $this->faker->unique()->numberBetween(10000000, 99999999),
             'product_barcode_symbology' => 'C128',

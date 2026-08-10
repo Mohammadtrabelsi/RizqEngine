@@ -6,6 +6,7 @@ use App\Traits\RecordsActivity;
 use Database\Factories\SupplierFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -22,5 +23,13 @@ class Supplier extends Model implements HasMedia
     protected static function newFactory()
     {
         return SupplierFactory::new();
+    }
+
+    /**
+     * @return HasMany<Product, $this>
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'supplier_id', 'id');
     }
 }
