@@ -11,74 +11,68 @@
 
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/nocturne.css') }}">
-    <style>
-        .lp-wrap { max-width: 1280px; margin: 0 auto; }
-        .lp-hero { display: flex; align-items: center; gap: var(--space-8); padding: 96px var(--space-8); }
-        .lp-hero > div { flex: 1; }
-        .lp-features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
-        .lp-access { display: flex; align-items: center; gap: var(--space-8); }
-        .lp-access > div { flex: 1; }
-        .lp-reporting { display: flex; align-items: center; gap: var(--space-8); padding: 80px var(--space-8); }
-        .lp-reporting > div { flex: 1; }
-        .lp-cta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6);
-            padding: 64px var(--space-8); border-top: 1px solid var(--color-divider); }
-        .lp-footer { display: flex; justify-content: space-between; gap: var(--space-4);
-            padding: var(--space-6) var(--space-8); border-top: 1px solid var(--color-divider); }
-        .lp-shot { aspect-ratio: 16/11; border-radius: var(--radius-lg);
-            background: repeating-linear-gradient(135deg, var(--color-surface) 0px, var(--color-surface) 10px,
-                var(--color-neutral-900) 10px, var(--color-neutral-900) 20px);
-            display: flex; align-items: center; justify-content: center;
-            font-family: monospace; font-size: 12px; color: var(--color-neutral-500); }
-        @media (max-width: 860px) {
-            .lp-hero, .lp-access, .lp-reporting, .lp-cta { flex-direction: column; align-items: flex-start; }
-            .lp-features-grid { grid-template-columns: 1fr; }
-            .lp-hero { padding: 56px var(--space-6); }
-        }
-    </style>
-</head>
-<body style="background:var(--color-bg); color:var(--color-text)">
 
-    {{-- Nav --}}
-    <div class="nav" style="padding:var(--space-4) var(--space-8); border-bottom:1px solid var(--color-divider)">
-        <div class="nav-brand" style="display:flex; align-items:center; gap:var(--space-2); font-size:15px">
-            <svg width="22" height="20" viewBox="0 0 100 90">
-                <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="var(--color-text)" stroke-width="8"></polygon>
-                <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="8"></polygon>
-                <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="8"></polygon>
-                <polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="8"></polygon>
-            </svg>
-            Triangle POS
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- Application CSS (Tailwind) -->
+    @vite('resources/css/app.css')
+</head>
+<body class="lp">
+
+    @php
+        $triangle = function ($size, $stroke = 8) {
+            $h = round($size * 90 / 100);
+            return '<svg width="'.$size.'" height="'.$h.'" viewBox="0 0 100 90" aria-hidden="true">'
+                .'<polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="currentColor" stroke-width="'.$stroke.'"></polygon>'
+                .'<polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="currentColor" stroke-width="'.$stroke.'"></polygon>'
+                .'<polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="currentColor" stroke-width="'.$stroke.'"></polygon>'
+                .'<polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--primary)" stroke="var(--primary)" stroke-width="'.$stroke.'"></polygon>'
+                .'</svg>';
+        };
+    @endphp
+
+    {{-- Navigation --}}
+    <nav class="lp-nav">
+        <div class="lp-wrap lp-nav__inner">
+            <a class="lp-brand" href="{{ route('welcome') }}">
+                {!! $triangle(22) !!}
+                Triangle POS
+            </a>
+            <div class="lp-nav__links">
+                <a href="#features">Features</a>
+                <a href="#access">Access control</a>
+                <a href="#reporting">{{ __('general.reporting') }}</a>
+                @include('includes.language-switcher')
+                <a href="{{ route('login') }}" class="btn btn-primary btn-sm">{{ __('login.sign-in') }}</a>
+            </div>
         </div>
-        <a href="#features">Features</a>
-        <a href="#access">Access control</a>
-        <a href="#reporting">Reporting</a>
-        @include('includes.language-switcher')
-        <a href="{{ route('login') }}" class="btn btn-secondary">Sign in</a>
-    </div>
+    </nav>
 
     {{-- Hero --}}
-    <div class="lp-wrap">
-        <div class="lp-hero">
-            <div style="display:flex; flex-direction:column; gap:var(--space-4)">
-                <h1 style="max-width:560px">Run your store with Triangle POS</h1>
-                <p class="text-muted" style="font-size:16px; max-width:480px; margin:0">A complete, production-ready POS and inventory platform. Manage products, stock, purchases, sales, returns, expenses and people — with powerful reporting and fine-grained role-based access control.</p>
-                <div style="display:flex; gap:var(--space-3); margin-top:var(--space-3); flex-wrap:wrap">
-                    <a href="{{ route('login') }}" class="btn btn-primary">Get started</a>
-                    <a href="#features" class="btn btn-secondary">See features</a>
-                </div>
-            </div>
-            <div>
-                <div class="lp-shot">product screenshot</div>
+    <header class="lp-wrap lp-hero">
+        <div class="lp-hero__copy">
+            <span class="lp-kicker">Point of sale &amp; inventory</span>
+            <h1 class="lp-title">Run your store with <span class="lp-title__grad">Triangle POS</span></h1>
+            <p class="lp-lead">A complete, production-ready POS and inventory platform. Manage products, stock, purchases, sales, returns, expenses and people — with powerful reporting and fine-grained role-based access control.</p>
+            <div class="lp-hero__actions">
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">{{ __('general.get-started') }}</a>
+                <a href="#features" class="btn btn-secondary btn-lg">See features</a>
             </div>
         </div>
-    </div>
+        <div class="lp-hero__media">
+            <div class="lp-shot"><span>product screenshot</span></div>
+        </div>
+    </header>
 
     {{-- Features --}}
-    <div id="features" class="lp-wrap" style="padding:80px var(--space-8)">
-        <h2 style="margin-bottom:var(--space-2)">Everything the shop floor needs</h2>
-        <p class="text-muted" style="max-width:520px; margin-bottom:var(--space-6)">One system for every part of running a store, from stock room to till.</p>
-        <div class="lp-features-grid">
+    <section id="features" class="lp-wrap lp-section">
+        <div class="lp-section__head">
+            <h2>Everything the shop floor needs</h2>
+            <p>One system for every part of running a store, from stock room to till.</p>
+        </div>
+        <div class="lp-features">
             @php
                 $features = [
                     ['title' => 'Products & inventory', 'desc' => 'Track stock levels, variants and categories across every location.'],
@@ -87,32 +81,26 @@
                     ['title' => 'Returns', 'desc' => 'Process refunds and exchanges without breaking your stock counts.'],
                     ['title' => 'Expenses', 'desc' => 'Log day-to-day spending and keep it tied to your reporting.'],
                     ['title' => 'People', 'desc' => 'Manage staff accounts and what each one can access.'],
-                    ['title' => 'Reporting', 'desc' => 'Sales, margin and stock reports whenever you need them.'],
                 ];
             @endphp
             @foreach($features as $f)
-                <div class="card elev-sm">
-                    <svg width="26" height="23" viewBox="0 0 100 90">
-                        <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="var(--color-text)" stroke-width="9"></polygon>
-                        <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="9"></polygon>
-                        <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="var(--color-text)" stroke-width="9"></polygon>
-                        <polygon points="27.5,47.5 72.5,47.5 50,90" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="9"></polygon>
-                    </svg>
-                    <div class="card-title">{{ $f['title'] }}</div>
-                    <p class="card-body">{{ $f['desc'] }}</p>
+                <div class="card lp-feature">
+                    <span class="lp-feature__icon">{!! $triangle(24, 9) !!}</span>
+                    <h3>{{ $f['title'] }}</h3>
+                    <p>{{ $f['desc'] }}</p>
                 </div>
             @endforeach
         </div>
-    </div>
+    </section>
 
     {{-- Role-based access band --}}
-    <div id="access" style="padding:80px var(--space-8); background:var(--color-section); background-image:radial-gradient(ellipse at 20% 20%, var(--color-section-glow), transparent 60%)">
-        <div class="lp-wrap lp-access">
-            <div style="display:flex; flex-direction:column; gap:var(--space-3)">
-                <h2 style="color:var(--color-neutral-100)">{{ __('general.role-based-access') }}</h2>
-                <p style="color:var(--color-neutral-300); max-width:440px; margin:0">{{ __('general.role-based-access-description') }}</p>
+    <section id="access" class="lp-band">
+        <div class="lp-wrap lp-band__inner">
+            <div class="lp-band__copy">
+                <h2>{{ __('general.role-based-access') }}</h2>
+                <p>{{ __('general.role-based-access-description') }}</p>
             </div>
-            <div style="display:flex; flex-direction:column; gap:var(--space-3); width:100%">
+            <div class="lp-roles">
                 @php
                     $roles = [
                         ['name' => 'Owner', 'access' => 'Full access'],
@@ -121,40 +109,46 @@
                     ];
                 @endphp
                 @foreach($roles as $r)
-                    <div style="display:flex; align-items:center; justify-content:space-between; background:var(--color-section-ghost); border-radius:var(--radius-md); padding:var(--space-4)">
-                        <div style="font-weight:500; font-size:14px; color:var(--color-neutral-100)">{{ $r['name'] }}</div>
-                        <div style="font-size:13px; color:var(--color-neutral-300)">{{ $r['access'] }}</div>
+                    <div class="lp-role">
+                        <span class="lp-role__name">{{ $r['name'] }}</span>
+                        <span class="lp-role__access">{{ $r['access'] }}</span>
                     </div>
                 @endforeach
             </div>
         </div>
-    </div>
+    </section>
 
     {{-- Reporting --}}
-    <div id="reporting" class="lp-wrap lp-reporting">
-        <div>
-            <div class="lp-shot">{{ __('general.reporting-dashboard-screenshot') }}</div>
+    <section id="reporting" class="lp-wrap lp-section">
+        <div class="lp-split">
+            <div class="lp-hero__media">
+                <div class="lp-shot"><span>{{ __('general.reporting-dashboard-screenshot') }}</span></div>
+            </div>
+            <div class="lp-split__copy">
+                <h2>{{ __('general.reporting') }}</h2>
+                <p>{{ __('general.reporting-description') }}</p>
+            </div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:var(--space-3)">
-            <h2>{{ __('general.reporting') }}</h2>
-            <p class="text-muted" style="max-width:440px; margin:0">{{ __('general.reporting-description') }}</p>
-        </div>
-    </div>
+    </section>
 
     {{-- CTA --}}
-    <div class="lp-wrap lp-cta">
-        <h3 style="margin:0">{{ __('general.ready-to-run-your-store') }}</h3>
-        <a href="{{ route('login') }}" class="btn btn-primary">{{ __('general.get-started') }}</a>
-    </div>
+    <section class="lp-wrap lp-section" style="padding-top:0">
+        <div class="lp-cta">
+            <h2>{{ __('general.ready-to-run-your-store') }}</h2>
+            <a href="{{ route('login') }}" class="btn btn-primary btn-lg">{{ __('general.get-started') }}</a>
+        </div>
+    </section>
 
     {{-- Footer --}}
-    <div class="lp-wrap lp-footer">
-        <div class="text-muted" style="font-size:13px">© {{ date('Y') }} Triangle POS</div>
-        <div style="display:flex; gap:var(--space-4)">
-            <a href="#" style="font-size:13px">{{ __('general.privacy') }}</a>
-            <a href="#" style="font-size:13px">{{ __('general.terms') }}</a>
+    <footer class="lp-footer">
+        <div class="lp-wrap lp-footer__inner">
+            <span class="text-muted">© {{ date('Y') }} Triangle POS</span>
+            <div class="lp-footer__links">
+                <a href="#">{{ __('general.privacy') }}</a>
+                <a href="#">{{ __('general.terms') }}</a>
+            </div>
         </div>
-    </div>
+    </footer>
 
 </body>
 </html>
