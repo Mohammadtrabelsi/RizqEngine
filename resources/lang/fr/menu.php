@@ -52,6 +52,7 @@ return [
     'all-stock-exits' => 'Tous les bons de sortie',
     'stock-movement-report' => 'Rapport de mouvement de stock',
     'suppliers' => 'Fournisseurs',
+    'transactions' => 'Transactions',
     'system-settings' => 'Paramètres du système',
     'units' => 'Unités',
     'user-management' => 'Gestion des utilisateurs',

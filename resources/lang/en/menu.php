@@ -52,6 +52,7 @@ return [
     'all-stock-exits' => 'All exit vouchers',
     'stock-movement-report' => 'Stock-movement-report',
     'suppliers' => 'Suppliers',
+    'transactions' => 'Transactions',
     'system-settings' => 'System-settings',
     'units' => 'Units',
     'user-management' => 'User-management',
