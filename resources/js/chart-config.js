@@ -9,10 +9,10 @@ $(document).ready(function () {
                     label: 'Sales',
                     data: response.sales.original.data,
                     backgroundColor: [
-                        '#6366F1',
+                        '#0088b0',
                     ],
                     borderColor: [
-                        '#6366F1',
+                        '#0088b0',
                     ],
                     borderWidth: 1
                 },
@@ -20,10 +20,10 @@ $(document).ready(function () {
                         label: 'Purchases',
                         data: response.purchases.original.data,
                         backgroundColor: [
-                            '#A5B4FC',
+                            '#9b9797',
                         ],
                         borderColor: [
-                            '#A5B4FC',
+                            '#9b9797',
                         ],
                         borderWidth: 1
                     }
@@ -48,14 +48,14 @@ $(document).ready(function () {
                 datasets: [{
                     data: [response.sales, response.purchases, response.expenses],
                     backgroundColor: [
-                        '#F59E0B',
-                        '#0284C7',
-                        '#EF4444',
+                        '#0088b0',
+                        '#d6006c',
+                        '#9b9797',
                     ],
                     hoverBackgroundColor: [
-                        '#F59E0B',
-                        '#0284C7',
-                        '#EF4444',
+                        '#0088b0',
+                        '#d6006c',
+                        '#9b9797',
                     ],
                 }]
             },
@@ -73,14 +73,14 @@ $(document).ready(function () {
                         label: 'Payment Sent',
                         data: response.payment_sent,
                         fill: false,
-                        borderColor: '#EA580C',
+                        borderColor: '#d6006c',
                         tension: 0
                     },
                     {
                         label: 'Payment Received',
                         data: response.payment_received,
                         fill: false,
-                        borderColor: '#2563EB',
+                        borderColor: '#0088b0',
                         tension: 0
                     },
                 ]

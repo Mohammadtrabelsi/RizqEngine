@@ -35,7 +35,7 @@
                 </li>
                 @endcan
 
-                @canany(['access_adjustments', 'access_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
+                @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
                 <li class="app-topnav-item dropdown {{ request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="bi bi-arrow-left-right"></i> <span>{{ __('menu.transactions') }}</span>
@@ -49,14 +49,16 @@
                             <a class="dropdown-item {{ request()->routeIs('adjustments.index') ? 'active' : '' }}" href="{{ route('adjustments.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-adjustments') }}</a>
                         @endcan
 
-                        @can('access_stock_exits')
+                        @canany(['access_stock_exits', 'create_stock_exits'])
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-header"><i class="bi bi-box-arrow-up mr-2"></i>{{ __('menu.stock-exits') }}</div>
                             @can('create_stock_exits')
                                 <a class="dropdown-item {{ request()->routeIs('stock-exits.create') ? 'active' : '' }}" href="{{ route('stock-exits.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-stock-exit') }}</a>
                             @endcan
-                            <a class="dropdown-item {{ request()->routeIs('stock-exits.index') ? 'active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-stock-exits') }}</a>
-                        @endcan
+                            @can('access_stock_exits')
+                                <a class="dropdown-item {{ request()->routeIs('stock-exits.index') ? 'active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-stock-exits') }}</a>
+                            @endcan
+                        @endcanany
 
                         @can('access_purchases')
                             <div class="dropdown-divider"></div>
