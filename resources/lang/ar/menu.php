@@ -52,6 +52,7 @@ return [
     'all-stock-exits' => 'كل أذون الصرف',
     'stock-movement-report' => 'تقرير حركة المخزون',
     'suppliers' => 'الموردون',
+    'transactions' => 'المعاملات',
     'system-settings' => 'إعدادات النظام',
     'units' => 'الوحدات',
     'user-management' => 'إدارة المستخدمين',
