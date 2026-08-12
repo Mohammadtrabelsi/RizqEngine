@@ -65,6 +65,35 @@
                 </div>
             @endforeach
         </div>
+
+        {{-- Financial summary --}}
+        <div class="row g-4 mb-4">
+            @php
+                $summary = [
+                    ['label' => __('general.revenue'),        'value' => format_currency($revenue),      'meta' => __('general.net-of-returns'),      'icon' => 'bi-cash-coin',    'tone' => 'text-accent'],
+                    ['label' => __('general.cost-of-goods'),  'value' => format_currency($cost_of_goods),'meta' => __('general.for-selected-period'), 'icon' => 'bi-box-seam',     'tone' => 'text-muted'],
+                    ['label' => __('general.gross-profit'),   'value' => format_currency($profit),       'meta' => __('general.revenue-minus-cost'),  'icon' => 'bi-graph-up',     'tone' => $profit >= 0 ? 'text-success' : 'text-danger'],
+                    ['label' => __('general.receivables'),    'value' => format_currency($receivables),  'meta' => __('general.due-from-customers'),  'icon' => 'bi-arrow-down-left-circle', 'tone' => 'text-success'],
+                    ['label' => __('general.payables'),       'value' => format_currency($payables),     'meta' => __('general.due-to-suppliers'),    'icon' => 'bi-arrow-up-right-circle',  'tone' => 'text-danger'],
+                ];
+            @endphp
+            @foreach($summary as $item)
+                <div class="col-sm-6 col-xl">
+                    <div class="card h-100 shadow-sm n-stat-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="n-card-kicker">{{ $item['label'] }}</div>
+                                    <div class="n-value">{{ $item['value'] }}</div>
+                                </div>
+                                <i class="bi {{ $item['icon'] }} {{ $item['tone'] }} fs-3"></i>
+                            </div>
+                            <div class="n-meta mt-3">{{ $item['meta'] }}</div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
         @endcan
 
         <div class="row gy-4">

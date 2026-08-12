@@ -19,22 +19,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $sales = Sale::completed()->sum('total_amount');
-        $sale_returns = SaleReturn::completed()->sum('total_amount');
-        $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
-        $product_costs = 0;
-
-        foreach (Sale::completed()->with('saleDetails')->get() as $sale) {
-            foreach ($sale->saleDetails as $saleDetail) {
-                if (! is_null($saleDetail->product)) {
-                    $product_costs += $saleDetail->product->product_cost * $saleDetail->quantity;
-                }
-            }
-        }
-
-        $revenue = ($sales - $sale_returns) / 100;
-        $profit = $revenue - $product_costs;
-
         // --- Date range filter -----------------------------------------
         $today = Carbon::today()->toDateString();
 
@@ -65,6 +49,28 @@ class HomeController extends Controller
         $todays_sales = Sale::completed()->whereBetween('date', $range)->sum('total_amount') / 100;
         $todays_transactions = Sale::completed()->whereBetween('date', $range)->count();
         $todays_expenses = Expense::whereBetween('date', $range)->sum('amount') / 100;
+
+        // --- Financial summary for the selected range ------------------
+        // Cost of goods sold is aggregated in a single query instead of
+        // hydrating every completed sale and its line items into memory.
+        $gross_sales = Sale::completed()->whereBetween('date', $range)->sum('total_amount');
+        $sale_returns = SaleReturn::completed()->whereBetween('date', $range)->sum('total_amount');
+        $purchase_returns = PurchaseReturn::completed()->whereBetween('date', $range)->sum('total_amount');
+
+        $cost_of_goods = DB::table('sale_details')
+            ->join('sales', 'sales.id', '=', 'sale_details.sale_id')
+            ->join('products', 'products.id', '=', 'sale_details.product_id')
+            ->where('sales.status', 'Completed')
+            ->whereBetween('sales.date', $range)
+            ->sum(DB::raw('sale_details.quantity * products.product_cost'));
+
+        $revenue = ($gross_sales - $sale_returns) / 100;
+        $cost_of_goods = $cost_of_goods / 100;
+        $profit = $revenue - $cost_of_goods;
+
+        // --- Outstanding balances (point-in-time snapshot) -------------
+        $receivables = Sale::completed()->sum('due_amount') / 100;
+        $payables = Purchase::completed()->sum('due_amount') / 100;
 
         $low_stock_products = Product::select('id', 'product_name', 'product_code', 'product_quantity', 'product_stock_alert')
             ->whereColumn('product_quantity', '<=', 'product_stock_alert')
@@ -106,9 +112,12 @@ class HomeController extends Controller
 
         return view('home', [
             'revenue' => $revenue,
+            'cost_of_goods' => $cost_of_goods,
             'sale_returns' => $sale_returns / 100,
             'purchase_returns' => $purchase_returns / 100,
             'profit' => $profit,
+            'receivables' => $receivables,
+            'payables' => $payables,
             'todays_sales' => $todays_sales,
             'todays_transactions' => $todays_transactions,
             'todays_expenses' => $todays_expenses,
