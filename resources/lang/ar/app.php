@@ -8,6 +8,7 @@ return [
     'developed' => 'تطوير',
     'home' => 'الرئيسية',
     'logout' => 'تسجيل الخروج',
+    'low-stock-alert' => 'المنتج ":code" كميته منخفضة!',
     'no-notifications' => 'لا توجد إشعارات',
     'notifications' => 'الإشعارات',
     'online' => 'متصل',

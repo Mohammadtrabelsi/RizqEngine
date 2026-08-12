@@ -44,7 +44,7 @@
                     </div>
                     @forelse($low_quantity_products as $product)
                         <a class="dropdown-item" href="{{ route('products.show', $product->id) }}">
-                            <i class="bi bi-hash mr-1 text-primary"></i> Product: "{{ $product->product_code }}" is low in quantity!
+                            <i class="bi bi-hash mr-1 text-primary"></i> {{ __('app.low-stock-alert', ['code' => $product->product_code]) }}
                         </a>
                     @empty
                         <a class="dropdown-item" href="#">
@@ -63,13 +63,13 @@
                 </div>
                 <div class="d-flex flex-column">
                     <span class="font-weight-bold">{{ auth()->user()->name }}</span>
-                    <span class="font-italic">Online <i class="bi bi-circle-fill text-success icon-fs-11px"></i></span>
+                    <span class="font-italic">{{ __('app.online') }} <i class="bi bi-circle-fill text-success icon-fs-11px"></i></span>
                 </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
                 <div class="dropdown-header bg-light py-2"><strong>{{ __('app.account') }}</strong></div>
                 <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                    <i class="mfe-2  bi bi-person icon-fs-1-2rem"></i> Profile
+                    <i class="mfe-2  bi bi-person icon-fs-1-2rem"></i> {{ __('app.profile') }}
                 </a>
                 <a id="logout-link" class="dropdown-item" href="#">
                     <i class="mfe-2  bi bi-box-arrow-left icon-fs-1-2rem"></i> {{ __('app.logout') }}   

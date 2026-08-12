@@ -8,6 +8,7 @@ return [
     'developed' => 'développé par',
     'home' => 'Accueil',
     'logout' => 'Déconnexion',
+    'low-stock-alert' => 'Le produit « :code » est en faible quantité !',
     'no-notifications' => 'Aucune notification',
     'notifications' => 'Notifications',
     'online' => 'En ligne',
