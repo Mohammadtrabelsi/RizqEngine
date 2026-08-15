@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\SaleDetails;
-use App\Models\SalePayment;
+use App\Services\SaleService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class SaleController extends Controller
 {
+    public function __construct(private readonly SaleService $sales) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_sales'), 403);
@@ -35,70 +36,13 @@ class SaleController extends Controller
 
     public function store(StoreSaleRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $due_amount = $request->total_amount - $request->paid_amount;
+        abort_if(Gate::denies('create_sales'), 403);
 
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $sale = Sale::create([
-                'date' => $request->date,
-                'customer_id' => $request->customer_id,
-                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
-                'tax_percentage' => $request->tax_percentage,
-                'discount_percentage' => $request->discount_percentage,
-                'shipping_amount' => $request->shipping_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'total_amount' => $request->total_amount * 100,
-                'due_amount' => $due_amount * 100,
-                'status' => $request->status,
-                'payment_status' => $payment_status,
-                'payment_method' => $request->payment_method,
-                'note' => $request->note,
-                'tax_amount' => (float) Cart::instance('sale')->tax() * 100,
-                'discount_amount' => (float) Cart::instance('sale')->discount() * 100,
-            ]);
-
-            foreach (Cart::instance('sale')->content() as $cart_item) {
-                SaleDetails::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price * 100,
-                    'unit_price' => $cart_item->options->unit_price * 100,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                    'product_discount_amount' => $cart_item->options->product_discount * 100,
-                    'product_discount_type' => $cart_item->options->product_discount_type,
-                    'product_tax_amount' => $cart_item->options->product_tax * 100,
-                ]);
-
-                if ($request->status == 'Shipped' || $request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty,
-                    ]);
-                }
-            }
-
-            Cart::instance('sale')->destroy();
-
-            if ($sale->paid_amount > 0) {
-                SalePayment::create([
-                    'date' => $request->date,
-                    'reference' => 'INV/'.$sale->reference,
-                    'amount' => $sale->paid_amount,
-                    'sale_id' => $sale->id,
-                    'payment_method' => $request->payment_method,
-                ]);
-            }
-        });
+        try {
+            $this->sales->createSale($request->all());
+        } catch (InsufficientStockException $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
 
         session()->flash('success', trans('sale.sale-created'));
 
@@ -148,72 +92,13 @@ class SaleController extends Controller
 
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
-        DB::transaction(function () use ($request, $sale) {
+        abort_if(Gate::denies('edit_sales'), 403);
 
-            $due_amount = $request->total_amount - $request->paid_amount;
-
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            foreach ($sale->saleDetails as $sale_detail) {
-                if ($sale->status == 'Shipped' || $sale->status == 'Completed') {
-                    $product = Product::findOrFail($sale_detail->product_id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity + $sale_detail->quantity,
-                    ]);
-                }
-                $sale_detail->delete();
-            }
-
-            $sale->update([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'customer_id' => $request->customer_id,
-                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
-                'tax_percentage' => $request->tax_percentage,
-                'discount_percentage' => $request->discount_percentage,
-                'shipping_amount' => $request->shipping_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'total_amount' => $request->total_amount * 100,
-                'due_amount' => $due_amount * 100,
-                'status' => $request->status,
-                'payment_status' => $payment_status,
-                'payment_method' => $request->payment_method,
-                'note' => $request->note,
-                'tax_amount' => (float) Cart::instance('sale')->tax() * 100,
-                'discount_amount' => (float) Cart::instance('sale')->discount() * 100,
-            ]);
-
-            foreach (Cart::instance('sale')->content() as $cart_item) {
-                SaleDetails::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price * 100,
-                    'unit_price' => $cart_item->options->unit_price * 100,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                    'product_discount_amount' => $cart_item->options->product_discount * 100,
-                    'product_discount_type' => $cart_item->options->product_discount_type,
-                    'product_tax_amount' => $cart_item->options->product_tax * 100,
-                ]);
-
-                if ($request->status == 'Shipped' || $request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty,
-                    ]);
-                }
-            }
-
-            Cart::instance('sale')->destroy();
-        });
+        try {
+            $this->sales->updateSale($sale, $request->all());
+        } catch (InsufficientStockException $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
 
         session()->flash('info', trans('sale.sale-updated'));
 
