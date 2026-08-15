@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StoreSaleReturnRequest;
 use App\Http\Requests\UpdateSaleReturnRequest;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\SaleReturn;
-use App\Models\SaleReturnDetail;
-use App\Models\SaleReturnPayment;
+use App\Services\SaleReturnService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class SalesReturnController extends Controller
 {
+    public function __construct(private readonly SaleReturnService $saleReturns) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_sale_returns'), 403);
@@ -35,70 +36,13 @@ class SalesReturnController extends Controller
 
     public function store(StoreSaleReturnRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $due_amount = $request->total_amount - $request->paid_amount;
+        abort_if(Gate::denies('create_sale_returns'), 403);
 
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $sale_return = SaleReturn::create([
-                'date' => $request->date,
-                'customer_id' => $request->customer_id,
-                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
-                'tax_percentage' => $request->tax_percentage,
-                'discount_percentage' => $request->discount_percentage,
-                'shipping_amount' => $request->shipping_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'total_amount' => $request->total_amount * 100,
-                'due_amount' => $due_amount * 100,
-                'status' => $request->status,
-                'payment_status' => $payment_status,
-                'payment_method' => $request->payment_method,
-                'note' => $request->note,
-                'tax_amount' => (float) Cart::instance('sale_return')->tax() * 100,
-                'discount_amount' => (float) Cart::instance('sale_return')->discount() * 100,
-            ]);
-
-            foreach (Cart::instance('sale_return')->content() as $cart_item) {
-                SaleReturnDetail::create([
-                    'sale_return_id' => $sale_return->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price * 100,
-                    'unit_price' => $cart_item->options->unit_price * 100,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                    'product_discount_amount' => $cart_item->options->product_discount * 100,
-                    'product_discount_type' => $cart_item->options->product_discount_type,
-                    'product_tax_amount' => $cart_item->options->product_tax * 100,
-                ]);
-
-                if ($request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity + $cart_item->qty,
-                    ]);
-                }
-            }
-
-            Cart::instance('sale_return')->destroy();
-
-            if ($sale_return->paid_amount > 0) {
-                SaleReturnPayment::create([
-                    'date' => $request->date,
-                    'reference' => 'INV/'.$sale_return->reference,
-                    'amount' => $sale_return->paid_amount,
-                    'sale_return_id' => $sale_return->id,
-                    'payment_method' => $request->payment_method,
-                ]);
-            }
-        });
+        try {
+            $this->saleReturns->createSaleReturn($request->all());
+        } catch (InsufficientStockException $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
 
         session()->flash('success', trans('salesreturn.sale-return-created'));
 
@@ -148,71 +92,13 @@ class SalesReturnController extends Controller
 
     public function update(UpdateSaleReturnRequest $request, SaleReturn $sale_return)
     {
-        DB::transaction(function () use ($request, $sale_return) {
-            $due_amount = $request->total_amount - $request->paid_amount;
+        abort_if(Gate::denies('edit_sale_returns'), 403);
 
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            foreach ($sale_return->saleReturnDetails as $sale_return_detail) {
-                if ($sale_return->status == 'Completed') {
-                    $product = Product::findOrFail($sale_return_detail->product_id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity - $sale_return_detail->quantity,
-                    ]);
-                }
-                $sale_return_detail->delete();
-            }
-
-            $sale_return->update([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'customer_id' => $request->customer_id,
-                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
-                'tax_percentage' => $request->tax_percentage,
-                'discount_percentage' => $request->discount_percentage,
-                'shipping_amount' => $request->shipping_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'total_amount' => $request->total_amount * 100,
-                'due_amount' => $due_amount * 100,
-                'status' => $request->status,
-                'payment_status' => $payment_status,
-                'payment_method' => $request->payment_method,
-                'note' => $request->note,
-                'tax_amount' => (float) Cart::instance('sale_return')->tax() * 100,
-                'discount_amount' => (float) Cart::instance('sale_return')->discount() * 100,
-            ]);
-
-            foreach (Cart::instance('sale_return')->content() as $cart_item) {
-                SaleReturnDetail::create([
-                    'sale_return_id' => $sale_return->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price * 100,
-                    'unit_price' => $cart_item->options->unit_price * 100,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                    'product_discount_amount' => $cart_item->options->product_discount * 100,
-                    'product_discount_type' => $cart_item->options->product_discount_type,
-                    'product_tax_amount' => $cart_item->options->product_tax * 100,
-                ]);
-
-                if ($request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity + $cart_item->qty,
-                    ]);
-                }
-            }
-
-            Cart::instance('sale_return')->destroy();
-        });
+        try {
+            $this->saleReturns->updateSaleReturn($sale_return, $request->all());
+        } catch (InsufficientStockException $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
 
         session()->flash('info', trans('salesreturn.sale-return-updated'));
 
