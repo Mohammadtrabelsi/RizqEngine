@@ -77,9 +77,6 @@
                                             (+) {{ format_currency($shipping) }}
                                         </span>
                                     </li>
-                                    @php
-                                        $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
-                                    @endphp
                                     <li class="list-group-item d-flex justify-content-between text-primary">
                                         <span class="fw-bold">{{ __('sale.grand-total') }}</span><span class="fw-bold">(=) {{ format_currency($total_with_shipping) }}</span>
                                     </li>

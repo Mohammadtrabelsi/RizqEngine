@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pos;
 
+use App\Services\CartPricingService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
@@ -200,29 +201,7 @@ class Checkout extends Component
 
     public function calculate($product)
     {
-        $price = 0;
-        $unit_price = 0;
-        $product_tax = 0;
-        $sub_total = 0;
-
-        if ($product['product_tax_type'] == 1) {
-            $price = $product['product_price'] + ($product['product_price'] * ($product['product_order_tax'] / 100));
-            $unit_price = $product['product_price'];
-            $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
-            $sub_total = $product['product_price'] + ($product['product_price'] * ($product['product_order_tax'] / 100));
-        } elseif ($product['product_tax_type'] == 2) {
-            $price = $product['product_price'];
-            $unit_price = $product['product_price'] - ($product['product_price'] * ($product['product_order_tax'] / 100));
-            $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
-            $sub_total = $product['product_price'];
-        } else {
-            $price = $product['product_price'];
-            $unit_price = $product['product_price'];
-            $product_tax = 0.00;
-            $sub_total = $product['product_price'];
-        }
-
-        return ['price' => $price, 'unit_price' => $unit_price, 'product_tax' => $product_tax, 'sub_total' => $sub_total];
+        return app(CartPricingService::class)->calculate($product);
     }
 
     public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount)

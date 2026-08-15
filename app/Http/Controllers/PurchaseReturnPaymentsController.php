@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\PurchaseReturn;
 use App\Models\PurchaseReturnPayment;
+use App\Services\PurchaseReturnService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class PurchaseReturnPaymentsController extends Controller
 {
+    public function __construct(private readonly PurchaseReturnService $purchaseReturns) {}
+
     public function index($purchase_return_id)
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
@@ -34,7 +36,7 @@ class PurchaseReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -43,34 +45,7 @@ class PurchaseReturnPaymentsController extends Controller
             'payment_method' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function () use ($request) {
-            PurchaseReturnPayment::create([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'amount' => $request->amount,
-                'note' => $request->note,
-                'purchase_return_id' => $request->purchase_return_id,
-                'payment_method' => $request->payment_method,
-            ]);
-
-            $purchase_return = PurchaseReturn::findOrFail($request->purchase_return_id);
-
-            $due_amount = $purchase_return->due_amount - $request->amount;
-
-            if ($due_amount == $purchase_return->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $purchase_return->update([
-                'paid_amount' => ($purchase_return->paid_amount + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status,
-            ]);
-        });
+        $this->purchaseReturns->addPayment($data);
 
         session()->flash('success', trans('purchasesreturn.purchase-return-payment-created'));
 
@@ -90,7 +65,7 @@ class PurchaseReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -99,34 +74,7 @@ class PurchaseReturnPaymentsController extends Controller
             'payment_method' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function () use ($request, $purchaseReturnPayment) {
-            $purchase_return = $purchaseReturnPayment->purchaseReturn;
-
-            $due_amount = ($purchase_return->due_amount + $purchaseReturnPayment->amount) - $request->amount;
-
-            if ($due_amount == $purchase_return->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $purchase_return->update([
-                'paid_amount' => (($purchase_return->paid_amount - $purchaseReturnPayment->amount) + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status,
-            ]);
-
-            $purchaseReturnPayment->update([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'amount' => $request->amount,
-                'note' => $request->note,
-                'purchase_return_id' => $request->purchase_return_id,
-                'payment_method' => $request->payment_method,
-            ]);
-        });
+        $this->purchaseReturns->updatePayment($purchaseReturnPayment, $data);
 
         session()->flash('info', trans('purchasesreturn.purchase-return-payment-updated'));
 

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\SalePayment;
+use App\Services\SaleService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class SalePaymentsController extends Controller
 {
+    public function __construct(private readonly SaleService $sales) {}
+
     public function index($sale_id)
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
@@ -34,7 +36,7 @@ class SalePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -43,34 +45,7 @@ class SalePaymentsController extends Controller
             'payment_method' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function () use ($request) {
-            SalePayment::create([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'amount' => $request->amount,
-                'note' => $request->note,
-                'sale_id' => $request->sale_id,
-                'payment_method' => $request->payment_method,
-            ]);
-
-            $sale = Sale::findOrFail($request->sale_id);
-
-            $due_amount = $sale->due_amount - $request->amount;
-
-            if ($due_amount == $sale->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $sale->update([
-                'paid_amount' => ($sale->paid_amount + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status,
-            ]);
-        });
+        $this->sales->addPayment($data);
 
         session()->flash('success', trans('sale.sale-payment-created'));
 
@@ -90,7 +65,7 @@ class SalePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -99,34 +74,7 @@ class SalePaymentsController extends Controller
             'payment_method' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function () use ($request, $salePayment) {
-            $sale = $salePayment->sale;
-
-            $due_amount = ($sale->due_amount + $salePayment->amount) - $request->amount;
-
-            if ($due_amount == $sale->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $sale->update([
-                'paid_amount' => (($sale->paid_amount - $salePayment->amount) + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status,
-            ]);
-
-            $salePayment->update([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'amount' => $request->amount,
-                'note' => $request->note,
-                'sale_id' => $request->sale_id,
-                'payment_method' => $request->payment_method,
-            ]);
-        });
+        $this->sales->updatePayment($salePayment, $data);
 
         session()->flash('info', trans('sale.sale-payment-updated'));
 

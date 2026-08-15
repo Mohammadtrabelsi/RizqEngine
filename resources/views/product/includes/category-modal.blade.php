@@ -1,7 +1,3 @@
-@php
-    $category_max_id = \App\Models\Category::max('id') + 1;
-    $category_code = "CA_" . str_pad($category_max_id, 2, '0', STR_PAD_LEFT)
-@endphp
 <div class="modal fade" id="categoryCreateModal" tabindex="-1" role="dialog" aria-labelledby="categoryCreateModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\SaleReturn;
 use App\Models\SaleReturnPayment;
+use App\Services\SaleReturnService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class SaleReturnPaymentsController extends Controller
 {
+    public function __construct(private readonly SaleReturnService $saleReturns) {}
+
     public function index($sale_return_id)
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
@@ -34,7 +36,7 @@ class SaleReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -43,34 +45,7 @@ class SaleReturnPaymentsController extends Controller
             'payment_method' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function () use ($request) {
-            SaleReturnPayment::create([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'amount' => $request->amount,
-                'note' => $request->note,
-                'sale_return_id' => $request->sale_return_id,
-                'payment_method' => $request->payment_method,
-            ]);
-
-            $sale_return = SaleReturn::findOrFail($request->sale_return_id);
-
-            $due_amount = $sale_return->due_amount - $request->amount;
-
-            if ($due_amount == $sale_return->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $sale_return->update([
-                'paid_amount' => ($sale_return->paid_amount + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status,
-            ]);
-        });
+        $this->saleReturns->addPayment($data);
 
         session()->flash('success', trans('salesreturn.sale-return-payment-created'));
 
@@ -90,7 +65,7 @@ class SaleReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -99,34 +74,7 @@ class SaleReturnPaymentsController extends Controller
             'payment_method' => 'required|string|max:255',
         ]);
 
-        DB::transaction(function () use ($request, $saleReturnPayment) {
-            $sale_return = $saleReturnPayment->saleReturn;
-
-            $due_amount = ($sale_return->due_amount + $saleReturnPayment->amount) - $request->amount;
-
-            if ($due_amount == $sale_return->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            $sale_return->update([
-                'paid_amount' => (($sale_return->paid_amount - $saleReturnPayment->amount) + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
-                'payment_status' => $payment_status,
-            ]);
-
-            $saleReturnPayment->update([
-                'date' => $request->date,
-                'reference' => $request->reference,
-                'amount' => $request->amount,
-                'note' => $request->note,
-                'sale_return_id' => $request->sale_return_id,
-                'payment_method' => $request->payment_method,
-            ]);
-        });
+        $this->saleReturns->updatePayment($saleReturnPayment, $data);
 
         session()->flash('info', trans('salesreturn.sale-return-payment-updated'));
 
