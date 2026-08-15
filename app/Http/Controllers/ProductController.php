@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Services\CategoryService;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -19,11 +20,13 @@ class ProductController extends Controller
 
     }
 
-    public function create()
+    public function create(CategoryService $categories)
     {
         abort_if(Gate::denies('create_products'), 403);
 
-        return view('product.products.create');
+        $category_code = $categories->nextCode();
+
+        return view('product.products.create', compact('category_code'));
     }
 
     public function store(StoreProductRequest $request)
