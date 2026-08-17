@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\InsufficientStockException;
 use App\Exceptions\StockInconsistencyException;
 use App\Http\Controllers\Controller;
 use App\Models\StockExit;
@@ -44,7 +45,7 @@ class StockExitController extends Controller
                 ],
                 $data['lines'],
             );
-        } catch (\App\Exceptions\InsufficientStockException $e) {
+        } catch (InsufficientStockException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
 

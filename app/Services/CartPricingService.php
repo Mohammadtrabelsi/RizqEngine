@@ -15,7 +15,7 @@ class CartPricingService
 {
     /**
      * @param  array<string, mixed>  $product  Must expose product_tax_type and product_order_tax.
-     * @param  float|int|null  $basePrice       Base price to tax; defaults to the product sale price.
+     * @param  float|int|null  $basePrice  Base price to tax; defaults to the product sale price.
      * @return array{price: float|int, unit_price: float|int, product_tax: float|int, sub_total: float|int}
      */
     public function calculate(array $product, float|int|null $basePrice = null): array
