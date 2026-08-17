@@ -33,11 +33,11 @@
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush mb-0">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0" x-data="{ open{{ $cart_item->id }}: false }">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             <span>{{ __('general.net-unit-price') }}</span>
                                             <span>
-                                                <span x-show="!open{{ $cart_item->id }}" @click="open{{ $cart_item->id }} = !open{{ $cart_item->id }}">{{ format_currency($cart_item->price) }}</span>
-                                                <div x-show="open{{ $cart_item->id }}">
+                                                <span class="js-price-summary" data-toggle="price-detail" role="button" tabindex="0">{{ format_currency($cart_item->price) }}</span>
+                                                <div class="js-price-detail" hidden>
                                                     @include('livewire.includes.product-cart-price')
                                                 </div>
                                             </span>

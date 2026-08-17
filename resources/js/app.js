@@ -1,12 +1,5 @@
 import './bootstrap.js';
 
-import Alpine from 'alpinejs';
-import collapse from '@alpinejs/collapse';
-
-Alpine.plugin(collapse);
-window.Alpine = Alpine;
-Alpine.start();
-
 const THEME_COOKIE = 'theme';
 
 function writeThemeCookie(value) {
@@ -64,6 +57,30 @@ document.addEventListener('click', (event) => {
     const willShow = !target.classList.contains('show');
     target.classList.toggle('show', willShow);
     trigger.setAttribute('aria-expanded', String(willShow));
+});
+
+// --- Price detail toggle (cart) --------------------------------------------
+// Replaces the former Alpine `x-data`/`x-show` toggle: clicking (or pressing
+// Enter/Space on) the net unit price reveals the price breakdown.
+function togglePriceDetail(summary) {
+    const wrapper = summary.closest('span');
+    if (!wrapper) return;
+    const detail = wrapper.querySelector('.js-price-detail');
+    if (!detail) return;
+    const willShow = detail.hasAttribute('hidden');
+    detail.toggleAttribute('hidden', !willShow);
+    summary.toggleAttribute('hidden', willShow);
+}
+document.addEventListener('click', (event) => {
+    const summary = event.target.closest('[data-toggle="price-detail"]');
+    if (summary) togglePriceDetail(summary);
+});
+document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const summary = event.target.closest('[data-toggle="price-detail"]');
+    if (!summary) return;
+    event.preventDefault();
+    togglePriceDetail(summary);
 });
 
 // --- Modals ----------------------------------------------------------------

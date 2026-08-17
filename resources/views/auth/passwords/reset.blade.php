@@ -75,7 +75,7 @@
 
 </div>
 
-<!-- Application JS (Alpine) -->
+<!-- Application JS -->
 @vite('resources/js/app.js')
 
 </body>
