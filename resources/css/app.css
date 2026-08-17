@@ -1145,6 +1145,62 @@ h4, .h4 { font-size: 20px; }
     }
 }
 
+/* =========================================================================
+ * TRIANGLE POS THEME — secondary (inline) navigation bar
+ * Shows the active primary section's items inline, replacing dropdowns.
+ * ====================================================================== */
+.app-subnav {
+    position: sticky;
+    top: 0;
+    z-index: 1019;
+    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg));
+    border-bottom: 1px solid var(--color-divider);
+}
+.app-subnav-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem 0;
+    overflow-x: auto;
+}
+.app-subnav-item { position: relative; }
+.app-subnav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.8rem;
+    line-height: 1;
+    color: var(--color-text);
+    white-space: nowrap;
+    text-decoration: none;
+    border: 1px solid transparent;
+    min-height: 38px;
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.app-subnav-link i { font-size: 0.9rem; color: var(--color-accent-700); }
+.app-subnav-link:hover,
+.app-subnav-link:focus {
+    color: var(--color-accent-700);
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    text-decoration: none;
+}
+.app-subnav-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+.app-subnav-link.is-active {
+    color: var(--color-bg);
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+.app-subnav-link.is-active i { color: var(--color-bg); }
+
 /* Compact header on small screens */
 @media (max-width: 767.98px) {
     .c-header { padding: 0.4rem 0.6rem; gap: 0.25rem 0.6rem; }
