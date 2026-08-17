@@ -26,10 +26,10 @@
  * destructive / refund / alert states.
  * ---------------------------------------------------------------------- */
 @theme {
-    --color-primary: #0088b0;
+    --color-primary: #4169e1;
     --color-secondary: #d7d3d3;
-    --color-success: #0088b0;
-    --color-info: #0088b0;
+    --color-success: #4169e1;
+    --color-info: #4169e1;
     --color-warning: #aa0b56;
     --color-danger: #d6006c;
     --color-light: #f8f4f4;
@@ -39,35 +39,35 @@
 }
 
 :root {
-    /* --- Broadsheet core --- */
-    --color-bg: #f3f2f2;      /* paper */
-    --color-surface: #eae9e9;
-    --color-text: #201e1d;    /* ink */
-    --color-accent: #0088b0;  /* cyan — all interactive */
+    /* --- Core --- */
+    --color-bg: #ffffff;      /* white */
+    --color-surface: #f4f6fb;
+    --color-text: #1a1c23;    /* ink */
+    --color-accent: #4169e1;  /* royal blue — all interactive */
     --color-accent-2: #d6006c; /* magenta — destructive / refund / low stock */
-    --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+    --color-divider: color-mix(in srgb, #1a1c23 12%, transparent);
 
-    /* --- Neutral ramp --- */
-    --color-neutral-100: #f8f4f4;
-    --color-neutral-200: #eae7e7;
-    --color-neutral-300: #d7d3d3;
-    --color-neutral-400: #bab6b6;
-    --color-neutral-500: #9b9797;
-    --color-neutral-600: #7d7979;
-    --color-neutral-700: #605d5d;
-    --color-neutral-800: #444141;
-    --color-neutral-900: #2d2b2b;
+    /* --- Neutral ramp (cool gray) --- */
+    --color-neutral-100: #f5f7fa;
+    --color-neutral-200: #e8ebf0;
+    --color-neutral-300: #d5dae2;
+    --color-neutral-400: #b3bac6;
+    --color-neutral-500: #929aa8;
+    --color-neutral-600: #727a89;
+    --color-neutral-700: #565d6b;
+    --color-neutral-800: #3a404b;
+    --color-neutral-900: #23272f;
 
-    /* --- Cyan ramp (accent) --- */
-    --color-accent-100: #e9f8ff;
-    --color-accent-200: #cbeeff;
-    --color-accent-300: #99e0ff;
-    --color-accent-400: #62c5ee;
-    --color-accent-500: #38a6cf;
-    --color-accent-600: #1186ac;
-    --color-accent-700: #006786;
-    --color-accent-800: #004961;
-    --color-accent-900: #0a303e;
+    /* --- Royal blue ramp (accent) --- */
+    --color-accent-100: #eaf0fd;
+    --color-accent-200: #cbdafb;
+    --color-accent-300: #a3bcf8;
+    --color-accent-400: #6f92f0;
+    --color-accent-500: #4169e1;
+    --color-accent-600: #2f52c8;
+    --color-accent-700: #2440a0;
+    --color-accent-800: #1b2f78;
+    --color-accent-900: #142252;
 
     /* --- Magenta ramp (second spot) --- */
     --color-magenta-100: #fff1f4;
@@ -91,7 +91,7 @@
     --dark: var(--color-text);
 
     --text: var(--color-text);
-    --muted: color-mix(in srgb, #201e1d 55%, transparent);
+    --muted: color-mix(in srgb, #1a1c23 55%, transparent);
     --border: var(--color-divider);
     --surface: var(--color-surface);
     --surface-2: var(--color-neutral-200);
@@ -1483,4 +1483,14 @@ a:hover { color: var(--color-accent-800); }
     .table-responsive .table { font-size: 15px; }
     .table-responsive .table th,
     .table-responsive .table td { padding: 0.85rem 0.75rem; }
+
+    /* Rein in the display type scale so headings fit narrow viewports. */
+    h1, .h1 { font-size: 30px; }
+    h2, .h2 { font-size: 25px; }
+    h3, .h3 { font-size: 21px; }
+    h4, .h4 { font-size: 18px; }
+
+    /* Comfortable gutters and no accidental horizontal scroll. */
+    .container-fluid { padding-right: 12px; padding-left: 12px; }
+    img { max-width: 100%; height: auto; }
 }
