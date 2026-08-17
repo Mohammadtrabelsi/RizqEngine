@@ -12,81 +12,189 @@
 
 @section('content')
     <div class="container-fluid mb-4">
-        <div class="row mb-3">
-            <div class="col-md-12">
-                {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
+        <!-- Product Header Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h2 class="mb-2">
+                                    <i class="bi bi-box-seam"></i> {{ $product->product_name }}
+                                </h2>
+                                <p class="mb-0"><small class="opacity-75">{{ __('product.product_code') }}: <strong>{{ $product->product_code }}</strong></small></p>
+                                <p class="mb-0"><small class="opacity-75">{{ __('product.category') }}: <strong>{{ $product->category->category_name }}</strong></small></p>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <div class="display-6 fw-bold">{{ format_currency($product->product_price) }}</div>
+                                <small class="opacity-75">Selling Price</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="row">
+            <!-- Main Content -->
             <div class="col-lg-9">
-                <div class="card h-100">
+                <!-- Basic Information -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-info-circle"></i> {{ __('product.product_details') }}</h5>
+                    </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.product_code') }}</span><span>{{ $product->product_code }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.barcode_symbology') }}</span><span>{{ $product->product_barcode_symbology }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.product_name') }}</span><span>{{ $product->product_name }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.category') }}</span><span>{{ $product->category->category_name }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.supplier') }}</span><span>{{ optional($product->supplier)->supplier_name ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.product_cost') }}</span><span>{{ format_currency($product->product_cost) }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.product_price') }}</span><span>{{ format_currency($product->product_price) }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.product_quantity') }}</span><span>{{ $product->product_quantity . ' ' . $product->product_unit }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.stock_worth') }}</span>
-                                <span>
-                                    COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
-                                    PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
-                                </span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.alert_quantity') }}</span><span>{{ $product->product_stock_alert }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.tax') }} (%)</span><span>{{ $product->product_order_tax ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.tax_type') }}</span>
-                                <span>
-                                    @if($product->product_tax_type == 1)
-                                        Exclusive
-                                    @elseif($product->product_tax_type == 2)
-                                        Inclusive
-                                    @else
-                                        N/A
-                                    @endif
-                                </span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">{{ __('product.note') }}</span><span>{{ $product->product_note ?? 'N/A' }}</span>
-                            </li>
-                        </ul>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom mb-2">
+                                    <label class="text-muted small"><i class="bi bi-upc-scan"></i> Barcode Symbology</label>
+                                    <span class="fw-bold">{{ $product->product_barcode_symbology }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom mb-2">
+                                    <label class="text-muted small"><i class="bi bi-truck"></i> Supplier</label>
+                                    <span class="fw-bold">{{ optional($product->supplier)->supplier_name ?? '<span class="text-muted">N/A</span>' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label class="text-muted small"><i class="bi bi-file-text"></i> Note</label>
+                                    <span class="fw-bold small">{{ $product->product_note ?? 'N/A' }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom mb-2">
+                                    <label class="text-muted small"><i class="bi bi-brightness-high"></i> Unit</label>
+                                    <span class="fw-bold">{{ $product->product_unit }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing & Cost -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-cash-coin"></i> Pricing & Cost</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-1">Cost Price</small>
+                                    <h4 class="mb-0 text-success">{{ format_currency($product->product_cost) }}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-1">Selling Price</small>
+                                    <h4 class="mb-0 text-primary">{{ format_currency($product->product_price) }}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="alert alert-info mb-0">
+                                    <i class="bi bi-percent"></i> Profit Margin: <strong>{{ number_format((($product->product_price - $product->product_cost) / $product->product_price * 100), 2) }}%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Information -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-box2"></i> Stock Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-1">Current Quantity</small>
+                                    <h4 class="mb-0">{{ $product->product_quantity }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-1">Alert Threshold</small>
+                                    <h4 class="mb-0">{{ $product->product_stock_alert }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="text-muted small d-block mb-2"><i class="bi bi-graph-up"></i> Stock Worth</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="p-3 bg-success bg-opacity-10 rounded">
+                                            <small class="text-muted d-block mb-1">By Cost Price</small>
+                                            <h5 class="mb-0 text-success">{{ format_currency($product->product_cost * $product->product_quantity) }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 bg-primary bg-opacity-10 rounded">
+                                            <small class="text-muted d-block mb-1">By Selling Price</small>
+                                            <h5 class="mb-0 text-primary">{{ format_currency($product->product_price * $product->product_quantity) }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tax Information -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-calculator"></i> Tax Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                                    <label class="text-muted small">Tax Rate</label>
+                                    <span class="fw-bold">{{ $product->product_order_tax ?? 'N/A' }}%</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                                    <label class="text-muted small">Tax Type</label>
+                                    <span class="badge bg-{{ $product->product_tax_type == 1 ? 'warning' : 'success' }}">
+                                        @if($product->product_tax_type == 1)
+                                            Exclusive
+                                        @elseif($product->product_tax_type == 2)
+                                            Inclusive
+                                        @else
+                                            N/A
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Sidebar -->
             <div class="col-lg-3">
-                <div class="card h-100">
-                    <div class="card-body">
+                <!-- Product Image -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-image"></i> Product Image</h5>
+                    </div>
+                    <div class="card-body text-center">
                         @forelse($product->getMedia('images') as $media)
-                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">
+                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-fluid rounded mb-2" style="max-height: 300px; object-fit: contain;">
                         @empty
-                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">
+                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid rounded mb-2" style="max-height: 300px; object-fit: contain;">
                         @endforelse
+                    </div>
+                </div>
+
+                <!-- Barcode Section -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-qr-code"></i> Barcode</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
+                        </div>
+                        <small class="text-muted d-block">{{ $product->product_code }}</small>
                     </div>
                 </div>
             </div>
