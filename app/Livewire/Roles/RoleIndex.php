@@ -34,6 +34,7 @@ class RoleIndex extends Component
     public function render()
     {
         $roles = Role::query()
+            ->with('permissions')
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%'.$this->search.'%');
             })
