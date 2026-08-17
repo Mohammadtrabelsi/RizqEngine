@@ -48,13 +48,13 @@
                 </li>
                 @endcan
 
-                @can('access_customers|access_suppliers')
+                @canany(['access_customers', 'access_suppliers'])
                 <li class="app-topnav-item {{ request()->routeIs('customers.*') || request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ auth()->user()->can('access_customers') ? route('customers.index') : route('suppliers.index') }}">
                         <i class="bi bi-people"></i> <span>{{ __('menu.parties') }}</span>
                     </a>
                 </li>
-                @endcan
+                @endcanany
 
                 @can('access_reports')
                 <li class="app-topnav-item {{ request()->routeIs('*-report.index') ? 'is-active' : '' }}">
@@ -80,13 +80,13 @@
                 </li>
                 @endcan
 
-                @can('access_currencies|access_settings')
+                @canany(['access_currencies', 'access_settings'])
                 <li class="app-topnav-item {{ request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ auth()->user()->can('access_settings') ? route('settings.index') : (auth()->user()->can('access_units') ? route('units.index') : route('currencies.index')) }}">
                         <i class="bi bi-gear"></i> <span>{{ __('menu.settings') }}</span>
                     </a>
                 </li>
-                @endcan
+                @endcanany
 
                 <li class="app-topnav-item {{ request()->routeIs('documentation.*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ route('documentation.index') }}">
