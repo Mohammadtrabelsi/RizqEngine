@@ -261,6 +261,35 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    // Devis → Bon de Commande → Commande → Facture workflow.
+
+    // Devis → Bon de Commande
+    Route::post('/quotations/{quotation}/convert-to-bon-commande', 'Convert\QuotationToBonCommandeController')
+        ->name('quotations.convert');
+
+    // Bon de Commande
+    Route::resource('bon-commandes', 'BonCommandeController')
+        ->parameters(['bon-commandes' => 'bonCommande'])
+        ->only(['index', 'show', 'edit', 'update', 'destroy']);
+    Route::post('/bon-commandes/{bonCommande}/confirm', 'BonCommandeController@confirm')->name('bon-commandes.confirm');
+    Route::post('/bon-commandes/{bonCommande}/cancel', 'BonCommandeController@cancel')->name('bon-commandes.cancel');
+
+    // Bon de Commande → Commande
+    Route::post('/bon-commandes/{bonCommande}/convert-to-commande', 'Convert\BonCommandeToCommandeController')
+        ->name('bon-commandes.convert');
+
+    // Commande
+    Route::resource('commandes', 'CommandeController')
+        ->parameters(['commandes' => 'commande'])
+        ->only(['index', 'show', 'destroy']);
+    Route::post('/commandes/{commande}/confirm', 'CommandeController@confirm')->name('commandes.confirm');
+
+    // Commande → Facture (Sale)
+    Route::post('/commandes/{commande}/generate-facture', 'Convert\CommandeToFactureController')
+        ->name('commandes.convert');
+});
+
+Route::group(['middleware' => 'auth'], function () {
     // User Profile
     Route::get('/user/profile', 'ProfileController@edit')->name('profile.edit');
     Route::patch('/user/profile', 'ProfileController@update')->name('profile.update');

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -34,6 +35,21 @@ class Quotation extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    /**
+     * The Bon de Commande this Devis was converted into (if any).
+     *
+     * @return HasOne<BonCommande, $this>
+     */
+    public function bonCommande(): HasOne
+    {
+        return $this->hasOne(BonCommande::class, 'quotation_id', 'id');
+    }
+
+    public function isConverted(): bool
+    {
+        return $this->bonCommande()->exists();
     }
 
     public static function boot()

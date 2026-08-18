@@ -40,6 +40,14 @@
                 </li>
                 @endcan
 
+                @canany(['access_bon_commandes', 'access_commandes'])
+                <li class="app-topnav-item {{ request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_bon_commandes') ? route('bon-commandes.index') : route('commandes.index') }}">
+                        <i class="bi bi-clipboard-check"></i> <span>{{ __('menu.orders') }}</span>
+                    </a>
+                </li>
+                @endcanany
+
                 @can('access_expenses')
                 <li class="app-topnav-item {{ request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ route('expenses.index') }}">
