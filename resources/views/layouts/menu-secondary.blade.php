@@ -9,13 +9,14 @@
     $inProducts = request()->routeIs('products.*') || request()->routeIs('product-categories.*') || request()->routeIs('barcode.print');
     $inTransactions = request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*');
     $inQuotations = request()->routeIs('quotations.*');
+    $inOrders = request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*');
     $inExpenses = request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*');
     $inParties = request()->routeIs('customers.*') || request()->routeIs('suppliers.*');
     $inReports = request()->routeIs('*-report.index');
     $inUsers = request()->routeIs('users*') || request()->routeIs('roles*');
     $inSettings = request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*');
 
-    $hasSecondary = $inProducts || $inTransactions || $inQuotations || $inExpenses || $inParties || $inReports || $inUsers || $inSettings;
+    $hasSecondary = $inProducts || $inTransactions || $inQuotations || $inOrders || $inExpenses || $inParties || $inReports || $inUsers || $inSettings;
 @endphp
 
 @if ($hasSecondary)
@@ -82,6 +83,15 @@
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('quotations.create') ? 'is-active' : '' }}" href="{{ route('quotations.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-quotation') }}</span></a></li>
                 @endcan
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('quotations.index') ? 'is-active' : '' }}" href="{{ route('quotations.index') }}"><i class="bi bi-journals"></i> <span>{{ __('menu.all-quotations') }}</span></a></li>
+            @endif
+
+            @if ($inOrders)
+                @can('access_bon_commandes')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('bon-commandes.*') ? 'is-active' : '' }}" href="{{ route('bon-commandes.index') }}"><i class="bi bi-clipboard-check"></i> <span>{{ __('menu.all-bon-commandes') }}</span></a></li>
+                @endcan
+                @can('access_commandes')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}"><i class="bi bi-bag-check"></i> <span>{{ __('menu.all-commandes') }}</span></a></li>
+                @endcan
             @endif
 
             @if ($inExpenses)
