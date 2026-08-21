@@ -57,10 +57,18 @@
                 @endcan
 
                 @canany(['access_customers', 'access_suppliers'])
-                <li class="app-topnav-item {{ request()->routeIs('customers.*') || request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_customers') ? route('customers.index') : route('suppliers.index') }}">
+                <li class="app-topnav-item dropdown {{ request()->routeIs('customers.*') || request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="bi bi-people"></i> <span>{{ __('menu.parties') }}</span>
                     </a>
+                    <div class="dropdown-menu">
+                        @can('access_customers')
+                            <a class="dropdown-item {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customers.index') }}"><i class="bi bi-people-fill"></i> <span>{{ __('menu.customers') }}</span></a>
+                        @endcan
+                        @can('access_suppliers')
+                            <a class="dropdown-item {{ request()->routeIs('suppliers.*') ? 'active' : '' }}" href="{{ route('suppliers.index') }}"><i class="bi bi-people-fill"></i> <span>{{ __('menu.suppliers') }}</span></a>
+                        @endcan
+                    </div>
                 </li>
                 @endcanany
 
