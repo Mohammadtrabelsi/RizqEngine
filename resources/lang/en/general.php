@@ -2,7 +2,10 @@
 
 return [
     'action' => 'Action',
+    'all-categories' => 'All categories',
     'all-products-above-alert-level' => 'All products above alert level',
+    'in-stock-only' => 'In stock only',
+    'out-of-stock' => 'Out of stock',
     'apply-filter' => 'Apply',
     'from-date' => 'From date',
     'reset' => 'Reset',
