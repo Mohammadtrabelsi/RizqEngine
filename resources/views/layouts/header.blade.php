@@ -79,41 +79,44 @@
                     <div style="max-height:320px; overflow-y:auto;">
                         @forelse($low_quantity_products as $product)
                             @php
-                                $isCritical = $product->product_quantity <= $product->product_stock_alert;
-                                $isLow      = !$isCritical && $product->product_quantity <= ($product->product_stock_alert * 2);
+                                $qty       = $product->product_quantity;
+                                $alert     = $product->product_stock_alert;
+                                $critical  = $qty <= $alert;
+                                $lowStock  = !$critical && $qty <= ($alert * 2);
+                                if ($critical) {
+                                    $bg  = 'background:#fef2f2;';
+                                    $clr = 'color:#dc2626;';
+                                    $ico = 'bi-exclamation-octagon-fill';
+                                } elseif ($lowStock) {
+                                    $bg  = 'background:#fffbeb;';
+                                    $clr = 'color:#d97706;';
+                                    $ico = 'bi-exclamation-triangle-fill';
+                                } else {
+                                    $bg  = 'background:#f0fdf4;';
+                                    $clr = 'color:#16a34a;';
+                                    $ico = 'bi-check-circle-fill';
+                                }
                             @endphp
                             <a href="{{ route('products.show', $product->id) }}"
-                               class="d-flex align-items-start gap-3 px-3 py-3 text-decoration-none"
-                               style="border-bottom:1px solid #f1f5f9; transition:background .12s ease; color:inherit;"
-                               onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                               class="notif-row d-flex align-items-start gap-3 px-3 py-3 text-decoration-none"
+                               style="border-bottom:1px solid #f1f5f9; color:inherit;">
 
-                                {{-- Severity icon --}}
                                 <div class="flex-shrink-0 d-flex align-items-center justify-content-center mt-1"
-                                     style="width:34px; height:34px; border-radius:8px;
-                                            background:{{ $isCritical ? '#fef2f2' : ($isLow ? '#fffbeb' : '#f0fdf4') }};
-                                            color:{{ $isCritical ? '#dc2626' : ($isLow ? '#d97706' : '#16a34a') }};">
-                                    <i class="bi {{ $isCritical ? 'bi-exclamation-octagon-fill' : ($isLow ? 'bi-exclamation-triangle-fill' : 'bi-check-circle-fill') }}"
-                                       style="font-size:0.95rem;"></i>
+                                     style="width:34px; height:34px; border-radius:8px; {{ $bg }} {{ $clr }}">
+                                    <i class="bi {{ $ico }}" style="font-size:0.95rem;"></i>
                                 </div>
 
-                                {{-- Content --}}
-                                <div class="flex-grow-1 min-width-0">
+                                <div class="flex-grow-1" style="min-width:0;">
                                     <div class="font-weight-bold text-slate-900 text-truncate"
-                                         style="font-size:0.83rem; line-height:1.3;">
-                                        {{ $product->product_name }}
-                                    </div>
+                                         style="font-size:0.83rem; line-height:1.3;">{{ $product->product_name }}</div>
                                     <div class="text-slate-500 mt-1" style="font-size:0.75rem;">
-                                        <span class="me-2">
-                                            <i class="bi bi-upc-scan me-1"></i>{{ $product->product_code }}
-                                        </span>
+                                        <i class="bi bi-upc-scan me-1"></i>{{ $product->product_code }}
                                     </div>
                                 </div>
 
-                                {{-- Stock badge --}}
                                 <div class="flex-shrink-0 text-end">
-                                    <span class="d-block font-weight-bold"
-                                          style="font-size:1rem; line-height:1; color:{{ $isCritical ? '#dc2626' : ($isLow ? '#d97706' : '#16a34a') }};">
-                                        {{ $product->product_quantity }}
+                                    <span class="d-block font-weight-bold" style="font-size:1rem; line-height:1; {{ $clr }}">
+                                        {{ $qty }}
                                     </span>
                                     <span class="text-slate-400" style="font-size:0.7rem;">{{ $product->product_unit }}</span>
                                 </div>

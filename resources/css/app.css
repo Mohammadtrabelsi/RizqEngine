@@ -865,6 +865,8 @@ h4, .h4 { font-size: 19px; }
     .dropdown-header { display: block; padding: 0.5rem 0.7rem; font-size: 80%; color: var(--muted); }
     /* Separators removed — menu items carry their own borders instead. */
     .dropdown-divider { display: none; }
+    /* Notification row hover */
+    .notif-row:hover { background: #f8fafc !important; }
 
     /* Ensure header-level dropdowns (notifications, user menu) appear
        above the horizontal top navigation which uses z-index:1020. */
