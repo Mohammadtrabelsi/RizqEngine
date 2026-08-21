@@ -2,9 +2,9 @@
 
 return [
     'account' => 'Compte',
-    'alerts' => '[TODO] Alerts',
-    'all-clear' => '[TODO] All Clear',
-    'all-good' => '[TODO] All good!',
+    'alerts' => 'Alertes',
+    'all-clear' => 'tout est bon',
+    'all-good' => 'tout est bon!',
     'are_you_sure' => 'Êtes-vous sûr ?',
     'back' => 'Retour',
     'create' => 'Créer',
@@ -14,7 +14,7 @@ return [
     'language' => 'Langue',
     'logout' => 'Déconnexion',
     'low-stock-alert' => 'Le produit « :code » est en faible quantité !',
-    'low-stock-alerts' => '[TODO] Low stock alerts',
+    'low-stock-alerts' => 'Alertes de stock faible',
     'no-notifications' => 'Aucune notification',
     'notifications' => 'Notifications',
     'online' => 'En ligne',
@@ -23,5 +23,5 @@ return [
     'search' => 'Rechercher',
     'update' => 'Mettre à jour',
     'version' => 'Version',
-    'view-all-products' => '[TODO] View all products',
+    'view-all-products' => 'Voir tout les produits',
 ];

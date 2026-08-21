@@ -36,7 +36,7 @@ return [
     'quantity' => 'الكمية',
     'reference' => 'المرجع',
     'shipping' => 'الشحن',
-    'status_' => '[TODO] Status ',
+    'status_' => 'الحالة',
     'status_cancelled' => 'ملغى',
     'status_confirmed' => 'مؤكد',
     'status_converted' => 'محوّل',

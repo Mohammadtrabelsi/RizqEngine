@@ -33,7 +33,7 @@ return [
     'quantity' => 'Quantité',
     'reference' => 'Référence',
     'shipping' => 'Livraison',
-    'status_' => '[TODO] Status ',
+    'status_' => 'Statut ',
     'status_confirmed' => 'Confirmée',
     'status_invoiced' => 'Facturée',
     'status_label' => 'Statut',

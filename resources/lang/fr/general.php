@@ -52,7 +52,7 @@ return [
     'sales-this-week' => 'Ventes cette semaine',
     'sales-today' => 'Ventes d\'aujourd\'hui',
     'search-product' => 'Rechercher un produit',
-    'see-features' => '[TODO] See-features',
+    'see-features' => 'Voir les caractéristiques',
     'shipping' => 'Livraison',
     'status' => 'Statut',
     'stock' => 'Stock',

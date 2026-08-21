@@ -8,7 +8,7 @@ return [
     'create_supplier' => 'إنشاء مورد',
     'edit_supplier' => 'تعديل المورد',
     'no_suppliers_found' => 'لم يتم العثور على موردين',
-    'profile_image' => '[TODO] Profile image',
+    'profile_image' => 'صورة المورد',
     'supplier_details' => 'تفاصيل المورد',
     'tax_identification_number' => 'رقم التعريف الضريبي (TIN)',
     'supplier_email' => 'البريد الإلكتروني للمورد',

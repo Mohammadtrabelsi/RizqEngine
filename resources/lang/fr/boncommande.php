@@ -36,7 +36,7 @@ return [
     'quantity' => 'Quantité',
     'reference' => 'Référence',
     'shipping' => 'Livraison',
-    'status_' => '[TODO] Status ',
+    'status_' => 'Statut',
     'status_cancelled' => 'Annulé',
     'status_confirmed' => 'Confirmé',
     'status_converted' => 'Converti',
