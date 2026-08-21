@@ -71,7 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+// Parties — customers & suppliers management (Livewire UI under the /parties prefix).
+// Route names are kept unprefixed (customers.*, suppliers.*) for backward compatibility.
+Route::group(['middleware' => 'auth', 'prefix' => 'parties'], function () {
     // Customers
     Route::resource('customers', 'CustomersController');
     // Suppliers
