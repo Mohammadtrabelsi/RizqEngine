@@ -78,32 +78,16 @@
                     {{-- Notification items --}}
                     <div style="max-height:320px; overflow-y:auto;">
                         @forelse($low_quantity_products as $product)
-                            @php
-                                $qty       = $product->product_quantity;
-                                $alert     = $product->product_stock_alert;
-                                $critical  = $qty <= $alert;
-                                $lowStock  = !$critical && $qty <= ($alert * 2);
-                                if ($critical):
-                                    $bg  = 'background:#fef2f2;';
-                                    $clr = 'color:#dc2626;';
-                                    $ico = 'bi-exclamation-octagon-fill';
-                                elseif ($lowStock):
-                                    $bg  = 'background:#fffbeb;';
-                                    $clr = 'color:#d97706;';
-                                    $ico = 'bi-exclamation-triangle-fill';
-                                else:
-                                    $bg  = 'background:#f0fdf4;';
-                                    $clr = 'color:#16a34a;';
-                                    $ico = 'bi-check-circle-fill';
-                                endif;
-                            @endphp
                             <a href="{{ route('products.show', $product->id) }}"
                                class="notif-row d-flex align-items-start gap-3 px-3 py-3 text-decoration-none"
                                style="border-bottom:1px solid #f1f5f9; color:inherit;">
 
                                 <div class="flex-shrink-0 d-flex align-items-center justify-content-center mt-1"
-                                     style="width:34px; height:34px; border-radius:8px; {{ $bg }} {{ $clr }}">
-                                    <i class="bi {{ $ico }}" style="font-size:0.95rem;"></i>
+                                     style="width:34px; height:34px; border-radius:8px;
+                                            {{ $product->product_quantity <= $product->product_stock_alert ? 'background:#fef2f2;' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'background:#fffbeb;' : 'background:#f0fdf4;') }}
+                                            {{ $product->product_quantity <= $product->product_stock_alert ? 'color:#dc2626;' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'color:#d97706;' : 'color:#16a34a;') }}">
+                                    <i class="bi {{ $product->product_quantity <= $product->product_stock_alert ? 'bi-exclamation-octagon-fill' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'bi-exclamation-triangle-fill' : 'bi-check-circle-fill') }}"
+                                       style="font-size:0.95rem;"></i>
                                 </div>
 
                                 <div class="flex-grow-1" style="min-width:0;">
@@ -115,8 +99,9 @@
                                 </div>
 
                                 <div class="flex-shrink-0 text-end">
-                                    <span class="d-block font-weight-bold" style="font-size:1rem; line-height:1; {{ $clr }}">
-                                        {{ $qty }}
+                                    <span class="d-block font-weight-bold"
+                                          style="font-size:1rem; line-height:1; {{ $product->product_quantity <= $product->product_stock_alert ? 'color:#dc2626;' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'color:#d97706;' : 'color:#16a34a;') }}">
+                                        {{ $product->product_quantity }}
                                     </span>
                                     <span class="text-slate-400" style="font-size:0.7rem;">{{ $product->product_unit }}</span>
                                 </div>
