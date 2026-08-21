@@ -1,4 +1,16 @@
-<div>
+@extends('layouts.app')
+
+@section('title', __('supplier.suppliers'))
+
+@section('breadcrumb')
+    <ol class="breadcrumb border-0 m-0">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('supplier.suppliers') }}</li>
+    </ol>
+@endsection
+
+@section('content')
+<div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 mb-3">
             <a href="{{ route('suppliers.create') }}" class="btn btn-primary">
@@ -48,3 +60,4 @@
         {{ $suppliers->links() }}
     </div>
 </div>
+@endsection
