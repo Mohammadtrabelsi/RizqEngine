@@ -19,7 +19,7 @@ class ProductCatalogService
      */
     public function findOrFail(int|string $id): Product
     {
-        return Product::findOrFail($id);
+        return Product::with('category')->findOrFail($id);
     }
 
     /**
@@ -56,8 +56,9 @@ class ProductCatalogService
      */
     public function paginateByCategory(int|string|null $categoryId, int $perPage): LengthAwarePaginator
     {
-        return Product::when($categoryId, function ($query) use ($categoryId) {
-            return $query->where('category_id', $categoryId);
-        })->paginate($perPage);
+        return Product::with('category')
+            ->when($categoryId, function ($query) use ($categoryId) {
+                return $query->where('category_id', $categoryId);
+            })->paginate($perPage);
     }
 }
