@@ -1070,7 +1070,7 @@ class LeBonPlanSeeder extends Seeder
                 [
                     'category_id' => $category->id,
                     'supplier_id' => $supplier?->id,
-                    'product_code' => 'LBP' . str_pad((string) $code, 5, '0', STR_PAD_LEFT),
+                    'product_code' => 'LBP'.str_pad((string) $code, 5, '0', STR_PAD_LEFT),
                     'product_barcode_symbology' => 'C128',
                     'product_quantity' => 0,
                     'product_cost' => $cost,
