@@ -2,7 +2,10 @@
 
 return [
     'action' => 'الإجراء',
+    'all-categories' => 'جميع الفئات',
     'all-products-above-alert-level' => 'جميع المنتجات أعلى من مستوى التنبيه',
+    'in-stock-only' => 'المتوفر في المخزون فقط',
+    'out-of-stock' => 'نفد من المخزون',
     'apply-filter' => 'تطبيق',
     'from-date' => 'من تاريخ',
     'reset' => 'إعادة تعيين',

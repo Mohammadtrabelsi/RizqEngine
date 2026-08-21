@@ -35,10 +35,15 @@ class ProductCatalogController extends Controller
         $data = $request->validate([
             'term' => 'required|string',
             'limit' => 'nullable|integer|min:1',
+            'category' => 'nullable|integer',
+            'in_stock_only' => 'nullable|boolean',
         ]);
 
         return response()->json(
-            $this->catalog->search($data['term'], (int) ($data['limit'] ?? 10))
+            $this->catalog->search($data['term'], (int) ($data['limit'] ?? 10), [
+                'category' => $data['category'] ?? null,
+                'in_stock_only' => (bool) ($data['in_stock_only'] ?? false),
+            ])
         );
     }
 
