@@ -1,4 +1,4 @@
-<div class="container-fluid d-flex align-items-center py-2 bg-white border-bottom">
+<div class="container-fluid d-flex align-items-center app-header-bar bg-white border-bottom">
     <button class="c-header-toggler app-nav-toggler d-lg-none mfe-auto btn btn-ghost text-slate-800" type="button"
             data-toggle="collapse" data-target="#app-topnav-collapse"
             aria-controls="app-topnav-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,7 +9,7 @@
     <a href="{{ route('home') }}" class="c-header-brand d-flex align-items-center mfs-3" style="text-decoration:none; gap:8px;">
         @if($headerSettings->client_logo || $headerSettings->client_name)
             @if($headerSettings->client_logo)
-                <img src="{{ \Illuminate\Support\Facades\Storage::url($headerSettings->client_logo) }}" alt="{{ $headerSettings->client_name ?? 'Logo' }}" style="max-height:32px; max-width:140px;">
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($headerSettings->client_logo) }}" alt="{{ $headerSettings->client_name ?? 'Logo' }}" style="max-height:26px; max-width:120px;">
             @endif
             @if($headerSettings->client_name)
                 <span class="font-weight-bold d-md-down-none text-slate-900" style="font-size:1.05rem;">{{ $headerSettings->client_name }}</span>
@@ -19,14 +19,14 @@
         @endif
     </a>
 
-    <ul class="c-header-nav ms-auto align-items-center gap-3">
+    <ul class="c-header-nav ms-auto align-items-center gap-2">
         <li class="c-header-nav-item d-flex align-items-center">
             @include('includes.language-switcher')
         </li>
 
         @can('create_pos_sales')
             <li class="c-header-nav-item">
-                <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
+                <a class="btn btn-primary btn-pill btn-sm {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
                     <i class="bi bi-cart mr-1"></i> {{ __('app.pos_system') }}
                 </a>
             </li>
