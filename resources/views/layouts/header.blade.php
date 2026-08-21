@@ -34,125 +34,155 @@
 
         @can('show_notifications')
             <li class="c-header-nav-item dropdown d-md-down-none">
+
                 {{-- Bell trigger --}}
-                <a class="c-header-nav-link position-relative d-flex align-items-center justify-content-center"
-                   style="width:38px; height:38px; border-radius:50%; background:#f1f5f9; color:#475569; transition:all .15s ease;"
+                <a id="notif-bell-btn"
+                   class="c-header-nav-link position-relative d-flex align-items-center justify-content-center notif-bell-btn"
                    data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-bell" style="font-size:1rem;"></i>
+                    <i class="bi bi-bell-fill"></i>
                     @if($low_quantity_products->count() > 0)
-                        <span class="position-absolute d-flex align-items-center justify-content-center"
-                              style="top:-2px; right:-2px; width:18px; height:18px; border-radius:50%; background:#ef4444; color:#fff; font-size:10px; font-weight:700; line-height:1; border:2px solid #fff;">
+                        <span class="notif-badge">
                             {{ $low_quantity_products->count() > 9 ? '9+' : $low_quantity_products->count() }}
                         </span>
                     @endif
                 </a>
 
                 {{-- Dropdown panel --}}
-                <div class="dropdown-menu dropdown-menu-right p-0 border-0 bg-white"
-                     style="width:340px; border-radius:12px; box-shadow:0 10px 40px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06); overflow:hidden;">
+                <div class="dropdown-menu dropdown-menu-right p-0 border-0 notif-panel">
 
-                    {{-- Panel header --}}
-                    <div class="d-flex align-items-center justify-content-between px-3 py-3"
-                         style="background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+                    {{-- Gradient header --}}
+                    <div class="notif-panel-header">
                         <div class="d-flex align-items-center gap-2">
-                            <div class="d-flex align-items-center justify-content-center"
-                                 style="width:30px; height:30px; border-radius:8px; background:#eef2ff;">
-                                <i class="bi bi-bell-fill" style="color:#4f46e5; font-size:0.85rem;"></i>
+                            <div class="notif-header-icon">
+                                <i class="bi bi-bell-fill"></i>
                             </div>
                             <div>
-                                <div class="font-weight-bold text-slate-900" style="font-size:0.88rem; line-height:1.2;">{{ __('app.notifications') }}</div>
-                                <div class="text-slate-500" style="font-size:0.75rem;">{{ __('app.low-stock-alerts') }}</div>
+                                <div class="notif-header-title">{{ __('app.notifications') }}</div>
+                                <div class="notif-header-sub">{{ __('app.low-stock-alerts') }}</div>
                             </div>
                         </div>
                         @if($low_quantity_products->count() > 0)
-                            <span style="background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; border-radius:20px; padding:2px 10px; font-size:11px; font-weight:600;">
+                            <span class="notif-count-badge notif-count-badge--alert">
                                 {{ $low_quantity_products->count() }} {{ __('app.alerts') }}
                             </span>
                         @else
-                            <span style="background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; border-radius:20px; padding:2px 10px; font-size:11px; font-weight:600;">
+                            <span class="notif-count-badge notif-count-badge--ok">
                                 {{ __('app.all-clear') }}
                             </span>
                         @endif
                     </div>
 
-                    {{-- Notification items --}}
-                    <div style="max-height:320px; overflow-y:auto;">
+                    {{-- Notification rows --}}
+                    <div class="notif-list">
                         @forelse($low_quantity_products as $product)
-                            <a href="{{ route('products.show', $product->id) }}"
-                               class="notif-row d-flex align-items-start gap-3 px-3 py-3 text-decoration-none"
-                               style="border-bottom:1px solid #f1f5f9; color:inherit;">
+                            <a href="{{ route('products.show', $product->id) }}" class="notif-item">
 
-                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center mt-1"
-                                     style="width:34px; height:34px; border-radius:8px;
-                                            {{ $product->product_quantity <= $product->product_stock_alert ? 'background:#fef2f2;' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'background:#fffbeb;' : 'background:#f0fdf4;') }}
-                                            {{ $product->product_quantity <= $product->product_stock_alert ? 'color:#dc2626;' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'color:#d97706;' : 'color:#16a34a;') }}">
-                                    <i class="bi {{ $product->product_quantity <= $product->product_stock_alert ? 'bi-exclamation-octagon-fill' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'bi-exclamation-triangle-fill' : 'bi-check-circle-fill') }}"
-                                       style="font-size:0.95rem;"></i>
+                                {{-- Severity icon --}}
+                                <div class="notif-icon
+                                    {{ $product->product_quantity <= $product->product_stock_alert
+                                        ? 'notif-icon--critical'
+                                        : ($product->product_quantity <= $product->product_stock_alert * 2
+                                            ? 'notif-icon--low'
+                                            : 'notif-icon--ok') }}">
+                                    <i class="bi {{ $product->product_quantity <= $product->product_stock_alert
+                                        ? 'bi-exclamation-octagon-fill'
+                                        : ($product->product_quantity <= $product->product_stock_alert * 2
+                                            ? 'bi-exclamation-triangle-fill'
+                                            : 'bi-check-circle-fill') }}"></i>
                                 </div>
 
-                                <div class="flex-grow-1" style="min-width:0;">
-                                    <div class="font-weight-bold text-slate-900 text-truncate"
-                                         style="font-size:0.83rem; line-height:1.3;">{{ $product->product_name }}</div>
-                                    <div class="text-slate-500 mt-1" style="font-size:0.75rem;">
-                                        <i class="bi bi-upc-scan me-1"></i>{{ $product->product_code }}
+                                {{-- Product info --}}
+                                <div class="notif-info">
+                                    <div class="notif-name">{{ $product->product_name }}</div>
+                                    <div class="notif-code">
+                                        <i class="bi bi-upc-scan"></i> {{ $product->product_code }}
                                     </div>
                                 </div>
 
-                                <div class="flex-shrink-0 text-end">
-                                    <span class="d-block font-weight-bold"
-                                          style="font-size:1rem; line-height:1; {{ $product->product_quantity <= $product->product_stock_alert ? 'color:#dc2626;' : ($product->product_quantity <= $product->product_stock_alert * 2 ? 'color:#d97706;' : 'color:#16a34a;') }}">
+                                {{-- Quantity --}}
+                                <div class="notif-qty">
+                                    <span class="notif-qty-num
+                                        {{ $product->product_quantity <= $product->product_stock_alert
+                                            ? 'notif-qty-num--critical'
+                                            : ($product->product_quantity <= $product->product_stock_alert * 2
+                                                ? 'notif-qty-num--low'
+                                                : 'notif-qty-num--ok') }}">
                                         {{ $product->product_quantity }}
                                     </span>
-                                    <span class="text-slate-400" style="font-size:0.7rem;">{{ $product->product_unit }}</span>
+                                    <span class="notif-unit">{{ $product->product_unit }}</span>
                                 </div>
+
                             </a>
                         @empty
-                            <div class="d-flex flex-column align-items-center justify-content-center py-5 text-center px-4">
-                                <div class="d-flex align-items-center justify-content-center mb-3"
-                                     style="width:52px; height:52px; border-radius:50%; background:#f0fdf4;">
-                                    <i class="bi bi-check-circle-fill" style="color:#22c55e; font-size:1.5rem;"></i>
+                            <div class="notif-empty">
+                                <div class="notif-empty-icon">
+                                    <i class="bi bi-check-circle-fill"></i>
                                 </div>
-                                <div class="font-weight-bold text-slate-900 mb-1" style="font-size:0.88rem;">{{ __('app.all-good') }}</div>
-                                <div class="text-slate-400" style="font-size:0.78rem;">{{ __('app.no-notifications') }}</div>
+                                <div class="notif-empty-title">{{ __('app.all-good') }}</div>
+                                <div class="notif-empty-sub">{{ __('app.no-notifications') }}</div>
                             </div>
                         @endforelse
                     </div>
 
-                    {{-- Panel footer --}}
+                    {{-- Footer --}}
                     @if($low_quantity_products->count() > 0)
-                        <div style="border-top:1px solid #e2e8f0; background:#f8fafc;">
-                            <a href="{{ route('products.index') }}"
-                               class="d-flex align-items-center justify-content-center gap-2 py-3 text-decoration-none font-weight-bold"
-                               style="font-size:0.82rem; color:#4f46e5; transition:color .15s ease;"
-                               onmouseover="this.style.color='#4338ca'" onmouseout="this.style.color='#4f46e5'">
+                        <div class="notif-footer">
+                            <a href="{{ route('products.index') }}" class="notif-footer-link">
                                 {{ __('app.view-all-products') }}
-                                <i class="bi bi-arrow-right" style="font-size:0.8rem;"></i>
+                                <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     @endif
+
                 </div>
             </li>
         @endcan
 
+        {{-- User dropdown --}}
         <li class="c-header-nav-item dropdown">
-            <a class="c-header-nav-link text-slate-900" data-toggle="dropdown" href="#" role="button"
-               aria-haspopup="true" aria-expanded="false">
-                <div class="c-avatar mr-2">
-                    <img class="c-avatar rounded-circle border" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image" style="width:36px; height:36px; object-fit:cover;">
+            <a class="user-trigger c-header-nav-link" data-toggle="dropdown" href="#"
+               role="button" aria-haspopup="true" aria-expanded="false">
+                <img class="user-trigger-avatar"
+                     src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
+                     alt="{{ auth()->user()->name }}">
+                <div class="user-trigger-info">
+                    <span class="user-trigger-name">{{ auth()->user()->name }}</span>
+                    <span class="user-trigger-status">
+                        <i class="bi bi-circle-fill"></i> {{ __('app.online') }}
+                    </span>
                 </div>
-                <div class="d-flex flex-column">
-                    <span class="font-weight-bold text-slate-900" style="font-size:14px;">{{ auth()->user()->name }}</span>
-                    <span class="text-slate-500" style="font-size:11px;">{{ __('app.online') }} <i class="bi bi-circle-fill text-success icon-fs-11px"></i></span>
-                </div>
+                <i class="bi bi-chevron-down user-trigger-caret"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-right p-1 shadow-lg border-0 bg-white">
-                <div class="dropdown-header border-bottom py-2 px-3 text-slate-500 bg-slate-50"><strong>{{ __('app.account') }}</strong></div>
-                <a class="dropdown-item py-2 px-3 text-slate-800" href="{{ route('profile.edit') }}">
-                    <i class="mfe-2 bi bi-person icon-fs-1-2rem text-indigo-600"></i> {{ __('app.profile') }}
-                </a>
-                <a id="logout-link" class="dropdown-item py-2 px-3 text-slate-800" href="#">
-                    <i class="mfe-2 bi bi-box-arrow-left icon-fs-1-2rem text-danger"></i> {{ __('app.logout') }}   
-                </a>
+
+            <div class="dropdown-menu dropdown-menu-right p-0 border-0 user-panel">
+
+                {{-- User card --}}
+                <div class="user-card">
+                    <img class="user-card-avatar"
+                         src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
+                         alt="{{ auth()->user()->name }}">
+                    <div>
+                        <div class="user-card-name">{{ auth()->user()->name }}</div>
+                        <div class="user-card-email">{{ auth()->user()->email }}</div>
+                    </div>
+                </div>
+
+                {{-- Menu items --}}
+                <div class="user-menu">
+                    <a class="user-menu-item" href="{{ route('profile.edit') }}">
+                        <span class="user-menu-item-icon user-menu-item-icon--indigo">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                        {{ __('app.profile') }}
+                    </a>
+                    <a id="logout-link" class="user-menu-item user-menu-item--danger" href="#">
+                        <span class="user-menu-item-icon user-menu-item-icon--red">
+                            <i class="bi bi-box-arrow-left"></i>
+                        </span>
+                        {{ __('app.logout') }}
+                    </a>
+                </div>
+
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
