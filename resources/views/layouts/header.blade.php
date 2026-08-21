@@ -83,19 +83,19 @@
                                 $alert     = $product->product_stock_alert;
                                 $critical  = $qty <= $alert;
                                 $lowStock  = !$critical && $qty <= ($alert * 2);
-                                if ($critical) {
+                                if ($critical):
                                     $bg  = 'background:#fef2f2;';
                                     $clr = 'color:#dc2626;';
                                     $ico = 'bi-exclamation-octagon-fill';
-                                } elseif ($lowStock) {
+                                elseif ($lowStock):
                                     $bg  = 'background:#fffbeb;';
                                     $clr = 'color:#d97706;';
                                     $ico = 'bi-exclamation-triangle-fill';
-                                } else {
+                                else:
                                     $bg  = 'background:#f0fdf4;';
                                     $clr = 'color:#16a34a;';
                                     $ico = 'bi-check-circle-fill';
-                                }
+                                endif;
                             @endphp
                             <a href="{{ route('products.show', $product->id) }}"
                                class="notif-row d-flex align-items-start gap-3 px-3 py-3 text-decoration-none"
