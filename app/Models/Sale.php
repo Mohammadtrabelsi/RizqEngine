@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -35,6 +36,16 @@ class Sale extends Model
     public function salePayments(): HasMany
     {
         return $this->hasMany(SalePayment::class, 'sale_id', 'id');
+    }
+
+    /**
+     * The Commande this Facture (Sale) was generated from (if any).
+     *
+     * @return BelongsTo<Commande, $this>
+     */
+    public function commande(): BelongsTo
+    {
+        return $this->belongsTo(Commande::class, 'commande_id', 'id');
     }
 
     public static function boot()
