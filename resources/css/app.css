@@ -1528,6 +1528,298 @@ div.dataTables_wrapper div.dataTables_length select { width: 65px; display: inli
 }
 
 /* =========================================================================
+ * TRIANGLE POS THEME — compact header bar, notification & user dropdowns
+ * ====================================================================== */
+
+/* --- Compact header bar --------------------------------------------------
+ * Minimizes the header's vertical footprint while keeping a 40px control
+ * height that stays comfortable to tap. */
+.app-header-bar {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    min-height: 52px;
+}
+.app-header-bar .c-header-brand { font-size: 1rem; }
+.app-header-bar .c-header-nav-link { padding: 0.35rem; }
+.app-header-bar .btn-sm { min-height: 34px; }
+@media (max-width: 767.98px) {
+    .app-header-bar { min-height: 48px; padding-top: 0.3rem; padding-bottom: 0.3rem; }
+}
+
+/* --- Notification bell trigger ------------------------------------------- */
+.notif-bell-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    color: #475569;
+    font-size: 1.05rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+.notif-bell-btn:hover,
+.notif-bell-btn[aria-expanded="true"] {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+.notif-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    background: #ef4444;
+    border: 2px solid var(--color-bg);
+    border-radius: 999px;
+}
+
+/* --- Notification panel --------------------------------------------------- */
+.notif-panel {
+    width: 340px;
+    max-width: calc(100vw - 24px);
+    margin-top: 0.5rem;
+    padding: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+.notif-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: #ffffff;
+}
+.notif-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 1rem;
+}
+.notif-header-title { font-weight: 600; font-size: 0.95rem; line-height: 1.1; }
+.notif-header-sub { font-size: 0.72rem; opacity: 0.85; margin-top: 2px; }
+.notif-count-badge {
+    flex-shrink: 0;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+.notif-count-badge--alert { background: rgba(255, 255, 255, 0.9); color: #b91c1c; }
+.notif-count-badge--ok { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+
+.notif-list { max-height: 340px; overflow-y: auto; }
+.notif-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.12s ease;
+}
+.notif-item:last-child { border-bottom: 0; }
+.notif-item:hover { background: #f8fafc; text-decoration: none; }
+.notif-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+}
+.notif-icon--critical { background: #fef2f2; color: #ef4444; }
+.notif-icon--low { background: #fffbeb; color: #f59e0b; }
+.notif-icon--ok { background: #ecfdf5; color: #10b981; }
+.notif-info { flex: 1; min-width: 0; }
+.notif-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.notif-code {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+.notif-qty { flex-shrink: 0; text-align: right; }
+.notif-qty-num { display: block; font-size: 0.95rem; font-weight: 700; line-height: 1; }
+.notif-qty-num--critical { color: #ef4444; }
+.notif-qty-num--low { color: #f59e0b; }
+.notif-qty-num--ok { color: #10b981; }
+.notif-unit { font-size: 0.68rem; color: #94a3b8; }
+
+.notif-empty { padding: 2rem 1rem; text-align: center; }
+.notif-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.6rem;
+    border-radius: 50%;
+    background: #ecfdf5;
+    color: #10b981;
+    font-size: 1.4rem;
+}
+.notif-empty-title { font-size: 0.9rem; font-weight: 600; color: #0f172a; }
+.notif-empty-sub { font-size: 0.78rem; color: #94a3b8; margin-top: 2px; }
+
+.notif-footer { padding: 0.6rem 1rem; border-top: 1px solid #f1f5f9; background: #f8fafc; }
+.notif-footer-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4f46e5;
+    text-decoration: none;
+}
+.notif-footer-link:hover { color: #4338ca; text-decoration: none; }
+
+/* --- User dropdown trigger ------------------------------------------------ */
+.user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s ease;
+}
+.user-trigger:hover,
+.user-trigger[aria-expanded="true"] { background: #f1f5f9; text-decoration: none; }
+.user-trigger-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+.user-trigger-info { display: flex; flex-direction: column; line-height: 1.15; }
+.user-trigger-name { font-size: 0.82rem; font-weight: 600; color: #0f172a; }
+.user-trigger-status {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.68rem;
+    color: #10b981;
+}
+.user-trigger-status i { font-size: 0.5rem; }
+.user-trigger-caret { font-size: 0.7rem; color: #94a3b8; }
+@media (max-width: 991.98px) {
+    .user-trigger-info { display: none; }
+    .user-trigger-caret { display: none; }
+}
+
+/* --- User dropdown panel -------------------------------------------------- */
+.user-panel {
+    width: 260px;
+    max-width: calc(100vw - 24px);
+    margin-top: 0.5rem;
+    padding: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
+    border-bottom: 1px solid #e2e8f0;
+}
+.user-card-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e2e8f0;
+    flex-shrink: 0;
+    border: 2px solid #ffffff;
+}
+.user-card-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 170px;
+}
+.user-card-email {
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 170px;
+}
+.user-menu { padding: 0.4rem; }
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #334155;
+    text-decoration: none;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+.user-menu-item:hover { background: #f8fafc; text-decoration: none; }
+.user-menu-item--danger { color: #ef4444; }
+.user-menu-item--danger:hover { background: #fef2f2; }
+.user-menu-item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.user-menu-item-icon--indigo { background: #eef2ff; color: #4f46e5; }
+.user-menu-item-icon--red { background: #fef2f2; color: #ef4444; }
+
+/* Keep header dropdowns right-aligned within the viewport on small screens */
+@media (max-width: 575.98px) {
+    .notif-panel, .user-panel { position: fixed; right: 12px; left: auto; }
+}
+
+/* =========================================================================
  * BROADSHEET — accessibility & touch targets
  * ====================================================================== */
 /* Every interactive element keeps a visible focus ring — never the
