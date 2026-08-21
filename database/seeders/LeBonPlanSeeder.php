@@ -59,7 +59,44 @@ class LeBonPlanSeeder extends Seeder
         }
 
         // Products imported from the spreadsheet: [name, cost, price, supplier].
-        $products = [
+        $products = self::productRows($suppliers);
+
+        $code = 1;
+        foreach ($products as [$name, $cost, $price, $supplier]) {
+            Product::firstOrCreate(
+                ['product_name' => $name],
+                [
+                    'category_id' => $category->id,
+                    'supplier_id' => $supplier?->id,
+                    'product_code' => 'LBP'.str_pad((string) $code, 5, '0', STR_PAD_LEFT),
+                    'product_barcode_symbology' => 'C128',
+                    'product_quantity' => 0,
+                    'product_cost' => $cost,
+                    'product_price' => $price,
+                    'product_unit' => 'PC',
+                    'product_stock_alert' => 1,
+                    'product_order_tax' => 0,
+                    'product_tax_type' => 1,
+                ]
+            );
+            $code++;
+        }
+    }
+
+    /**
+     * The product rows imported from the "Etat de Stock Le Bon Plan" spreadsheet.
+     *
+     * Each row is [name, cost, price, supplier]. The supplier column is resolved
+     * from the given map of supplier models (keyed by name); pass an empty map to
+     * obtain the rows without resolving suppliers (e.g. when only the canonical
+     * product names are needed).
+     *
+     * @param  array<string, \App\Models\Supplier>  $suppliers
+     * @return array<int, array{0: string, 1: int, 2: int, 3: \App\Models\Supplier|null}>
+     */
+    public static function productRows(array $suppliers = []): array
+    {
+        return [
             ['fixation toilette laterale k2s (monji)', 3, 3, $suppliers['Monji ben Hamed'] ?? null],
             ['vis 4x30 blanc (eech)', 0, 0, $suppliers['Euro Equipement'] ?? null],
             ['agraffe 10', 11, 11, null],
@@ -1062,26 +1099,5 @@ class LeBonPlanSeeder extends Seeder
             ['collection 3 pieces noir (ayedi sanitaire)', 18, 18, $suppliers['Ramzi Ayedi'] ?? null],
             ['collection 3 pieces beige (ayedi sanitaire)', 18, 18, $suppliers['Ramzi Ayedi'] ?? null],
         ];
-
-        $code = 1;
-        foreach ($products as [$name, $cost, $price, $supplier]) {
-            Product::firstOrCreate(
-                ['product_name' => $name],
-                [
-                    'category_id' => $category->id,
-                    'supplier_id' => $supplier?->id,
-                    'product_code' => 'LBP'.str_pad((string) $code, 5, '0', STR_PAD_LEFT),
-                    'product_barcode_symbology' => 'C128',
-                    'product_quantity' => 0,
-                    'product_cost' => $cost,
-                    'product_price' => $price,
-                    'product_unit' => 'PC',
-                    'product_stock_alert' => 1,
-                    'product_order_tax' => 0,
-                    'product_tax_type' => 1,
-                ]
-            );
-            $code++;
-        }
     }
 }
