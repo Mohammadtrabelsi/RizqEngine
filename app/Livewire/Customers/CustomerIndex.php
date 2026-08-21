@@ -17,6 +17,11 @@ class CustomerIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    public function mount(): void
+    {
+        abort_if(Gate::denies('access_customers'), 403);
+    }
+
     public function updatingSearch(): void
     {
         $this->resetPage();
