@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $products->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($products as $product)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="product-{{ $product->id }}">

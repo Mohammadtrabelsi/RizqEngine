@@ -25,6 +25,7 @@
             </div>
         </div>
 
+        <div class="d-flex justify-content-center mb-3">{{ $currencies->links() }}</div>
         <div class="row">
             @forelse($currencies as $currency)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="currency-{{ $currency->id }}">

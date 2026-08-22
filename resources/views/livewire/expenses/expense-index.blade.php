@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $expenses->links() }}</div>
     <div class="row">
         @forelse($expenses as $expense)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="expense-{{ $expense->id }}">
