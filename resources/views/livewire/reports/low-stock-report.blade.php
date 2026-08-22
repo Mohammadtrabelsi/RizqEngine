@@ -36,7 +36,7 @@
                         <input wire:model.live="only_out_of_stock" type="checkbox" class="form-check-input" id="only_out_of_stock">
                         <label class="form-check-label" for="only_out_of_stock">{{ __('report.show-only-out-of-stock-products') }}</label>
                     </div>
-                    <div class="d-flex justify-content-center mb-3">{{ $products->links() }}</div>
+                    <div class="d-flex justify-content-center mb-3">{{ $products->links('pagination::bootstrap-5') }}</div>
                     <div class="row">
                         @forelse($products as $product)
                             <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
@@ -63,7 +63,7 @@
                             <div class="col-12 text-center">{{ __('report.all-products-above-alert-level') }}</div>
                         @endforelse
                     </div>
-                    {{ $products->links() }}
+                    {{ $products->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>

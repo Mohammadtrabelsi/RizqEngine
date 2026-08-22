@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-center mb-3">{{ $units->links() }}</div>
+        <div class="d-flex justify-content-center mb-3">{{ $units->links('pagination::bootstrap-5') }}</div>
         <div class="row">
             @forelse($units as $unit)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="unit-{{ $unit->id }}">
@@ -48,7 +48,7 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            {{ $units->links() }}
+            {{ $units->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection

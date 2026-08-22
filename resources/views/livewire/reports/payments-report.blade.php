@@ -77,7 +77,7 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center mb-3">{{ $information->links() }}</div>
+                        <div class="d-flex justify-content-center mb-3">{{ $information->links('pagination::bootstrap-5') }}</div>
                         <div class="row">
                             @forelse($information as $data)
                                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
@@ -111,7 +111,7 @@
                             @endforelse
                         </div>
                         <div @class(['mt-3' => $information->hasPages()])>
-                            {{ $information->links() }}
+                            {{ $information->links('pagination::bootstrap-5') }}
                         </div>
                     </div>
                 </div>

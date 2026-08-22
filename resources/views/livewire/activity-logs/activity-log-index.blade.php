@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-center mb-3">{{ $activities->links() }}</div>
+    <div class="d-flex justify-content-center mb-3">{{ $activities->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($activities as $activity)
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="activity-{{ $activity->id }}">
@@ -63,6 +63,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $activities->links() }}
+        {{ $activities->links('pagination::bootstrap-5') }}
     </div>
 </div>
