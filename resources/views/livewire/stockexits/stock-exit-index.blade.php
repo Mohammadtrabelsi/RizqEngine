@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-center mb-3">{{ $stockExits->links() }}</div>
+    <div class="d-flex justify-content-center mb-3">{{ $stockExits->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($stockExits as $stockExit)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="stock-exit-{{ $stockExit->id }}">
@@ -56,6 +56,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $stockExits->links() }}
+        {{ $stockExits->links('pagination::bootstrap-5') }}
     </div>
 </div>
