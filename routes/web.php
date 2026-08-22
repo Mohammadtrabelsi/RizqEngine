@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Parties — customers & suppliers management (full-page Livewire UI under the /parties prefix).
 // Route names are kept unprefixed (customers.*, suppliers.*) for backward compatibility.
-Route::group(['middleware' => 'auth', 'prefix' => 'parties'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'parties', 'namespace' => '\\'], function () {
     // Customers (full-page Livewire components)
     Route::get('customers', CustomerIndex::class)->name('customers.index');
     Route::get('customers/create', CustomerForm::class)->name('customers.create');
