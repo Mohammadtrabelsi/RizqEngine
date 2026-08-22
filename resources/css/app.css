@@ -1834,8 +1834,6 @@ button:focus-visible,
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
 }
-a:not(.btn):not([class*="btn-"]) { color: var(--color-accent-700); }
-a:not(.btn):not([class*="btn-"]):hover { color: var(--color-accent-800); }
 
 /* Remove horizontal rule / separator lines — structure now comes from the
    borders on buttons and menu items rather than dividing rules. */
