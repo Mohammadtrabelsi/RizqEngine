@@ -22,6 +22,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $suppliers->links() }}</div>
     <div class="row">
         @forelse($suppliers as $supplier)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="supplier-{{ $supplier->id }}">

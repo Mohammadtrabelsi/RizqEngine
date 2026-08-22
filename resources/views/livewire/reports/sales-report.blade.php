@@ -81,6 +81,7 @@
                             <span class="sr-only">{{ __('report.loading') }}</span>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center mb-3">{{ $sales->links() }}</div>
                     <div class="row">
                         @forelse($sales as $sale)
                             <div class="col-xl-4 col-lg-6 mb-4">

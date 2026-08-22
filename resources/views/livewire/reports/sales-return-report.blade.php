@@ -81,6 +81,7 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center mb-3">{{ $sale_returns->links() }}</div>
                     <div class="row">
                         @forelse($sale_returns as $sale_return)
                             <div class="col-xl-4 col-lg-6 mb-4">

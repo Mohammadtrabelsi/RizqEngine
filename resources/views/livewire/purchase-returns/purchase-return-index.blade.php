@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $purchase_returns->links() }}</div>
     <div class="row">
         @forelse($purchase_returns as $purchase_return)
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="purchase-return-{{ $purchase_return->id }}">

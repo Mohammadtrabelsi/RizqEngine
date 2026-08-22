@@ -61,6 +61,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <div class="table-responsive">
+                        <div class="d-flex justify-content-center mb-3">{{ $movements->links() }}</div>
                         <div class="row">
                             @forelse($movements as $movement)
                                 <div class="col-xl-4 col-lg-6 mb-4">

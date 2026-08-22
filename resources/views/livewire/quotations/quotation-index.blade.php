@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $quotations->links() }}</div>
     <div class="row">
         @forelse($quotations as $quotation)
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="quotation-{{ $quotation->id }}">

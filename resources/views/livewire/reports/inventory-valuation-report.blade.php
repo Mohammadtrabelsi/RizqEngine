@@ -72,6 +72,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
+                        <div class="d-flex justify-content-center mb-3">{{ $products->links() }}</div>
                         <div class="row">
                             @forelse($products as $product)
                                 <div class="col-xl-4 col-lg-6 mb-4">

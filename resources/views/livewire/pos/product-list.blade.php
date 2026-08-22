@@ -2,6 +2,7 @@
     <div class="card border-0 shadow-sm mt-3">
         <div class="card-body">
             <livewire:pos.filter :categories="$categories"/>
+            <div class="d-flex justify-content-center mb-3">{{ $products->links() }}</div>
             <div class="row position-relative">
                 <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
                     <div class="spinner-border text-primary" role="status">
