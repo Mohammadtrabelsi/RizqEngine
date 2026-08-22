@@ -3,6 +3,12 @@
 use App\Http\Middleware\SetLocale;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
+use App\Livewire\Customers\CustomerForm;
+use App\Livewire\Customers\CustomerIndex;
+use App\Livewire\Customers\CustomerShow;
+use App\Livewire\Suppliers\SupplierForm;
+use App\Livewire\Suppliers\SupplierIndex;
+use App\Livewire\Suppliers\SupplierShow;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Models\Customer;
@@ -71,13 +77,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
 
-// Parties — customers & suppliers management (Livewire UI under the /parties prefix).
+// Parties — customers & suppliers management (full-page Livewire UI under the /parties prefix).
 // Route names are kept unprefixed (customers.*, suppliers.*) for backward compatibility.
 Route::group(['middleware' => 'auth', 'prefix' => 'parties'], function () {
-    // Customers
-    Route::resource('customers', 'CustomersController');
-    // Suppliers
-    Route::resource('suppliers', 'SuppliersController');
+    // Customers (full-page Livewire components)
+    Route::get('customers', CustomerIndex::class)->name('customers.index');
+    Route::get('customers/create', CustomerForm::class)->name('customers.create');
+    Route::get('customers/{customer}', CustomerShow::class)->name('customers.show');
+    Route::get('customers/{customer}/edit', CustomerForm::class)->name('customers.edit');
+
+    // Suppliers (full-page Livewire components)
+    Route::get('suppliers', SupplierIndex::class)->name('suppliers.index');
+    Route::get('suppliers/create', SupplierForm::class)->name('suppliers.create');
+    Route::get('suppliers/{supplier}', SupplierShow::class)->name('suppliers.show');
+    Route::get('suppliers/{supplier}/edit', SupplierForm::class)->name('suppliers.edit');
 });
 
 Route::group(['middleware' => 'auth'], function () {

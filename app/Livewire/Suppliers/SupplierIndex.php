@@ -17,6 +17,11 @@ class SupplierIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    public function mount(): void
+    {
+        abort_if(Gate::denies('access_suppliers'), 403);
+    }
+
     public function updatingSearch(): void
     {
         $this->resetPage();

@@ -179,7 +179,7 @@
 @endsection
 
 @section('third_party_scripts')
-    <script src="{{ asset('js/dropzone.js') }}"></script>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 @endsection
 
 @push('page_scripts')
