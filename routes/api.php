@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CurrencyController;
-use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ExpenseCategoryController;
 use App\Http\Controllers\Api\ProductCatalogController;
 use App\Http\Controllers\Api\Reports\InventoryValuationController;
@@ -17,7 +16,6 @@ use App\Http\Controllers\Api\Reports\SalesReturnReportController;
 use App\Http\Controllers\Api\Reports\StockMovementController;
 use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\StockExitController;
-use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\UnitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,12 +41,6 @@ Route::middleware('auth:api')->group(function () {
 
     // CurrencyService
     Route::apiResource('currencies', CurrencyController::class)->except('show');
-
-    // CustomerService
-    Route::apiResource('customers', CustomerController::class);
-
-    // SupplierService
-    Route::apiResource('suppliers', SupplierController::class);
 
     // UnitService
     Route::apiResource('units', UnitController::class)->except('show');
