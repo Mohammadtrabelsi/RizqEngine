@@ -56,13 +56,21 @@
                 </li>
                 @endcan
 
-                @canany(['access_customers', 'access_suppliers'])
-                <li class="app-topnav-item {{ request()->routeIs('customers.*') || request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_customers') ? route('customers.index') : route('suppliers.index') }}">
-                        <i class="bi bi-people"></i> <span>{{ __('menu.parties') }}</span>
+                @can('access_customers')
+                <li class="app-topnav-item {{ request()->routeIs('customers.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('customers.index') }}">
+                        <i class="bi bi-people"></i> <span>{{ __('menu.customers') }}</span>
                     </a>
                 </li>
-                @endcanany
+                @endcan
+
+                @can('access_suppliers')
+                <li class="app-topnav-item {{ request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('suppliers.index') }}">
+                        <i class="bi bi-people"></i> <span>{{ __('menu.suppliers') }}</span>
+                    </a>
+                </li>
+                @endcan
 
                 @can('access_reports')
                 <li class="app-topnav-item {{ request()->routeIs('*-report.index') ? 'is-active' : '' }}">
