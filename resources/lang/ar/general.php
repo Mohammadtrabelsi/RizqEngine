@@ -37,6 +37,7 @@ return [
     'please-search-and-select-products' => 'يرجى البحث وتحديد المنتجات',
     'privacy' => 'الخصوصية',
     'product' => 'المنتج',
+    'products' => 'المنتجات',
     'quantity' => 'الكمية',
     'ready-to-run-your-store' => 'جاهز لإدارة متجرك؟',
     'receivables' => 'الذمم المدينة',

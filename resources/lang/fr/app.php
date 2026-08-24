@@ -24,4 +24,8 @@ return [
     'update' => 'Mettre à jour',
     'version' => 'Version',
     'view-all-products' => 'Voir tout les produits',
+    'notif-desc-out' => 'En rupture de stock — à réapprovisionner au plus vite.',
+    'notif-desc-critical' => 'Stock critique : :qty :unit restant(s) (alerte à :alert). Réapprovisionnez maintenant.',
+    'notif-desc-low' => 'Stock faible : seulement :qty :unit restant(s). Pensez à réapprovisionner.',
+    'notif-desc-ok' => 'Stock suffisant : :qty :unit disponible(s).',
 ];

@@ -27,6 +27,16 @@
         @forelse($suppliers as $supplier)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="supplier-{{ $supplier->id }}">
                 <div class="card h-100">
+                    <div class="position-relative overflow-hidden rounded-top" style="height: 160px; background: #f8f9fa;">
+                        @php($supplierImage = $supplier->getFirstMediaUrl('images'))
+                        @if ($supplierImage)
+                            <img src="{{ $supplierImage }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $supplier->supplier_name }}">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center w-100 h-100 text-muted">
+                                <i class="bi bi-person-circle" style="font-size: 3.5rem;"></i>
+                            </div>
+                        @endif
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $supplier->supplier_name }}</h5>
                         <ul class="list-group list-group-flush mb-3">
@@ -38,13 +48,13 @@
                         </ul>
                         <div class="btn-group">
                             @can('edit_suppliers')
-                                <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_suppliers')
-                                <a href="{{ route('suppliers.show', $supplier->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('suppliers.show', $supplier->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
                             @endcan
                             @can('delete_suppliers')
-                                <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $supplier->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $supplier->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
                             @endcan
                         </div>
                     </div>
