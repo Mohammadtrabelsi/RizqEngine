@@ -1,45 +1,40 @@
-<div class="btn-group dropdown inline-action-menu">
-    <button type="button" class="btn btn-ghost-primary rounded" data-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-three-dots-vertical"></i>
-    </button>
-    <div class="dropdown-menu">
-        <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}" class="dropdown-item">
-            <i class="bi bi-file-earmark-pdf mr-2 text-success" style="line-height: 1;"></i> POS Invoice
+<div class="d-flex flex-wrap justify-content-center gap-1 inline-action-menu">
+    <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}" class="btn btn-sm btn-ghost-success rounded" title="POS Invoice">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </a>
+    @can('access_sale_payments')
+        <a href="{{ route('sale-payments.index', $data->id) }}" class="btn btn-sm btn-ghost-warning rounded" title="Show Payments">
+            <i class="bi bi-cash-coin"></i>
         </a>
-        @can('access_sale_payments')
-            <a href="{{ route('sale-payments.index', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-cash-coin mr-2 text-warning" style="line-height: 1;"></i> Show Payments
-            </a>
-        @endcan
-        @can('access_sale_payments')
-            @if($data->due_amount > 0)
-            <a href="{{ route('sale-payments.create', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-plus-circle-dotted mr-2 text-success" style="line-height: 1;"></i> Add Payment
-            </a>
-            @endif
-        @endcan
-        @can('edit_sales')
-            <a href="{{ route('sales.edit', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-pencil mr-2 text-primary" style="line-height: 1;"></i> Edit
-            </a>
-        @endcan
-        @can('show_sales')
-            <a href="{{ route('sales.show', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-eye mr-2 text-info" style="line-height: 1;"></i> Details
-            </a>
-        @endcan
-        @can('delete_sales')
-            <button id="delete" class="dropdown-item" onclick="
-                event.preventDefault();
-                {
-                document.getElementById('destroy{{ $data->id }}').submit()
-                }">
-                <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> Delete
-                <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sales.destroy', $data->id) }}" method="POST">
-                    @csrf
-                    @method('delete')
-                </form>
-            </button>
-        @endcan
-    </div>
+    @endcan
+    @can('access_sale_payments')
+        @if($data->due_amount > 0)
+        <a href="{{ route('sale-payments.create', $data->id) }}" class="btn btn-sm btn-ghost-success rounded" title="Add Payment">
+            <i class="bi bi-plus-circle-dotted"></i>
+        </a>
+        @endif
+    @endcan
+    @can('edit_sales')
+        <a href="{{ route('sales.edit', $data->id) }}" class="btn btn-sm btn-ghost-primary rounded" title="Edit">
+            <i class="bi bi-pencil"></i>
+        </a>
+    @endcan
+    @can('show_sales')
+        <a href="{{ route('sales.show', $data->id) }}" class="btn btn-sm btn-ghost-info rounded" title="Details">
+            <i class="bi bi-eye"></i>
+        </a>
+    @endcan
+    @can('delete_sales')
+        <button id="delete" class="btn btn-sm btn-ghost-danger rounded" title="Delete" onclick="
+            event.preventDefault();
+            {
+            document.getElementById('destroy{{ $data->id }}').submit()
+            }">
+            <i class="bi bi-trash"></i>
+            <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sales.destroy', $data->id) }}" method="POST">
+                @csrf
+                @method('delete')
+            </form>
+        </button>
+    @endcan
 </div>
