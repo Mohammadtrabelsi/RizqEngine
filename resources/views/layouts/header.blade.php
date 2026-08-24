@@ -97,6 +97,17 @@
                                     <div class="notif-code">
                                         <i class="bi bi-upc-scan"></i> {{ $product->product_code }}
                                     </div>
+                                    <div class="notif-desc">
+                                        @if($product->product_quantity <= 0)
+                                            {{ __('app.notif-desc-out') }}
+                                        @elseif($product->product_quantity <= $product->product_stock_alert)
+                                            {{ __('app.notif-desc-critical', ['qty' => $product->product_quantity, 'unit' => $product->product_unit, 'alert' => $product->product_stock_alert]) }}
+                                        @elseif($product->product_quantity <= $product->product_stock_alert * 2)
+                                            {{ __('app.notif-desc-low', ['qty' => $product->product_quantity, 'unit' => $product->product_unit]) }}
+                                        @else
+                                            {{ __('app.notif-desc-ok', ['qty' => $product->product_quantity, 'unit' => $product->product_unit]) }}
+                                        @endif
+                                    </div>
                                 </div>
 
                                 {{-- Quantity --}}
