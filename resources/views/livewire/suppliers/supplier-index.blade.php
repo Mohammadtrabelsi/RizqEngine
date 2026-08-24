@@ -27,6 +27,16 @@
         @forelse($suppliers as $supplier)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="supplier-{{ $supplier->id }}">
                 <div class="card h-100">
+                    <div class="position-relative overflow-hidden rounded-top" style="height: 160px; background: #f8f9fa;">
+                        @php($supplierImage = $supplier->getFirstMediaUrl('images'))
+                        @if ($supplierImage)
+                            <img src="{{ $supplierImage }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $supplier->supplier_name }}">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center w-100 h-100 text-muted">
+                                <i class="bi bi-person-circle" style="font-size: 3.5rem;"></i>
+                            </div>
+                        @endif
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $supplier->supplier_name }}</h5>
                         <ul class="list-group list-group-flush mb-3">

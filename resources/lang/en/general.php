@@ -37,6 +37,7 @@ return [
     'please-search-and-select-products' => 'Please search and select products',
     'privacy' => 'Privacy',
     'product' => 'Product',
+    'products' => 'Products',
     'quantity' => 'Quantity',
     'ready-to-run-your-store' => 'Ready to run your store?',
     'receivables' => 'Receivables',

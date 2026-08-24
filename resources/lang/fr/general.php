@@ -37,6 +37,7 @@ return [
     'please-search-and-select-products' => 'Veuillez rechercher et sélectionner des produits',
     'privacy' => 'Confidentialité',
     'product' => 'Produit',
+    'products' => 'Produits',
     'quantity' => 'Quantité',
     'ready-to-run-your-store' => 'Prêt à gérer votre magasin ?',
     'receivables' => 'Créances',

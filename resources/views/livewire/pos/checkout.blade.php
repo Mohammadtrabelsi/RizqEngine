@@ -30,12 +30,16 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <div class="row">
-                        @if($cart_items->isNotEmpty())
-                            @foreach($cart_items as $cart_item)
-                                <div class="col-lg-6 mb-3">
-                                    <div class="card h-100">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">{{ __('general.products') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @if($cart_items->isNotEmpty())
+                                @foreach($cart_items as $cart_item)
+                                    <div class="col-lg-12 mb-3">
+                                        <div class="card h-100">
                                         <div class="card-header d-flex justify-content-between align-items-start">
                                             <div>
                                                 {{ $cart_item->name }} <br>
@@ -65,7 +69,8 @@
                             <div class="col-12 text-center">
                                 <span class="text-danger">Please search &amp; select products!</span>
                             </div>
-                        @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
