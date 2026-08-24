@@ -1,15 +1,15 @@
 @can('edit_adjustments')
-    <a href="{{ route('adjustments.edit', $data->id) }}" class="btn btn-info btn-sm">
+    <a href="{{ route('adjustments.edit', $data->id) }}" class="btn btn-outline-info btn-sm">
         <i class="bi bi-pencil"></i>
     </a>
 @endcan
 @can('show_adjustments')
-    <a href="{{ route('adjustments.show', $data->id) }}" class="btn btn-primary btn-sm">
+    <a href="{{ route('adjustments.show', $data->id) }}" class="btn btn-outline-primary btn-sm">
         <i class="bi bi-eye"></i>
     </a>
 @endcan
 @can('delete_adjustments')
-    <button id="delete" class="btn btn-danger btn-sm" onclick="
+    <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         {
         document.getElementById('destroy{{ $data->id }}').submit()
