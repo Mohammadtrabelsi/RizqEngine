@@ -21,6 +21,7 @@ return [
     'pos_system' => 'Système de point de vente',
     'profile' => 'Profil',
     'search' => 'Rechercher',
+    'all' => 'Tous',
     'update' => 'Mettre à jour',
     'version' => 'Version',
     'view-all-products' => 'Voir tout les produits',

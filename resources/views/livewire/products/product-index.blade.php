@@ -1,11 +1,18 @@
 <div>
-    <div class="row">
-        <div class="col-12 col-md-6 mb-3">
+    <div class="row align-items-center">
+        <div class="col-12 col-md-4 mb-3">
             <a href="{{ route('products.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
             </a>
         </div>
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-4 mb-3">
+            <select wire:model.live="stockStatus" class="form-select" aria-label="Filter by stock status">
+                @foreach($this->stockStatusOptions as $value => $label)
+                    <option value="{{ $value }}">{{ $label }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
             <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">
         </div>
     </div>
@@ -21,19 +28,10 @@
                              class="w-100 h-100" style="object-fit: cover;" alt="{{ $product->product_name }}">
                         <!-- Stock Status Badge -->
                         <div class="position-absolute top-0 end-0 m-2">
-                            @if($product->product_quantity <= $product->product_stock_alert)
-                                <span class="badge bg-danger">
-                                    <i class="bi bi-exclamation-triangle"></i> Low Stock
-                                </span>
-                            @elseif($product->product_quantity <= ($product->product_stock_alert * 2))
-                                <span class="badge bg-warning">
-                                    <i class="bi bi-exclamation-circle"></i> Medium
-                                </span>
-                            @else
-                                <span class="badge bg-success">
-                                    <i class="bi bi-check-circle"></i> In Stock
-                                </span>
-                            @endif
+                            @php($status = $product->stock_status)
+                            <span class="badge bg-{{ $status->color() }}">
+                                <i class="bi bi-{{ $status->icon() }}"></i> {{ $status->label() }}
+                            </span>
                         </div>
                     </div>
 

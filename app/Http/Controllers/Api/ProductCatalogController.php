@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\StockStatus;
 use App\Http\Controllers\Controller;
 use App\Services\ProductCatalogService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 
 /**
  * API surface for {@see ProductCatalogService} (read access to the catalogue).
@@ -19,12 +21,21 @@ class ProductCatalogController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        return response()->json(
-            $this->catalog->paginateByCategory(
-                $request->query('category_id'),
-                (int) $request->query('per_page', 12)
-            )
+        $data = $request->validate([
+            'category_id' => 'nullable|integer',
+            'per_page' => 'nullable|integer|min:1',
+            'stock_status' => ['nullable', new Enum(StockStatus::class)],
+        ]);
+
+        $products = $this->catalog->paginateByCategory(
+            $data['category_id'] ?? null,
+            (int) ($data['per_page'] ?? 12),
+            isset($data['stock_status']) ? StockStatus::from($data['stock_status']) : null
         );
+
+        $products->getCollection()->each->append('stock_status');
+
+        return response()->json($products);
     }
 
     /**
@@ -52,6 +63,8 @@ class ProductCatalogController extends Controller
      */
     public function show(int|string $id): JsonResponse
     {
-        return response()->json($this->catalog->findOrFail($id));
+        return response()->json(
+            $this->catalog->findOrFail($id)->append('stock_status')
+        );
     }
 }

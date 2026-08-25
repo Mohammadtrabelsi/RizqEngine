@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\StockStatus;
 use App\Traits\HasDefaultTranslations;
 use App\Traits\RecordsActivity;
 use Database\Factories\ProductFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +32,7 @@ use Spatie\Translatable\HasTranslations;
  * @property int $product_tax_type
  * @property string|null $product_note
  * @property int $units_sold Transient attribute populated by reporting queries.
+ * @property-read StockStatus $stock_status Derived from quantity and alert threshold.
  */
 class Product extends Model implements HasMedia
 {
@@ -69,6 +72,33 @@ class Product extends Model implements HasMedia
     public function stockMovements(): HasMany
     {
         return $this->hasMany(StockMovement::class, 'product_id', 'id');
+    }
+
+    /**
+     * Derived stock status for this product.
+     */
+    public function getStockStatusAttribute(): StockStatus
+    {
+        return StockStatus::fromQuantity(
+            (int) $this->product_quantity,
+            (int) $this->product_stock_alert
+        );
+    }
+
+    /**
+     * Constrain a query to products matching the given stock status.
+     *
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    public function scopeStockStatus(Builder $query, StockStatus $status): Builder
+    {
+        return match ($status) {
+            StockStatus::OutOfStock => $query->where('product_quantity', '<=', 0),
+            StockStatus::LowStock => $query->where('product_quantity', '>', 0)
+                ->whereColumn('product_quantity', '<=', 'product_stock_alert'),
+            StockStatus::InStock => $query->whereColumn('product_quantity', '>', 'product_stock_alert'),
+        };
     }
 
     public function registerMediaCollections(): void
