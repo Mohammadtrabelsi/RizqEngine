@@ -29,4 +29,7 @@ return [
     'search' => 'Search',
     'all' => 'All',
     'are_you_sure' => 'Are you sure?',
+    'reset' => 'Reset filters',
+    'yes' => 'Yes',
+    'no' => 'No',
 ];

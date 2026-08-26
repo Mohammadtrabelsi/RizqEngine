@@ -22,6 +22,40 @@
         </div>
     </div>
 
+    <div class="row align-items-end">
+        <div class="col-12 col-md-3 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('supplier.city') }}</label>
+            <select wire:model.live="city" class="form-select">
+                <option value="">{{ __('app.all') }}</option>
+                @foreach($cities as $c)
+                    <option value="{{ $c }}">{{ $c }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-12 col-md-3 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('supplier.country') }}</label>
+            <select wire:model.live="country" class="form-select">
+                <option value="">{{ __('app.all') }}</option>
+                @foreach($countries as $c)
+                    <option value="{{ $c }}">{{ $c }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-12 col-md-3 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('supplier.tax_identification_number') }}</label>
+            <select wire:model.live="hasTaxId" class="form-select">
+                <option value="">{{ __('app.all') }}</option>
+                <option value="yes">{{ __('app.yes') }}</option>
+                <option value="no">{{ __('app.no') }}</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-3 mb-3">
+            <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary w-100">
+                <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+            </button>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-center mb-3">{{ $suppliers->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($suppliers as $supplier)
