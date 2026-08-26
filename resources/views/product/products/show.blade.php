@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="alert alert-info mb-0">
-                                    <i class="bi bi-percent"></i> Profit Margin: <strong>{{ number_format((($product->product_price - $product->product_cost) / $product->product_price * 100), 2) }}%</strong>
+                                    <i class="bi bi-percent"></i> Profit Margin: <strong>{{ $product->product_price > 0 ? number_format((($product->product_price - $product->product_cost) / $product->product_price * 100), 2) . '%' : 'N/A' }}</strong>
                                 </div>
                             </div>
                         </div>
