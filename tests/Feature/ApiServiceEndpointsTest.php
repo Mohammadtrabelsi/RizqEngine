@@ -141,6 +141,46 @@ class ApiServiceEndpointsTest extends TestCase
     }
 
     /** @test */
+    public function it_filters_the_product_catalogue_by_stock_status(): void
+    {
+        $this->actingAsApiUser();
+
+        $inStock = $this->makeProduct(['product_quantity' => 50, 'product_stock_alert' => 5]);
+        $lowStock = $this->makeProduct(['product_quantity' => 3, 'product_stock_alert' => 5]);
+        $outOfStock = $this->makeProduct(['product_quantity' => 0, 'product_stock_alert' => 5]);
+
+        $this->getJson('/api/products?stock_status=low_stock')
+            ->assertOk()
+            ->assertJsonFragment(['id' => $lowStock->id, 'stock_status' => 'low_stock'])
+            ->assertJsonMissing(['id' => $inStock->id])
+            ->assertJsonMissing(['id' => $outOfStock->id]);
+
+        $this->getJson('/api/products?stock_status=out_of_stock')
+            ->assertOk()
+            ->assertJsonFragment(['id' => $outOfStock->id, 'stock_status' => 'out_of_stock'])
+            ->assertJsonMissing(['id' => $lowStock->id]);
+
+        $this->getJson('/api/products?stock_status=in_stock')
+            ->assertOk()
+            ->assertJsonFragment(['id' => $inStock->id, 'stock_status' => 'in_stock'])
+            ->assertJsonMissing(['id' => $lowStock->id]);
+
+        $this->getJson('/api/products?stock_status=bogus')
+            ->assertStatus(422);
+    }
+
+    /** @test */
+    public function it_returns_the_stock_status_with_product_details(): void
+    {
+        $this->actingAsApiUser();
+        $product = $this->makeProduct(['product_quantity' => 3, 'product_stock_alert' => 5]);
+
+        $this->getJson("/api/products/{$product->id}")
+            ->assertOk()
+            ->assertJsonPath('stock_status', 'low_stock');
+    }
+
+    /** @test */
     public function it_exposes_the_low_stock_report(): void
     {
         $this->actingAsApiUser();

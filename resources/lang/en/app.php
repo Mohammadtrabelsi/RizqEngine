@@ -27,5 +27,6 @@ return [
     'version' => 'Version',
     'language' => 'Language',
     'search' => 'Search',
+    'all' => 'All',
     'are_you_sure' => 'Are you sure?',
 ];

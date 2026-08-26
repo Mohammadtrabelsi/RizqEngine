@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\StockStatus;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -52,13 +53,20 @@ class ProductCatalogService
     }
 
     /**
-     * Paginate products, optionally filtered by category.
+     * Paginate products, optionally filtered by category and/or stock status.
      */
-    public function paginateByCategory(int|string|null $categoryId, int $perPage): LengthAwarePaginator
-    {
+    public function paginateByCategory(
+        int|string|null $categoryId,
+        int $perPage,
+        ?StockStatus $stockStatus = null
+    ): LengthAwarePaginator {
         return Product::with('category')
             ->when($categoryId, function ($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);
-            })->paginate($perPage);
+            })
+            ->when($stockStatus, function ($query) use ($stockStatus) {
+                return $query->stockStatus($stockStatus);
+            })
+            ->paginate($perPage);
     }
 }

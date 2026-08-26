@@ -27,5 +27,6 @@ return [
     'version' => 'الإصدار',
     'language' => 'اللغة',
     'search' => 'بحث',
+    'all' => 'الكل',
     'are_you_sure' => 'هل أنت متأكد؟',
 ];
