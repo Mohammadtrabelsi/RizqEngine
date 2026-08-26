@@ -21,7 +21,9 @@ class SupplierService
                     ->orWhere('supplier_phone', 'like', $term);
             })
             ->latest()
-            ->paginate($perPage);
+            ->latest('id')
+            ->paginate($perPage)
+            ->withQueryString();
     }
 
     public function findOrFail(int $id): Supplier
