@@ -48,7 +48,104 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('show_products'), 403);
 
-        return view('product.products.show', compact('product'));
+        $transactions = $this->productTransactions($product);
+
+        return view('product.products.show', compact('product', 'transactions'));
+    }
+
+    /**
+     * Build a unified, date-sorted list of every transaction (sales,
+     * purchases, and their returns) that involved the given product.
+     *
+     * @return \Illuminate\Support\Collection<int, array<string, mixed>>
+     */
+    private function productTransactions(Product $product): \Illuminate\Support\Collection
+    {
+        $transactions = collect();
+
+        $product->saleDetails()->with('sale')->get()
+            ->each(function ($detail) use ($transactions) {
+                $parent = $detail->sale;
+
+                $transactions->push([
+                    'type' => 'sale',
+                    'label' => 'Sale',
+                    'badge' => 'success',
+                    'reference' => $parent?->reference,
+                    'party' => $parent?->customer_name,
+                    'route' => $parent ? route('sales.show', $parent->id) : null,
+                    'quantity' => $detail->quantity,
+                    'unit_price' => $detail->unit_price,
+                    'sub_total' => $detail->sub_total,
+                    'date' => $parent?->created_at ?? $detail->created_at,
+                ]);
+            });
+
+        $product->purchaseDetails()->with('purchase')->get()
+            ->each(function ($detail) use ($transactions) {
+                $parent = $detail->purchase;
+
+                $transactions->push([
+                    'type' => 'purchase',
+                    'label' => 'Purchase',
+                    'badge' => 'primary',
+                    'reference' => $parent?->reference,
+                    'party' => $parent?->supplier_name,
+                    'route' => $parent ? route('purchases.show', $parent->id) : null,
+                    'quantity' => $detail->quantity,
+                    'unit_price' => $detail->unit_price,
+                    'sub_total' => $detail->sub_total,
+                    'date' => $parent?->created_at ?? $detail->created_at,
+                ]);
+            });
+
+        $saleReturns = \App\Models\SaleReturn::whereIn(
+            'id',
+            $product->saleReturnDetails()->pluck('sale_return_id')
+        )->get()->keyBy('id');
+
+        $product->saleReturnDetails()->get()
+            ->each(function ($detail) use ($transactions, $saleReturns) {
+                $parent = $saleReturns->get($detail->sale_return_id);
+
+                $transactions->push([
+                    'type' => 'sale_return',
+                    'label' => 'Sale Return',
+                    'badge' => 'warning',
+                    'reference' => $parent?->reference,
+                    'party' => $parent?->customer_name,
+                    'route' => $parent ? route('sale-returns.show', $parent->id) : null,
+                    'quantity' => $detail->quantity,
+                    'unit_price' => $detail->unit_price,
+                    'sub_total' => $detail->sub_total,
+                    'date' => $parent?->created_at ?? $detail->created_at,
+                ]);
+            });
+
+        $purchaseReturns = \App\Models\PurchaseReturn::whereIn(
+            'id',
+            $product->purchaseReturnDetails()->pluck('purchase_return_id')
+        )->get()->keyBy('id');
+
+        $product->purchaseReturnDetails()->get()
+            ->each(function ($detail) use ($transactions, $purchaseReturns) {
+                $parent = $purchaseReturns->get($detail->purchase_return_id);
+
+                $transactions->push([
+                    'type' => 'purchase_return',
+                    'label' => 'Purchase Return',
+                    'badge' => 'danger',
+                    'reference' => $parent?->reference,
+                    'party' => $parent?->supplier_name,
+                    'route' => $parent ? route('purchase-returns.show', $parent->id) : null,
+                    'quantity' => $detail->quantity,
+                    'unit_price' => $detail->unit_price,
+                    'sub_total' => $detail->sub_total,
+                    'date' => $parent?->created_at ?? $detail->created_at,
+                ]);
+            });
+
+        return $transactions->sortByDesc('date')->values();
     }
 
     public function edit(Product $product)

@@ -138,7 +138,7 @@
                 </div>
 
                 <!-- Tax Information -->
-                <div class="card border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-calculator"></i> Tax Information</h5>
                     </div>
@@ -165,6 +165,62 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Transaction History -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-clock-history"></i> Transaction History</h5>
+                        <span class="badge bg-secondary">{{ $transactions->count() }}</span>
+                    </div>
+                    <div class="card-body p-0">
+                        @if($transactions->isEmpty())
+                            <div class="text-center text-muted py-5">
+                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                No transactions recorded for this product yet.
+                            </div>
+                        @else
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Reference</th>
+                                            <th>Party</th>
+                                            <th class="text-end">Quantity</th>
+                                            <th class="text-end">Unit Price</th>
+                                            <th class="text-end">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($transactions as $transaction)
+                                            <tr>
+                                                <td>
+                                                    <span class="d-block">{{ optional($transaction['date'])->format('d M Y') }}</span>
+                                                    <small class="text-muted">{{ optional($transaction['date'])->format('H:i') }}</small>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-{{ $transaction['badge'] }}">{{ $transaction['label'] }}</span>
+                                                </td>
+                                                <td>
+                                                    @if($transaction['route'])
+                                                        <a href="{{ $transaction['route'] }}">{{ $transaction['reference'] ?? '—' }}</a>
+                                                    @else
+                                                        {{ $transaction['reference'] ?? '—' }}
+                                                    @endif
+                                                </td>
+                                                <td>{{ $transaction['party'] ?? '—' }}</td>
+                                                <td class="text-end">{{ $transaction['quantity'] }}</td>
+                                                <td class="text-end">{{ format_currency($transaction['unit_price']) }}</td>
+                                                <td class="text-end fw-bold">{{ format_currency($transaction['sub_total']) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
