@@ -11,19 +11,69 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  */
 class SupplierService
 {
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array<string, mixed>  $filters
+     */
+    public function paginate(?string $search = null, int $perPage = 12, array $filters = []): LengthAwarePaginator
     {
+        $city = $filters['city'] ?? '';
+        $country = $filters['country'] ?? '';
+        $hasTaxId = $filters['hasTaxId'] ?? '';
+
         return Supplier::query()
             ->when($search, function ($query) use ($search) {
                 $term = '%'.$search.'%';
-                $query->where('supplier_name', 'like', $term)
-                    ->orWhere('supplier_email', 'like', $term)
-                    ->orWhere('supplier_phone', 'like', $term);
+                $query->where(function ($q) use ($term) {
+                    $q->where('supplier_name', 'like', $term)
+                        ->orWhere('supplier_email', 'like', $term)
+                        ->orWhere('supplier_phone', 'like', $term)
+                        ->orWhere('tax_identification_number', 'like', $term);
+                });
+            })
+            ->when($city !== '', function ($query) use ($city) {
+                $query->where('city', $city);
+            })
+            ->when($country !== '', function ($query) use ($country) {
+                $query->where('country', $country);
+            })
+            ->when($hasTaxId === 'yes', function ($query) {
+                $query->whereNotNull('tax_identification_number')
+                    ->where('tax_identification_number', '!=', '');
+            })
+            ->when($hasTaxId === 'no', function ($query) {
+                $query->where(function ($q) {
+                    $q->whereNull('tax_identification_number')
+                        ->orWhere('tax_identification_number', '=', '');
+                });
             })
             ->latest()
             ->latest('id')
             ->paginate($perPage)
             ->withQueryString();
+    }
+
+    /**
+     * Distinct non-empty cities across all suppliers.
+     *
+     * @return \Illuminate\Support\Collection<int, string>
+     */
+    public function cities()
+    {
+        return Supplier::query()
+            ->whereNotNull('city')->where('city', '!=', '')
+            ->distinct()->orderBy('city')->pluck('city');
+    }
+
+    /**
+     * Distinct non-empty countries across all suppliers.
+     *
+     * @return \Illuminate\Support\Collection<int, string>
+     */
+    public function countries()
+    {
+        return Supplier::query()
+            ->whereNotNull('country')->where('country', '!=', '')
+            ->distinct()->orderBy('country')->pluck('country');
     }
 
     public function findOrFail(int $id): Supplier

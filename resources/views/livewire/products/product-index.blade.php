@@ -5,15 +5,50 @@
                 <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
             </a>
         </div>
-        <div class="col-12 col-md-4 mb-3">
+        <div class="col-12 col-md-8 mb-3">
+            <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">
+        </div>
+    </div>
+
+    <div class="row align-items-end">
+        <div class="col-12 col-md-3 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
+            <select wire:model.live="categoryId" class="form-select" aria-label="Filter by category">
+                <option value="">{{ __('app.all') }}</option>
+                @foreach($this->categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-12 col-md-3 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('product.supplier') }}</label>
+            <select wire:model.live="supplierId" class="form-select" aria-label="Filter by supplier">
+                <option value="">{{ __('app.all') }}</option>
+                @foreach($this->suppliers as $supplier)
+                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-12 col-md-2 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('product.stock') }}</label>
             <select wire:model.live="stockStatus" class="form-select" aria-label="Filter by stock status">
                 @foreach($this->stockStatusOptions as $value => $label)
                     <option value="{{ $value }}">{{ $label }}</option>
                 @endforeach
             </select>
         </div>
-        <div class="col-12 col-md-4 mb-3">
-            <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">
+        <div class="col-6 col-md-2 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('product.min_price') }}</label>
+            <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="form-control" placeholder="0">
+        </div>
+        <div class="col-6 col-md-2 mb-3">
+            <label class="form-label small text-muted mb-1">{{ __('product.max_price') }}</label>
+            <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="form-control" placeholder="∞">
+        </div>
+        <div class="col-12 mb-3">
+            <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+            </button>
         </div>
     </div>
 

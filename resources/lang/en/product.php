@@ -67,6 +67,8 @@ return [
     'select_unit' => 'Select Unit',
     'something-went-wrong' => 'Something went wrong',
     'stock' => 'Stock',
+    'min_price' => 'Min price',
+    'max_price' => 'Max price',
     'stock_alert' => 'Alert Quantity',
     'stock_worth' => 'Stock worth',
     'submit' => 'Submit',
