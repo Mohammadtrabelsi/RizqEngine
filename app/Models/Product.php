@@ -75,6 +75,46 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * Sale line items referencing this product.
+     *
+     * @return HasMany<SaleDetails, $this>
+     */
+    public function saleDetails(): HasMany
+    {
+        return $this->hasMany(SaleDetails::class, 'product_id', 'id');
+    }
+
+    /**
+     * Purchase line items referencing this product.
+     *
+     * @return HasMany<PurchaseDetail, $this>
+     */
+    public function purchaseDetails(): HasMany
+    {
+        return $this->hasMany(PurchaseDetail::class, 'product_id', 'id');
+    }
+
+    /**
+     * Sale-return line items referencing this product.
+     *
+     * @return HasMany<SaleReturnDetail, $this>
+     */
+    public function saleReturnDetails(): HasMany
+    {
+        return $this->hasMany(SaleReturnDetail::class, 'product_id', 'id');
+    }
+
+    /**
+     * Purchase-return line items referencing this product.
+     *
+     * @return HasMany<PurchaseReturnDetail, $this>
+     */
+    public function purchaseReturnDetails(): HasMany
+    {
+        return $this->hasMany(PurchaseReturnDetail::class, 'product_id', 'id');
+    }
+
+    /**
      * Derived stock status for this product.
      */
     public function getStockStatusAttribute(): StockStatus
