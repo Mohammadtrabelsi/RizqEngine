@@ -1169,9 +1169,9 @@ h4, .h4 { font-size: 19px; }
     .c-avatar img, img.c-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
 }
 
-.app-no-sidebar .c-wrapper { margin-left: 0 !important; }
+.app-no-sidebar .c-wrapper { margin-inline-start: 0 !important; }
 .app-no-sidebar .c-body,
-.app-no-sidebar .c-header { left: 0 !important; }
+.app-no-sidebar .c-header { inset-inline-start: 0 !important; }
 
 /* =========================================================================
  * TRIANGLE POS THEME — horizontal top navigation
@@ -2003,10 +2003,10 @@ hr { display: none; }
 /* Push the whole content wrapper to the right of the fixed sidebar. */
 @media (min-width: 992px) {
     .app-with-sidebar .c-wrapper {
-        margin-left: var(--app-sidebar-width);
+        margin-inline-start: var(--app-sidebar-width);
         padding-left: 1.5rem;
         padding-right: 1.5rem;
-        transition: margin-left 0.2s ease;
+        transition: margin-inline-start 0.2s ease;
     }
 }
 
