@@ -13,16 +13,24 @@
     @include('includes.main-css')
 </head>
 
-<body class="c-app app-no-sidebar {{ request()->cookie('theme') === 'dark' ? 'c-dark-theme' : '' }}">
+<body class="c-app app-with-sidebar {{ request()->cookie('theme') === 'dark' ? 'c-dark-theme' : '' }}">
+    @include('layouts.sidebar')
+
     <div class="c-wrapper">
         <header class="c-header c-header-light c-header-fixed">
             @include('layouts.header')
-            @include('layouts.menu-horizontal')
-            @include('layouts.subheader')
         </header>
 
         <div class="c-body">
             <main class="c-main">
+                <div class="c-subheader">
+                    <div class="container-fluid">
+                        @yield('breadcrumb')
+                    </div>
+                </div>
+
+                @include('layouts.menu-secondary')
+
                 <div class="container-fluid">
                     @include('utils.flash')
                 </div>
