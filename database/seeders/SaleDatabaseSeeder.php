@@ -32,7 +32,7 @@ class SaleDatabaseSeeder extends Seeder
         $paymentStatuses = ['Paid', 'Partial', 'Unpaid'];
         $paymentMethods = ['Cash', 'Credit Card', 'Cheque', 'Bank Transfer'];
 
-        foreach (range(1, 50) as $index) {
+        foreach (range(1, 100) as $index) {
             $date = Carbon::parse($startDate)->addDays(rand(0, $startDate->diffInDays($endDate)));
             $customer = $customers->random();
             $totalAmount = rand(5000, 150000);
