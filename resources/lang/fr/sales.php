@@ -59,7 +59,7 @@ return [
     'status' => 'Statut',
     'sub_total' => 'Sous-total',
     'tax' => 'Taxe',
-    'title' => 'Titre',
+    'title' => 'Ventes',
     'total' => 'Total',
     'update_payment' => 'Mettre à jour le paiement',
     'update_sale_return' => 'Mettre à jour le retour de vente',

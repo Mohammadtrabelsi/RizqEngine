@@ -59,7 +59,7 @@ return [
     'status' => 'Status',
     'sub_total' => 'Sub total',
     'tax' => 'Tax',
-    'title' => 'Title',
+    'title' => 'Sales',
     'total' => 'Total',
     'update_payment' => 'Update payment',
     'update_sale_return' => 'Update sale return',
