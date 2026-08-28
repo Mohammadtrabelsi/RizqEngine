@@ -91,7 +91,7 @@ class ProductIndex extends Component
      */
     public function getStockStatusOptionsProperty(): array
     {
-        $options = ['' => __('app.all') ?? 'All'];
+        $options = ['' => __('app.all')];
 
         foreach (StockStatus::cases() as $status) {
             $options[$status->value] = $status->label();
