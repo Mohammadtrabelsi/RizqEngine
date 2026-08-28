@@ -319,7 +319,7 @@ return [
         'Alert' => Alert::class,
         'DNS1D' => DNS1DFacade::class,
         'DNS2D' => DNS2DFacade::class,
-        'PDF' => SnappyPdf::class,
+        'PDF' => \Barryvdh\DomPDF\Facade\Pdf::class,
         'SnappyImage' => SnappyImage::class,
     ],
 
