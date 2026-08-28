@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Customer;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Owns all persistence for customers, including the optional profile image
@@ -54,7 +55,7 @@ class CustomerService
     /**
      * Distinct non-empty cities across all customers.
      *
-     * @return \Illuminate\Support\Collection<int, string>
+     * @return Collection<int, string>
      */
     public function cities()
     {
@@ -66,7 +67,7 @@ class CustomerService
     /**
      * Distinct non-empty countries across all customers.
      *
-     * @return \Illuminate\Support\Collection<int, string>
+     * @return Collection<int, string>
      */
     public function countries()
     {

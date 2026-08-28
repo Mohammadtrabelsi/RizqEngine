@@ -47,12 +47,12 @@ return [
         'cta_body' => 'Importez votre liste de produits, définissez les rôles, commencez à vendre.',
         'cta_button' => 'Connectez-vous à votre magasin',
         'modules' => [
-            'products'  => ['title' => 'Produits & stock', 'body' => 'Variantes, codes-barres, comptages multi-entrepôts et seuils de stock bas qui alertent avant la rupture.'],
-            'sales'     => ['title' => 'Ventes & retours', 'body' => 'Devis, commandes, paiements partiels et avoirs — chaque mouvement journalisé et réversible.'],
+            'products' => ['title' => 'Produits & stock', 'body' => 'Variantes, codes-barres, comptages multi-entrepôts et seuils de stock bas qui alertent avant la rupture.'],
+            'sales' => ['title' => 'Ventes & retours', 'body' => 'Devis, commandes, paiements partiels et avoirs — chaque mouvement journalisé et réversible.'],
             'purchases' => ['title' => 'Achats & fournisseurs', 'body' => 'Bons de commande, réceptions et soldes fournisseurs rapprochés de ce qui est réellement arrivé.'],
-            'roles'     => ['title' => 'Rôles & permissions', 'body' => 'Contrôles par écran et par action : les caissiers voient la caisse, seul le propriétaire voit les marges.'],
+            'roles' => ['title' => 'Rôles & permissions', 'body' => 'Contrôles par écran et par action : les caissiers voient la caisse, seul le propriétaire voit les marges.'],
             'reporting' => ['title' => 'Rapports', 'body' => 'Chiffre d\'affaires, coût des marchandises, marge brute, créances et dettes sur toute période — exportable.'],
-            'expenses'  => ['title' => 'Dépenses & personnel', 'body' => 'Journaux de service, dépenses catégorisées et clôture de caisse quotidienne qui tombe juste.'],
+            'expenses' => ['title' => 'Dépenses & personnel', 'body' => 'Journaux de service, dépenses catégorisées et clôture de caisse quotidienne qui tombe juste.'],
         ],
     ],
 

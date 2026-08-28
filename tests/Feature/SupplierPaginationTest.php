@@ -25,7 +25,7 @@ class SupplierPaginationTest extends TestCase
             'updated_at' => now(),
         ]);
 
-        $suppliers = new SupplierService();
+        $suppliers = new SupplierService;
 
         Paginator::currentPageResolver(fn () => 1);
         $page1 = $suppliers->paginate(null, 12)->pluck('id')->all();

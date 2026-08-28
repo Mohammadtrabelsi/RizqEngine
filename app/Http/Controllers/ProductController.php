@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\PurchaseReturn;
+use App\Models\SaleReturn;
 use App\Services\CategoryService;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -57,9 +60,9 @@ class ProductController extends Controller
      * Build a unified, date-sorted list of every transaction (sales,
      * purchases, and their returns) that involved the given product.
      *
-     * @return \Illuminate\Support\Collection<int, array<string, mixed>>
+     * @return Collection<int, array<string, mixed>>
      */
-    private function productTransactions(Product $product): \Illuminate\Support\Collection
+    private function productTransactions(Product $product): Collection
     {
         $transactions = collect();
 
@@ -99,7 +102,7 @@ class ProductController extends Controller
                 ]);
             });
 
-        $saleReturns = \App\Models\SaleReturn::whereIn(
+        $saleReturns = SaleReturn::whereIn(
             'id',
             $product->saleReturnDetails()->pluck('sale_return_id')
         )->get()->keyBy('id');
@@ -122,7 +125,7 @@ class ProductController extends Controller
                 ]);
             });
 
-        $purchaseReturns = \App\Models\PurchaseReturn::whereIn(
+        $purchaseReturns = PurchaseReturn::whereIn(
             'id',
             $product->purchaseReturnDetails()->pluck('purchase_return_id')
         )->get()->keyBy('id');

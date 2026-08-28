@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Supplier;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Owns all persistence for suppliers, including the optional profile image
@@ -55,7 +56,7 @@ class SupplierService
     /**
      * Distinct non-empty cities across all suppliers.
      *
-     * @return \Illuminate\Support\Collection<int, string>
+     * @return Collection<int, string>
      */
     public function cities()
     {
@@ -67,7 +68,7 @@ class SupplierService
     /**
      * Distinct non-empty countries across all suppliers.
      *
-     * @return \Illuminate\Support\Collection<int, string>
+     * @return Collection<int, string>
      */
     public function countries()
     {

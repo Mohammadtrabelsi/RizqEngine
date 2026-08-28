@@ -91,8 +91,8 @@ class LeBonPlanSeeder extends Seeder
      * obtain the rows without resolving suppliers (e.g. when only the canonical
      * product names are needed).
      *
-     * @param  array<string, \App\Models\Supplier>  $suppliers
-     * @return array<int, array{0: string, 1: int, 2: int, 3: \App\Models\Supplier|null}>
+     * @param  array<string, Supplier>  $suppliers
+     * @return array<int, array{0: string, 1: int, 2: int, 3: Supplier|null}>
      */
     public static function productRows(array $suppliers = []): array
     {

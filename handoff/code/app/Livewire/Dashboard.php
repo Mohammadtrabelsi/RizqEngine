@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -44,7 +43,7 @@ class Dashboard extends Component
         return [
             ['key' => 'sales_today',  'value' => '2 480.90', 'unit' => 'DT', 'note' => __('pos.dash.sales_note', ['n' => 62]), 'delta' => '+8.4%', 'tone' => 'up'],
             ['key' => 'transactions', 'value' => '148',      'note' => __('pos.dash.tx_note', ['n' => 2]),                    'delta' => '—',     'tone' => 'flat'],
-            ['key' => 'low_stock',    'value' => '1 002',    'note' => __('pos.dash.low_stock_note'),                        'delta' => 'ACTION','tone' => 'warn'],
+            ['key' => 'low_stock',    'value' => '1 002',    'note' => __('pos.dash.low_stock_note'),                        'delta' => 'ACTION', 'tone' => 'warn'],
             ['key' => 'expenses',     'value' => '318.00',   'unit' => 'DT', 'note' => __('pos.dash.expenses_note', ['n' => 9]), 'delta' => '-2.1%', 'tone' => 'flat'],
         ];
     }

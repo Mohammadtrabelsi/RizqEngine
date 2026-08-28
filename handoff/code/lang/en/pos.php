@@ -47,12 +47,12 @@ return [
         'cta_body' => 'Import your product list, set roles, start selling.',
         'cta_button' => 'Sign in to your store',
         'modules' => [
-            'products'  => ['title' => 'Products & stock', 'body' => 'Variants, barcodes, multi-warehouse counts and low-stock thresholds that fire before you run dry.'],
-            'sales'     => ['title' => 'Sales & returns', 'body' => 'Quotes, orders, partial payments and credit notes — every movement journalled and reversible.'],
+            'products' => ['title' => 'Products & stock', 'body' => 'Variants, barcodes, multi-warehouse counts and low-stock thresholds that fire before you run dry.'],
+            'sales' => ['title' => 'Sales & returns', 'body' => 'Quotes, orders, partial payments and credit notes — every movement journalled and reversible.'],
             'purchases' => ['title' => 'Purchases & suppliers', 'body' => 'Purchase orders, receipts and supplier balances reconciled against what actually landed.'],
-            'roles'     => ['title' => 'Roles & permissions', 'body' => 'Per-screen and per-action gates, so cashiers see the till and only the owner sees margins.'],
+            'roles' => ['title' => 'Roles & permissions', 'body' => 'Per-screen and per-action gates, so cashiers see the till and only the owner sees margins.'],
             'reporting' => ['title' => 'Reporting', 'body' => 'Revenue, COGS, gross profit, receivables and debts on any date range — exportable.'],
-            'expenses'  => ['title' => 'Expenses & staff', 'body' => 'Shift logs, categorised expenses and daily cash-up that ties out at close of business.'],
+            'expenses' => ['title' => 'Expenses & staff', 'body' => 'Shift logs, categorised expenses and daily cash-up that ties out at close of business.'],
         ],
     ],
 

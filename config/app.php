@@ -3,8 +3,8 @@
 use App\Providers\AppServiceProvider;
 use App\Providers\EventServiceProvider;
 use App\Providers\RouteServiceProvider;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\Snappy\Facades\SnappyImage;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Barryvdh\Snappy\ServiceProvider;
 use Illuminate\Auth\AuthServiceProvider;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
@@ -319,7 +319,7 @@ return [
         'Alert' => Alert::class,
         'DNS1D' => DNS1DFacade::class,
         'DNS2D' => DNS2DFacade::class,
-        'PDF' => \Barryvdh\DomPDF\Facade\Pdf::class,
+        'PDF' => Pdf::class,
         'SnappyImage' => SnappyImage::class,
     ],
 
