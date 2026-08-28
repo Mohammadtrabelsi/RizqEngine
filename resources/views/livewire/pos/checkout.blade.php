@@ -38,7 +38,7 @@
                         <div class="row">
                             @if($cart_items->isNotEmpty())
                                 @foreach($cart_items as $cart_item)
-                                    <div class="col-lg-12 mb-3">
+                                    <div class="col-lg-12 mb-3" wire:key="cart-item-{{ $cart_item->rowId }}">
                                         <div class="card h-100">
                                         <div class="card-header d-flex justify-content-between align-items-start">
                                             <div>
