@@ -18,7 +18,7 @@ use App\Models\Quotation;
 use App\Models\Sale;
 use App\Models\SaleReturn;
 use App\Models\Supplier;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -209,11 +209,7 @@ Route::group(['middleware' => 'auth'], function () {
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('sale.print-pos', [
             'sale' => $sale,
-        ])->setPaper('a7')
-            ->setOption('margin-top', 8)
-            ->setOption('margin-bottom', 8)
-            ->setOption('margin-left', 5)
-            ->setOption('margin-right', 5);
+        ])->setPaper('a7');
 
         return $pdf->stream('sale-'.$sale->reference.'.pdf');
     })->name('sales.pos.pdf');
