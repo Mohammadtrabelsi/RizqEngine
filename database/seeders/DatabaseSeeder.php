@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PeopleDatabaseSeeder::class);
         $this->call(LeBonPlanSeeder::class);
         $this->call(SaleDatabaseSeeder::class);
+        $this->call(CommandeDatabaseSeeder::class);
         $this->call(ExpenseDatabaseSeeder::class);
         $this->call(TestDataSeeder::class);
 
