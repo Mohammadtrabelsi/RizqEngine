@@ -53,14 +53,16 @@ Route::get('/language/{locale}', function (string $locale) {
 | Modern redesign from the design handoff. Mounted on dedicated routes so the
 | existing welcome / auth / home screens keep working unchanged.
 */
-Route::get('/landing', RedesignLandingPage::class)->name('redesign.landing');
+Route::group(['namespace' => '\\'], function () {
+    Route::get('/landing', RedesignLandingPage::class)->name('redesign.landing');
 
-Route::middleware('guest')->group(function () {
-    Route::get('/sign-in', RedesignLogin::class)->name('redesign.login');
-});
+    Route::middleware('guest')->group(function () {
+        Route::get('/sign-in', RedesignLogin::class)->name('redesign.login');
+    });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', RedesignDashboard::class)->name('dashboard');
+    Route::middleware('auth')->group(function () {
+        Route::get('/dashboard', RedesignDashboard::class)->name('dashboard');
+    });
 });
 
 Auth::routes(['register' => false]);

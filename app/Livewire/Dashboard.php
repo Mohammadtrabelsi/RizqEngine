@@ -141,6 +141,10 @@ class Dashboard extends Component
     #[Computed]
     public function unreadCount(): int
     {
+        if (! \Illuminate\Support\Facades\Schema::hasTable('notifications')) {
+            return 0;
+        }
+
         return (int) (auth()->user()?->unreadNotifications()->count() ?? 0);
     }
 
