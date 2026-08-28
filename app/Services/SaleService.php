@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ConversionException;
+use App\Exceptions\InsufficientStockException;
 use App\Models\Commande;
 use App\Models\Customer;
 use App\Models\Product;
@@ -234,6 +235,8 @@ class SaleService
      *
      * @throws ConversionException when the Commande is not invoiceable or has
      *                             already been invoiced.
+     * @throws InsufficientStockException when generating with a stock-moving
+     *                                    status and a product lacks stock.
      */
     public function createFactureFromCommande(Commande $commande, array $overrides = []): Sale
     {

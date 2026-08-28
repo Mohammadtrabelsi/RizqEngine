@@ -80,7 +80,7 @@ class ProductController extends Controller
                     'quantity' => $detail->quantity,
                     'unit_price' => $detail->unit_price,
                     'sub_total' => $detail->sub_total,
-                    'date' => $parent?->created_at ?? $detail->created_at,
+                    'date' => $parent->created_at ?? $detail->created_at,
                 ]);
             });
 
@@ -98,7 +98,7 @@ class ProductController extends Controller
                     'quantity' => $detail->quantity,
                     'unit_price' => $detail->unit_price,
                     'sub_total' => $detail->sub_total,
-                    'date' => $parent?->created_at ?? $detail->created_at,
+                    'date' => $parent->created_at ?? $detail->created_at,
                 ]);
             });
 
@@ -121,7 +121,7 @@ class ProductController extends Controller
                     'quantity' => $detail->quantity,
                     'unit_price' => $detail->unit_price,
                     'sub_total' => $detail->sub_total,
-                    'date' => $parent?->created_at ?? $detail->created_at,
+                    'date' => $parent->created_at ?? $detail->created_at,
                 ]);
             });
 
@@ -144,7 +144,7 @@ class ProductController extends Controller
                     'quantity' => $detail->quantity,
                     'unit_price' => $detail->unit_price,
                     'sub_total' => $detail->sub_total,
-                    'date' => $parent?->created_at ?? $detail->created_at,
+                    'date' => $parent->created_at ?? $detail->created_at,
                 ]);
             });
 

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Enums\StockStatus;
 use App\Models\Product;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 /**
