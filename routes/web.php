@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Middleware\SetLocale;
+use App\Livewire\Auth\Login as RedesignLogin;
+use App\Livewire\Dashboard as RedesignDashboard;
+use App\Livewire\LandingPage as RedesignLandingPage;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
@@ -42,6 +45,23 @@ Route::get('/language/{locale}', function (string $locale) {
 
     return redirect()->back();
 })->name('language.switch');
+
+/*
+|--------------------------------------------------------------------------
+| Redesign screens (landing / sign-in / dashboard)
+|--------------------------------------------------------------------------
+| Modern redesign from the design handoff. Mounted on dedicated routes so the
+| existing welcome / auth / home screens keep working unchanged.
+*/
+Route::get('/landing', RedesignLandingPage::class)->name('redesign.landing');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/sign-in', RedesignLogin::class)->name('redesign.login');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', RedesignDashboard::class)->name('dashboard');
+});
 
 Auth::routes(['register' => false]);
 

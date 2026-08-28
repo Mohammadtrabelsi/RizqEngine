@@ -27,6 +27,58 @@
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* -------------------------------------------------------------------------
+ * Triangle POS redesign tokens (landing / sign-in / dashboard).
+ * Scoped, single-indigo-accent palette from the design handoff. These add
+ * new utility names (accent, ink, canvas, warn, ok, hairline …) and do not
+ * repurpose the existing "Light" design system above.
+ * ---------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+@theme {
+    --color-canvas: #f7f7fb;
+    --color-canvas-2: #f2f2f8;
+
+    --color-ink: #26263a;
+    --color-ink-2: #35354d;
+    --color-ink-3: #4a4a63;
+
+    --color-body: #6b6b85;
+    --color-muted: #82829b;
+    --color-hairline: #e7e7ee;
+
+    --color-accent: #4f39e0;
+    --color-accent-hover: #4229c9;
+    --color-accent-light: #eeecfd;
+    --color-accent-soft: #dedaf9;
+
+    --color-ok: #1fa36b;
+    --color-ok-bg: #e8f6ee;
+
+    --color-warn: #97621b;
+    --color-warn-bg: #fdf6e7;
+    --color-warn-border: #eddcb4;
+
+    --color-danger: #c0392b;
+    --color-danger-bg: #fceceb;
+
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --radius-card: 16px;
+    --radius-panel: 22px;
+    --radius-field: 12px;
+    --radius-ctl: 10px;
+
+    --shadow-mock: 0 30px 70px -30px rgba(48, 40, 90, 0.35);
+    --shadow-cta: 0 10px 26px -8px rgba(79, 57, 224, 0.6);
+
+    --tracking-display: -0.035em;
+    --tracking-num: -0.03em;
+    --tracking-micro: 0.12em;
+}
+
 :root {
     /* --- Light Mode Core --- */
     --color-bg: #f8fafc;
