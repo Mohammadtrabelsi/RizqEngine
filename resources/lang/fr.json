@@ -101,5 +101,17 @@
   "status.return": "Retour",
   "status.draft": "Brouillon",
   "auth.failed": "Ces identifiants ne correspondent à aucun compte.",
-  "auth.throttle": "Trop de tentatives de connexion. Réessayez dans :seconds secondes."
+  "auth.throttle": "Trop de tentatives de connexion. Réessayez dans :seconds secondes.",
+  "feature.products.title": "Produits & stock",
+  "feature.products.body": "Variantes, codes-barres, comptages multi-entrepôts et seuils de stock bas qui alertent avant la rupture.",
+  "feature.sales.title": "Ventes & retours",
+  "feature.sales.body": "Devis, commandes, paiements partiels et avoirs — chaque mouvement journalisé et réversible.",
+  "feature.purchases.title": "Achats & fournisseurs",
+  "feature.purchases.body": "Bons de commande, réceptions et soldes fournisseurs rapprochés de ce qui est réellement arrivé.",
+  "feature.roles.title": "Rôles & permissions",
+  "feature.roles.body": "Accès par écran et par action : les caissiers voient la caisse, seul le propriétaire voit les marges.",
+  "feature.reporting.title": "Rapports",
+  "feature.reporting.body": "Chiffre d'affaires, coût des ventes, marge brute, créances et dettes sur toute période — exportables.",
+  "feature.expenses.title": "Dépenses & personnel",
+  "feature.expenses.body": "Journaux de shift, dépenses catégorisées et clôture de caisse quotidienne équilibrée en fin de journée."
 }
