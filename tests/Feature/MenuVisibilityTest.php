@@ -21,7 +21,10 @@ class MenuVisibilityTest extends TestCase
         $this->actingAs($user)
             ->get(route('home'))
             ->assertOk()
-            ->assertSee('Parties')
-            ->assertSee('Customers');
+            // The redesign groups these links under a "Customers & Suppliers"
+            // heading; the group and the Customers link must appear for a user
+            // who has customer access.
+            ->assertSee('Customers')
+            ->assertSee('Suppliers');
     }
 }
