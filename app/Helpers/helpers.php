@@ -8,7 +8,7 @@ if (! function_exists('settings')) {
     function settings()
     {
         $settings = cache()->remember('settings', 24 * 60, function () {
-            return Setting::first() ?? new Setting();
+            return Setting::first() ?? new Setting;
         });
 
         return $settings;
