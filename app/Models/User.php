@@ -58,4 +58,32 @@ class User extends Authenticatable implements HasMedia
     {
         return $builder->where('is_active', 1);
     }
+
+    /**
+     * Uppercase initials derived from the user's name (max two letters),
+     * used by the dashboard avatar pill.
+     */
+    public function initials(): string
+    {
+        $parts = preg_split('/\s+/', trim((string) $this->name)) ?: [];
+        $parts = array_values(array_filter($parts));
+
+        if ($parts === []) {
+            return '?';
+        }
+
+        $letters = count($parts) === 1
+            ? mb_substr($parts[0], 0, 2)
+            : mb_substr($parts[0], 0, 1).mb_substr($parts[count($parts) - 1], 0, 1);
+
+        return mb_strtoupper($letters);
+    }
+
+    /**
+     * Human-readable label of the user's primary role for the shift card.
+     */
+    public function getRoleLabelAttribute(): string
+    {
+        return (string) ($this->roles->first()?->name ?? __('nav.staff_roles'));
+    }
 }
