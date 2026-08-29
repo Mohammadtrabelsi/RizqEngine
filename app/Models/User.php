@@ -84,6 +84,6 @@ class User extends Authenticatable implements HasMedia
      */
     public function getRoleLabelAttribute(): string
     {
-        return (string) ($this->roles->first()?->name ?? __('nav.staff_roles'));
+        return (string) ($this->getRoleNames()->first() ?? __('nav.staff_roles'));
     }
 }

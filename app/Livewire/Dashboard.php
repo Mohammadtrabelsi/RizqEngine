@@ -15,6 +15,30 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
+/**
+ * @property-read float $salesToday
+ * @property-read int $salesCount
+ * @property-read int $txCount
+ * @property-read int $lowStockCount
+ * @property-read float $expensesToday
+ * @property-read int $expenseCount
+ * @property-read int $registerCount
+ * @property-read int $pendingOrders
+ * @property-read int $unreadCount
+ * @property-read string $salesDeltaLabel
+ * @property-read string $expensesDeltaLabel
+ * @property-read Collection<int, array{label: string, revenue: float, cogs: float, revenue_px: int, cogs_px: int}> $series
+ * @property-read float $revenueTotal
+ * @property-read float $cogsTotal
+ * @property-read float $grossProfit
+ * @property-read int $marginPct
+ * @property-read float $receivables
+ * @property-read int $debtorCount
+ * @property-read float $supplierDebt
+ * @property-read string $nextDueDate
+ * @property-read Collection<int, array{reference: string, customer: string, status: string, total: float}> $recentTransactions
+ * @property-read Collection<int, array{name: string, reorder_point: int, stock: int}> $restockQueue
+ */
 class Dashboard extends Component
 {
     #[Url]
@@ -196,7 +220,8 @@ class Dashboard extends Component
         $revenueByDay = Sale::completed()
             ->whereBetween('date', $window)
             ->groupBy(DB::raw('DATE(date)'))
-            ->pluck(DB::raw('SUM(total_amount) as amount'), DB::raw('DATE(date) as day'));
+            ->selectRaw('DATE(date) as day, SUM(total_amount) as amount')
+            ->pluck('amount', 'day');
 
         $cogsByDay = DB::table('sale_details')
             ->join('sales', 'sales.id', '=', 'sale_details.sale_id')
@@ -204,22 +229,26 @@ class Dashboard extends Component
             ->where('sales.status', 'Completed')
             ->whereBetween('sales.date', $window)
             ->groupBy(DB::raw('DATE(sales.date)'))
-            ->pluck(DB::raw('SUM(sale_details.quantity * products.product_cost) as amount'), DB::raw('DATE(sales.date) as day'));
+            ->selectRaw('DATE(sales.date) as day, SUM(sale_details.quantity * products.product_cost) as amount')
+            ->pluck('amount', 'day');
 
-        $days = collect();
+        /** @var list<array{label: string, revenue: float, cogs: float}> $rows */
+        $rows = [];
         for ($d = $start; $d->lessThanOrEqualTo($end); $d = $d->addDay()) {
             $key = $d->toDateString();
-            $days->push([
+            $rows[] = [
                 'label' => $d->isoFormat('D MMM'),
                 'revenue' => (float) ($revenueByDay[$key] ?? 0) / 100,
                 'cogs' => (float) ($cogsByDay[$key] ?? 0) / 100,
-            ]);
+            ];
         }
 
-        $max = max($days->max('revenue') ?: 1, 1);
+        $max = max(collect($rows)->max('revenue') ?: 1, 1);
 
-        return $days->map(fn (array $row) => [
-            ...$row,
+        return collect($rows)->map(fn (array $row) => [
+            'label' => $row['label'],
+            'revenue' => $row['revenue'],
+            'cogs' => $row['cogs'],
             'revenue_px' => (int) round($row['revenue'] / $max * 124),
             'cogs_px' => (int) round(min($row['cogs'], $max) / $max * 52),
         ]);
@@ -284,7 +313,7 @@ class Dashboard extends Component
             ->get(['id', 'reference', 'customer_name', 'total_amount', 'status', 'payment_status'])
             ->map(fn (Sale $sale) => [
                 'reference' => $sale->reference,
-                'customer' => $sale->customer_name ?: __('dash.walk_in'),
+                'customer' => (string) ($sale->customer_name ?: __('dash.walk_in')),
                 'status' => $this->paymentStatusKey($sale->payment_status),
                 'total' => (float) $sale->total_amount,
             ]);
