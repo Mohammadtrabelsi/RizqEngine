@@ -1,4 +1,5 @@
 <?php
+
 // app/Livewire/LandingPage.php
 
 namespace App\Livewire;
@@ -8,7 +9,8 @@ use Livewire\Component;
 
 class LandingPage extends Component
 {
-    #[Computed] public function stats(): array
+    #[Computed]
+    public function stats(): array
     {
         return [
             ['value' => '1 002',  'label' => __('landing.stat.skus')],
@@ -17,7 +19,8 @@ class LandingPage extends Component
         ];
     }
 
-    #[Computed] public function features(): array
+    #[Computed]
+    public function features(): array
     {
         return [
             ['title' => __('feature.products.title'),  'body' => __('feature.products.body')],
@@ -30,7 +33,8 @@ class LandingPage extends Component
     }
 
     /** Static hero illustration data — not real cart state. */
-    #[Computed] public function mockCart(): array
+    #[Computed]
+    public function mockCart(): array
     {
         return [
             ['name' => 'Espresso beans 1kg',   'qty' => 2, 'price' => 42.00, 'highlight' => false],

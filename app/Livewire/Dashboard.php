@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Commande;
 use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -9,6 +10,7 @@ use App\Models\Sale;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -131,17 +133,17 @@ class Dashboard extends Component
     #[Computed]
     public function pendingOrders(): int
     {
-        if (! class_exists(\App\Models\Commande::class)) {
+        if (! class_exists(Commande::class)) {
             return 0;
         }
 
-        return (int) \App\Models\Commande::query()->count();
+        return (int) Commande::query()->count();
     }
 
     #[Computed]
     public function unreadCount(): int
     {
-        if (! \Illuminate\Support\Facades\Schema::hasTable('notifications')) {
+        if (! Schema::hasTable('notifications')) {
             return 0;
         }
 

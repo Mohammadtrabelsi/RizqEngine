@@ -1,4 +1,5 @@
 <?php
+
 // routes/web.php (relevant entries)
 
 use App\Livewire\Auth\Login;

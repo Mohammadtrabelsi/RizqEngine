@@ -1,4 +1,5 @@
 <?php
+
 // app/Livewire/Auth/Login.php
 
 namespace App\Livewire\Auth;
@@ -54,7 +55,7 @@ class Login extends Component
 
     protected function throttleKey(): string
     {
-        return strtolower($this->email) . '|' . request()->ip();
+        return strtolower($this->email).'|'.request()->ip();
     }
 
     public function render()

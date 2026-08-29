@@ -2,13 +2,13 @@
 
 use App\Http\Middleware\SetLocale;
 use App\Livewire\Auth\Login as RedesignLogin;
-use App\Livewire\Dashboard as RedesignDashboard;
-use App\Livewire\LandingPage as RedesignLandingPage;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
 use App\Livewire\Customers\CustomerIndex;
 use App\Livewire\Customers\CustomerShow;
+use App\Livewire\Dashboard as RedesignDashboard;
+use App\Livewire\LandingPage as RedesignLandingPage;
 use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierIndex;
 use App\Livewire\Suppliers\SupplierShow;
