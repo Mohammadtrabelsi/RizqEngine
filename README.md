@@ -6,9 +6,25 @@
 
 > **Important Note:** This Project is ready for Production. But use code from main branch only. If you find any bug or have any suggestion please create an Issue.
 
+Triangle POS is a web-based Point of Sale and inventory management system built with Laravel and Livewire.
+
+# Tech Stack
+
+- **Backend:** Laravel 13 (PHP 8.2+)
+- **Frontend:** Livewire 4, Tailwind CSS 4, Vite
+- **Database:** MySQL / MariaDB
+- **PDF Generation:** Laravel Snappy
+
+# Requirements
+
+- PHP >= 8.2
+- Composer
+- Node.js & npm
+- MySQL or MariaDB
+
 # Local Installation
 
-- run `` git clone https://github.com/FahimAnzamDip/triangle-pos.git ``
+- run `` git clone https://github.com/Mohammadtrabelsi/triangle-pos.git ``
 - run ``composer install `` 
 - run `` npm install ``
 - run ``npm run dev``
