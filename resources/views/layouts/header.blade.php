@@ -79,6 +79,20 @@
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate text-[13.5px] font-semibold">{{ $product->product_name }}</p>
                                     <p class="font-mono text-[11.5px] text-muted">{{ $product->product_code }}</p>
+                                    @php
+                                        $notifKey = match(true) {
+                                            $product->product_quantity <= 0 => 'app.notif-desc-out',
+                                            $product->product_quantity <= $product->product_stock_alert => 'app.notif-desc-critical',
+                                            default => 'app.notif-desc-low',
+                                        };
+                                    @endphp
+                                    <p class="mt-1 text-[11.5px] leading-snug text-body">
+                                        {{ __($notifKey, [
+                                            'qty' => $product->product_quantity,
+                                            'unit' => $product->product_unit,
+                                            'alert' => $product->product_stock_alert,
+                                        ]) }}
+                                    </p>
                                 </div>
                                 <span @class([
                                     'font-mono text-sm font-semibold',
