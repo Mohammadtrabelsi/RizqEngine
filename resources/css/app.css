@@ -2231,6 +2231,65 @@ hr { display: none; }
     color: #ffffff;
 }
 
+/* Collapsible section toggle — full-width button styled like a link. */
+.app-sidebar-toggle {
+    width: 100%;
+    justify-content: space-between;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-align: inherit;
+    font-family: inherit;
+}
+/* A collapsible section that contains the active route: highlight the label
+   without the heavy accent fill (the active child sublink carries the fill). */
+.app-sidebar-item.is-active > .app-sidebar-toggle {
+    background: var(--color-ink-2);
+    color: #ffffff;
+    font-weight: 600;
+}
+.app-sidebar-caret {
+    font-size: 0.8rem !important;
+    width: auto !important;
+    height: auto !important;
+    color: rgba(255, 255, 255, 0.55);
+    transition: transform 0.2s ease;
+}
+.app-sidebar-toggle.is-open .app-sidebar-caret { transform: rotate(180deg); }
+
+/* Nested sub-navigation inside a collapsible section. Hidden until the
+   section is opened (`.is-open` toggled by the app.js submenu handler). */
+.app-sidebar-sublist {
+    list-style: none;
+    margin: 2px 0 4px;
+    padding: 0 0 0 0.4rem;
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
+    margin-inline-start: 0.7rem;
+    display: none;
+}
+.app-sidebar-sublist.is-open { display: block; }
+.app-sidebar-sublink {
+    display: block;
+    padding: 0.45rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    line-height: 1.2;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.app-sidebar-sublink:hover {
+    background: var(--color-ink-2);
+    color: #ffffff;
+    text-decoration: none;
+}
+.app-sidebar-sublink.is-active {
+    background: var(--color-accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+
 /* Shift card pinned to the bottom of the sidebar (matches the dashboard). */
 .app-sidebar-shift {
     margin: 0 0.75rem 0.9rem;
