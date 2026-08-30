@@ -30,13 +30,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('home');
-    }
-
-    return view('welcome');
-})->name('welcome');
+// Public front page — the Triangle POS landing screen.
+Route::get('/', RedesignLandingPage::class)->name('welcome');
 
 Route::get('/language/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
@@ -66,6 +61,11 @@ Route::group(['namespace' => '\\'], function () {
 });
 
 Auth::routes(['register' => false]);
+
+// Route the framework login screen to the Triangle POS sign-in. Registered
+// after Auth::routes so it wins URI matching for GET /login; the POST /login
+// handler and the other auth routes stay intact.
+Route::redirect('/login', '/sign-in')->name('login');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')
