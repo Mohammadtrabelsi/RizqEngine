@@ -9,7 +9,7 @@
 
     <ul class="c-header-nav ms-auto align-items-center gap-2">
         <li class="c-header-nav-item d-flex align-items-center">
-            @include('includes.language-switcher')
+            <livewire:locale-switcher />
         </li>
 
         @can('create_pos_sales')
