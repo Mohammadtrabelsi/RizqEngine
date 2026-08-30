@@ -1,16 +1,5 @@
-@extends('layouts.app')
-
-@section('title', __('customer.customer_details'))
-
-@section('breadcrumb')
-    <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">{{ __('customer.customers') }}</a></li>
-        <li class="breadcrumb-item active">{{ __('customer.customer_details') }}</li>
-    </ol>
-@endsection
-
-@section('content')
+{{-- Full-page Livewire component: single root, shell provides chrome. --}}
+<div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -35,4 +24,4 @@
         </div>
     </div>
 </div>
-@endsection
+</div>

@@ -1,16 +1,5 @@
-@extends('layouts.app')
-
-@section('title', $currencyId ? __('currency.edit_currency') : __('currency.add_currency'))
-
-@section('breadcrumb')
-    <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('currencies.index') }}">{{ __('currency.currencies') }}</a></li>
-        <li class="breadcrumb-item active">{{ $currencyId ? __('currency.edit_currency') : __('currency.add_currency') }}</li>
-    </ol>
-@endsection
-
-@section('content')
+{{-- Full-page Livewire component: single root, shell provides chrome. --}}
+<div>
     <div class="container-fluid">
         <form wire:submit="save">
             <div class="row">
@@ -70,4 +59,4 @@
             </div>
         </form>
     </div>
-@endsection
+</div>

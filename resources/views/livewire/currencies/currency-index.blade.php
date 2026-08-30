@@ -1,15 +1,5 @@
-@extends('layouts.app')
-
-@section('title', __('currency.currencies'))
-
-@section('breadcrumb')
-    <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
-        <li class="breadcrumb-item active">{{ __('currency.currencies') }}</li>
-    </ol>
-@endsection
-
-@section('content')
+{{-- Full-page Livewire component: single root, shell provides chrome. --}}
+<div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-6 mb-3">
@@ -65,4 +55,4 @@
             {{ $currencies->links('pagination::bootstrap-5') }}
         </div>
     </div>
-@endsection
+</div>

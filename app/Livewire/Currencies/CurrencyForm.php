@@ -71,6 +71,7 @@ class CurrencyForm extends Component
 
     public function render()
     {
-        return view('livewire.currencies.currency-form');
+        return view('livewire.currencies.currency-form')
+            ->layout('components.layouts.admin', ['title' => $this->currencyId ? __('currency.edit_currency') : __('currency.add_currency')]);
     }
 }

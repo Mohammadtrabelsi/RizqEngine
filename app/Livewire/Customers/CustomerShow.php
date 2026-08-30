@@ -19,6 +19,7 @@ class CustomerShow extends Component
 
     public function render()
     {
-        return view('livewire.customers.customer-show');
+        return view('livewire.customers.customer-show')
+            ->layout('components.layouts.admin', ['title' => __('customer.customer_details')]);
     }
 }

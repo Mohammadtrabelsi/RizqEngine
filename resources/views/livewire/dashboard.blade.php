@@ -1,65 +1,7 @@
 {{-- resources/views/livewire/dashboard.blade.php --}}
-<div x-data="{ drawer: false }" class="grid min-h-screen grid-cols-1 bg-canvas-2 lg:grid-cols-[260px_1fr]">
-    {{-- Desktop sidebar --}}
-    <div class="hidden lg:block">
-        <x-app-sidebar active="dashboard" :order-count="$this->pendingOrders" />
-    </div>
-
-    {{-- Mobile off-canvas drawer --}}
-    <div x-show="drawer" x-cloak class="fixed inset-0 z-50 lg:hidden" style="display:none">
-        <div class="absolute inset-0 bg-ink/50" @click="drawer = false"></div>
-        <div class="absolute inset-y-0 left-0 w-[260px]" @click.outside="drawer = false">
-            <x-app-sidebar active="dashboard" :order-count="$this->pendingOrders" />
-        </div>
-    </div>
-
-    <main class="min-w-0">
-        <header class="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-4 border-b border-hairline bg-canvas px-5 py-4 lg:px-8">
-            <div class="flex items-center gap-3">
-                <button type="button" @click="drawer = true" class="grid h-[38px] w-[38px] place-items-center rounded-ctl border border-hairline bg-white lg:hidden" aria-label="Menu">
-                    <svg class="h-4 w-4 text-ink-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-                </button>
-                <div>
-                    <h1 class="font-display text-[22px] font-bold tracking-[-0.02em]">{{ __('dash.title') }}</h1>
-                    <p class="mt-0.5 text-[13px] text-body">
-                        {{ now()->isoFormat('dddd, D MMMM YYYY') }} · {{ __('dash.all_registers') }}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2.5">
-                <livewire:locale-switcher />
-
-                @if (\Illuminate\Support\Facades\Route::has('app.pos.index'))
-                    <a href="{{ route('app.pos.index') }}" class="hidden rounded-ctl bg-accent px-[18px] py-2.5 text-[13.5px] font-semibold text-white transition-colors hover:bg-accent-hover sm:inline-block">
-                        {{ __('dash.open_pos') }}
-                    </a>
-                @endif
-
-                <button type="button" class="relative grid h-[38px] w-[38px] place-items-center rounded-ctl border border-hairline bg-white">
-                    <svg class="h-4 w-4 text-ink-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                    @if ($this->unreadCount)
-                        <span class="absolute -right-1.5 -top-1.5 rounded-full bg-danger px-1.5 font-mono text-[10px] font-semibold text-white">
-                            {{ $this->unreadCount > 9 ? '9+' : $this->unreadCount }}
-                        </span>
-                    @endif
-                </button>
-
-                <div class="flex items-center gap-2.5 rounded-full border border-hairline bg-white py-[5px] pl-[5px] pr-3">
-                    <span class="grid h-[30px] w-[30px] place-items-center rounded-full bg-ink font-mono text-xs font-semibold text-white">
-                        {{ auth()->user()->initials() }}
-                    </span>
-                    <span class="hidden sm:block">
-                        <span class="block text-[13px] font-bold leading-tight">{{ auth()->user()->name }}</span>
-                        <span class="flex items-center gap-1.5 text-[11.5px] text-ok">
-                            <span class="h-[5px] w-[5px] rounded-full bg-ok"></span>{{ __('dash.online') }}
-                        </span>
-                    </span>
-                </div>
-            </div>
-        </header>
-
-        <div class="grid gap-5 px-5 pb-12 pt-7 lg:px-8">
+{{-- Content only: the sidebar, header and footer come from the shared admin shell. --}}
+<div>
+    <div class="grid gap-5 px-5 pb-12 pt-7 lg:px-8">
             {{-- 1. Range filter --}}
             <form wire:submit="apply" class="flex flex-wrap items-end gap-3 rounded-card border border-hairline bg-white p-[18px]">
                 <div>
@@ -214,5 +156,4 @@
                 </section>
             </div>
         </div>
-    </main>
 </div>
