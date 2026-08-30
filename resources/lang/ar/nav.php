@@ -1,14 +1,17 @@
+<?php
+
 return [
     'access_control' => 'التحكم في الوصول',
     'customers' => 'العملاء',
     'dashboard' => 'لوحة التحكم',
     'expenses' => 'المصروفات',
     'features' => 'الميزات',
-    'group.$groupKey' => 'المجموعة.$groupKey',
-    'group.insight' => 'رؤى المجموعة',
-    'group.overview' => 'نظرة عامة على المجموعة',
-    'group.people' => 'أشخاص المجموعة',
-    'group.transactions' => 'معاملات المجموعة',
+    'group' => [
+        'insight' => 'رؤى',
+        'overview' => 'نظرة عامة',
+        'people' => 'الأشخاص',
+        'transactions' => 'المعاملات',
+    ],
     'orders' => 'الطلبات',
     'point_of_sale' => 'نقطة البيع',
     'products' => 'المنتجات',
