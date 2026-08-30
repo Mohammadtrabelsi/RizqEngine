@@ -59,6 +59,24 @@ document.addEventListener('click', (event) => {
     trigger.setAttribute('aria-expanded', String(willShow));
 });
 
+// --- Sidebar submenu toggle ------------------------------------------------
+// Expands/collapses a collapsible sidebar section. The button carries
+// `.is-open` (drives the caret) and its sibling `.app-sidebar-sublist` carries
+// `.is-open` (drives visibility). Server-rendered state opens the section that
+// contains the current route.
+document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-toggle="submenu"]');
+    if (!trigger) return;
+    event.preventDefault();
+    const sublist = trigger.parentElement
+        ? trigger.parentElement.querySelector('.app-sidebar-sublist')
+        : null;
+    const willOpen = !trigger.classList.contains('is-open');
+    trigger.classList.toggle('is-open', willOpen);
+    trigger.setAttribute('aria-expanded', String(willOpen));
+    if (sublist) sublist.classList.toggle('is-open', willOpen);
+});
+
 // --- Price detail toggle (cart) --------------------------------------------
 // Replaces the former Alpine `x-data`/`x-show` toggle: clicking (or pressing
 // Enter/Space on) the net unit price reveals the price breakdown.
