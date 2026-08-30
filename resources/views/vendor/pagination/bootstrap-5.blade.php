@@ -1,3 +1,11 @@
+@php
+    // The page name this paginator uses (defaults to "page"). Inside a
+    // Livewire component the wire:click handlers below drive paging through
+    // an AJAX round-trip instead of a full browser navigation; outside
+    // Livewire the wire:* attributes are inert and the href fallback is used.
+    $pageName = method_exists($paginator, 'getPageName') ? $paginator->getPageName() : 'page';
+@endphp
+
 @if ($paginator->hasPages())
     <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex items-center justify-center">
         <ul class="inline-flex flex-wrap items-center gap-1">
@@ -9,6 +17,7 @@
             @else
                 <li>
                     <a href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="{{ __('pagination.previous') }}"
+                       wire:click.prevent="previousPage('{{ $pageName }}')" wire:loading.attr="disabled"
                        class="inline-flex items-center justify-center min-w-[2.25rem] h-9 px-3 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-300 transition-colors">&laquo;</a>
                 </li>
             @endif
@@ -26,12 +35,13 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li aria-current="page">
+                            <li aria-current="page" wire:key="paginator-{{ $pageName }}-page-{{ $page }}">
                                 <span class="inline-flex items-center justify-center min-w-[2.25rem] h-9 px-3 rounded-lg border border-indigo-600 bg-indigo-600 text-sm font-semibold text-white shadow-sm select-none">{{ $page }}</span>
                             </li>
                         @else
-                            <li>
+                            <li wire:key="paginator-{{ $pageName }}-page-{{ $page }}">
                                 <a href="{{ $url }}" aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
+                                   wire:click.prevent="gotoPage({{ $page }}, '{{ $pageName }}')" wire:loading.attr="disabled"
                                    class="inline-flex items-center justify-center min-w-[2.25rem] h-9 px-3 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-300 transition-colors">{{ $page }}</a>
                             </li>
                         @endif
@@ -43,6 +53,7 @@
             @if ($paginator->hasMorePages())
                 <li>
                     <a href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="{{ __('pagination.next') }}"
+                       wire:click.prevent="nextPage('{{ $pageName }}')" wire:loading.attr="disabled"
                        class="inline-flex items-center justify-center min-w-[2.25rem] h-9 px-3 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-300 transition-colors">&raquo;</a>
                 </li>
             @else

@@ -1,14 +1,17 @@
+<?php
+
 return [
     'access_control' => 'Contrôle d\'accès',
     'customers' => 'Clients',
     'dashboard' => 'Tableau de bord',
     'expenses' => 'Dépenses',
     'features' => 'Fonctionnalités',
-    'group.$groupKey' => 'Groupe.$groupKey',
-    'group.insight' => 'Aperçu du groupe',
-    'group.overview' => 'Vue d\'ensemble du groupe',
-    'group.people' => 'Personnes du groupe',
-    'group.transactions' => 'Transactions du groupe',
+    'group' => [
+        'insight' => 'Aperçu',
+        'overview' => 'Vue d\'ensemble',
+        'people' => 'Personnes',
+        'transactions' => 'Transactions',
+    ],
     'orders' => 'Commandes',
     'point_of_sale' => 'Point de vente',
     'products' => 'Produits',
