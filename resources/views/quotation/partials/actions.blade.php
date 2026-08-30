@@ -3,6 +3,18 @@
         <i class="bi bi-three-dots-vertical"></i>
     </button>
     <div class="dropdown-menu">
+        @can('convert_quotations')
+            @if(! $data->isConverted())
+                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('convert-qt-{{ $data->id }}').submit();">
+                    <i class="bi bi-arrow-right-circle mr-2 text-success" style="line-height: 1;"></i> {{ __('boncommande.transform-to-bon-commande') }}
+                    <form id="convert-qt-{{ $data->id }}" class="d-none" action="{{ route('quotations.convert', $data->id) }}" method="POST">@csrf</form>
+                </button>
+            @else
+                <a href="{{ route('bon-commandes.show', $data->bonCommande->id) }}" class="dropdown-item">
+                    <i class="bi bi-box-arrow-up-right mr-2 text-info" style="line-height: 1;"></i> {{ __('boncommande.view-bon-commande') }}
+                </a>
+            @endif
+        @endcan
         @can('create_quotation_sales')
             <a href="{{ route('quotation-sales.create', $data) }}" class="dropdown-item">
                 <i class="bi bi-check2-circle mr-2 text-success" style="line-height: 1;"></i> Make Sale

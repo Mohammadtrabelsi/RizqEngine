@@ -18,7 +18,7 @@ class PaymentStatusService
     public const PAID = 'Paid';
 
     /**
-     * @param  float|int  $dueAmount    Outstanding amount after the payment/document.
+     * @param  float|int  $dueAmount  Outstanding amount after the payment/document.
      * @param  float|int  $totalAmount  Document grand total.
      *
      * Both amounts must be expressed in the same unit (the codebase compares

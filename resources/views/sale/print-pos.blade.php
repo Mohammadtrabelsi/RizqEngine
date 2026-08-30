@@ -7,6 +7,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        @page {
+            margin: 8px 5px;
+        }
         * {
             font-size: 12px;
             line-height: 18px;

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'access_control' => 'Contrôle d\'accès',
+    'customers' => 'Clients',
+    'dashboard' => 'Tableau de bord',
+    'expenses' => 'Dépenses',
+    'features' => 'Fonctionnalités',
+    'group' => [
+        'insight' => 'Aperçu',
+        'overview' => 'Vue d\'ensemble',
+        'people' => 'Personnes',
+        'transactions' => 'Transactions',
+    ],
+    'orders' => 'Commandes',
+    'point_of_sale' => 'Point de vente',
+    'products' => 'Produits',
+    'quotes' => 'Devis',
+    'reporting' => 'Rapports',
+    'reports' => 'Rapports',
+    'settings' => 'Paramètres',
+    'staff_roles' => 'Rôles du personnel',
+    'suppliers' => 'Fournisseurs',
+    'transactions' => 'Transactions',
+];

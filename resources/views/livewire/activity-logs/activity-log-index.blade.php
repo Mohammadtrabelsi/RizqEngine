@@ -21,6 +21,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $activities->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($activities as $activity)
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="activity-{{ $activity->id }}">
@@ -46,9 +47,9 @@
                             <li class="list-group-item d-flex justify-content-between px-0"><span>User</span><span>{{ $activity->causer->name ?? 'System' }}</span></li>
                         </ul>
                         <div class="btn-group">
-                            <a href="{{ route('activity-logs.show', $activity->id) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
+                            <a href="{{ route('activity-logs.show', $activity->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
                             @can('delete_activity_logs')
-                                <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $activity->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $activity->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
                             @endcan
                         </div>
                     </div>
@@ -62,6 +63,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $activities->links() }}
+        {{ $activities->links('pagination::bootstrap-5') }}
     </div>
 </div>

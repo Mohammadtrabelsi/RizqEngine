@@ -89,6 +89,7 @@ class CustomerForm extends Component
 
     public function render()
     {
-        return view('livewire.customers.customer-form');
+        return view('livewire.customers.customer-form')
+            ->layout('components.layouts.admin', ['title' => $this->customerId ? __('customer.edit') : __('customer.create')]);
     }
 }

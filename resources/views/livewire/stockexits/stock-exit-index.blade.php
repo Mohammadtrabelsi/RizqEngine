@@ -12,6 +12,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $stockExits->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($stockExits as $stockExit)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="stock-exit-{{ $stockExit->id }}">
@@ -33,7 +34,7 @@
                         </ul>
                         <div class="btn-group">
                             @can('show_stock_exits')
-                                <a href="{{ route('stock-exits.show', $stockExit->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('stock-exits.show', $stockExit->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
                             @endcan
                             @can('create_stock_entries')
                                 @if($stockExit->status !== \App\Models\StockExit::STATUS_CLOSED)
@@ -41,7 +42,7 @@
                                 @endif
                             @endcan
                             @can('delete_stock_exits')
-                                <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $stockExit->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $stockExit->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
                             @endcan
                         </div>
                     </div>
@@ -55,6 +56,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $stockExits->links() }}
+        {{ $stockExits->links('pagination::bootstrap-5') }}
     </div>
 </div>

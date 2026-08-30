@@ -1,8 +1,17 @@
 <?php
 
 use App\Http\Middleware\SetLocale;
+use App\Livewire\Auth\Login as RedesignLogin;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
+use App\Livewire\Customers\CustomerForm;
+use App\Livewire\Customers\CustomerIndex;
+use App\Livewire\Customers\CustomerShow;
+use App\Livewire\Dashboard as RedesignDashboard;
+use App\Livewire\LandingPage as RedesignLandingPage;
+use App\Livewire\Suppliers\SupplierForm;
+use App\Livewire\Suppliers\SupplierIndex;
+use App\Livewire\Suppliers\SupplierShow;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Models\Customer;
@@ -12,7 +21,7 @@ use App\Models\Quotation;
 use App\Models\Sale;
 use App\Models\SaleReturn;
 use App\Models\Supplier;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,13 +30,12 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('home');
-    }
-
-    return view('welcome');
-})->name('welcome');
+// Public front page — the Triangle POS landing screen.
+// Namespace reset (\\) so the class-string action is not prefixed with the
+// controller namespace configured in RouteServiceProvider.
+Route::group(['namespace' => '\\'], function () {
+    Route::get('/', RedesignLandingPage::class)->name('welcome');
+});
 
 Route::get('/language/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
@@ -37,7 +45,31 @@ Route::get('/language/{locale}', function (string $locale) {
     return redirect()->back();
 })->name('language.switch');
 
+/*
+|--------------------------------------------------------------------------
+| Redesign screens (landing / sign-in / dashboard)
+|--------------------------------------------------------------------------
+| Modern redesign from the design handoff. Mounted on dedicated routes so the
+| existing welcome / auth / home screens keep working unchanged.
+*/
+Route::group(['namespace' => '\\'], function () {
+    Route::get('/landing', RedesignLandingPage::class)->name('redesign.landing');
+
+    Route::middleware('guest')->group(function () {
+        Route::get('/sign-in', RedesignLogin::class)->name('redesign.login');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/dashboard', RedesignDashboard::class)->name('dashboard');
+    });
+});
+
 Auth::routes(['register' => false]);
+
+// Route the framework login screen to the Triangle POS sign-in. Registered
+// after Auth::routes so it wins URI matching for GET /login; the POST /login
+// handler and the other auth routes stay intact.
+Route::redirect('/login', '/sign-in')->name('login');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')
@@ -71,11 +103,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
 
-Route::group(['middleware' => 'auth'], function () {
-    // Customers
-    Route::resource('customers', 'CustomersController');
-    // Suppliers
-    Route::resource('suppliers', 'SuppliersController');
+// Parties — customers & suppliers management (full-page Livewire UI under the /parties prefix).
+// Route names are kept unprefixed (customers.*, suppliers.*) for backward compatibility.
+Route::group(['middleware' => 'auth', 'prefix' => 'parties', 'namespace' => '\\'], function () {
+    // Customers (full-page Livewire components)
+    Route::get('customers', CustomerIndex::class)->name('customers.index');
+    Route::get('customers/create', CustomerForm::class)->name('customers.create');
+    Route::get('customers/{customer}', CustomerShow::class)->name('customers.show');
+    Route::get('customers/{customer}/edit', CustomerForm::class)->name('customers.edit');
+
+    // Suppliers (full-page Livewire components)
+    Route::get('suppliers', SupplierIndex::class)->name('suppliers.index');
+    Route::get('suppliers/create', SupplierForm::class)->name('suppliers.create');
+    Route::get('suppliers/{supplier}', SupplierShow::class)->name('suppliers.show');
+    Route::get('suppliers/{supplier}/edit', SupplierForm::class)->name('suppliers.edit');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -194,11 +235,7 @@ Route::group(['middleware' => 'auth'], function () {
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('sale.print-pos', [
             'sale' => $sale,
-        ])->setPaper('a7')
-            ->setOption('margin-top', 8)
-            ->setOption('margin-bottom', 8)
-            ->setOption('margin-left', 5)
-            ->setOption('margin-right', 5);
+        ])->setPaper('a7');
 
         return $pdf->stream('sale-'.$sale->reference.'.pdf');
     })->name('sales.pos.pdf');
@@ -258,6 +295,35 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/quotation-sales/{quotation}', 'QuotationSalesController')->name('quotation-sales.create');
     // quotations
     Route::resource('quotations', 'QuotationController');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    // Devis → Bon de Commande → Commande → Facture workflow.
+
+    // Devis → Bon de Commande
+    Route::post('/quotations/{quotation}/convert-to-bon-commande', 'Convert\QuotationToBonCommandeController')
+        ->name('quotations.convert');
+
+    // Bon de Commande
+    Route::resource('bon-commandes', 'BonCommandeController')
+        ->parameters(['bon-commandes' => 'bonCommande'])
+        ->only(['index', 'show', 'edit', 'update', 'destroy']);
+    Route::post('/bon-commandes/{bonCommande}/confirm', 'BonCommandeController@confirm')->name('bon-commandes.confirm');
+    Route::post('/bon-commandes/{bonCommande}/cancel', 'BonCommandeController@cancel')->name('bon-commandes.cancel');
+
+    // Bon de Commande → Commande
+    Route::post('/bon-commandes/{bonCommande}/convert-to-commande', 'Convert\BonCommandeToCommandeController')
+        ->name('bon-commandes.convert');
+
+    // Commande
+    Route::resource('commandes', 'CommandeController')
+        ->parameters(['commandes' => 'commande'])
+        ->only(['index', 'show', 'destroy']);
+    Route::post('/commandes/{commande}/confirm', 'CommandeController@confirm')->name('commandes.confirm');
+
+    // Commande → Facture (Sale)
+    Route::post('/commandes/{commande}/generate-facture', 'Convert\CommandeToFactureController')
+        ->name('commandes.convert');
 });
 
 Route::group(['middleware' => 'auth'], function () {

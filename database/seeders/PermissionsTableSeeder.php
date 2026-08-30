@@ -57,6 +57,19 @@ class PermissionsTableSeeder extends Seeder
             'create_quotation_sales',
             // Send Quotation On Email
             'send_quotation_mails',
+            // Devis → Bon de Commande → Commande → Facture workflow
+            'convert_quotations',
+            'access_bon_commandes',
+            'show_bon_commandes',
+            'edit_bon_commandes',
+            'delete_bon_commandes',
+            'confirm_bon_commandes',
+            'convert_bon_commandes',
+            'access_commandes',
+            'show_commandes',
+            'delete_commandes',
+            'confirm_commandes',
+            'convert_commandes',
             // Expenses
             'access_expenses',
             'create_expenses',

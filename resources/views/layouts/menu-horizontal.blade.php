@@ -1,7 +1,8 @@
 {{--
     Triangle POS — primary navigation as a horizontal menu bar.
-    Rendered inside the content area (below the header) instead of a
-    vertical sidebar. Authored with Tailwind CSS utilities and components.
+    Each top-level section is a direct route link. The section's own
+    items are rendered inline in a secondary navbar (menu-secondary)
+    instead of hover dropdowns.
 --}}
 <nav class="app-topnav" aria-label="{{ __('menu.products') }}">
     <div class="container-fluid">
@@ -16,166 +17,74 @@
                 </li>
 
                 @can('access_products')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') || request()->routeIs('barcode.print') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="app-topnav-item {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') || request()->routeIs('barcode.print') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('products.index') }}">
                         <i class="bi bi-journal-bookmark"></i> <span>{{ __('menu.products') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        @can('access_product_categories')
-                            <a class="dropdown-item {{ request()->routeIs('product-categories.*') ? 'active' : '' }}" href="{{ route('product-categories.index') }}"><i class="bi bi-collection mr-2"></i>{{ __('menu.categories') }}</a>
-                        @endcan
-                        @can('create_products')
-                            <a class="dropdown-item {{ request()->routeIs('products.create') ? 'active' : '' }}" href="{{ route('products.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-product') }}</a>
-                        @endcan
-                        <a class="dropdown-item {{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-products') }}</a>
-                        @can('print_barcodes')
-                            <a class="dropdown-item {{ request()->routeIs('barcode.print') ? 'active' : '' }}" href="{{ route('barcode.print') }}"><i class="bi bi-printer mr-2"></i>{{ __('menu.print-barcode') }}</a>
-                        @endcan
-                    </div>
                 </li>
                 @endcan
 
                 @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
-                <li class="app-topnav-item dropdown {{ request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="app-topnav-item {{ request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_sales') ? route('sales.index') : (auth()->user()->can('access_purchases') ? route('purchases.index') : route('adjustments.index')) }}">
                         <i class="bi bi-arrow-left-right"></i> <span>{{ __('menu.transactions') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        @can('access_adjustments')
-                            <div class="dropdown-header"><i class="bi bi-clipboard-check mr-2"></i>{{ __('menu.stock-adjustments') }}</div>
-                            @can('create_adjustments')
-                                <a class="dropdown-item {{ request()->routeIs('adjustments.create') ? 'active' : '' }}" href="{{ route('adjustments.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-adjustment') }}</a>
-                            @endcan
-                            <a class="dropdown-item {{ request()->routeIs('adjustments.index') ? 'active' : '' }}" href="{{ route('adjustments.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-adjustments') }}</a>
-                        @endcan
-
-                        @canany(['access_stock_exits', 'create_stock_exits'])
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-header"><i class="bi bi-box-arrow-up mr-2"></i>{{ __('menu.stock-exits') }}</div>
-                            @can('create_stock_exits')
-                                <a class="dropdown-item {{ request()->routeIs('stock-exits.create') ? 'active' : '' }}" href="{{ route('stock-exits.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-stock-exit') }}</a>
-                            @endcan
-                            @can('access_stock_exits')
-                                <a class="dropdown-item {{ request()->routeIs('stock-exits.index') ? 'active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-stock-exits') }}</a>
-                            @endcan
-                        @endcanany
-
-                        @can('access_purchases')
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-header"><i class="bi bi-bag mr-2"></i>{{ __('menu.purchases') }}</div>
-                            @can('create_purchase')
-                                <a class="dropdown-item {{ request()->routeIs('purchases.create') ? 'active' : '' }}" href="{{ route('purchases.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-purchase') }}</a>
-                            @endcan
-                            <a class="dropdown-item {{ request()->routeIs('purchases.index') ? 'active' : '' }}" href="{{ route('purchases.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-purchases') }}</a>
-                        @endcan
-
-                        @can('access_purchase_returns')
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-header"><i class="bi bi-arrow-return-right mr-2"></i>{{ __('menu.purchase-returns') }}</div>
-                            @can('create_purchase_returns')
-                                <a class="dropdown-item {{ request()->routeIs('purchase-returns.create') ? 'active' : '' }}" href="{{ route('purchase-returns.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-purchase-return') }}</a>
-                            @endcan
-                            <a class="dropdown-item {{ request()->routeIs('purchase-returns.index') ? 'active' : '' }}" href="{{ route('purchase-returns.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-purchase-returns') }}</a>
-                        @endcan
-
-                        @can('access_sales')
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-header"><i class="bi bi-receipt mr-2"></i>{{ __('menu.sales') }}</div>
-                            @can('create_sales')
-                                <a class="dropdown-item {{ request()->routeIs('sales.create') ? 'active' : '' }}" href="{{ route('sales.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-sale') }}</a>
-                            @endcan
-                            <a class="dropdown-item {{ request()->routeIs('sales.index') ? 'active' : '' }}" href="{{ route('sales.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-sales') }}</a>
-                        @endcan
-
-                        @can('access_sale_returns')
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-header"><i class="bi bi-arrow-return-left mr-2"></i>{{ __('menu.sale-returns') }}</div>
-                            @can('create_sale_returns')
-                                <a class="dropdown-item {{ request()->routeIs('sale-returns.create') ? 'active' : '' }}" href="{{ route('sale-returns.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-sale-return') }}</a>
-                            @endcan
-                            <a class="dropdown-item {{ request()->routeIs('sale-returns.index') ? 'active' : '' }}" href="{{ route('sale-returns.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-sale-returns') }}</a>
-                        @endcan
-                    </div>
                 </li>
                 @endcanany
 
                 @can('access_quotations')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('quotations.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="app-topnav-item {{ request()->routeIs('quotations.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('quotations.index') }}">
                         <i class="bi bi-cart-check"></i> <span>{{ __('menu.quotations') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        @can('create_adjustments')
-                            <a class="dropdown-item {{ request()->routeIs('quotations.create') ? 'active' : '' }}" href="{{ route('quotations.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-quotation') }}</a>
-                        @endcan
-                        <a class="dropdown-item {{ request()->routeIs('quotations.index') ? 'active' : '' }}" href="{{ route('quotations.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-quotations') }}</a>
-                    </div>
                 </li>
                 @endcan
+
+                @canany(['access_bon_commandes', 'access_commandes'])
+                <li class="app-topnav-item {{ request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_bon_commandes') ? route('bon-commandes.index') : route('commandes.index') }}">
+                        <i class="bi bi-clipboard-check"></i> <span>{{ __('menu.orders') }}</span>
+                    </a>
+                </li>
+                @endcanany
 
                 @can('access_expenses')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="app-topnav-item {{ request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('expenses.index') }}">
                         <i class="bi bi-wallet2"></i> <span>{{ __('menu.expenses') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        @can('access_expense_categories')
-                            <a class="dropdown-item {{ request()->routeIs('expense-categories.*') ? 'active' : '' }}" href="{{ route('expense-categories.index') }}"><i class="bi bi-collection mr-2"></i>{{ __('menu.categories') }}</a>
-                        @endcan
-                        @can('create_expenses')
-                            <a class="dropdown-item {{ request()->routeIs('expenses.create') ? 'active' : '' }}" href="{{ route('expenses.create') }}"><i class="bi bi-journal-plus mr-2"></i>{{ __('menu.create-expense') }}</a>
-                        @endcan
-                        <a class="dropdown-item {{ request()->routeIs('expenses.index') ? 'active' : '' }}" href="{{ route('expenses.index') }}"><i class="bi bi-journals mr-2"></i>{{ __('menu.all-expenses') }}</a>
-                    </div>
                 </li>
                 @endcan
 
-                @can('access_customers|access_suppliers')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('customers.*') || request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="bi bi-people"></i> <span>{{ __('menu.parties') }}</span>
+                @can('access_customers')
+                <li class="app-topnav-item {{ request()->routeIs('customers.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('customers.index') }}">
+                        <i class="bi bi-people"></i> <span>{{ __('menu.customers') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        @can('access_customers')
-                            <a class="dropdown-item {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customers.index') }}"><i class="bi bi-people-fill mr-2"></i>{{ __('menu.customers') }}</a>
-                        @endcan
-                        @can('access_suppliers')
-                            <a class="dropdown-item {{ request()->routeIs('suppliers.*') ? 'active' : '' }}" href="{{ route('suppliers.index') }}"><i class="bi bi-people-fill mr-2"></i>{{ __('menu.suppliers') }}</a>
-                        @endcan
-                    </div>
+                </li>
+                @endcan
+
+                @can('access_suppliers')
+                <li class="app-topnav-item {{ request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('suppliers.index') }}">
+                        <i class="bi bi-people"></i> <span>{{ __('menu.suppliers') }}</span>
+                    </a>
                 </li>
                 @endcan
 
                 @can('access_reports')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('*-report.index') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="app-topnav-item {{ request()->routeIs('*-report.index') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('profit-loss-report.index') }}">
                         <i class="bi bi-graph-up"></i> <span>{{ __('menu.reports') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item {{ request()->routeIs('profit-loss-report.index') ? 'active' : '' }}" href="{{ route('profit-loss-report.index') }}"><i class="bi bi-clipboard-data mr-2"></i>{{ __('menu.profit-loss-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('payments-report.index') ? 'active' : '' }}" href="{{ route('payments-report.index') }}"><i class="bi bi-clipboard-data mr-2"></i>{{ __('menu.payments-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('sales-report.index') ? 'active' : '' }}" href="{{ route('sales-report.index') }}"><i class="bi bi-clipboard-data mr-2"></i>{{ __('menu.sales-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('purchases-report.index') ? 'active' : '' }}" href="{{ route('purchases-report.index') }}"><i class="bi bi-clipboard-data mr-2"></i>{{ __('menu.purchases-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('sales-return-report.index') ? 'active' : '' }}" href="{{ route('sales-return-report.index') }}"><i class="bi bi-clipboard-data mr-2"></i>{{ __('menu.sales-return-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('purchases-return-report.index') ? 'active' : '' }}" href="{{ route('purchases-return-report.index') }}"><i class="bi bi-clipboard-data mr-2"></i>{{ __('menu.purchases-return-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('inventory-valuation-report.index') ? 'active' : '' }}" href="{{ route('inventory-valuation-report.index') }}"><i class="bi bi-box-seam mr-2"></i>{{ __('menu.inventory-valuation-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('low-stock-report.index') ? 'active' : '' }}" href="{{ route('low-stock-report.index') }}"><i class="bi bi-exclamation-triangle mr-2"></i>{{ __('menu.low-stock-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('stock-movement-report.index') ? 'active' : '' }}" href="{{ route('stock-movement-report.index') }}"><i class="bi bi-arrow-left-right mr-2"></i>{{ __('menu.stock-movement-report') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('product-movement-report.index') ? 'active' : '' }}" href="{{ route('product-movement-report.index') }}"><i class="bi bi-speedometer2 mr-2"></i>{{ __('menu.product-movement-report') }}</a>
-                    </div>
                 </li>
                 @endcan
 
                 @can('access_user_management')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('users*') || request()->routeIs('roles*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="app-topnav-item {{ request()->routeIs('users*') || request()->routeIs('roles*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('users.index') }}">
                         <i class="bi bi-people"></i> <span>{{ __('menu.user-management') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item {{ request()->routeIs('users.create') ? 'active' : '' }}" href="{{ route('users.create') }}"><i class="bi bi-person-plus mr-2"></i>{{ __('menu.create-user') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}"><i class="bi bi-person-lines-fill mr-2"></i>{{ __('menu.all-users') }}</a>
-                        <a class="dropdown-item {{ request()->routeIs('roles*') ? 'active' : '' }}" href="{{ route('roles.index') }}"><i class="bi bi-key mr-2"></i>{{ __('menu.roles-permissions') }}</a>
-                    </div>
                 </li>
                 @endcan
 
@@ -187,24 +96,13 @@
                 </li>
                 @endcan
 
-                @can('access_currencies|access_settings')
-                <li class="app-topnav-item dropdown {{ request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                @canany(['access_currencies', 'access_settings'])
+                <li class="app-topnav-item {{ request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_settings') ? route('settings.index') : (auth()->user()->can('access_units') ? route('units.index') : route('currencies.index')) }}">
                         <i class="bi bi-gear"></i> <span>{{ __('menu.settings') }}</span>
                     </a>
-                    <div class="dropdown-menu">
-                        @can('access_units')
-                            <a class="dropdown-item {{ request()->routeIs('units*') ? 'active' : '' }}" href="{{ route('units.index') }}"><i class="bi bi-calculator mr-2"></i>{{ __('menu.units') }}</a>
-                        @endcan
-                        @can('access_currencies')
-                            <a class="dropdown-item {{ request()->routeIs('currencies*') ? 'active' : '' }}" href="{{ route('currencies.index') }}"><i class="bi bi-cash-stack mr-2"></i>{{ __('menu.currencies') }}</a>
-                        @endcan
-                        @can('access_settings')
-                            <a class="dropdown-item {{ request()->routeIs('settings*') ? 'active' : '' }}" href="{{ route('settings.index') }}"><i class="bi bi-sliders mr-2"></i>{{ __('menu.system-settings') }}</a>
-                        @endcan
-                    </div>
                 </li>
-                @endcan
+                @endcanany
 
                 <li class="app-topnav-item {{ request()->routeIs('documentation.*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ route('documentation.index') }}">
@@ -215,3 +113,5 @@
         </div>
     </div>
 </nav>
+
+@include('layouts.menu-secondary')

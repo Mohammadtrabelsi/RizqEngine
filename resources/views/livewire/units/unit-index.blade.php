@@ -1,15 +1,5 @@
-@extends('layouts.app')
-
-@section('title', __('units.units'))
-
-@section('breadcrumb')
-    <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('units.home') }}</a></li>
-        <li class="breadcrumb-item active">{{ __('units.units') }}</li>
-    </ol>
-@endsection
-
-@section('content')
+{{-- Full-page Livewire component: single root, shell provides chrome. --}}
+<div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-6 mb-3">
@@ -22,6 +12,7 @@
             </div>
         </div>
 
+        <div class="d-flex justify-content-center mb-3">{{ $units->links('pagination::bootstrap-5') }}</div>
         <div class="row">
             @forelse($units as $unit)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="unit-{{ $unit->id }}">
@@ -47,7 +38,7 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            {{ $units->links() }}
+            {{ $units->links('pagination::bootstrap-5') }}
         </div>
     </div>
-@endsection
+</div>

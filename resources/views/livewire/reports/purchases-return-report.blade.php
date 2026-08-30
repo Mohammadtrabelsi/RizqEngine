@@ -81,6 +81,7 @@
                             <span class="sr-only">{{ __('report.loading') }}</span>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center mb-3">{{ $purchase_returns->links('pagination::bootstrap-5') }}</div>
                     <div class="row">
                         @forelse($purchase_returns as $purchase_return)
                             <div class="col-xl-4 col-lg-6 mb-4">
@@ -121,7 +122,7 @@
                         @endforelse
                     </div>
                     <div @class(['mt-3' => $purchase_returns->hasPages()])>
-                        {{ $purchase_returns->links() }}
+                        {{ $purchase_returns->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>

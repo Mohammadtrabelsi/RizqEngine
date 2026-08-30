@@ -12,6 +12,15 @@
 
 @section('content')
     <div class="container-fluid">
+        @if($sale->commande)
+            @include('partials.document-chain', [
+                'current' => 'sale',
+                'quotation' => optional(optional($sale->commande->bonCommande))->quotation,
+                'bonCommande' => optional($sale->commande)->bonCommande,
+                'commande' => $sale->commande,
+                'sale' => $sale,
+            ])
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">

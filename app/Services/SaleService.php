@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\ConversionException;
+use App\Exceptions\InsufficientStockException;
+use App\Models\Commande;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
@@ -210,6 +213,111 @@ class SaleService
             $cart->destroy();
 
             return $sale;
+        });
+    }
+
+    /**
+     * Generate the Facture (Sale) for a confirmed Commande — the final step of
+     * the Devis → Bon de Commande → Commande → Facture workflow.
+     *
+     * This reuses the existing Sale/invoice implementation rather than adding a
+     * second one: the resulting document is an ordinary Sale, linked back to its
+     * Commande via commande_id (unique => a Commande is invoiced at most once).
+     * The raw integer-cent columns are copied verbatim from the Commande so the
+     * amounts and taxes match exactly.
+     *
+     * The Facture is created as a "Pending" sale by default, so it does not move
+     * stock on generation; it can then be completed through the normal Sale
+     * flow, which handles stock via {@see StockService}. Pass an override to
+     * change status / payment on generation.
+     *
+     * @param  array<string, mixed>  $overrides
+     *
+     * @throws ConversionException when the Commande is not invoiceable or has
+     *                             already been invoiced.
+     * @throws InsufficientStockException when generating with a stock-moving
+     *                                    status and a product lacks stock.
+     */
+    public function createFactureFromCommande(Commande $commande, array $overrides = []): Sale
+    {
+        return DB::transaction(function () use ($commande, $overrides) {
+            // Serialize concurrent invoicing of the same Commande.
+            $commande = Commande::lockForUpdate()->findOrFail($commande->id);
+
+            if (! in_array($commande->status, [Commande::STATUS_PENDING, Commande::STATUS_CONFIRMED], true)) {
+                throw new ConversionException(trans('commande.not-invoiceable'));
+            }
+
+            if ($commande->sale()->exists()) {
+                throw new ConversionException(
+                    trans('commande.already-invoiced', ['reference' => $commande->reference])
+                );
+            }
+
+            $status = $overrides['status'] ?? 'Pending';
+            $paidAmount = (float) ($overrides['paid_amount'] ?? 0);
+            $totalAmount = $commande->total_amount; // accessor => real units
+            $dueAmount = $totalAmount - $paidAmount;
+            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $totalAmount);
+
+            $sale = new Sale;
+            $sale->commande_id = $commande->id;
+            $sale->date = $overrides['date'] ?? now()->format('Y-m-d');
+            $sale->customer_id = $commande->customer_id;
+            $sale->customer_name = $commande->customer_name;
+            $sale->tax_percentage = $commande->getRawOriginal('tax_percentage');
+            $sale->discount_percentage = $commande->getRawOriginal('discount_percentage');
+            $sale->tax_amount = $commande->getRawOriginal('tax_amount');
+            $sale->discount_amount = $commande->getRawOriginal('discount_amount');
+            $sale->shipping_amount = $commande->getRawOriginal('shipping_amount');
+            $sale->total_amount = $commande->getRawOriginal('total_amount');
+            $sale->paid_amount = $paidAmount * 100;
+            $sale->due_amount = $dueAmount * 100;
+            $sale->status = $status;
+            $sale->payment_status = $paymentStatus;
+            $sale->payment_method = $overrides['payment_method'] ?? 'Cash';
+            $sale->note = $overrides['note'] ?? $commande->getRawOriginal('note');
+            $sale->save();
+
+            foreach ($commande->commandeDetails as $detail) {
+                SaleDetails::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $detail->getRawOriginal('product_id'),
+                    'product_name' => $detail->getRawOriginal('product_name'),
+                    'product_code' => $detail->getRawOriginal('product_code'),
+                    'quantity' => $detail->getRawOriginal('quantity'),
+                    'price' => $detail->getRawOriginal('price'),
+                    'unit_price' => $detail->getRawOriginal('unit_price'),
+                    'sub_total' => $detail->getRawOriginal('sub_total'),
+                    'product_discount_amount' => $detail->getRawOriginal('product_discount_amount'),
+                    'product_discount_type' => $detail->getRawOriginal('product_discount_type'),
+                    'product_tax_amount' => $detail->getRawOriginal('product_tax_amount'),
+                ]);
+
+                if ($status === 'Shipped' || $status === 'Completed') {
+                    $this->stock->stockOut(
+                        Product::findOrFail($detail->product_id),
+                        (int) $detail->quantity,
+                        null,
+                        'Sale',
+                        $sale->id,
+                    );
+                }
+            }
+
+            if ($paidAmount > 0) {
+                SalePayment::create([
+                    'date' => $sale->date,
+                    'reference' => 'INV/'.$sale->reference,
+                    'amount' => $sale->paid_amount,
+                    'sale_id' => $sale->id,
+                    'payment_method' => $sale->payment_method,
+                ]);
+            }
+
+            $commande->update(['status' => Commande::STATUS_INVOICED]);
+
+            return $sale->refresh();
         });
     }
 

@@ -32,6 +32,6 @@ class UnitIndex extends Component
     {
         return view('livewire.units.unit-index', [
             'units' => $units->paginate($this->search),
-        ]);
+        ])->layout('components.layouts.admin', ['title' => __('units.units')]);
     }
 }

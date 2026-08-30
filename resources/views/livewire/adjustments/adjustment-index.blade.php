@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $adjustments->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($adjustments as $adjustment)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="adjustment-{{ $adjustment->id }}">
@@ -22,13 +23,13 @@
                         </ul>
                         <div class="btn-group">
                             @can('edit_adjustments')
-                                <a href="{{ route('adjustments.edit', $adjustment->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('adjustments.edit', $adjustment->id) }}" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_adjustments')
-                                <a href="{{ route('adjustments.show', $adjustment->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('adjustments.show', $adjustment->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
                             @endcan
                             @can('delete_adjustments')
-                                <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $adjustment->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $adjustment->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
                             @endcan
                         </div>
                     </div>
@@ -42,6 +43,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $adjustments->links() }}
+        {{ $adjustments->links('pagination::bootstrap-5') }}
     </div>
 </div>

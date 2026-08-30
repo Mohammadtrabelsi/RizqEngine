@@ -1,4 +1,7 @@
-<form wire:submit="save">
+{{-- Full-page Livewire component: single root, shell provides chrome. --}}
+<div>
+<div class="container-fluid">
+    <form wire:submit="save">
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group">
@@ -83,4 +86,6 @@
             </div>
         </div>
     </div>
-</form>
+    </form>
+</div>
+</div>

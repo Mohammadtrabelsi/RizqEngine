@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $users->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($users as $user)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="user-{{ $user->id }}">
@@ -43,6 +44,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $users->links() }}
+        {{ $users->links('pagination::bootstrap-5') }}
     </div>
 </div>

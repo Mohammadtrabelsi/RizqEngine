@@ -16,11 +16,16 @@
                     <span class="sr-only">{{ __('general.loading') }}...</span>
                 </div>
             </div>
-            <div class="row">
-                @if($cart_items->isNotEmpty())
-                    @foreach($cart_items as $cart_item)
-                        <div class="col-xl-4 col-lg-6 mb-4">
-                            <div class="card h-100">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ __('general.products') }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @if($cart_items->isNotEmpty())
+                            @foreach($cart_items as $cart_item)
+                                <div class="col-xl-4 col-lg-6 mb-4">
+                                    <div class="card h-100">
                                 <div class="card-header d-flex justify-content-between align-items-start">
                                     <div>
                                         {{ $cart_item->name }} <br>
@@ -33,11 +38,11 @@
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush mb-0">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0" x-data="{ open{{ $cart_item->id }}: false }">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             <span>{{ __('general.net-unit-price') }}</span>
                                             <span>
-                                                <span x-show="!open{{ $cart_item->id }}" @click="open{{ $cart_item->id }} = !open{{ $cart_item->id }}">{{ format_currency($cart_item->price) }}</span>
-                                                <div x-show="open{{ $cart_item->id }}">
+                                                <span class="js-price-summary" data-toggle="price-detail" role="button" tabindex="0">{{ format_currency($cart_item->price) }}</span>
+                                                <div class="js-price-detail" hidden>
                                                     @include('livewire.includes.product-cart-price')
                                                 </div>
                                             </span>
@@ -71,7 +76,9 @@
                     <div class="col-12 text-center">
                         <span class="text-danger">{{ __('general.please-search-and-select-products') }}</span>
                     </div>
-                @endif
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>

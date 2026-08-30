@@ -84,7 +84,10 @@ class ApiServiceEndpointsTest extends TestCase
             'category_name' => 'Drinks',
         ])->assertOk();
 
-        $this->assertDatabaseHas('categories', ['category_name' => 'Drinks']);
+        // category_name is translatable, so it is persisted as a JSON blob of
+        // locale => value; assert against the resolved translation rather than
+        // the raw column.
+        $this->assertSame('Drinks', Category::findOrFail($created['id'])->getTranslation('category_name', 'en'));
 
         // destroy
         $this->deleteJson('/api/categories/'.$created['id'])
@@ -138,6 +141,47 @@ class ApiServiceEndpointsTest extends TestCase
         $this->getJson('/api/products/search?term=Findable')
             ->assertOk()
             ->assertJsonFragment(['id' => $product->id]);
+    }
+
+    /** @test */
+    public function it_filters_the_product_catalogue_by_stock_status(): void
+    {
+        $this->actingAsApiUser();
+
+        $inStock = $this->makeProduct(['product_quantity' => 50, 'product_stock_alert' => 5]);
+        $lowStock = $this->makeProduct(['product_quantity' => 3, 'product_stock_alert' => 5]);
+        $outOfStock = $this->makeProduct(['product_quantity' => 0, 'product_stock_alert' => 5]);
+
+        // Assert on the returned product id list: product and category ids can
+        // collide, so a recursive assertJsonMissing(['id' => ...]) would match
+        // the nested category object rather than the product row.
+        $this->assertSame([$lowStock->id], $this->productIdsFor('low_stock'));
+        $this->assertSame([$outOfStock->id], $this->productIdsFor('out_of_stock'));
+        $this->assertSame([$inStock->id], $this->productIdsFor('in_stock'));
+
+        $this->getJson('/api/products?stock_status=bogus')
+            ->assertStatus(422);
+    }
+
+    /**
+     * @return array<int, int> product ids returned by the stock-status filter
+     */
+    private function productIdsFor(string $status): array
+    {
+        return collect(
+            $this->getJson('/api/products?stock_status='.$status)->assertOk()->json('data')
+        )->pluck('id')->all();
+    }
+
+    /** @test */
+    public function it_returns_the_stock_status_with_product_details(): void
+    {
+        $this->actingAsApiUser();
+        $product = $this->makeProduct(['product_quantity' => 3, 'product_stock_alert' => 5]);
+
+        $this->getJson("/api/products/{$product->id}")
+            ->assertOk()
+            ->assertJsonPath('stock_status', 'low_stock');
     }
 
     /** @test */

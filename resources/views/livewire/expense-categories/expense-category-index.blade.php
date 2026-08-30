@@ -11,6 +11,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $categories->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="expense-category-{{ $category->id }}">
@@ -34,7 +35,7 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $categories->links() }}
+        {{ $categories->links('pagination::bootstrap-5') }}
     </div>
 
     <!-- Create Modal -->

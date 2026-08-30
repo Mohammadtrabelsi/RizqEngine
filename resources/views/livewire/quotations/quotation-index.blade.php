@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mb-3">{{ $quotations->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($quotations as $quotation)
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="quotation-{{ $quotation->id }}">
@@ -38,6 +39,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        {{ $quotations->links() }}
+        {{ $quotations->links('pagination::bootstrap-5') }}
     </div>
 </div>

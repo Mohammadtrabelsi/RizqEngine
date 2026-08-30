@@ -89,6 +89,7 @@ class SupplierForm extends Component
 
     public function render()
     {
-        return view('livewire.suppliers.supplier-form');
+        return view('livewire.suppliers.supplier-form')
+            ->layout('components.layouts.admin', ['title' => $this->supplierId ? __('supplier.edit_supplier') : __('supplier.create_supplier')]);
     }
 }

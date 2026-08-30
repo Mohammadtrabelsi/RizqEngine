@@ -8,7 +8,7 @@ return [
     'create_supplier' => 'Créer un fournisseur',
     'edit_supplier' => 'Modifier le fournisseur',
     'no_suppliers_found' => 'Aucun fournisseur trouvé',
-    'profile_image' => '[TODO] Profile image',
+    'profile_image' => 'Image du profile',
     'supplier_details' => 'Détails du fournisseur',
     'tax_identification_number' => "Numéro d'identification fiscale (NIF)",
     'supplier_email' => 'E-mail du fournisseur',

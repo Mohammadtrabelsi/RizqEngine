@@ -4,6 +4,7 @@
             <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
         </div>
     </div>
+    <div class="d-flex justify-content-center mb-3">{{ $payments->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($payments as $payment)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="srp-{{ $payment->id }}">
@@ -30,5 +31,5 @@
             </div>
         @endforelse
     </div>
-    <div class="d-flex justify-content-center">{{ $payments->links() }}</div>
+    <div class="d-flex justify-content-center">{{ $payments->links('pagination::bootstrap-5') }}</div>
 </div>

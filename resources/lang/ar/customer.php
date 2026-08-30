@@ -13,7 +13,7 @@ return [
     'customers' => 'العملاء',
     'edit' => 'تعديل',
     'no_customers_found' => 'لم يتم العثور على عملاء',
-    'profile_image' => '[TODO] Profile image',
+    'profile_image' => 'صورة العميل',
     'tax_identification_number' => 'رقم التعريف الضريبي (TIN)',
     'update' => 'تحديث',
 ];

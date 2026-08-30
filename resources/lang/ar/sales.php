@@ -59,7 +59,7 @@ return [
     'status' => 'الحالة',
     'sub_total' => 'المجموع الفرعي',
     'tax' => 'الضريبة',
-    'title' => 'العنوان',
+    'title' => 'المبيعات',
     'total' => 'الإجمالي',
     'update_payment' => 'تحديث الدفعة',
     'update_sale_return' => 'تحديث مرتجع المبيعات',
