@@ -2204,6 +2204,16 @@ hr { display: none; }
     background: transparent;
 }
 
+/* Small leading dot on overview items, mirroring the dashboard sidebar. */
+.app-sidebar-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.3);
+    flex: 0 0 auto;
+}
+.app-sidebar-item.is-active > .app-sidebar-link .app-sidebar-dot { background: #ffffff; }
+
 .app-sidebar-link:hover {
     background: var(--color-ink-2);
     color: #ffffff;
@@ -2219,14 +2229,6 @@ hr { display: none; }
 .app-sidebar-item.is-active > .app-sidebar-link i {
     background: transparent;
     color: #ffffff;
-}
-.app-sidebar-item.is-active > .app-sidebar-link::after {
-    content: "";
-    margin-inline-start: auto;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: #ffffff;
 }
 
 /* Backdrop for mobile off-canvas */
