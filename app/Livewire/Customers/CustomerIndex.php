@@ -77,6 +77,6 @@ class CustomerIndex extends Component
             ]),
             'cities' => $customers->cities(),
             'countries' => $customers->countries(),
-        ]);
+        ])->layout('components.layouts.admin', ['title' => __('customer.customers')]);
     }
 }

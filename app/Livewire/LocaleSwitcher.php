@@ -7,10 +7,10 @@ use Livewire\Component;
 
 class LocaleSwitcher extends Component
 {
-    /** Locales offered in the redesign header (subset of supported locales). */
+    /** Locales offered in the header, in a stable display order. */
     public function locales(): array
     {
-        return array_values(array_intersect(['en', 'fr'], SetLocale::SUPPORTED_LOCALES));
+        return array_values(array_intersect(['en', 'fr', 'ar'], SetLocale::SUPPORTED_LOCALES));
     }
 
     public function render()

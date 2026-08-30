@@ -1,7 +1,9 @@
 {{-- resources/views/layouts/redesign.blade.php --}}
 {{-- Standalone shell for the Triangle POS redesign screens (landing / sign-in / dashboard). --}}
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="antialiased">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+      dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"
+      class="antialiased">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

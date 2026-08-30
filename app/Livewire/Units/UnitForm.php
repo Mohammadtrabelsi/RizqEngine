@@ -56,6 +56,7 @@ class UnitForm extends Component
 
     public function render()
     {
-        return view('livewire.units.unit-form');
+        return view('livewire.units.unit-form')
+            ->layout('components.layouts.admin', ['title' => $this->unitId ? __('units.edit_unit') : __('units.add_unit')]);
     }
 }

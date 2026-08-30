@@ -2384,3 +2384,25 @@ hr { display: none; }
 @media (max-width: 767.98px) {
     .app-footer-inner { flex-direction: column; align-items: flex-start; }
 }
+
+/* -------------------------------------------------------------------------
+ * RTL (Arabic) support.
+ * The shared shell and header/footer already use logical properties, and the
+ * fixed sidebar flips via inset-inline. Page content, however, still leans on
+ * physical Tailwind utilities (Bootstrap grid, ml/mr, text-left/right,
+ * left/right, rounded-l/r). Mirror the common ones under [dir="rtl"] so admin
+ * content reads correctly in Arabic without rewriting every template.
+ * ---------------------------------------------------------------------- */
+/* Only the physical utilities need mirroring; logical ones (text-start, the
+   ms/me and ps/pe families) already follow `dir`. The custom margin helpers
+   are defined with !important, so the overrides carry it too. */
+[dir="rtl"] .text-left  { text-align: right !important; }
+[dir="rtl"] .text-right { text-align: left !important; }
+[dir="rtl"] .ml-auto { margin-left: 0 !important; margin-right: auto !important; }
+[dir="rtl"] .mr-auto { margin-right: 0 !important; margin-left: auto !important; }
+[dir="rtl"] .float-left  { float: right !important; }
+[dir="rtl"] .float-right { float: left !important; }
+[dir="rtl"] .justify-content-start { justify-content: flex-end !important; }
+[dir="rtl"] .justify-content-end   { justify-content: flex-start !important; }
+
+[x-cloak] { display: none !important; }

@@ -40,6 +40,6 @@ class CurrencyIndex extends Component
     {
         return view('livewire.currencies.currency-index', [
             'currencies' => $currencies->paginate($this->search),
-        ]);
+        ])->layout('components.layouts.admin', ['title' => __('currency.currencies')]);
     }
 }

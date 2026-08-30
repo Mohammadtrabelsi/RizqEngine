@@ -1,191 +1,143 @@
-<div class="container-fluid d-flex align-items-center app-header-bar bg-white border-bottom">
-    <button class="c-header-toggler app-nav-toggler mfe-auto btn btn-ghost text-slate-800" type="button"
-            data-toggle="collapse" data-target="#app-sidebar"
-            aria-controls="app-sidebar" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="bi bi-list icon-fs-2rem"></i>
-    </button>
+{{--
+    Triangle POS — shared admin header.
+    Redesign shell look (unified with the dashboard): page title + date subline,
+    language switcher, POS shortcut, low-stock notifications and a user menu.
+    The `low_quantity_products` collection is injected by a view composer in
+    AppServiceProvider. `title` / `subtitle` are passed in by the layout shell.
+--}}
+@php
+    $headerTitle = $title ?? trim($__env->yieldContent('title')) ?: config('app.name');
+    $headerSubtitle = $subtitle ?? (now()->isoFormat('dddd, D MMMM YYYY') . ' · ' . __('dash.all_registers'));
+@endphp
 
-    @yield('header-title')
+<header class="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-4 border-b border-hairline bg-canvas px-5 py-4 lg:px-8">
+    <div class="flex items-center gap-3">
+        <button type="button"
+                class="grid h-[38px] w-[38px] place-items-center rounded-ctl border border-hairline bg-white lg:hidden"
+                data-toggle="collapse" data-target="#app-sidebar"
+                aria-controls="app-sidebar" aria-expanded="false" aria-label="{{ __('menu.products') }}">
+            <svg class="h-4 w-4 text-ink-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="min-w-0">
+            <h1 class="truncate font-display text-[22px] font-bold tracking-[-0.02em]">{{ $headerTitle }}</h1>
+            <p class="mt-0.5 text-[13px] text-body">{{ $headerSubtitle }}</p>
+        </div>
+    </div>
 
-    <ul class="c-header-nav ms-auto align-items-center gap-2">
-        <li class="c-header-nav-item d-flex align-items-center">
-            <livewire:locale-switcher />
-        </li>
+    <div class="flex items-center gap-2.5">
+        <livewire:locale-switcher />
 
         @can('create_pos_sales')
-            <li class="c-header-nav-item">
-                <a class="btn btn-primary btn-pill btn-sm {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
-                    <i class="bi bi-cart mr-1"></i> {{ __('app.pos_system') }}
-                </a>
-            </li>
+            <a href="{{ route('app.pos.index') }}"
+               @class([
+                   'hidden rounded-ctl bg-accent px-[18px] py-2.5 text-[13.5px] font-semibold text-white transition-colors hover:bg-accent-hover sm:inline-block',
+                   'pointer-events-none opacity-60' => request()->routeIs('app.pos.index'),
+               ])>
+                {{ __('dash.open_pos') }}
+            </a>
         @endcan
 
         @can('show_notifications')
-            <li class="c-header-nav-item dropdown d-md-down-none">
-
-                {{-- Bell trigger --}}
-                <a id="notif-bell-btn"
-                   class="c-header-nav-link position-relative d-flex align-items-center justify-content-center notif-bell-btn"
-                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-bell-fill"></i>
-                    @if($low_quantity_products->count() > 0)
-                        <span class="notif-badge">
+            <div class="relative" x-data="{ open: false }">
+                <button type="button" @click="open = !open" @click.outside="open = false"
+                        class="relative grid h-[38px] w-[38px] place-items-center rounded-ctl border border-hairline bg-white text-ink-3 transition-colors hover:text-accent">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    @if(($low_quantity_products ?? collect())->count() > 0)
+                        <span class="absolute -right-1.5 -top-1.5 rounded-full bg-danger px-1.5 font-mono text-[10px] font-semibold text-white">
                             {{ $low_quantity_products->count() > 9 ? '9+' : $low_quantity_products->count() }}
                         </span>
                     @endif
-                </a>
+                </button>
 
-                {{-- Dropdown panel --}}
-                <div class="dropdown-menu dropdown-menu-right p-0 border-0 notif-panel">
-
-                    {{-- Gradient header --}}
-                    <div class="notif-panel-header">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="notif-header-icon">
-                                <i class="bi bi-bell-fill"></i>
-                            </div>
-                            <div>
-                                <div class="notif-header-title">{{ __('app.notifications') }}</div>
-                                <div class="notif-header-sub">{{ __('app.low-stock-alerts') }}</div>
-                            </div>
+                <div x-show="open" x-cloak x-transition
+                     class="absolute end-0 z-40 mt-2 w-[340px] overflow-hidden rounded-card border border-hairline bg-white shadow-xl">
+                    <div class="flex items-center justify-between gap-2 border-b border-hairline px-4 py-3.5">
+                        <div>
+                            <p class="font-display text-sm font-bold">{{ __('app.notifications') }}</p>
+                            <p class="text-[12px] text-body">{{ __('app.low-stock-alerts') }}</p>
                         </div>
-                        @if($low_quantity_products->count() > 0)
-                            <span class="notif-count-badge notif-count-badge--alert">
+                        @if(($low_quantity_products ?? collect())->count() > 0)
+                            <span class="rounded-full bg-warn-bg px-2 py-0.5 font-mono text-[11px] font-semibold text-warn">
                                 {{ $low_quantity_products->count() }} {{ __('app.alerts') }}
                             </span>
                         @else
-                            <span class="notif-count-badge notif-count-badge--ok">
-                                {{ __('app.all-clear') }}
-                            </span>
+                            <span class="rounded-full bg-ok-bg px-2 py-0.5 font-mono text-[11px] font-semibold text-ok">{{ __('app.all-clear') }}</span>
                         @endif
                     </div>
 
-                    {{-- Notification rows --}}
-                    <div class="notif-list">
-                        @forelse($low_quantity_products as $product)
-                            <a href="{{ route('products.show', $product->id) }}" class="notif-item">
-
-                                {{-- Severity icon --}}
-                                <div class="notif-icon
-                                    {{ $product->product_quantity <= $product->product_stock_alert
-                                        ? 'notif-icon--critical'
-                                        : ($product->product_quantity <= $product->product_stock_alert * 2
-                                            ? 'notif-icon--low'
-                                            : 'notif-icon--ok') }}">
-                                    <i class="bi {{ $product->product_quantity <= $product->product_stock_alert
-                                        ? 'bi-exclamation-octagon-fill'
-                                        : ($product->product_quantity <= $product->product_stock_alert * 2
-                                            ? 'bi-exclamation-triangle-fill'
-                                            : 'bi-check-circle-fill') }}"></i>
+                    <div class="max-h-[320px] overflow-y-auto">
+                        @forelse(($low_quantity_products ?? collect()) as $product)
+                            <a href="{{ route('products.show', $product->id) }}"
+                               class="flex items-center gap-3 border-b border-hairline px-4 py-3 transition-colors hover:bg-canvas">
+                                <span @class([
+                                    'grid h-9 w-9 shrink-0 place-items-center rounded-ctl',
+                                    'bg-warn-bg text-warn' => $product->product_quantity <= $product->product_stock_alert,
+                                    'bg-ok-bg text-ok' => $product->product_quantity > $product->product_stock_alert,
+                                ])>
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                </span>
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate text-[13.5px] font-semibold">{{ $product->product_name }}</p>
+                                    <p class="font-mono text-[11.5px] text-muted">{{ $product->product_code }}</p>
                                 </div>
-
-                                {{-- Product info --}}
-                                <div class="notif-info">
-                                    <div class="notif-name">{{ $product->product_name }}</div>
-                                    <div class="notif-code">
-                                        <i class="bi bi-upc-scan"></i> {{ $product->product_code }}
-                                    </div>
-                                    <div class="notif-desc">
-                                        @if($product->product_quantity <= 0)
-                                            {{ __('app.notif-desc-out') }}
-                                        @elseif($product->product_quantity <= $product->product_stock_alert)
-                                            {{ __('app.notif-desc-critical', ['qty' => $product->product_quantity, 'unit' => $product->product_unit, 'alert' => $product->product_stock_alert]) }}
-                                        @elseif($product->product_quantity <= $product->product_stock_alert * 2)
-                                            {{ __('app.notif-desc-low', ['qty' => $product->product_quantity, 'unit' => $product->product_unit]) }}
-                                        @else
-                                            {{ __('app.notif-desc-ok', ['qty' => $product->product_quantity, 'unit' => $product->product_unit]) }}
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{-- Quantity --}}
-                                <div class="notif-qty">
-                                    <span class="notif-qty-num
-                                        {{ $product->product_quantity <= $product->product_stock_alert
-                                            ? 'notif-qty-num--critical'
-                                            : ($product->product_quantity <= $product->product_stock_alert * 2
-                                                ? 'notif-qty-num--low'
-                                                : 'notif-qty-num--ok') }}">
-                                        {{ $product->product_quantity }}
-                                    </span>
-                                    <span class="notif-unit">{{ $product->product_unit }}</span>
-                                </div>
-
+                                <span @class([
+                                    'font-mono text-sm font-semibold',
+                                    'text-danger' => $product->product_quantity <= $product->product_stock_alert,
+                                    'text-warn' => $product->product_quantity > $product->product_stock_alert,
+                                ])>{{ $product->product_quantity }}</span>
                             </a>
                         @empty
-                            <div class="notif-empty">
-                                <div class="notif-empty-icon">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                </div>
-                                <div class="notif-empty-title">{{ __('app.all-good') }}</div>
-                                <div class="notif-empty-sub">{{ __('app.no-notifications') }}</div>
+                            <div class="px-4 py-8 text-center">
+                                <p class="text-[13.5px] font-semibold">{{ __('app.all-good') }}</p>
+                                <p class="mt-1 text-[12.5px] text-muted">{{ __('app.no-notifications') }}</p>
                             </div>
                         @endforelse
                     </div>
 
-                    {{-- Footer --}}
-                    @if($low_quantity_products->count() > 0)
-                        <div class="notif-footer">
-                            <a href="{{ route('products.index') }}" class="notif-footer-link">
-                                {{ __('app.view-all-products') }}
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
+                    @if(($low_quantity_products ?? collect())->count() > 0)
+                        <a href="{{ route('products.index') }}" class="block border-t border-hairline px-4 py-3 text-center text-[13px] font-semibold text-accent hover:text-accent-hover">
+                            {{ __('app.view-all-products') }}
+                        </a>
                     @endif
-
                 </div>
-            </li>
+            </div>
         @endcan
 
-        {{-- User dropdown --}}
-        <li class="c-header-nav-item dropdown">
-            <a class="user-trigger c-header-nav-link" data-toggle="dropdown" href="#"
-               role="button" aria-haspopup="true" aria-expanded="false">
-                <img class="user-trigger-avatar"
-                     src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
-                     alt="{{ auth()->user()->name }}">
-                <div class="user-trigger-info">
-                    <span class="user-trigger-name">{{ auth()->user()->name }}</span>
-                    <span class="user-trigger-status">
-                        <i class="bi bi-circle-fill"></i> {{ __('app.online') }}
+        {{-- User menu --}}
+        <div class="relative" x-data="{ open: false }">
+            <button type="button" @click="open = !open" @click.outside="open = false"
+                    class="flex items-center gap-2.5 rounded-full border border-hairline bg-white py-[5px] pe-3 ps-[5px]">
+                <span class="grid h-[30px] w-[30px] place-items-center rounded-full bg-ink font-mono text-xs font-semibold text-white">
+                    {{ auth()->user()->initials() }}
+                </span>
+                <span class="hidden text-start sm:block">
+                    <span class="block text-[13px] font-bold leading-tight">{{ auth()->user()->name }}</span>
+                    <span class="flex items-center gap-1.5 text-[11.5px] text-ok">
+                        <span class="h-[5px] w-[5px] rounded-full bg-ok"></span>{{ __('dash.online') }}
                     </span>
+                </span>
+                <svg class="hidden h-3.5 w-3.5 text-ink-3 sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+
+            <div x-show="open" x-cloak x-transition
+                 class="absolute end-0 z-40 mt-2 w-[260px] overflow-hidden rounded-card border border-hairline bg-white shadow-xl">
+                <div class="border-b border-hairline px-4 py-3.5">
+                    <p class="truncate text-sm font-bold">{{ auth()->user()->name }}</p>
+                    <p class="truncate text-[12.5px] text-body">{{ auth()->user()->email }}</p>
                 </div>
-                <i class="bi bi-chevron-down user-trigger-caret"></i>
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-right p-0 border-0 user-panel">
-
-                {{-- User card --}}
-                <div class="user-card">
-                    <img class="user-card-avatar"
-                         src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
-                         alt="{{ auth()->user()->name }}">
-                    <div>
-                        <div class="user-card-name">{{ auth()->user()->name }}</div>
-                        <div class="user-card-email">{{ auth()->user()->email }}</div>
-                    </div>
-                </div>
-
-                {{-- Menu items --}}
-                <div class="user-menu">
-                    <a class="user-menu-item" href="{{ route('profile.edit') }}">
-                        <span class="user-menu-item-icon user-menu-item-icon--indigo">
-                            <i class="bi bi-person-fill"></i>
-                        </span>
+                <div class="p-1.5">
+                    <a href="{{ route('profile.edit') }}" class="flex items-center gap-2.5 rounded-ctl px-3 py-2.5 text-[13.5px] font-medium text-ink-3 transition-colors hover:bg-canvas hover:text-ink">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         {{ __('app.profile') }}
                     </a>
-                    <a id="logout-link" class="user-menu-item user-menu-item--danger" href="#">
-                        <span class="user-menu-item-icon user-menu-item-icon--red">
-                            <i class="bi bi-box-arrow-left"></i>
-                        </span>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                       class="flex items-center gap-2.5 rounded-ctl px-3 py-2.5 text-[13.5px] font-medium text-danger transition-colors hover:bg-danger/10">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                         {{ __('app.logout') }}
                     </a>
                 </div>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">@csrf</form>
             </div>
-        </li>
-    </ul>
-</div>
+        </div>
+    </div>
+</header>

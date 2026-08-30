@@ -1,16 +1,5 @@
-@extends('layouts.app')
-
-@section('title', $supplierId ? __('supplier.edit_supplier') : __('supplier.create_supplier'))
-
-@section('breadcrumb')
-    <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('suppliers.index') }}">{{ __('supplier.suppliers') }}</a></li>
-        <li class="breadcrumb-item active">{{ $supplierId ? __('supplier.edit_supplier') : __('supplier.create_supplier') }}</li>
-    </ol>
-@endsection
-
-@section('content')
+{{-- Full-page Livewire component: single root, shell provides chrome. --}}
+<div>
 <div class="container-fluid">
     <form wire:submit="save">
     <div class="row">
@@ -99,4 +88,4 @@
     </div>
     </form>
 </div>
-@endsection
+</div>

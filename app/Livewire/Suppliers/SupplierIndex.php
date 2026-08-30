@@ -77,6 +77,6 @@ class SupplierIndex extends Component
             ]),
             'cities' => $suppliers->cities(),
             'countries' => $suppliers->countries(),
-        ]);
+        ])->layout('components.layouts.admin', ['title' => __('supplier.suppliers')]);
     }
 }
