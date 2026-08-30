@@ -1,4 +1,5 @@
 <?php
+
 return [
     'account' => 'Compte',
     'alerts' => 'Alertes',
@@ -11,6 +12,7 @@ return [
     'create' => 'Créer',
     'developed' => 'développé par',
     'developed-by' => 'projet d\'origine',
+    'filters' => 'Filtres',
     'home' => 'Accueil',
     'language' => 'Langue',
     'logout' => 'Déconnexion',

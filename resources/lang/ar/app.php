@@ -12,6 +12,7 @@ return [
     'create' => 'إنشاء',
     'developed' => 'تطوير',
     'developed-by' => 'المشروع الأصلي',
+    'filters' => 'مرشحات',
     'home' => 'الرئيسية',
     'language' => 'اللغة',
     'logout' => 'تسجيل الخروج',
