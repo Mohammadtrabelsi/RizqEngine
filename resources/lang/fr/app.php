@@ -29,6 +29,7 @@ return [
     'pos_system' => 'Système de point de vente',
     'profile' => 'Profil',
     'reset' => '[TODO] Reset filters',
+    'filters' => 'Filtres',
     'search' => 'Rechercher',
     'update' => 'Mettre à jour',
     'version' => 'Version',
