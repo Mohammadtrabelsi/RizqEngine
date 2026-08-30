@@ -25,7 +25,7 @@
     --color-light: #ffffff;
     --color-dark: #0f172a;
 
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
 }
 
 /* -------------------------------------------------------------------------
@@ -80,7 +80,7 @@
 
 :root {
     /* --- Light Mode Core --- */
-    --color-bg: #f8fafc;
+    --color-bg: #f7f7fb;
     --color-surface: #ffffff;
     --color-text: #0f172a;
     --color-accent: #4f46e5;   /* Indigo primary accent */
@@ -137,8 +137,8 @@
     --tint-indigo: #eef2ff;
 
     /* Signature gradients */
-    --gradient-brand: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-    --gradient-cool: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    --gradient-brand: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+    --gradient-cool: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
     --gradient-sunset: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
     --gradient-mint: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
 
@@ -163,8 +163,8 @@
     --surface-2: var(--color-neutral-200);
     --bg: var(--color-bg);
 
-    --font-heading: 'Inter', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    --font-heading: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
 
     --space-1: 0.25rem;
     --space-2: 0.5rem;
@@ -2075,8 +2075,8 @@ hr { display: none; }
  * ====================================================================== */
 :root {
     --app-sidebar-width: 264px;
-    --app-sidebar-bg: #ffffff;
-    --app-sidebar-border: #e2e8f0;
+    --app-sidebar-bg: var(--color-ink);
+    --app-sidebar-border: var(--color-ink);
 }
 
 .app-with-sidebar { }
@@ -2113,8 +2113,8 @@ hr { display: none; }
     gap: 0.5rem;
     height: 64px;
     padding: 0 1.1rem;
-    border-bottom: 1px solid var(--app-sidebar-border);
-    background: var(--gradient-brand);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--color-ink);
 }
 .app-sidebar-brand-link {
     display: inline-flex;
@@ -2161,12 +2161,13 @@ hr { display: none; }
 .app-sidebar-list { list-style: none; margin: 0; padding: 0; }
 
 .app-sidebar-heading {
-    font-size: 0.68rem;
-    font-weight: 700;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #94a3b8;
-    padding: 0.9rem 0.75rem 0.35rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 0.9rem 0.75rem 0.4rem;
     margin-top: 0.25rem;
 }
 
@@ -2179,7 +2180,7 @@ hr { display: none; }
     border-radius: 10px;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #475569;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     line-height: 1.2;
     position: relative;
@@ -2197,45 +2198,35 @@ hr { display: none; }
     transition: background 0.15s ease, color 0.15s ease;
 }
 
-/* Per-section coloured icon chips */
-.app-sidebar-link--home i        { color: var(--color-indigo);  background: var(--tint-indigo); }
-.app-sidebar-link--products i    { color: var(--color-blue);    background: var(--tint-blue); }
-.app-sidebar-link--transactions i{ color: var(--color-violet);  background: var(--tint-violet); }
-.app-sidebar-link--quotations i  { color: var(--color-cyan);    background: var(--tint-cyan); }
-.app-sidebar-link--orders i      { color: var(--color-teal);    background: var(--tint-teal); }
-.app-sidebar-link--expenses i    { color: var(--color-orange);  background: var(--tint-orange); }
-.app-sidebar-link--customers i   { color: var(--color-pink);    background: var(--tint-pink); }
-.app-sidebar-link--suppliers i   { color: var(--color-sky);     background: var(--tint-sky); }
-.app-sidebar-link--reports i     { color: var(--color-emerald); background: var(--tint-emerald); }
-.app-sidebar-link--users i       { color: var(--color-purple);  background: var(--tint-violet); }
-.app-sidebar-link--logs i        { color: var(--color-amber);   background: var(--tint-amber); }
-.app-sidebar-link--settings i    { color: var(--color-secondary); background: #f1f5f9; }
-.app-sidebar-link--docs i        { color: var(--color-rose);    background: var(--tint-pink); }
+/* Single-accent ink treatment — one indigo accent only, no per-item colours. */
+.app-sidebar-link i {
+    color: rgba(255, 255, 255, 0.55);
+    background: transparent;
+}
 
 .app-sidebar-link:hover {
-    background: #f8fafc;
-    color: #0f172a;
+    background: var(--color-ink-2);
+    color: #ffffff;
     text-decoration: none;
 }
+.app-sidebar-link:hover i { color: rgba(255, 255, 255, 0.85); }
+
 .app-sidebar-item.is-active > .app-sidebar-link {
-    background: var(--gradient-cool);
+    background: var(--color-accent);
     color: #ffffff;
-    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.28);
+    font-weight: 600;
 }
 .app-sidebar-item.is-active > .app-sidebar-link i {
-    background: rgba(255,255,255,0.22);
+    background: transparent;
     color: #ffffff;
 }
-.app-sidebar-item.is-active > .app-sidebar-link::before {
+.app-sidebar-item.is-active > .app-sidebar-link::after {
     content: "";
-    position: absolute;
-    inset-inline-start: -0.75rem;
-    top: 20%;
-    bottom: 20%;
-    width: 4px;
-    border-radius: 0 4px 4px 0;
+    margin-inline-start: auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
     background: #ffffff;
-    opacity: 0.85;
 }
 
 /* Backdrop for mobile off-canvas */
