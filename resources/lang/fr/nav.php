@@ -1,5 +1,4 @@
 <?php
-
 return [
     'access_control' => 'Contrôle d\'accès',
     'customers' => 'Clients',
@@ -12,11 +11,11 @@ return [
         'people' => 'Personnes',
         'transactions' => 'Transactions',
     ],
-    'group.$groupKey' => '[TODO] Group.$groupKey',
-    'group.insight' => '[TODO] Group.insight',
-    'group.overview' => '[TODO] Group.overview',
-    'group.people' => '[TODO] Group.people',
-    'group.transactions' => '[TODO] Group.transactions',
+    'group.$groupKey' => 'Groupe $groupKey',
+    'group.insight' => 'Aperçu',
+    'group.overview' => 'Vue d\'ensemble',
+    'group.people' => 'Personnes',
+    'group.transactions' => 'Transactions',
     'orders' => 'Commandes',
     'point_of_sale' => 'Point de vente',
     'products' => 'Produits',

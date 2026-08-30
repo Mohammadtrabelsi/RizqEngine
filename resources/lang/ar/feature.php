@@ -1,16 +1,14 @@
-<?php
-
 return [
-    'expenses.body' => '[TODO] Expenses.body',
-    'expenses.title' => '[TODO] Expenses.title',
-    'products.body' => '[TODO] Products.body',
-    'products.title' => '[TODO] Products.title',
-    'purchases.body' => '[TODO] Purchases.body',
-    'purchases.title' => '[TODO] Purchases.title',
-    'reporting.body' => '[TODO] Reporting.body',
-    'reporting.title' => '[TODO] Reporting.title',
-    'roles.body' => '[TODO] Roles.body',
-    'roles.title' => '[TODO] Roles.title',
-    'sales.body' => '[TODO] Sales.body',
-    'sales.title' => '[TODO] Sales.title',
+    'expenses.body' => 'إدارة وتتبع المصروفات اليومية والتشغيلية.',
+    'expenses.title' => 'المصروفات',
+    'products.body' => 'إدارة المخزون، المنتجات، وتفاصيل الأسعار.',
+    'products.title' => 'المنتجات',
+    'purchases.body' => 'إدارة المشتريات، أوامر الشراء، والموردين.',
+    'purchases.title' => 'المشتريات',
+    'reporting.body' => 'عرض التقارير والتحليلات المالية والإحصاءات.',
+    'reporting.title' => 'التقارير',
+    'roles.body' => 'إدارة صلاحيات وأدوار المستخدمين.',
+    'roles.title' => 'الأدوار والصلاحيات',
+    'sales.body' => 'متابعة المبيعات، الفواتير، ونقاط البيع.',
+    'sales.title' => 'المبيعات',
 ];

@@ -1,5 +1,3 @@
-<?php
-
 return [
     'access_control' => 'التحكم في الوصول',
     'customers' => 'العملاء',
@@ -12,11 +10,11 @@ return [
         'people' => 'الأشخاص',
         'transactions' => 'المعاملات',
     ],
-    'group.$groupKey' => '[TODO] Group.$groupKey',
-    'group.insight' => '[TODO] Group.insight',
-    'group.overview' => '[TODO] Group.overview',
-    'group.people' => '[TODO] Group.people',
-    'group.transactions' => '[TODO] Group.transactions',
+    'group.$groupKey' => 'المجموعة $groupKey',
+    'group.insight' => 'رؤى',
+    'group.overview' => 'نظرة عامة',
+    'group.people' => 'الأشخاص',
+    'group.transactions' => 'المعاملات',
     'orders' => 'الطلبات',
     'point_of_sale' => 'نقطة البيع',
     'products' => 'المنتجات',

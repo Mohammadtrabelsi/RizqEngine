@@ -1,5 +1,3 @@
-<?php
-
 return [
     'action' => 'الإجراء',
     'add_product' => 'إضافة منتج',
@@ -31,9 +29,9 @@ return [
     'inclusive' => 'شامل',
     'invalid-product-code' => 'رمز المنتج غير صالحة',
     'loading' => 'جاري التحميل...',
-    'max_price' => '[TODO] Max price',
+    'max_price' => 'الحد الأقصى للسعر',
     'maximum-barcode-limit' => 'الحد الأقصى للباركود',
-    'min_price' => '[TODO] Min price',
+    'min_price' => 'الحد الأدنى للسعر',
     'name' => 'الاسم',
     'no-products-found' => 'لم يتم العثور على أي منتجات',
     'no_categories_found' => 'لم يتم العثور على فئات',

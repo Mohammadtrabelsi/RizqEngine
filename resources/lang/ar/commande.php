@@ -33,7 +33,7 @@ return [
     'quantity' => 'الكمية',
     'reference' => 'المرجع',
     'shipping' => 'الشحن',
-    'status_' => '[TODO] Status ',
+    'status_' => 'الحالة',
     'status_confirmed' => 'مؤكد',
     'status_invoiced' => 'مفوتر',
     'status_label' => 'الحالة',

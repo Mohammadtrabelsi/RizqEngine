@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'card' => '[TODO] Card',
-    'cart_total' => '[TODO] Cart total',
-    'cash' => '[TODO] Cash',
-    'charge' => '[TODO] Charge',
+    'card' => 'بطاقة',
+    'cart_total' => 'إجمالي السلة',
+    'cash' => 'نقداً',
+    'charge' => 'تحصيل',
 ];
