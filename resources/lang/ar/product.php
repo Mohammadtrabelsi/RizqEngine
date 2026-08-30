@@ -79,4 +79,13 @@ return [
     'upc_e' => 'UPC E',
     'update_category' => 'تحديث الفئة',
     'update_product' => 'تحديث المنتج',
+    'expiry_date' => 'تاريخ انتهاء الصلاحية',
+    'expiry' => 'الصلاحية',
+    'expired' => 'منتهي الصلاحية',
+    'expiring_soon' => 'ينتهي قريباً',
+    'not_expired' => 'غير منتهي الصلاحية',
+    'mark_expired_out_of_stock' => 'تعيين المنتهية كنفدت من المخزون',
+    'expired-marked-out-of-stock' => 'تم نقل :count من المنتجات المنتهية إلى نفد المخزون',
+    'no-expired-products' => 'لا توجد منتجات منتهية الصلاحية بها مخزون متبقٍ',
+    'expired-in-stock-notice' => '{1} :count منتج منتهي الصلاحية لا يزال به مخزون|[2,*] :count منتجات منتهية الصلاحية لا تزال بها مخزون',
 ];

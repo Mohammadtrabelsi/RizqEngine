@@ -29,6 +29,7 @@ return [
     'pos_system' => 'Pos system',
     'profile' => 'Profile',
     'reset' => 'Reset filters',
+    'filters' => 'Filters',
     'search' => 'Search',
     'update' => 'Update',
     'version' => 'Version',

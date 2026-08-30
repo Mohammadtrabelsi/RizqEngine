@@ -81,4 +81,13 @@ return [
     'upc_e' => 'UPC E',
     'update_category' => 'Mettre à jour la catégorie',
     'update_product' => 'Mettre à jour le produit',
+    'expiry_date' => "Date d'expiration",
+    'expiry' => 'Expiration',
+    'expired' => 'Expiré',
+    'expiring_soon' => 'Expire bientôt',
+    'not_expired' => 'Non expiré',
+    'mark_expired_out_of_stock' => 'Marquer les expirés en rupture de stock',
+    'expired-marked-out-of-stock' => ':count produit(s) expiré(s) mis en rupture de stock',
+    'no-expired-products' => 'Aucun produit expiré avec du stock restant',
+    'expired-in-stock-notice' => '{1} :count produit expiré a encore du stock|[2,*] :count produits expirés ont encore du stock',
 ];
