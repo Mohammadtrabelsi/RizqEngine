@@ -31,7 +31,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public front page — the Triangle POS landing screen.
-Route::get('/', RedesignLandingPage::class)->name('welcome');
+// Namespace reset (\\) so the class-string action is not prefixed with the
+// controller namespace configured in RouteServiceProvider.
+Route::group(['namespace' => '\\'], function () {
+    Route::get('/', RedesignLandingPage::class)->name('welcome');
+});
 
 Route::get('/language/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
