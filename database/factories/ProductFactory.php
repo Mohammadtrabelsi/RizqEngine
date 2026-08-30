@@ -39,6 +39,17 @@ class ProductFactory extends Factory
             'product_order_tax' => $this->faker->numberBetween(0, 20),
             'product_tax_type' => $this->faker->numberBetween(1, 2),
             'product_note' => $this->faker->sentence(),
+            'expiry_date' => null,
         ];
+    }
+
+    /**
+     * State: the product has already expired.
+     */
+    public function expired(): self
+    {
+        return $this->state(fn () => [
+            'expiry_date' => now()->subDays($this->faker->numberBetween(1, 60))->toDateString(),
+        ]);
     }
 }

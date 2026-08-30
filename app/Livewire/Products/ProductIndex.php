@@ -40,6 +40,10 @@ class ProductIndex extends Component
     #[Url(as: 'max_price')]
     public string $maxPrice = '';
 
+    /** Expiry filter ('' = all, 'expired', 'expiring_soon', 'not_expired'). */
+    #[Url(as: 'expiry')]
+    public string $expiry = '';
+
     public function mount(): void
     {
         abort_if(Gate::denies('access_products'), 403);
@@ -75,13 +79,64 @@ class ProductIndex extends Component
         $this->resetPage();
     }
 
+    public function updatingExpiry(): void
+    {
+        $this->resetPage();
+    }
+
     /**
      * Reset every filter back to its default (all) value.
      */
     public function resetFilters(): void
     {
-        $this->reset(['search', 'stockStatus', 'categoryId', 'supplierId', 'minPrice', 'maxPrice']);
+        $this->reset(['search', 'stockStatus', 'categoryId', 'supplierId', 'minPrice', 'maxPrice', 'expiry']);
         $this->resetPage();
+    }
+
+    /**
+     * Expiry filter options for the filter control.
+     *
+     * @return array<string, string>
+     */
+    public function getExpiryOptionsProperty(): array
+    {
+        return [
+            '' => __('app.all'),
+            'expired' => __('product.expired'),
+            'expiring_soon' => __('product.expiring_soon'),
+            'not_expired' => __('product.not_expired'),
+        ];
+    }
+
+    /**
+     * Number of currently expired products still holding stock — surfaced so
+     * the manager can be shown/hidden and the count communicated to the user.
+     */
+    public function getExpiredInStockCountProperty(): int
+    {
+        return Product::query()->expired()->where('product_quantity', '>', 0)->count();
+    }
+
+    /**
+     * Manager action: force every expired product that still has stock to
+     * zero quantity, moving them to the "out of stock" status.
+     */
+    public function markExpiredOutOfStock(): void
+    {
+        abort_if(Gate::denies('edit_products'), 403);
+
+        $affected = Product::query()
+            ->expired()
+            ->where('product_quantity', '>', 0)
+            ->update(['product_quantity' => 0]);
+
+        $this->resetPage();
+
+        if ($affected > 0) {
+            session()->flash('success', trans('product.expired-marked-out-of-stock', ['count' => $affected]));
+        } else {
+            session()->flash('info', trans('product.no-expired-products'));
+        }
     }
 
     /**
@@ -153,6 +208,14 @@ class ProductIndex extends Component
             })
             ->when(is_numeric($this->maxPrice), function ($query) {
                 $query->where('product_price', '<=', (int) round(((float) $this->maxPrice) * 100));
+            })
+            ->when($this->expiry === 'expired', fn ($query) => $query->expired())
+            ->when($this->expiry === 'expiring_soon', fn ($query) => $query->expiringSoon())
+            ->when($this->expiry === 'not_expired', function ($query) {
+                $query->where(function ($q) {
+                    $q->whereNull('expiry_date')
+                        ->orWhereDate('expiry_date', '>', now()->toDateString());
+                });
             })
             ->latest()
             ->paginate(12);

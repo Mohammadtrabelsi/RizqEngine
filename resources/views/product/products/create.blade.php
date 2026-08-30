@@ -146,6 +146,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="expiry_date">{{ __('product.expiry_date') }}</label>
+                                        <input type="date" class="form-control" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="product_note">{{ __('product.note') }}</label>
                                 <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>

@@ -31,8 +31,10 @@ use Spatie\Translatable\HasTranslations;
  * @property int $product_order_tax
  * @property int $product_tax_type
  * @property string|null $product_note
+ * @property \Illuminate\Support\Carbon|null $expiry_date
  * @property int $units_sold Transient attribute populated by reporting queries.
  * @property-read StockStatus $stock_status Derived from quantity and alert threshold.
+ * @property-read bool $is_expired Whether the product's expiry date has passed.
  */
 class Product extends Model implements HasMedia
 {
@@ -41,6 +43,11 @@ class Product extends Model implements HasMedia
     protected $guarded = [];
 
     protected $with = ['media'];
+
+    /** @var array<string, string> */
+    protected $casts = [
+        'expiry_date' => 'date',
+    ];
 
     /** @var array<int, string> */
     public array $translatable = ['product_name', 'product_note'];
@@ -139,6 +146,56 @@ class Product extends Model implements HasMedia
                 ->whereColumn('product_quantity', '<=', 'product_stock_alert'),
             StockStatus::InStock => $query->whereColumn('product_quantity', '>', 'product_stock_alert'),
         };
+    }
+
+    /**
+     * Whether this product has an expiry date that is on or before today.
+     */
+    public function getIsExpiredAttribute(): bool
+    {
+        return $this->expiry_date !== null
+            && $this->expiry_date->startOfDay()->lte(now()->startOfDay());
+    }
+
+    /**
+     * Constrain a query to products whose expiry date has passed (or is today).
+     *
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    public function scopeExpired(Builder $query): Builder
+    {
+        return $query->whereNotNull('expiry_date')
+            ->whereDate('expiry_date', '<=', now()->toDateString());
+    }
+
+    /**
+     * Constrain a query to products expiring within the next $days days
+     * (and not yet expired).
+     *
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    public function scopeExpiringSoon(Builder $query, int $days = 30): Builder
+    {
+        return $query->whereNotNull('expiry_date')
+            ->whereDate('expiry_date', '>', now()->toDateString())
+            ->whereDate('expiry_date', '<=', now()->addDays($days)->toDateString());
+    }
+
+    /**
+     * Force this product out of stock by zeroing its on-hand quantity.
+     * Returns true when a change was actually persisted.
+     */
+    public function markOutOfStock(): bool
+    {
+        if ((int) $this->product_quantity <= 0) {
+            return false;
+        }
+
+        $this->product_quantity = 0;
+
+        return $this->save();
     }
 
     public function registerMediaCollections(): void

@@ -29,6 +29,7 @@ return [
     'pos_system' => 'نظام نقاط البيع',
     'profile' => 'الملف الشخصي',
     'reset' => '[TODO] Reset filters',
+    'filters' => 'عوامل التصفية',
     'search' => 'بحث',
     'update' => 'تحديث',
     'version' => 'الإصدار',
