@@ -146,5 +146,11 @@
             </li>
         </ul>
     </nav>
+
+    <div class="app-sidebar-shift">
+        <p class="app-sidebar-shift-label">{{ __('dash.shift_open') }}</p>
+        <p class="app-sidebar-shift-time">08:12 — {{ __('dash.now') }}</p>
+        <p class="app-sidebar-shift-meta">{{ __('dash.register_role', ['register' => '01', 'role' => auth()->user()->role_label]) }}</p>
+    </div>
 </aside>
 <div class="app-sidebar-backdrop d-lg-none" data-toggle="collapse" data-target="#app-sidebar"></div>
