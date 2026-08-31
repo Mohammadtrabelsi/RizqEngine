@@ -35,7 +35,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="product_code">{{ __('product.product_code') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="product_code" required value="{{ $product->product_code }}">
+                                        <input type="number" min="0" step="1" class="form-control" name="product_code" required value="{{ $product->product_code }}">
                                     </div>
                                 </div>
                             </div>
