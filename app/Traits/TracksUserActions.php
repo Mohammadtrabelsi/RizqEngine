@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -19,12 +18,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Values that are already set explicitly (e.g. during seeding or imports)
  * are preserved rather than overwritten, and nothing is stamped when there
  * is no authenticated user (console commands, queued jobs, etc.).
+ *
+ * @property int|null $created_by
+ * @property int|null $updated_by
  */
 trait TracksUserActions
 {
     public static function bootTracksUserActions(): void
     {
-        static::creating(function (Model $model): void {
+        static::creating(function (self $model): void {
             $userId = auth()->id();
 
             if ($userId === null) {
@@ -40,7 +42,7 @@ trait TracksUserActions
             }
         });
 
-        static::updating(function (Model $model): void {
+        static::updating(function (self $model): void {
             $userId = auth()->id();
 
             if ($userId !== null) {
