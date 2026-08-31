@@ -8,6 +8,7 @@ use App\Models\StockEntry;
 use App\Models\StockEntryDetail;
 use App\Models\StockExit;
 use App\Models\StockExitDetail;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -25,6 +26,28 @@ use Illuminate\Support\Facades\DB;
 class StockExitService
 {
     public function __construct(private StockService $stockService) {}
+
+    /**
+     * Paginate stock exits (with a count of their detail lines), optionally
+     * filtered by reference, destination or responsible party.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return StockExit::query()
+            ->withCount('details')
+            ->when($search, function ($query) use ($search) {
+                $query->where('reference', 'like', '%'.$search.'%')
+                    ->orWhere('destination', 'like', '%'.$search.'%')
+                    ->orWhere('responsible', 'like', '%'.$search.'%');
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function delete(int $id): void
+    {
+        StockExit::findOrFail($id)->delete();
+    }
 
     /**
      * Create and validate a Bon de Sortie, decreasing real stock.

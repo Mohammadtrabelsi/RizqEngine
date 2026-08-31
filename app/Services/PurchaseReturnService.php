@@ -8,6 +8,7 @@ use App\Models\PurchaseReturnDetail;
 use App\Models\PurchaseReturnPayment;
 use App\Models\Supplier;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -24,6 +25,38 @@ class PurchaseReturnService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
     ) {}
+
+    /**
+     * Paginate purchase returns, optionally filtered by reference or supplier name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return PurchaseReturn::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('supplier_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Paginate the payments recorded against a single purchase return.
+     */
+    public function paginatePayments(int $purchaseReturnId, ?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return PurchaseReturnPayment::query()
+            ->where('purchase_return_id', $purchaseReturnId)
+            ->when($search, fn ($q) => $q->where('reference', 'like', '%'.$search.'%'))
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function deletePayment(int $id): void
+    {
+        PurchaseReturnPayment::findOrFail($id)->delete();
+    }
 
     /**
      * @param  array<string, mixed>  $data

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AdjustedProduct;
 use App\Models\Adjustment;
 use App\Models\Product;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -15,6 +16,26 @@ use Illuminate\Support\Facades\DB;
 class AdjustmentService
 {
     public function __construct(private readonly StockService $stock) {}
+
+    /**
+     * Paginate adjustments (with a count of adjusted products), optionally
+     * filtered by reference.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return Adjustment::query()
+            ->withCount('adjustedProducts')
+            ->when($search, function ($query) use ($search) {
+                $query->where('reference', 'like', '%'.$search.'%');
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function delete(int $id): void
+    {
+        Adjustment::findOrFail($id)->delete();
+    }
 
     /**
      * @param  array<string, mixed>  $data

@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Quotation;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -24,6 +25,21 @@ use Illuminate\Support\Facades\DB;
  */
 class BonCommandeService
 {
+    /**
+     * Paginate bons de commande, optionally filtered by reference or customer name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return BonCommande::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('customer_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
     /**
      * The monetary + descriptive columns shared by a Quotation and a
      * Bon de Commande, stored as integer cents. Copied verbatim.

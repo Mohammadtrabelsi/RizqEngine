@@ -2,7 +2,7 @@
 
 namespace App\Livewire\PurchaseReturns;
 
-use App\Models\PurchaseReturn;
+use App\Services\PurchaseReturnService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class PurchaseReturnIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(PurchaseReturnService $purchaseReturns)
     {
-        $purchase_returns = PurchaseReturn::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('supplier_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.purchase-returns.purchase-return-index', compact('purchase_returns'));
+        return view('livewire.purchase-returns.purchase-return-index', [
+            'purchase_returns' => $purchaseReturns->paginate($this->search),
+        ]);
     }
 }

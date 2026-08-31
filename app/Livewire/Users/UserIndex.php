@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Users;
 
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,26 +27,19 @@ class UserIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, UserService $users): void
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        User::findOrFail($id)->delete();
+        $users->delete($id);
 
         session()->flash('warning', trans('user.user-deleted'));
     }
 
-    public function render()
+    public function render(UserService $users)
     {
-        $users = User::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('name', 'like', $term)
-                    ->orWhere('email', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.users.user-index', compact('users'));
+        return view('livewire.users.user-index', [
+            'users' => $users->paginate($this->search),
+        ]);
     }
 }

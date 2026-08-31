@@ -8,6 +8,7 @@ use App\Models\SaleReturn;
 use App\Models\SaleReturnDetail;
 use App\Models\SaleReturnPayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -24,6 +25,38 @@ class SaleReturnService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
     ) {}
+
+    /**
+     * Paginate sale returns, optionally filtered by reference or customer name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return SaleReturn::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('customer_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Paginate the payments recorded against a single sale return.
+     */
+    public function paginatePayments(int $saleReturnId, ?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return SaleReturnPayment::query()
+            ->where('sale_return_id', $saleReturnId)
+            ->when($search, fn ($q) => $q->where('reference', 'like', '%'.$search.'%'))
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function deletePayment(int $id): void
+    {
+        SaleReturnPayment::findOrFail($id)->delete();
+    }
 
     /**
      * @param  array<string, mixed>  $data

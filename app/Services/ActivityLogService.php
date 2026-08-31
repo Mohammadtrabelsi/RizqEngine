@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Spatie\Activitylog\Models\Activity;
+
+/**
+ * Read and maintenance access to the activity log.
+ */
+class ActivityLogService
+{
+    public function paginate(?string $search = null, int $perPage = 15): LengthAwarePaginator
+    {
+        return Activity::query()
+            ->with('causer')
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('description', 'like', $term)
+                    ->orWhere('log_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function delete(int $id): void
+    {
+        Activity::findOrFail($id)->delete();
+    }
+
+    public function clear(): void
+    {
+        Activity::query()->delete();
+    }
+}

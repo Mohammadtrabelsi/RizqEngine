@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Expenses;
 
-use App\Models\Expense;
+use App\Services\ExpenseService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -22,25 +22,19 @@ class ExpenseIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, ExpenseService $expenses): void
     {
         abort_if(Gate::denies('delete_expenses'), 403);
 
-        Expense::findOrFail($id)->delete();
+        $expenses->delete($id);
 
         session()->flash('warning', trans('expense.expense-deleted'));
     }
 
-    public function render()
+    public function render(ExpenseService $expenses)
     {
-        $expenses = Expense::query()
-            ->with('category')
-            ->when($this->search, function ($query) {
-                $query->where('reference', 'like', '%'.$this->search.'%');
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.expenses.expense-index', compact('expenses'));
+        return view('livewire.expenses.expense-index', [
+            'expenses' => $expenses->paginate($this->search),
+        ]);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Roles;
 
+use App\Services\RoleService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Spatie\Permission\Models\Role;
 
 class RoleIndex extends Component
 {
@@ -22,25 +22,19 @@ class RoleIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, RoleService $roles): void
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        Role::findOrFail($id)->delete();
+        $roles->delete($id);
 
         session()->flash('success', trans('user.role-deleted'));
     }
 
-    public function render()
+    public function render(RoleService $roles)
     {
-        $roles = Role::query()
-            ->with('permissions')
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%'.$this->search.'%');
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.roles.role-index', compact('roles'));
+        return view('livewire.roles.role-index', [
+            'roles' => $roles->paginate($this->search),
+        ]);
     }
 }

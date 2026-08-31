@@ -11,6 +11,7 @@ use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\SalePayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -27,6 +28,38 @@ class SaleService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
     ) {}
+
+    /**
+     * Paginate sales, optionally filtered by reference or customer name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return Sale::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('customer_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Paginate the payments recorded against a single sale.
+     */
+    public function paginatePayments(int $saleId, ?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return SalePayment::query()
+            ->where('sale_id', $saleId)
+            ->when($search, fn ($q) => $q->where('reference', 'like', '%'.$search.'%'))
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function deletePayment(int $id): void
+    {
+        SalePayment::findOrFail($id)->delete();
+    }
 
     /**
      * Create a sale from the "sale" cart instance.
