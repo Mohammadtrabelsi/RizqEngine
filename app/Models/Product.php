@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\StockStatus;
 use App\Traits\HasDefaultTranslations;
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,7 +37,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Product extends Model implements HasMedia
 {
-    use HasDefaultTranslations, HasFactory, HasTranslations, InteractsWithMedia, RecordsActivity;
+    use HasDefaultTranslations, HasFactory, HasTranslations, InteractsWithMedia, RecordsActivity, TracksUserActions;
 
     protected $guarded = [];
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, HasRoles, InteractsWithMedia, Notifiable, RecordsActivity;
+    use HasFactory, HasRoles, InteractsWithMedia, Notifiable, RecordsActivity, TracksUserActions;
 
     /**
      * The attributes that are mass assignable.
