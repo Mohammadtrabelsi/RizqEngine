@@ -47,6 +47,19 @@ class ActivityLogIndex extends Component
         $this->resetPage();
     }
 
+    /**
+     * Bootstrap badge class for an activity event name.
+     */
+    public function eventBadge(?string $event): string
+    {
+        return [
+            'created' => 'badge-success',
+            'updated' => 'badge-info',
+            'deleted' => 'badge-danger',
+            'restored' => 'badge-warning',
+        ][$event] ?? 'badge-secondary';
+    }
+
     public function render(ActivityLogService $activities)
     {
         return view('livewire.activity-logs.activity-log-index', [

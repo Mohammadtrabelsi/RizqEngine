@@ -22,6 +22,14 @@ class Supplier extends Model implements HasMedia
 
     protected $guarded = [];
 
+    /**
+     * URL of the supplier's profile image, or an empty string when none is set.
+     */
+    public function getImageUrlAttribute(): string
+    {
+        return $this->getFirstMediaUrl('images');
+    }
+
     protected static function newFactory()
     {
         return SupplierFactory::new();

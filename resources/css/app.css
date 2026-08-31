@@ -2465,3 +2465,39 @@ hr { display: none; }
 [dir="rtl"] .justify-content-end   { justify-content: flex-start !important; }
 
 [x-cloak] { display: none !important; }
+
+/* -------------------------------------------------------------------------
+ * Media thumbnails & card hover — extracted from inline styles in the
+ * product / customer / supplier index views so the templates carry no
+ * inline CSS.
+ * ---------------------------------------------------------------------- */
+.media-thumb {
+    height: 160px;
+    background: #f8f9fa;
+}
+
+.media-thumb--lg {
+    height: 180px;
+}
+
+.thumb-cover {
+    object-fit: cover;
+}
+
+.thumb-placeholder-icon {
+    font-size: 3.5rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    color: #ccc;
+}
+
+.card-lift {
+    transition: all 0.3s ease;
+}
+
+.card-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}

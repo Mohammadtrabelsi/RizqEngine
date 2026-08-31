@@ -1,13 +1,4 @@
 <div>
-    @php
-        $eventBadges = [
-            'created' => 'badge-success',
-            'updated' => 'badge-info',
-            'deleted' => 'badge-danger',
-            'restored' => 'badge-warning',
-        ];
-    @endphp
-
     <div class="row">
         <div class="col-12 col-md-6 mb-3">
             @can('delete_activity_logs')
@@ -27,7 +18,7 @@
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="activity-{{ $activity->id }}">
                 <div class="card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span class="badge {{ $eventBadges[$activity->event] ?? 'badge-secondary' }}">{{ $activity->event ?? 'n/a' }}</span>
+                        <span class="badge {{ $this->eventBadge($activity->event) }}">{{ $activity->event ?? 'n/a' }}</span>
                         <small class="text-muted">{{ $activity->created_at->format('d M, Y H:i') }}</small>
                     </div>
                     <div class="card-body">
