@@ -12,37 +12,45 @@
         </div>
     </div>
 
-    <div class="row align-items-end">
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('supplier.city') }}</label>
-            <select wire:model.live="city" class="form-select">
-                <option value="">{{ __('app.all') }}</option>
-                @foreach($cities as $c)
-                    <option value="{{ $c }}">{{ $c }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('supplier.country') }}</label>
-            <select wire:model.live="country" class="form-select">
-                <option value="">{{ __('app.all') }}</option>
-                @foreach($countries as $c)
-                    <option value="{{ $c }}">{{ $c }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('supplier.tax_identification_number') }}</label>
-            <select wire:model.live="hasTaxId" class="form-select">
-                <option value="">{{ __('app.all') }}</option>
-                <option value="yes">{{ __('app.yes') }}</option>
-                <option value="no">{{ __('app.no') }}</option>
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary w-100">
-                <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
-            </button>
+    {{-- Filters container --}}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h6 class="card-title text-muted mb-3">
+                <i class="bi bi-funnel"></i> {{ __('app.filters') }}
+            </h6>
+            <div class="row align-items-end">
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('supplier.city') }}</label>
+                    <select wire:model.live="city" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($cities as $c)
+                            <option value="{{ $c }}">{{ $c }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('supplier.country') }}</label>
+                    <select wire:model.live="country" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($countries as $c)
+                            <option value="{{ $c }}">{{ $c }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('supplier.tax_identification_number') }}</label>
+                    <select wire:model.live="hasTaxId" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        <option value="yes">{{ __('app.yes') }}</option>
+                        <option value="no">{{ __('app.no') }}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
