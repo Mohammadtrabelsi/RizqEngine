@@ -47,6 +47,8 @@ return [
     'profit' => 'Profit',
     'purchase-returns' => 'Purchase returns',
     'purchases' => 'Purchases',
+    'sale-returns' => 'Sale returns',
+    'sales' => 'Sales',
     'quantity' => 'Quantity',
     'ranking' => 'Ranking',
     'reference' => 'Reference',

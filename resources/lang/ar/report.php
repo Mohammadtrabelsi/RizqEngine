@@ -47,6 +47,8 @@ return [
     'profit' => 'الربح',
     'purchase-returns' => 'مرتجعات المشتريات',
     'purchases' => 'المشتريات',
+    'sale-returns' => 'مرتجعات المبيعات',
+    'sales' => 'المبيعات',
     'quantity' => 'الكمية',
     'ranking' => 'الترتيب',
     'reference' => 'المرجع',
