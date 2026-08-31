@@ -152,6 +152,18 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// --- Submit-a-referenced-form buttons --------------------------------------
+// Replaces inline `onclick="…getElementById('id').submit()"` handlers. A
+// control carrying `data-submit-form="<form id>"` submits that hidden form
+// (used for the delete/confirm/convert row actions and the logout link).
+document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-submit-form]');
+    if (!trigger) return;
+    event.preventDefault();
+    const form = document.getElementById(trigger.getAttribute('data-submit-form'));
+    if (form) form.submit();
+});
+
 // --- Dismissible alerts ----------------------------------------------------
 document.addEventListener('click', (event) => {
     const closer = event.target.closest('[data-dismiss="alert"]');

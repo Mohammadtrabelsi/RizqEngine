@@ -15,7 +15,7 @@
                 </a>
             @endcan
             @can('confirm_bon_commandes')
-                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('confirm-bc-{{ $data->id }}').submit();">
+                <button class="dropdown-item" data-submit-form="confirm-bc-{{ $data->id }}">
                     <i class="bi bi-check2-circle mr-2 text-success" style="line-height: 1;"></i> {{ __('boncommande.confirm') }}
                     <form id="confirm-bc-{{ $data->id }}" class="d-none" action="{{ route('bon-commandes.confirm', $data->id) }}" method="POST">@csrf</form>
                 </button>
@@ -23,7 +23,7 @@
         @endif
         @if($data->status === \App\Models\BonCommande::STATUS_CONFIRMED)
             @can('convert_bon_commandes')
-                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('convert-bc-{{ $data->id }}').submit();">
+                <button class="dropdown-item" data-submit-form="convert-bc-{{ $data->id }}">
                     <i class="bi bi-arrow-right-circle mr-2 text-success" style="line-height: 1;"></i> {{ __('boncommande.convert-to-commande') }}
                     <form id="convert-bc-{{ $data->id }}" class="d-none" action="{{ route('bon-commandes.convert', $data->id) }}" method="POST">@csrf</form>
                 </button>
@@ -31,14 +31,14 @@
         @endif
         @if(! $data->isConverted() && ! $data->isCancelled())
             @can('edit_bon_commandes')
-                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('cancel-bc-{{ $data->id }}').submit();">
+                <button class="dropdown-item" data-submit-form="cancel-bc-{{ $data->id }}">
                     <i class="bi bi-x-circle mr-2 text-warning" style="line-height: 1;"></i> {{ __('boncommande.cancel') }}
                     <form id="cancel-bc-{{ $data->id }}" class="d-none" action="{{ route('bon-commandes.cancel', $data->id) }}" method="POST">@csrf</form>
                 </button>
             @endcan
         @endif
         @can('delete_bon_commandes')
-            <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('destroy-bc-{{ $data->id }}').submit();">
+            <button class="dropdown-item" data-submit-form="destroy-bc-{{ $data->id }}">
                 <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> {{ __('boncommande.delete') }}
                 <form id="destroy-bc-{{ $data->id }}" class="d-none" action="{{ route('bon-commandes.destroy', $data->id) }}" method="POST">
                     @csrf

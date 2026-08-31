@@ -10,7 +10,7 @@
         @endcan
         @if($data->status === \App\Models\Commande::STATUS_PENDING)
             @can('confirm_commandes')
-                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('confirm-cmd-{{ $data->id }}').submit();">
+                <button class="dropdown-item" data-submit-form="confirm-cmd-{{ $data->id }}">
                     <i class="bi bi-check2-circle mr-2 text-success" style="line-height: 1;"></i> {{ __('commande.confirm') }}
                     <form id="confirm-cmd-{{ $data->id }}" class="d-none" action="{{ route('commandes.confirm', $data->id) }}" method="POST">@csrf</form>
                 </button>
@@ -18,14 +18,14 @@
         @endif
         @if(! $data->isInvoiced())
             @can('convert_commandes')
-                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('facture-cmd-{{ $data->id }}').submit();">
+                <button class="dropdown-item" data-submit-form="facture-cmd-{{ $data->id }}">
                     <i class="bi bi-receipt mr-2 text-success" style="line-height: 1;"></i> {{ __('commande.generate-facture') }}
                     <form id="facture-cmd-{{ $data->id }}" class="d-none" action="{{ route('commandes.convert', $data->id) }}" method="POST">@csrf</form>
                 </button>
             @endcan
         @endif
         @can('delete_commandes')
-            <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('destroy-cmd-{{ $data->id }}').submit();">
+            <button class="dropdown-item" data-submit-form="destroy-cmd-{{ $data->id }}">
                 <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> {{ __('commande.delete') }}
                 <form id="destroy-cmd-{{ $data->id }}" class="d-none" action="{{ route('commandes.destroy', $data->id) }}" method="POST">
                     @csrf

@@ -5,7 +5,7 @@
     <div class="dropdown-menu">
         @can('convert_quotations')
             @if(! $data->isConverted())
-                <button class="dropdown-item" onclick="event.preventDefault(); document.getElementById('convert-qt-{{ $data->id }}').submit();">
+                <button class="dropdown-item" data-submit-form="convert-qt-{{ $data->id }}">
                     <i class="bi bi-arrow-right-circle mr-2 text-success" style="line-height: 1;"></i> {{ __('boncommande.transform-to-bon-commande') }}
                     <form id="convert-qt-{{ $data->id }}" class="d-none" action="{{ route('quotations.convert', $data->id) }}" method="POST">@csrf</form>
                 </button>
@@ -36,11 +36,7 @@
             </a>
         @endcan
         @can('delete_quotations')
-            <button id="delete" class="dropdown-item" onclick="
-                event.preventDefault();
-                {
-                document.getElementById('destroy{{ $data->id }}').submit()
-                }">
+            <button id="delete" class="dropdown-item" data-submit-form="destroy{{ $data->id }}">
                 <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> Delete
                 <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('quotations.destroy', $data->id) }}" method="POST">
                     @csrf

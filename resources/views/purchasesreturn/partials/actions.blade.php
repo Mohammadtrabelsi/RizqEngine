@@ -26,11 +26,7 @@
             </a>
         @endcan
         @can('delete_purchase_return')
-            <button id="delete" class="dropdown-item" onclick="
-                event.preventDefault();
-                {
-                document.getElementById('destroy{{ $data->id }}').submit()
-                }">
+            <button id="delete" class="dropdown-item" data-submit-form="destroy{{ $data->id }}">
                 <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> Delete
                 <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('purchase-returns.destroy', $data->id) }}" method="POST">
                     @csrf

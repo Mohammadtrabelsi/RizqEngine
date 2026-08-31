@@ -9,12 +9,7 @@
 </a>
 @endcan
 @can('delete_products')
-<button id="delete" class="btn btn-outline-danger btn-sm" onclick="
-    event.preventDefault();
-    {
-        document.getElementById('destroy{{ $data->id }}').submit()
-    }
-    ">
+<button id="delete" class="btn btn-outline-danger btn-sm" data-submit-form="destroy{{ $data->id }}">
     <i class="bi bi-trash"></i>
     <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('products.destroy', $data->id) }}" method="POST">
         @csrf
