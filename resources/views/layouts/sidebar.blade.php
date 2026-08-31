@@ -152,6 +152,21 @@
             </li>
             @endcan
 
+            {{-- FINANCE --}}
+            @php($inFinance = request()->routeIs('monthly-budgets.*') || request()->routeIs('outings.*') || request()->routeIs('invoice-archive.*'))
+            <li class="app-sidebar-heading">{{ __('finance.monthly_budgets') }}</li>
+            <li class="app-sidebar-item {{ $inFinance ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inFinance ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inFinance ? 'true' : 'false' }}">
+                    <span>{{ __('finance.monthly_budgets') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inFinance ? 'is-open' : '' }}">
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('monthly-budgets.*') ? 'is-active' : '' }}" href="{{ route('monthly-budgets.index') }}">{{ __('finance.monthly_budgets') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('outings.*') ? 'is-active' : '' }}" href="{{ route('outings.index') }}">{{ __('finance.outings') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('invoice-archive.*') ? 'is-active' : '' }}" href="{{ route('invoice-archive.index') }}">{{ __('finance.invoice_archive') }}</a></li>
+                </ul>
+            </li>
+
             {{-- PEOPLE --}}
             @canany(['access_customers', 'access_suppliers', 'access_user_management'])
             <li class="app-sidebar-heading">{{ __('nav.group.people') }}</li>
