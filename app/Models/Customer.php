@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  */
 class Customer extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, RecordsActivity;
+    use HasFactory, InteractsWithMedia, RecordsActivity, TracksUserActions;
 
     protected $guarded = [];
 

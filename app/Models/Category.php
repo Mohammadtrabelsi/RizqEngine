@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasDefaultTranslations;
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use HasDefaultTranslations, HasFactory, HasTranslations, RecordsActivity;
+    use HasDefaultTranslations, HasFactory, HasTranslations, RecordsActivity, TracksUserActions;
 
     protected $guarded = [];
 
