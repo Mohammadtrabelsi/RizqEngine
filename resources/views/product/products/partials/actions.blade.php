@@ -1,5 +1,5 @@
 @can('edit_products')
-<a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-info btn-sm">
+<a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-primary btn-sm">
     <i class="bi bi-pencil"></i>
 </a>
 @endcan

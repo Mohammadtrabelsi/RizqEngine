@@ -199,7 +199,7 @@
                         <!-- Action Buttons -->
                         <div class="btn-group w-100 mt-auto" role="group">
                             @can('edit_products')
-                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-info btn-sm" title="Edit">
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-primary btn-sm" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             @endcan

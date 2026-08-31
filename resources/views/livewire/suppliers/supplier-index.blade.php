@@ -72,7 +72,7 @@
                         </ul>
                         <div class="btn-group">
                             @can('edit_suppliers')
-                                <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_suppliers')
                                 <a href="{{ route('suppliers.show', $supplier->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
