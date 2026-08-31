@@ -117,4 +117,17 @@ class BonCommande extends Model
     {
         return $value / 100;
     }
+
+    /**
+     * Bootstrap badge class representing this bon de commande's status.
+     */
+    public function statusBadgeClass(): string
+    {
+        return [
+            self::STATUS_DRAFT => 'badge-info',
+            self::STATUS_CONFIRMED => 'badge-primary',
+            self::STATUS_CONVERTED => 'badge-success',
+            self::STATUS_CANCELLED => 'badge-danger',
+        ][$this->status] ?? 'badge-secondary';
+    }
 }
