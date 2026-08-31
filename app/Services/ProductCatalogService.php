@@ -57,9 +57,11 @@ class ProductCatalogService
      */
     public function paginateByCategory(
         int|string|null $categoryId,
-        int $perPage,
+        ?int $perPage = null,
         ?StockStatus $stockStatus = null
     ): LengthAwarePaginator {
+        $perPage = $perPage ?: 9;
+
         return Product::with('category')
             ->when($categoryId, function ($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);

@@ -124,6 +124,26 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * Bon de Commande line items referencing this product.
+     *
+     * @return HasMany<BonCommandeDetails, $this>
+     */
+    public function bonCommandeDetails(): HasMany
+    {
+        return $this->hasMany(BonCommandeDetails::class, 'product_id', 'id');
+    }
+
+    /**
+     * Commande line items referencing this product.
+     *
+     * @return HasMany<CommandeDetails, $this>
+     */
+    public function commandeDetails(): HasMany
+    {
+        return $this->hasMany(CommandeDetails::class, 'product_id', 'id');
+    }
+
+    /**
      * Derived stock status for this product.
      */
     public function getStockStatusAttribute(): StockStatus
