@@ -1,4 +1,5 @@
 <?php
+
 return [
     'cta_button' => 'Commencer',
     'cta_lead' => 'Rejoignez des milliers d\'utilisateurs et développez votre activité dès aujourd\'hui',

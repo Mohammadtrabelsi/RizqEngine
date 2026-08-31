@@ -1,4 +1,5 @@
 <?php
+
 return [
     'access_control' => 'Contrôle d\'accès',
     'customers' => 'Clients',

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'action' => 'Action',
     'all_registers' => 'Tous les registres',

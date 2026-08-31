@@ -1,4 +1,5 @@
 <?php
+
 return [
     'expenses.body' => 'Gérer et suivre les dépenses quotidiennes et opérationnelles.',
     'expenses.title' => 'Dépenses',

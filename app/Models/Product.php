@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -32,7 +33,7 @@ use Spatie\Translatable\HasTranslations;
  * @property int $product_order_tax
  * @property int $product_tax_type
  * @property string|null $product_note
- * @property \Illuminate\Support\Carbon|null $expiry_date
+ * @property Carbon|null $expiry_date
  * @property int $units_sold Transient attribute populated by reporting queries.
  * @property-read StockStatus $stock_status Derived from quantity and alert threshold.
  * @property-read bool $is_expired Whether the product's expiry date has passed.

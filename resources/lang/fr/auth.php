@@ -1,4 +1,5 @@
 <?php
+
 return [
     'already-have-account' => 'Vous avez déjà un compte ?',
     'before-proceeding' => 'Avant de continuer, veuillez vérifier votre boîte e-mail pour un lien de vérification.',

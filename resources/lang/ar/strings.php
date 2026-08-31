@@ -1,4 +1,5 @@
 <?php
+
 return [
     'Go Home' => 'الذهاب إلى الصفحة الرئيسية',
     'Go to page :page' => 'الذهاب إلى الصفحة :page',
