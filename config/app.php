@@ -253,6 +253,7 @@ return [
         SweetAlertServiceProvider::class,
         PermissionServiceProvider::class,
         BarcodeServiceProvider::class,
+        \Barryvdh\DomPDF\ServiceProvider::class,
         ServiceProvider::class,
         /*
          * Application Service Providers...
