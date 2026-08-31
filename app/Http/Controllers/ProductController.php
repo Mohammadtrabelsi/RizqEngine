@@ -52,8 +52,64 @@ class ProductController extends Controller
         abort_if(Gate::denies('show_products'), 403);
 
         $transactions = $this->productTransactions($product);
+        $orders = $this->productOrders($product);
 
-        return view('product.products.show', compact('product', 'transactions'));
+        return view('product.products.show', compact('product', 'transactions', 'orders'));
+    }
+
+    /**
+     * Build a date-sorted list of every order document (Bon de Commande and
+     * Commande) whose line items reference the given product.
+     *
+     * @return Collection<int, array<string, mixed>>
+     */
+    private function productOrders(Product $product): Collection
+    {
+        $orders = collect();
+
+        $product->bonCommandeDetails()->with('bonCommande.customer')->get()
+            ->each(function ($detail) use ($orders) {
+                $parent = $detail->bonCommande;
+
+                if (! $parent) {
+                    return;
+                }
+
+                $orders->push([
+                    'type' => 'bon_commande',
+                    'label' => 'Bon de Commande',
+                    'badge' => 'info',
+                    'reference' => $parent->reference,
+                    'party' => optional($parent->customer)->customer_name,
+                    'status' => $parent->status,
+                    'route' => route('bon-commandes.show', $parent->id),
+                    'quantity' => $detail->quantity,
+                    'date' => $parent->created_at ?? $detail->created_at,
+                ]);
+            });
+
+        $product->commandeDetails()->with('commande.customer')->get()
+            ->each(function ($detail) use ($orders) {
+                $parent = $detail->commande;
+
+                if (! $parent) {
+                    return;
+                }
+
+                $orders->push([
+                    'type' => 'commande',
+                    'label' => 'Commande',
+                    'badge' => 'primary',
+                    'reference' => $parent->reference,
+                    'party' => optional($parent->customer)->customer_name,
+                    'status' => $parent->status,
+                    'route' => route('commandes.show', $parent->id),
+                    'quantity' => $detail->quantity,
+                    'date' => $parent->created_at ?? $detail->created_at,
+                ]);
+            });
+
+        return $orders->sortByDesc('date')->values();
     }
 
     /**

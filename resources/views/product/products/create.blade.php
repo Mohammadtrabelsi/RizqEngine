@@ -58,9 +58,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="supplier_id">{{ __('product.supplier') }}</label>
-                                        <select class="form-control" name="supplier_id" id="supplier_id">
-                                            <option value="" selected>{{ __('product.select_supplier') }}</option>
+                                        <label for="supplier_id">{{ __('product.supplier') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="supplier_id" id="supplier_id" required>
+                                            <option value="" selected disabled>{{ __('product.select_supplier') }}</option>
                                             @foreach(\App\Models\Supplier::all() as $supplier)
                                                 <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>{{ $supplier->supplier_name }}</option>
                                             @endforeach
@@ -111,7 +111,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_stock_alert">{{ __('product.stock_alert') }} <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('product_stock_alert', 0) }}" min="0" max="100">
+                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('product_stock_alert', 10) }}" min="10" max="100">
                                     </div>
                                 </div>
                             </div>

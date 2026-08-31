@@ -168,6 +168,60 @@
                     </div>
                 </div>
 
+                <!-- Orders -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-receipt"></i> Orders</h5>
+                        <span class="badge bg-secondary">{{ $orders->count() }}</span>
+                    </div>
+                    <div class="card-body p-0">
+                        @if($orders->isEmpty())
+                            <div class="text-center text-muted py-5">
+                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                This product does not appear on any order yet.
+                            </div>
+                        @else
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Reference</th>
+                                            <th>Customer</th>
+                                            <th>Status</th>
+                                            <th class="text-end">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($orders as $order)
+                                            <tr>
+                                                <td>
+                                                    <span class="d-block">{{ optional($order['date'])->format('d M Y') }}</span>
+                                                    <small class="text-muted">{{ optional($order['date'])->format('H:i') }}</small>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-{{ $order['badge'] }}">{{ $order['label'] }}</span>
+                                                </td>
+                                                <td>
+                                                    @if($order['route'])
+                                                        <a href="{{ $order['route'] }}">{{ $order['reference'] ?? '—' }}</a>
+                                                    @else
+                                                        {{ $order['reference'] ?? '—' }}
+                                                    @endif
+                                                </td>
+                                                <td>{{ $order['party'] ?? '—' }}</td>
+                                                <td><span class="badge bg-light text-dark text-capitalize">{{ $order['status'] ?? '—' }}</span></td>
+                                                <td class="text-end">{{ $order['quantity'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- Transaction History -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">

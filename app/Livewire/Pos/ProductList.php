@@ -44,7 +44,7 @@ class ProductList extends Component
 
     public function showCountChanged($value)
     {
-        $this->limit = $value;
+        $this->limit = (int) $value ?: 9;
         $this->resetPage();
     }
 

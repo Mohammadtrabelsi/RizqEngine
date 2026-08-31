@@ -22,13 +22,13 @@ class StoreProductRequest extends FormRequest
             'product_quantity' => ['required', 'integer', 'min:1'],
             'product_cost' => ['required', 'numeric', 'max:2147483647'],
             'product_price' => ['required', 'numeric', 'max:2147483647'],
-            'product_stock_alert' => ['required', 'integer', 'min:0'],
+            'product_stock_alert' => ['required', 'integer', 'min:10'],
             'product_order_tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'product_tax_type' => ['nullable', 'integer'],
             'product_note' => ['nullable', 'string', 'max:1000'],
             'expiry_date' => ['nullable', 'date'],
             'category_id' => ['required', 'integer'],
-            'supplier_id' => ['nullable', 'integer', 'exists:suppliers,id'],
+            'supplier_id' => ['required', 'integer', 'exists:suppliers,id'],
         ];
     }
 
