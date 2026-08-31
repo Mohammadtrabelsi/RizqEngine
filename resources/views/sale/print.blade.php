@@ -2,94 +2,157 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sale Details</title>
-    <link rel="stylesheet" href="{{ public_path('css/print.css') }}">
+    <title>Facture {{ $sale->reference }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { margin: 0; }
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #1a1a1a;
+            background: #f4f2ee;
+            font-size: 13px;
+        }
+        .page { padding: 45px 55px; }
+        .invoice-title {
+            font-size: 72px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-bottom: 18px;
+        }
+        .meta-pills { margin-bottom: 22px; }
+        .pill {
+            display: inline-block;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 7px 22px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .divider { border: none; border-top: 1px solid #1a1a1a; margin: 0 0 30px 0; }
+        .parties { width: 100%; margin-bottom: 30px; }
+        .parties td { vertical-align: top; }
+        .parties .right { text-align: right; }
+        .party-label { font-weight: bold; font-size: 14px; margin-bottom: 12px; }
+        .party-line { margin-bottom: 3px; }
+        .party-name { font-weight: bold; }
+        table.items { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        table.items thead th {
+            background: #1a1a1a;
+            color: #f4f2ee;
+            text-align: center;
+            padding: 14px 12px;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        table.items thead th.desc { text-align: left; }
+        table.items tbody td {
+            border: 1px solid #1a1a1a;
+            padding: 13px 12px;
+            text-align: center;
+        }
+        table.items tbody td.desc { text-align: center; }
+        .totals { width: 100%; margin-top: 18px; }
+        .totals td { padding: 6px 12px; font-size: 16px; }
+        .totals .label { text-align: right; font-weight: bold; }
+        .totals .value { text-align: right; font-weight: bold; width: 130px; }
+        .totals .grand td {
+            background: #1a1a1a;
+            color: #f4f2ee;
+            padding: 14px 12px;
+            font-size: 18px;
+        }
+        .footer { margin-top: 60px; width: 100%; }
+        .footer td { vertical-align: top; font-size: 13px; }
+        .footer .right { text-align: right; }
+        .footer-title { font-weight: bold; margin-bottom: 4px; }
+        .thanks {
+            text-align: center;
+            letter-spacing: 3px;
+            padding-top: 18px;
+            margin-top: 22px;
+            border-top: 1px solid #1a1a1a;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="text-align: center;margin-bottom: 25px;">
-                <img width="180" src="{{ public_path('images/logo-dark.png') }}" alt="Logo">
-                <h4 style="margin-bottom: 20px;">
-                    <span>Reference::</span> <strong>{{ $sale->reference }}</strong>
-                </h4>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-4">
-                        <div class="col-xs-4 mb-3 mb-md-0">
-                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Company Info:</h4>
-                            <div><strong>{{ settings()->company_name }}</strong></div>
-                            <div>{{ settings()->company_address }}</div>
-                            <div>Email: {{ settings()->company_email }}</div>
-                            <div>Phone: {{ settings()->company_phone }}</div>
-                        </div>
-
-                        <div class="col-xs-4 mb-3 mb-md-0">
-                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Customer Info:</h4>
-                            <div><strong>{{ $customer->customer_name }}</strong></div>
-                            <div>{{ $customer->address }}</div>
-                            <div>Email: {{ $customer->customer_email }}</div>
-                            <div>Phone: {{ $customer->customer_phone }}</div>
-                        </div>
-
-                        <div class="col-xs-4 mb-3 mb-md-0">
-                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Invoice Info:</h4>
-                            <div>Invoice: <strong>INV/{{ $sale->reference }}</strong></div>
-                            <div>Date: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</div>
-                            <div>
-                                Status: <strong>{{ $sale->status }}</strong>
-                            </div>
-                            <div>
-                                Payment Status: <strong>{{ $sale->payment_status }}</strong>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row" style="margin-top: 30px;">
-                        @foreach($sale->saleDetails as $item)
-                            <div class="col-xs-6" style="margin-bottom: 20px;">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div><strong>{{ $item->product_name }}</strong>
-                                            <span class="badge badge-success">{{ $item->product_code }}</span>
-                                        </div>
-                                        <ul class="list-group" style="margin-top: 10px;">
-                                            <li class="list-group-item">Net Unit Price <span class="pull-right">{{ format_currency($item->unit_price) }}</span></li>
-                                            <li class="list-group-item">Quantity <span class="pull-right">{{ $item->quantity }}</span></li>
-                                            <li class="list-group-item">Discount <span class="pull-right">{{ format_currency($item->product_discount_amount) }}</span></li>
-                                            <li class="list-group-item">Tax <span class="pull-right">{{ format_currency($item->product_tax_amount) }}</span></li>
-                                            <li class="list-group-item">Sub Total <span class="pull-right"><strong>{{ format_currency($item->sub_total) }}</strong></span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 col-xs-offset-8">
-                            <ul class="list-group">
-                                <li class="list-group-item"><strong>Discount ({{ $sale->discount_percentage }}%)</strong> <span class="pull-right">{{ format_currency($sale->discount_amount) }}</span></li>
-                                <li class="list-group-item"><strong>Tax ({{ $sale->tax_percentage }}%)</strong> <span class="pull-right">{{ format_currency($sale->tax_amount) }}</span></li>
-                                <li class="list-group-item"><strong>Shipping</strong> <span class="pull-right">{{ format_currency($sale->shipping_amount) }}</span></li>
-                                <li class="list-group-item"><strong>Grand Total</strong> <span class="pull-right"><strong>{{ format_currency($sale->total_amount) }}</strong></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 25px;">
-                        <div class="col-xs-12">
-                            <p style="font-style: italic;text-align: center">{{ settings()->company_name }} &copy; {{ date('Y') }}.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="page">
+    <div class="invoice-title">FACTURE</div>
+    <div class="meta-pills">
+        <span class="pill">Facture n°{{ $sale->reference }}</span>
+        <span class="pill">{{ \Carbon\Carbon::parse($sale->date)->format('d/m/y') }}</span>
     </div>
+    <hr class="divider">
+
+    <table class="parties">
+        <tr>
+            <td>
+                <div class="party-label">{{ strtoupper(settings()->company_name) }}</div>
+                <div class="party-line">{{ settings()->company_phone }}</div>
+                <div class="party-line">{{ settings()->company_email }}</div>
+                <div class="party-line">{{ settings()->company_address }}</div>
+            </td>
+            <td class="right">
+                <div class="party-label">À L'ATTENTION DE</div>
+                <div class="party-line party-name">{{ $customer->customer_name }}</div>
+                <div class="party-line">{{ $customer->customer_phone }}</div>
+                <div class="party-line">{{ $customer->address }}</div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th class="desc">DESCRIPTION</th>
+                <th>PRIX</th>
+                <th>QUANTITÉ</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($sale->saleDetails as $item)
+                <tr>
+                    <td class="desc">{{ $item->product_name }}</td>
+                    <td>{{ format_currency($item->unit_price) }}</td>
+                    <td>{{ str_pad($item->quantity, 2, '0', STR_PAD_LEFT) }}</td>
+                    <td>{{ format_currency($item->sub_total) }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <table class="totals">
+        <tr>
+            <td class="label">Sous total :</td>
+            <td class="value">{{ format_currency($sale->total_amount - $sale->tax_amount + $sale->discount_amount) }}</td>
+        </tr>
+        <tr>
+            <td class="label">TVA ({{ $sale->tax_percentage }}%) :</td>
+            <td class="value">{{ format_currency($sale->tax_amount) }}</td>
+        </tr>
+        <tr class="grand">
+            <td class="label">TOTAL :</td>
+            <td class="value">{{ format_currency($sale->total_amount) }}</td>
+        </tr>
+    </table>
+
+    <table class="footer">
+        <tr>
+            <td>
+                <div class="footer-title">Paiement à l'ordre de {{ settings()->company_name }}</div>
+                <div>Référence facture : {{ $sale->reference }}</div>
+            </td>
+            <td class="right">
+                <div class="footer-title">Conditions de paiement</div>
+                <div>Statut : {{ $sale->payment_status }}</div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="thanks">MERCI DE VOTRE CONFIANCE</div>
 </div>
 </body>
 </html>
