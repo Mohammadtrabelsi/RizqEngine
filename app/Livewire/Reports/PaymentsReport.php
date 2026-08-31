@@ -43,6 +43,12 @@ class PaymentsReport extends Component
                 $this->payment_method,
                 10
             ),
+            'summary' => $service->summary(
+                $this->payments,
+                $this->start_date,
+                $this->end_date,
+                $this->payment_method
+            ),
         ]);
     }
 

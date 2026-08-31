@@ -68,6 +68,35 @@
     </div>
 
     @if($information->isNotEmpty())
+        <div class="row mb-2">
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                            <i class="bi bi-collection fs-4"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted small text-uppercase">{{ __('reports.payments') }}</div>
+                            <div class="h4 mb-0 fw-bold">{{ number_format($summary['count']) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                            <i class="bi bi-cash-stack fs-4"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted small text-uppercase">{{ __('report.total') }}</div>
+                            <div class="h4 mb-0 fw-bold">{{ format_currency($summary['total_amount']) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card border-0 shadow-sm">

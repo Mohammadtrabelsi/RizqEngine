@@ -50,6 +50,13 @@ class PurchasesReturnReport extends Component
                 $this->payment_status,
                 10
             ),
+            'summary' => $service->summary(
+                $this->start_date,
+                $this->end_date,
+                $this->supplier_id,
+                $this->purchase_return_status,
+                $this->payment_status
+            ),
         ]);
     }
 
