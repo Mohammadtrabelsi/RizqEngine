@@ -37,6 +37,11 @@ class AdjustmentService
         Adjustment::findOrFail($id)->delete();
     }
 
+    public function deleteModel(Adjustment $adjustment): void
+    {
+        $adjustment->delete();
+    }
+
     /**
      * @param  array<string, mixed>  $data
      */

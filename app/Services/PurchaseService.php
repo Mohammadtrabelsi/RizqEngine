@@ -58,6 +58,53 @@ class PurchaseService
         PurchasePayment::findOrFail($id)->delete();
     }
 
+    public function findOrFail(int|string $id): Purchase
+    {
+        return Purchase::findOrFail($id);
+    }
+
+    /**
+     * The supplier attached to a purchase, for the detail view.
+     */
+    public function supplierFor(Purchase $purchase): Supplier
+    {
+        return Supplier::findOrFail($purchase->supplier_id);
+    }
+
+    /**
+     * Reset the "purchase" cart to the given purchase's saved line items,
+     * ready for editing.
+     */
+    public function loadCart(Purchase $purchase): void
+    {
+        Cart::instance('purchase')->destroy();
+        $cart = Cart::instance('purchase');
+
+        foreach ($purchase->purchaseDetails as $purchase_detail) {
+            $cart->add([
+                'id' => $purchase_detail->product_id,
+                'name' => $purchase_detail->product_name,
+                'qty' => $purchase_detail->quantity,
+                'price' => $purchase_detail->price,
+                'weight' => 1,
+                'options' => [
+                    'product_discount' => $purchase_detail->product_discount_amount,
+                    'product_discount_type' => $purchase_detail->product_discount_type,
+                    'sub_total' => $purchase_detail->sub_total,
+                    'code' => $purchase_detail->product_code,
+                    'stock' => Product::findOrFail($purchase_detail->product_id)->product_quantity,
+                    'product_tax' => $purchase_detail->product_tax_amount,
+                    'unit_price' => $purchase_detail->unit_price,
+                ],
+            ]);
+        }
+    }
+
+    public function delete(Purchase $purchase): void
+    {
+        $purchase->delete();
+    }
+
     /**
      * @param  array<string, mixed>  $data
      */

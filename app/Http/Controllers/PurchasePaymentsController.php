@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Purchase;
 use App\Models\PurchasePayment;
 use App\Services\PurchaseService;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ class PurchasePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_payments'), 403);
 
-        $purchase = Purchase::findOrFail($purchase_id);
+        $purchase = $this->purchases->findOrFail($purchase_id);
 
         return view('purchase.payments.index', compact('purchase'));
 
@@ -27,7 +26,7 @@ class PurchasePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_payments'), 403);
 
-        $purchase = Purchase::findOrFail($purchase_id);
+        $purchase = $this->purchases->findOrFail($purchase_id);
 
         return view('purchase.payments.create', compact('purchase'));
     }
@@ -56,7 +55,7 @@ class PurchasePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_payments'), 403);
 
-        $purchase = Purchase::findOrFail($purchase_id);
+        $purchase = $this->purchases->findOrFail($purchase_id);
 
         return view('purchase.payments.edit', compact('purchasePayment', 'purchase'));
     }
@@ -85,7 +84,7 @@ class PurchasePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_payments'), 403);
 
-        $purchasePayment->delete();
+        $this->purchases->deletePayment($purchasePayment->id);
 
         session()->flash('warning', trans('purchase.purchase-payment-deleted'));
 

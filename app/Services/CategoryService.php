@@ -21,6 +21,16 @@ class CategoryService
         return Category::orderBy('category_name')->get();
     }
 
+    /**
+     * Every category, for populating select controls (e.g. the POS screen).
+     *
+     * @return Collection<int, Category>
+     */
+    public function all(): Collection
+    {
+        return Category::all();
+    }
+
     public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
     {
         return Category::query()

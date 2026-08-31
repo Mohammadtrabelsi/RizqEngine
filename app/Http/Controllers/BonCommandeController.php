@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\ConversionException;
 use App\Http\Requests\UpdateBonCommandeRequest;
 use App\Models\BonCommande;
-use App\Models\Customer;
 use App\Services\BonCommandeService;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,8 +24,7 @@ class BonCommandeController extends Controller
     {
         abort_if(Gate::denies('show_bon_commandes'), 403);
 
-        $bonCommande->load(['bonCommandeDetails.product', 'quotation', 'commande.sale']);
-        $customer = Customer::findOrFail($bonCommande->customer_id);
+        [$bonCommande, $customer] = $this->bonCommandes->showData($bonCommande);
 
         return view('boncommande.show', compact('bonCommande', 'customer'));
     }
@@ -94,9 +91,7 @@ class BonCommandeController extends Controller
     {
         abort_if(Gate::denies('delete_bon_commandes'), 403);
 
-        Cart::instance('bon_commande')->destroy();
-
-        $bonCommande->delete();
+        $this->bonCommandes->delete($bonCommande);
 
         session()->flash('warning', trans('boncommande.deleted'));
 

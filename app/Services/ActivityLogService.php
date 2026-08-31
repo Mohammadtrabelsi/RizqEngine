@@ -23,9 +23,23 @@ class ActivityLogService
             ->paginate($perPage);
     }
 
+    /**
+     * Load an activity with its causer and subject relations, for the
+     * detail view.
+     */
+    public function loadForShow(Activity $activity): Activity
+    {
+        return $activity->load(['causer', 'subject']);
+    }
+
     public function delete(int $id): void
     {
         Activity::findOrFail($id)->delete();
+    }
+
+    public function deleteModel(Activity $activity): void
+    {
+        $activity->delete();
     }
 
     public function clear(): void

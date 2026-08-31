@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
-use App\Models\Customer;
-use App\Models\Product;
 use App\Models\Sale;
 use App\Services\SaleService;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -53,7 +51,7 @@ class SaleController extends Controller
     {
         abort_if(Gate::denies('show_sales'), 403);
 
-        $customer = Customer::findOrFail($sale->customer_id);
+        $customer = $this->sales->customerFor($sale);
 
         return view('sale.show', compact('sale', 'customer'));
     }
@@ -62,30 +60,7 @@ class SaleController extends Controller
     {
         abort_if(Gate::denies('edit_sales'), 403);
 
-        $sale_details = $sale->saleDetails;
-
-        Cart::instance('sale')->destroy();
-
-        $cart = Cart::instance('sale');
-
-        foreach ($sale_details as $sale_detail) {
-            $cart->add([
-                'id' => $sale_detail->product_id,
-                'name' => $sale_detail->product_name,
-                'qty' => $sale_detail->quantity,
-                'price' => $sale_detail->price,
-                'weight' => 1,
-                'options' => [
-                    'product_discount' => $sale_detail->product_discount_amount,
-                    'product_discount_type' => $sale_detail->product_discount_type,
-                    'sub_total' => $sale_detail->sub_total,
-                    'code' => $sale_detail->product_code,
-                    'stock' => Product::findOrFail($sale_detail->product_id)->product_quantity,
-                    'product_tax' => $sale_detail->product_tax_amount,
-                    'unit_price' => $sale_detail->unit_price,
-                ],
-            ]);
-        }
+        $this->sales->loadCart($sale);
 
         return view('sale.edit', compact('sale'));
     }
@@ -109,7 +84,7 @@ class SaleController extends Controller
     {
         abort_if(Gate::denies('delete_sales'), 403);
 
-        $sale->delete();
+        $this->sales->delete($sale);
 
         session()->flash('warning', trans('sale.sale-deleted'));
 

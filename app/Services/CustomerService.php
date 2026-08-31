@@ -13,6 +13,16 @@ use Illuminate\Support\Collection;
 class CustomerService
 {
     /**
+     * Every customer, for populating select controls (e.g. the POS screen).
+     *
+     * @return Collection<int, Customer>
+     */
+    public function all(): Collection
+    {
+        return Customer::all();
+    }
+
+    /**
      * @param  array<string, mixed>  $filters
      */
     public function paginate(?string $search = null, int $perPage = 12, array $filters = []): LengthAwarePaginator

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class ExpenseController extends Controller
 {
+    public function __construct(private readonly ExpenseService $expenses) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_expenses'), 403);
@@ -36,7 +39,7 @@ class ExpenseController extends Controller
             'details' => 'nullable|string|max:1000',
         ]);
 
-        Expense::create([
+        $this->expenses->create([
             'date' => $request->date,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
@@ -67,7 +70,7 @@ class ExpenseController extends Controller
             'details' => 'nullable|string|max:1000',
         ]);
 
-        $expense->update([
+        $this->expenses->update($expense->id, [
             'date' => $request->date,
             'reference' => $request->reference,
             'category_id' => $request->category_id,
@@ -84,7 +87,7 @@ class ExpenseController extends Controller
     {
         abort_if(Gate::denies('delete_expenses'), 403);
 
-        $expense->delete();
+        $this->expenses->delete($expense->id);
 
         session()->flash('warning', trans('expense.expense-deleted'));
 

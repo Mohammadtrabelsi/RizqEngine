@@ -58,6 +58,53 @@ class SaleReturnService
         SaleReturnPayment::findOrFail($id)->delete();
     }
 
+    public function findOrFail(int|string $id): SaleReturn
+    {
+        return SaleReturn::findOrFail($id);
+    }
+
+    /**
+     * The customer attached to a sale return, for the detail view.
+     */
+    public function customerFor(SaleReturn $sale_return): Customer
+    {
+        return Customer::findOrFail($sale_return->customer_id);
+    }
+
+    /**
+     * Reset the "sale_return" cart to the given return's saved line items,
+     * ready for editing.
+     */
+    public function loadCart(SaleReturn $sale_return): void
+    {
+        Cart::instance('sale_return')->destroy();
+        $cart = Cart::instance('sale_return');
+
+        foreach ($sale_return->saleReturnDetails as $sale_return_detail) {
+            $cart->add([
+                'id' => $sale_return_detail->product_id,
+                'name' => $sale_return_detail->product_name,
+                'qty' => $sale_return_detail->quantity,
+                'price' => $sale_return_detail->price,
+                'weight' => 1,
+                'options' => [
+                    'product_discount' => $sale_return_detail->product_discount_amount,
+                    'product_discount_type' => $sale_return_detail->product_discount_type,
+                    'sub_total' => $sale_return_detail->sub_total,
+                    'code' => $sale_return_detail->product_code,
+                    'stock' => Product::findOrFail($sale_return_detail->product_id)->product_quantity,
+                    'product_tax' => $sale_return_detail->product_tax_amount,
+                    'unit_price' => $sale_return_detail->unit_price,
+                ],
+            ]);
+        }
+    }
+
+    public function delete(SaleReturn $sale_return): void
+    {
+        $sale_return->delete();
+    }
+
     /**
      * @param  array<string, mixed>  $data
      */

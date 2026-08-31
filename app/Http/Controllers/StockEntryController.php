@@ -26,7 +26,7 @@ class StockEntryController extends Controller
                 ->with('error', trans('stockexit.exit-already-closed'));
         }
 
-        $stockExit->load('details.product');
+        $stockExit = $this->stockExitService->loadForEntry($stockExit);
 
         return view('stockentry.create', compact('stockExit'));
     }
@@ -76,7 +76,7 @@ class StockEntryController extends Controller
     {
         abort_if(Gate::denies('show_stock_exits'), 403);
 
-        $stockEntry->load(['details.product', 'stockExit']);
+        $stockEntry = $this->stockExitService->loadEntryForShow($stockEntry);
 
         return view('stockentry.show', compact('stockEntry'));
     }

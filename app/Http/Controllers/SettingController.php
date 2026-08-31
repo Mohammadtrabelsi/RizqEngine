@@ -4,28 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSettingsRequest;
 use App\Http\Requests\StoreSmtpSettingsRequest;
-use App\Models\Setting;
+use App\Services\SettingService;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
+    public function __construct(private readonly SettingService $settings) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_settings'), 403);
 
-        $settings = Setting::firstOrFail();
+        $settings = $this->settings->current();
 
         return view('setting.index', compact('settings'));
     }
 
     public function update(StoreSettingsRequest $request)
     {
-        $settings = Setting::firstOrFail();
-
         $data = [
             'company_name' => $request->company_name,
             'client_name' => $request->client_name,
@@ -37,23 +36,10 @@ class SettingController extends Controller
             'default_currency_position' => $request->default_currency_position,
         ];
 
-        if ($request->hasFile('default_product_image')) {
-            if ($settings->default_product_image) {
-                Storage::disk('public')->delete($settings->default_product_image);
-            }
-            $data['default_product_image'] = $request->file('default_product_image')->store('settings', 'public');
-        }
-
-        if ($request->hasFile('default_category_image')) {
-            if ($settings->default_category_image) {
-                Storage::disk('public')->delete($settings->default_category_image);
-            }
-            $data['default_category_image'] = $request->file('default_category_image')->store('settings', 'public');
-        }
-
-        $settings->update($data);
-
-        cache()->forget('settings');
+        $this->settings->update($data, [
+            'default_product_image' => $request->file('default_product_image'),
+            'default_category_image' => $request->file('default_category_image'),
+        ]);
 
         session()->flash('info', trans('setting.settings-updated'));
 

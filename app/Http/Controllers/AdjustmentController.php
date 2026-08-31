@@ -94,7 +94,7 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('delete_adjustments'), 403);
 
-        $adjustment->delete();
+        $this->adjustments->deleteModel($adjustment);
 
         session()->flash('warning', trans('adjustment.adjustment-deleted'));
 

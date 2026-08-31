@@ -49,6 +49,51 @@ class StockExitService
         StockExit::findOrFail($id)->delete();
     }
 
+    public function deleteModel(StockExit $stockExit): void
+    {
+        $stockExit->delete();
+    }
+
+    /**
+     * Eager-load the relations a stock exit's detail view needs.
+     */
+    public function loadForShow(StockExit $stockExit): StockExit
+    {
+        return $stockExit->load(['details.product', 'entries.details.product', 'user']);
+    }
+
+    /**
+     * Eager-load the detail lines (with products) for the return-entry form.
+     */
+    public function loadForEntry(StockExit $stockExit): StockExit
+    {
+        return $stockExit->load('details.product');
+    }
+
+    /**
+     * Eager-load the "details" relation for API responses.
+     */
+    public function loadDetails(StockExit $stockExit): StockExit
+    {
+        return $stockExit->load('details');
+    }
+
+    /**
+     * Eager-load a stock entry's own detail lines for API responses.
+     */
+    public function loadEntryDetails(StockEntry $stockEntry): StockEntry
+    {
+        return $stockEntry->load('details');
+    }
+
+    /**
+     * Eager-load the relations a stock entry's detail view needs.
+     */
+    public function loadEntryForShow(StockEntry $stockEntry): StockEntry
+    {
+        return $stockEntry->load(['details.product', 'stockExit']);
+    }
+
     /**
      * Create and validate a Bon de Sortie, decreasing real stock.
      *
