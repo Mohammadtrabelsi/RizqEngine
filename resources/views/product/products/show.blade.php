@@ -288,9 +288,9 @@
                     </div>
                     <div class="card-body text-center">
                         @forelse($product->getMedia('images') as $media)
-                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-fluid rounded mb-2" style="max-height: 300px; object-fit: contain;">
+                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-contain-300 img-fluid rounded mb-2">
                         @empty
-                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid rounded mb-2" style="max-height: 300px; object-fit: contain;">
+                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-contain-300 img-fluid rounded mb-2">
                         @endforelse
                     </div>
                 </div>

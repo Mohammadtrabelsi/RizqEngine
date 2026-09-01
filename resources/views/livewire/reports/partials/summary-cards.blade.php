@@ -9,7 +9,7 @@
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body d-flex align-items-center">
-                <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                <div class="icon-tile-48 rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center me-3">
                     <i class="bi bi-collection fs-4"></i>
                 </div>
                 <div>
@@ -22,7 +22,7 @@
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body d-flex align-items-center">
-                <div class="rounded-circle bg-info bg-opacity-10 text-info d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                <div class="icon-tile-48 rounded-circle bg-info bg-opacity-10 text-info d-flex align-items-center justify-content-center me-3">
                     <i class="bi bi-cash-stack fs-4"></i>
                 </div>
                 <div>
@@ -35,7 +35,7 @@
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body d-flex align-items-center">
-                <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                <div class="icon-tile-48 rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center me-3">
                     <i class="bi bi-check2-circle fs-4"></i>
                 </div>
                 <div>
@@ -48,7 +48,7 @@
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body d-flex align-items-center">
-                <div class="rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                <div class="icon-tile-48 rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center me-3">
                     <i class="bi bi-hourglass-split fs-4"></i>
                 </div>
                 <div>

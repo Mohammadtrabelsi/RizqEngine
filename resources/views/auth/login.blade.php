@@ -20,7 +20,7 @@
 <div class="login-grid">
 
     {{-- Brand panel --}}
-    <div class="login-brand" style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-right: 1px solid #e2e8f0;">
+    <div class="auth-aside login-brand">
         <div class="login-brand__logo d-flex align-items-center gap-2">
             <svg width="26" height="23" viewBox="0 0 100 90" aria-hidden="true">
                 <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"></polygon>

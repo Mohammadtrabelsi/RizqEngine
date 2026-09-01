@@ -2562,3 +2562,42 @@ hr { display: none; }
 .lp-feature__icon { background: #eef2ff; width: fit-content; }
 .lp-band--access { background: #f1f5f9; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
 .lp-section--flush { padding-top: 0; }
+
+/* -------------------------------------------------------------------------
+ * Shared view utilities — extracted from remaining inline styles/<style>
+ * blocks across the app views (avatars, icon tiles, thumbnails, auth screen,
+ * POS product cards, role checkboxes).
+ * ---------------------------------------------------------------------- */
+.avatar-100 { width: 100px; height: 100px; }
+.avatar-80 { width: 80px; height: 80px; }
+.icon-tile-48 { width: 48px; height: 48px; }
+.line-1 { line-height: 1; }
+.img-max-120 { max-width: 120px; }
+.img-max-180 { max-width: 180px; }
+.img-w-180 { width: 180px; }
+.logo-preview { max-height: 48px; max-width: 160px; }
+.img-contain-300 { max-height: 300px; object-fit: contain; }
+
+/* Auth screens */
+.auth-brand-link { text-decoration: none; color: var(--color-text); }
+.auth-card { max-width: 420px; }
+.auth-subtitle { font-size: 15px; line-height: 1.6; color: var(--color-neutral-300); }
+.auth-fineprint { font-size: 12px; }
+.auth-footnote { font-size: 13px; text-align: center; }
+.auth-alert-accent { border-color: var(--color-accent); color: var(--color-accent); background: rgba(145, 132, 217, 0.1); }
+.auth-aside { background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-right: 1px solid #e2e8f0; }
+
+/* POS product grid */
+.pos-thumb { height: 200px; }
+.pos-card-badge { opacity: 0.9; font-size: 11px; }
+.pos-card-price { font-size: 1.25rem; color: #2c3e50; }
+.cursor-pointer .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+.wire-loading-overlay { background-color: rgba(255, 255, 255, 0.8); z-index: 10; min-height: 300px; }
+
+/* Role permission checkboxes */
+.custom-control-label { cursor: pointer; }
+
+.pos-card { transition: all 0.3s ease; }

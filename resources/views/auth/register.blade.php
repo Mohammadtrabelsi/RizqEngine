@@ -19,16 +19,16 @@
 <div class="login-grid">
 
     <div class="login-brand login-brand-copy">
-        <a href="{{ route('welcome') }}" style="text-decoration:none; color:var(--color-text);">
+        <a href="{{ route('welcome') }}" class="auth-brand-link">
             <x-logo :size="26" label="Triangle POS" />
         </a>
 
-        <div style="max-width:420px">
+        <div class="auth-card">
             <div class="login-brand-lead">{{ __('login.welcome') }}</div>
-            <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300)">{{ __('login.description') }}</div>
+            <div class="auth-subtitle">{{ __('login.description') }}</div>
         </div>
 
-        <div class="text-muted" style="font-size:12px">© {{ date('Y') }} Triangle POS</div>
+        <div class="auth-fineprint text-muted">© {{ date('Y') }} Triangle POS</div>
     </div>
 
     <div class="login-form-wrap">
@@ -77,7 +77,7 @@
 
                     <button type="submit" class="btn btn-primary btn-block">{{ __('auth.register') }}</button>
 
-                    <div class="text-muted" style="font-size:13px; text-align:center">
+                    <div class="auth-footnote text-muted">
                         <a href="{{ route('login') }}">{{ __('auth.already-have-account') }}</a>
                     </div>
                 </form>

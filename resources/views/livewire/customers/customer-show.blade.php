@@ -7,7 +7,7 @@
                 <div class="card-body">
                     @if ($customer->getFirstMediaUrl('images'))
                         <div class="text-center mb-4">
-                            <img src="{{ $customer->getFirstMediaUrl('images') }}" class="img-fluid img-thumbnail rounded-circle" alt="Customer Image" style="max-width: 180px;">
+                            <img src="{{ $customer->getFirstMediaUrl('images') }}" class="img-max-180 img-fluid img-thumbnail rounded-circle" alt="Customer Image">
                         </div>
                     @endif
                     <ul class="list-group list-group-flush">
