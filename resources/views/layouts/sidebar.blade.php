@@ -7,7 +7,6 @@
     mirroring the inline items previously only shown in menu-secondary. Toggling
     is handled by the vanilla `data-toggle="submenu"` handler in app.js.
 --}}
-@php($sidebarSettings = settings())
 <aside class="app-sidebar" id="app-sidebar">
     <div class="app-sidebar-brand">
         <a href="{{ route('dashboard') }}" class="app-sidebar-brand-link">
@@ -48,7 +47,6 @@
             <li class="app-sidebar-heading">{{ __('nav.group.transactions') }}</li>
 
             @can('access_products')
-            @php($inProducts = request()->routeIs('products.*') || request()->routeIs('product-categories.*') || request()->routeIs('barcode.print'))
             <li class="app-sidebar-item {{ $inProducts ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inProducts ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inProducts ? 'true' : 'false' }}">
                     <span>{{ __('nav.products') }}</span>
@@ -70,7 +68,6 @@
             @endcan
 
             @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
-            @php($inTransactions = request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*'))
             <li class="app-sidebar-item {{ $inTransactions ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inTransactions ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inTransactions ? 'true' : 'false' }}">
                     <span>{{ __('nav.transactions') }}</span>
@@ -100,7 +97,6 @@
             @endcanany
 
             @can('access_quotations')
-            @php($inQuotations = request()->routeIs('quotations.*'))
             <li class="app-sidebar-item {{ $inQuotations ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inQuotations ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inQuotations ? 'true' : 'false' }}">
                     <span>{{ __('nav.quotes') }}</span>
@@ -116,7 +112,6 @@
             @endcan
 
             @canany(['access_bon_commandes', 'access_commandes'])
-            @php($inOrders = request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*'))
             <li class="app-sidebar-item {{ $inOrders ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inOrders ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inOrders ? 'true' : 'false' }}">
                     <span>{{ __('nav.orders') }}</span>
@@ -134,7 +129,6 @@
             @endcanany
 
             @can('access_expenses')
-            @php($inExpenses = request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*'))
             <li class="app-sidebar-item {{ $inExpenses ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inExpenses ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inExpenses ? 'true' : 'false' }}">
                     <span>{{ __('nav.expenses') }}</span>
@@ -173,7 +167,6 @@
             @endcan
 
             @can('access_user_management')
-            @php($inUsers = request()->routeIs('users*') || request()->routeIs('roles*'))
             <li class="app-sidebar-item {{ $inUsers ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inUsers ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inUsers ? 'true' : 'false' }}">
                     <span>{{ __('nav.staff_roles') }}</span>
@@ -192,7 +185,6 @@
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
             @endcanany
             @can('access_reports')
-            @php($inReports = request()->routeIs('*-report.index'))
             <li class="app-sidebar-item {{ $inReports ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inReports ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inReports ? 'true' : 'false' }}">
                     <span>{{ __('nav.reports') }}</span>
@@ -214,7 +206,6 @@
             @endcan
 
             @canany(['access_currencies', 'access_settings', 'access_units'])
-            @php($inSettings = request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*'))
             <li class="app-sidebar-item {{ $inSettings ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSettings ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSettings ? 'true' : 'false' }}">
                     <span>{{ __('nav.settings') }}</span>

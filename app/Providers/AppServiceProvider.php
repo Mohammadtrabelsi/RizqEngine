@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Product;
 use App\Observers\ProductObserver;
+use App\View\Composers\NavigationComposer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -41,5 +42,9 @@ class AppServiceProvider extends ServiceProvider
                     ->get()
             );
         });
+
+        // Active-section flags and store settings for the navigation, so the
+        // sidebar and secondary menu carry no @php routing logic.
+        View::composer(['layouts.sidebar', 'layouts.menu-secondary'], NavigationComposer::class);
     }
 }

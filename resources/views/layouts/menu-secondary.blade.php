@@ -5,20 +5,6 @@
     more than a single destination.
 --}}
 
-@php
-    $inProducts = request()->routeIs('products.*') || request()->routeIs('product-categories.*') || request()->routeIs('barcode.print');
-    $inTransactions = request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*');
-    $inQuotations = request()->routeIs('quotations.*');
-    $inOrders = request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*');
-    $inExpenses = request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*');
-    $inParties = request()->routeIs('customers.*') || request()->routeIs('suppliers.*');
-    $inReports = request()->routeIs('*-report.index');
-    $inUsers = request()->routeIs('users*') || request()->routeIs('roles*');
-    $inSettings = request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*');
-
-    $hasSecondary = $inProducts || $inTransactions || $inQuotations || $inOrders || $inExpenses || $inParties || $inReports || $inUsers || $inSettings;
-@endphp
-
 @if ($hasSecondary)
 <nav class="app-subnav" aria-label="{{ __('menu.products') }}">
     <div class="container-fluid">
