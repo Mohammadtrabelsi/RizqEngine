@@ -20,7 +20,7 @@
 
     <div class="login-brand login-brand-copy">
         <a href="{{ route('welcome') }}" style="text-decoration:none; color:var(--color-text);">
-            @include('layouts.logo', ['size' => 26, 'label' => 'Triangle POS', 'labelSize' => 15])
+            <x-logo :size="26" label="Triangle POS" />
         </a>
 
         <div style="max-width:420px">

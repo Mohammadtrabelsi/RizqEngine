@@ -39,9 +39,6 @@
             </div>
 
             <div class="col-12">
-                @php
-                    $sectionChunks = collect($sections)->chunk(ceil(count($sections) / 2));
-                @endphp
 
                 <div class="row">
                     @foreach ($sectionChunks as $chunk)

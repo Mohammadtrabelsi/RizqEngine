@@ -1,32 +1,5 @@
 {{-- resources/views/components/app-sidebar.blade.php --}}
-@props(['active' => 'dashboard', 'orderCount' => 0])
 
-@php
-    // Design key => real application route name. Items whose route does not
-    // exist in this app are skipped, so the sidebar never links to a 404.
-    $groups = [
-        'overview' => [
-            ['key' => 'dashboard', 'label' => __('nav.dashboard'), 'route' => 'dashboard', 'dot' => true],
-            ['key' => 'pos', 'label' => __('nav.point_of_sale'), 'route' => 'app.pos.index', 'dot' => true],
-        ],
-        'transactions' => [
-            ['key' => 'products', 'label' => __('nav.products'), 'route' => 'products.index'],
-            ['key' => 'transactions', 'label' => __('nav.transactions'), 'route' => 'sales.index'],
-            ['key' => 'quotes', 'label' => __('nav.quotes'), 'route' => 'quotations.index'],
-            ['key' => 'orders', 'label' => __('nav.orders'), 'route' => 'commandes.index', 'badge' => $orderCount],
-            ['key' => 'expenses', 'label' => __('nav.expenses'), 'route' => 'expenses.index'],
-        ],
-        'people' => [
-            ['key' => 'customers', 'label' => __('nav.customers'), 'route' => 'customers.index'],
-            ['key' => 'suppliers', 'label' => __('nav.suppliers'), 'route' => 'suppliers.index'],
-            ['key' => 'staff', 'label' => __('nav.staff_roles'), 'route' => 'users.index'],
-        ],
-        'insight' => [
-            ['key' => 'reports', 'label' => __('nav.reports'), 'route' => 'sales-report.index'],
-            ['key' => 'settings', 'label' => __('nav.settings'), 'route' => 'settings.index'],
-        ],
-    ];
-@endphp
 
 <aside {{ $attributes->merge(['class' => 'flex h-full flex-col gap-[26px] bg-ink px-4 py-[22px] text-white']) }}>
     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-2">

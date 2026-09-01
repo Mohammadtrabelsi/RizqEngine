@@ -8,6 +8,9 @@ class DocumentationController extends Controller
     {
         $sections = array_keys(trans('documentation.sections'));
 
-        return view('documentation.index', compact('sections'));
+        // Split the sections into two balanced columns for the layout.
+        $sectionChunks = collect($sections)->chunk((int) ceil(count($sections) / 2));
+
+        return view('documentation.index', compact('sections', 'sectionChunks'));
     }
 }

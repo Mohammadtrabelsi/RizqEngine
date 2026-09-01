@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Product;
 use App\Observers\ProductObserver;
 use App\View\Composers\NavigationComposer;
+use App\View\Composers\WelcomeComposer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -46,5 +47,8 @@ class AppServiceProvider extends ServiceProvider
         // Active-section flags and store settings for the navigation, so the
         // sidebar and secondary menu carry no @php routing logic.
         View::composer(['layouts.sidebar', 'layouts.menu-secondary'], NavigationComposer::class);
+
+        // Static marketing content for the landing page.
+        View::composer('welcome', WelcomeComposer::class);
     }
 }

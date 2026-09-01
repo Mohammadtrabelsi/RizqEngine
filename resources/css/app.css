@@ -2547,3 +2547,18 @@ hr { display: none; }
 .tag-paid { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
 .tag-unpaid { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 .tag-muted { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* -------------------------------------------------------------------------
+ * Logo mark + wordmark — moved out of the inline styles in the old
+ * layouts/logo partial (now the <x-logo> component).
+ * ---------------------------------------------------------------------- */
+.logo { display: inline-flex; align-items: center; gap: var(--space-2, 6px); line-height: 1; }
+.logo-wordmark { font-family: var(--font-heading, 'Inter', sans-serif); font-weight: 500; font-size: 15px; letter-spacing: 0.01em; }
+
+/* -------------------------------------------------------------------------
+ * Landing page — extracted from inline styles in welcome.blade.php.
+ * ---------------------------------------------------------------------- */
+.lp-accent-text { color: #4f46e5; }
+.lp-feature__icon { background: #eef2ff; width: fit-content; }
+.lp-band--access { background: #f1f5f9; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
+.lp-section--flush { padding-top: 0; }
