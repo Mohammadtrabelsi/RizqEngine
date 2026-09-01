@@ -2531,3 +2531,19 @@ hr { display: none; }
 .language-switcher__item:hover { background: rgba(0,0,0,.06); color: #23282c; text-decoration: none; }
 .language-switcher__item.is-active { font-weight: 600; }
 .language-switcher__check { color: #2eb85c; font-weight: 700; }
+
+/* -------------------------------------------------------------------------
+ * Home dashboard — extracted from inline styles in home.blade.php.
+ * ---------------------------------------------------------------------- */
+.dash-kicker { color: #4f46e5; letter-spacing: 0.08em; font-size: 11px; }
+.dash-kicker--sm { font-size: 10px; }
+.dash-value { font-size: 28px; line-height: 1.2; font-family: var(--font-heading); }
+.dash-summary-value { font-size: 22px; font-family: var(--font-heading); }
+.dash-icon-badge { background: #eef2ff; color: #4f46e5; }
+.n-bars { display: flex; align-items: flex-end; gap: 1rem; height: 180px; }
+.n-bar-col { height: 100%; justify-content: flex-end; }
+.n-bar { background: #4f46e5; max-width: 36px; }
+.chart-container-sm { width: 100%; max-width: 320px; }
+.tag-paid { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.tag-unpaid { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.tag-muted { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }

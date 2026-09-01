@@ -88,6 +88,39 @@ class HomeReportService
             'recent_sales' => $recent_sales,
             'from_date' => $fromDate,
             'to_date' => $toDate,
+            'kpis' => $this->kpiTiles($todays_sales, $todays_transactions, $low_stock_products->count(), $todays_expenses),
+            'summary' => $this->summaryTiles($revenue, $cost_of_goods, $profit, $receivables, $payables),
+        ];
+    }
+
+    /**
+     * The four headline KPI tiles for the dashboard.
+     *
+     * @return list<array{label: string, value: string, meta: string, icon: string}>
+     */
+    private function kpiTiles(float|int $sales, int $transactions, int $lowStock, float|int $expenses): array
+    {
+        return [
+            ['label' => __('general.sales-today'), 'value' => format_currency($sales), 'meta' => __('general.completed-sales-today'), 'icon' => 'bi-bag-check'],
+            ['label' => __('general.transactions'), 'value' => $transactions, 'meta' => __('general.orders-today'), 'icon' => 'bi-receipt'],
+            ['label' => __('general.low-stock-items'), 'value' => $lowStock, 'meta' => __('general.needs-reorder'), 'icon' => 'bi-exclamation-triangle'],
+            ['label' => __('general.todays-expenses'), 'value' => format_currency($expenses), 'meta' => __('general.logged-today'), 'icon' => 'bi-wallet2'],
+        ];
+    }
+
+    /**
+     * The five financial-summary tiles for the dashboard.
+     *
+     * @return list<array{label: string, value: string, meta: string, icon: string, tone: string}>
+     */
+    private function summaryTiles(float|int $revenue, float|int $cogs, float|int $profit, float|int $receivables, float|int $payables): array
+    {
+        return [
+            ['label' => __('general.revenue'), 'value' => format_currency($revenue), 'meta' => __('general.net-of-returns'), 'icon' => 'bi-cash-coin', 'tone' => 'text-indigo-600'],
+            ['label' => __('general.cost-of-goods'), 'value' => format_currency($cogs), 'meta' => __('general.for-selected-period'), 'icon' => 'bi-box-seam', 'tone' => 'text-slate-500'],
+            ['label' => __('general.gross-profit'), 'value' => format_currency($profit), 'meta' => __('general.revenue-minus-cost'), 'icon' => 'bi-graph-up', 'tone' => $profit >= 0 ? 'text-emerald-600' : 'text-rose-600'],
+            ['label' => __('general.receivables'), 'value' => format_currency($receivables), 'meta' => __('general.due-from-customers'), 'icon' => 'bi-arrow-down-left-circle', 'tone' => 'text-emerald-600'],
+            ['label' => __('general.payables'), 'value' => format_currency($payables), 'meta' => __('general.due-to-suppliers'), 'icon' => 'bi-arrow-up-right-circle', 'tone' => 'text-rose-600'],
         ];
     }
 
@@ -123,8 +156,15 @@ class HomeReportService
             }
         }
 
-        $week_bars = $week->values();
-        $week_max = max($week_bars->max('amount'), 1);
+        $week_max = max($week->max('amount'), 1);
+
+        // Pre-compute each bar's height percentage (min 4%) for the chart so
+        // the view carries no arithmetic.
+        $week_bars = $week->map(function (array $bar) use ($week_max) {
+            $bar['pct'] = max(4, round(($bar['amount'] / $week_max) * 100));
+
+            return $bar;
+        })->values();
 
         return [$week_bars, $week_max];
     }

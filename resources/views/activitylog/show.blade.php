@@ -10,12 +10,6 @@
     </ol>
 @endsection
 
-@php
-    $changes = $activity->attribute_changes ? $activity->attribute_changes->toArray() : [];
-    $newAttributes = $changes['attributes'] ?? [];
-    $oldAttributes = $changes['old'] ?? [];
-    $attributeKeys = array_keys($newAttributes + $oldAttributes);
-@endphp
 
 @section('content')
     <div class="container-fluid">
@@ -54,13 +48,9 @@
                         <h5 class="mb-0">{{ __('activitylog.attribute_changes') }}</h5>
                     </div>
                     <div class="card-body">
-                        @if(count($attributeKeys))
+                        @if(count($changeSet['keys']))
                             <div class="row">
-                                @foreach($attributeKeys as $key)
-                                    @php
-                                        $old = $oldAttributes[$key] ?? null;
-                                        $new = $newAttributes[$key] ?? null;
-                                    @endphp
+                                @foreach($changeSet['keys'] as $key)
                                     <div class="col-md-6 mb-3">
                                         <div class="card border h-100">
                                             <div class="card-header py-2">
@@ -69,11 +59,11 @@
                                             <div class="card-body py-2">
                                                 <div class="mb-1">
                                                     <small class="text-muted d-block">{{ __('activitylog.old_value') }}</small>
-                                                    <span class="text-danger">{{ is_array($old) ? json_encode($old) : ($old ?? '—') }}</span>
+                                                    <span class="text-danger">{{ is_array($changeSet['old'][$key] ?? null) ? json_encode($changeSet['old'][$key]) : ($changeSet['old'][$key] ?? '—') }}</span>
                                                 </div>
                                                 <div>
                                                     <small class="text-muted d-block">{{ __('activitylog.new_value') }}</small>
-                                                    <span class="text-success">{{ is_array($new) ? json_encode($new) : ($new ?? '—') }}</span>
+                                                    <span class="text-success">{{ is_array($changeSet['new'][$key] ?? null) ? json_encode($changeSet['new'][$key]) : ($changeSet['new'][$key] ?? '—') }}</span>
                                                 </div>
                                             </div>
                                         </div>

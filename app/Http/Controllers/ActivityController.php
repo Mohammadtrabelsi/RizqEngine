@@ -25,8 +25,9 @@ class ActivityController extends Controller
         abort_if(Gate::denies('access_activity_logs'), 403);
 
         $activity = $this->activities->loadForShow($activity);
+        $changeSet = $this->activities->changeSet($activity);
 
-        return view('activitylog.show', compact('activity'));
+        return view('activitylog.show', compact('activity', 'changeSet'));
     }
 
     public function destroy(Activity $activity)

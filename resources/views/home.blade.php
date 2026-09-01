@@ -40,24 +40,16 @@
         {{-- KPI tiles --}}
         @can('show_total_stats')
         <div class="row g-4 mb-4">
-            @php
-                $kpis = [
-                    ['label' => __('general.sales-today'),   'value' => format_currency($todays_sales),   'meta' => __('general.completed-sales-today'), 'icon' => 'bi-bag-check'],
-                    ['label' => __('general.transactions'),    'value' => $todays_transactions,             'meta' => __('general.orders-today'),          'icon' => 'bi-receipt'],
-                    ['label' => __('general.low-stock-items'), 'value' => $low_stock_products->count(),      'meta' => __('general.needs-reorder'),         'icon' => 'bi-exclamation-triangle'],
-                    ['label' => __('general.todays-expenses'),'value' => format_currency($todays_expenses), 'meta' => __('general.logged-today'),        'icon' => 'bi-wallet2'],
-                ];
-            @endphp
             @foreach($kpis as $kpi)
                 <div class="col-sm-6 col-xl-3">
                     <div class="card h-100 bg-white border rounded-lg shadow-sm p-3">
                         <div class="card-body p-0 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
-                                    <div class="card-kicker text-uppercase font-weight-bold" style="color:#4f46e5; letter-spacing:0.08em; font-size:11px;">{{ $kpi['label'] }}</div>
-                                    <div class="n-value font-weight-bold text-slate-900" style="font-size:28px; line-height:1.2; font-family:var(--font-heading);">{{ $kpi['value'] }}</div>
+                                    <div class="card-kicker dash-kicker text-uppercase font-weight-bold">{{ $kpi['label'] }}</div>
+                                    <div class="n-value dash-value font-weight-bold text-slate-900">{{ $kpi['value'] }}</div>
                                 </div>
-                                <div class="p-2 rounded-circle" style="background:#eef2ff; color:#4f46e5;">
+                                <div class="p-2 rounded-circle dash-icon-badge">
                                     <i class="bi {{ $kpi['icon'] }} fs-4"></i>
                                 </div>
                             </div>
@@ -72,23 +64,14 @@
 
         {{-- Financial summary --}}
         <div class="row g-4 mb-4">
-            @php
-                $summary = [
-                    ['label' => __('general.revenue'),        'value' => format_currency($revenue),      'meta' => __('general.net-of-returns'),      'icon' => 'bi-cash-coin',    'tone' => 'text-indigo-600'],
-                    ['label' => __('general.cost-of-goods'),  'value' => format_currency($cost_of_goods),'meta' => __('general.for-selected-period'), 'icon' => 'bi-box-seam',     'tone' => 'text-slate-500'],
-                    ['label' => __('general.gross-profit'),   'value' => format_currency($profit),       'meta' => __('general.revenue-minus-cost'),  'icon' => 'bi-graph-up',     'tone' => $profit >= 0 ? 'text-emerald-600' : 'text-rose-600'],
-                    ['label' => __('general.receivables'),    'value' => format_currency($receivables),  'meta' => __('general.due-from-customers'),  'icon' => 'bi-arrow-down-left-circle', 'tone' => 'text-emerald-600'],
-                    ['label' => __('general.payables'),       'value' => format_currency($payables),     'meta' => __('general.due-to-suppliers'),    'icon' => 'bi-arrow-up-right-circle',  'tone' => 'text-rose-600'],
-                ];
-            @endphp
             @foreach($summary as $item)
                 <div class="col-sm-6 col-xl">
                     <div class="card h-100 bg-white border rounded-lg shadow-sm p-3">
                         <div class="card-body p-0 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
-                                    <div class="card-kicker text-uppercase font-weight-bold" style="color:#4f46e5; letter-spacing:0.08em; font-size:10px;">{{ $item['label'] }}</div>
-                                    <div class="font-weight-bold text-slate-900 mt-1" style="font-size:22px; font-family:var(--font-heading);">{{ $item['value'] }}</div>
+                                    <div class="card-kicker dash-kicker dash-kicker--sm text-uppercase font-weight-bold">{{ $item['label'] }}</div>
+                                    <div class="dash-summary-value font-weight-bold text-slate-900 mt-1">{{ $item['value'] }}</div>
                                 </div>
                                 <i class="bi {{ $item['icon'] }} {{ $item['tone'] }} fs-4"></i>
                             </div>
@@ -106,11 +89,10 @@
             <div class="col-lg-7">
                 <div class="card bg-white border rounded-lg shadow-sm h-100 p-4">
                     <div class="card-title font-weight-bold text-slate-900 h5 mb-4">{{ __('general.sales-this-week') }}</div>
-                    <div class="n-bars mt-auto" style="display:flex; align-items:flex-end; gap:1rem; height:180px;">
+                    <div class="n-bars mt-auto">
                         @foreach($week_bars as $bar)
-                            @php $pct = max(4, round(($bar['amount'] / ($week_max > 0 ? $week_max : 1)) * 100)); @endphp
-                            <div class="n-bar-col flex-1 d-flex flex-column align-items-center gap-2" style="height:100%; justify-content:flex-end;">
-                                <div class="n-bar rounded-top w-100" style="height: {{ $pct }}%; background:#4f46e5; max-width:36px;"
+                            <div class="n-bar-col flex-1 d-flex flex-column align-items-center gap-2">
+                                <div class="n-bar rounded-top w-100" style="height: {{ $bar['pct'] }}%"
                                      title="{{ format_currency($bar['amount']) }}"></div>
                                 <div class="card-meta text-slate-500 small">{{ $bar['label'] }}</div>
                             </div>
@@ -127,7 +109,7 @@
                         {{ __('general.overview') }} this period
                     </div>
                     <div class="card-body p-0 d-flex justify-content-center align-items-center">
-                        <div class="chart-container chart-container-sm" style="width:100%; max-width:320px;">
+                        <div class="chart-container chart-container-sm">
                             <canvas id="currentMonthChart"></canvas>
                         </div>
                     </div>
@@ -150,11 +132,6 @@
 
                     <div class="row g-4">
                         @forelse($recent_sales as $sale)
-                            @php
-                                $ps = $sale->payment_status;
-                                $tagStyle = $ps === 'Paid' ? 'background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe;'
-                                    : ($ps === 'Unpaid' ? 'background:#fef2f2; color:#b91c1c; border:1px solid #fecaca;' : 'background:#f1f5f9; color:#475569; border:1px solid #e2e8f0;');
-                            @endphp
                             <div class="col-xl-4 col-lg-6">
                                 <div class="card bg-white border rounded-lg shadow-sm h-100 p-3">
                                     <div class="card-body p-0">
@@ -162,7 +139,12 @@
                                             <a href="{{ route('sales.show', $sale->id) }}" class="font-weight-bold text-indigo-600 text-decoration-none">
                                                 {{ $sale->reference }}
                                             </a>
-                                            <span class="tag" style="{{ $tagStyle }}">{{ $ps }}</span>
+                                            <span @class([
+                                                'tag',
+                                                'tag-paid' => $sale->payment_status === 'Paid',
+                                                'tag-unpaid' => $sale->payment_status === 'Unpaid',
+                                                'tag-muted' => ! in_array($sale->payment_status, ['Paid', 'Unpaid']),
+                                            ])>{{ $sale->payment_status }}</span>
                                         </div>
                                         <div class="d-flex flex-column gap-2 text-slate-600 small">
                                             <div class="d-flex justify-content-between border-bottom pb-1">
