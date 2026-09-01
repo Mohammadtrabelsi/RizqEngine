@@ -13,6 +13,16 @@ use Illuminate\Support\Collection;
 class SupplierService
 {
     /**
+     * All suppliers ordered by name, for populating filter/select controls.
+     *
+     * @return Collection<int, Supplier>
+     */
+    public function ordered(): Collection
+    {
+        return Supplier::orderBy('supplier_name')->get();
+    }
+
+    /**
      * @param  array<string, mixed>  $filters
      */
     public function paginate(?string $search = null, int $perPage = 12, array $filters = []): LengthAwarePaginator

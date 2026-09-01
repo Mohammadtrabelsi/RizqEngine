@@ -66,7 +66,7 @@ class StockExitController extends Controller
     {
         abort_if(Gate::denies('show_stock_exits'), 403);
 
-        $stockExit->load(['details.product', 'entries.details.product', 'user']);
+        $stockExit = $this->stockExitService->loadForShow($stockExit);
 
         return view('stockexit.show', compact('stockExit'));
     }
@@ -75,7 +75,7 @@ class StockExitController extends Controller
     {
         abort_if(Gate::denies('delete_stock_exits'), 403);
 
-        $stockExit->delete();
+        $this->stockExitService->deleteModel($stockExit);
 
         session()->flash('warning', trans('stockexit.exit-deleted'));
 

@@ -55,7 +55,7 @@
                                     <img src="{{ $result->getFirstMediaUrl('images', 'thumb') }}"
                                          alt="{{ $result->product_name }}"
                                          width="40" height="40"
-                                         class="rounded border flex-shrink-0" style="object-fit: cover;">
+                                         class="thumb-cover rounded border flex-shrink-0">
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="fw-bold text-truncate">{{ $result->product_name }}</div>
                                         <div class="small text-muted">

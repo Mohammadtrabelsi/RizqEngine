@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Sales;
 
-use App\Models\Sale;
+use App\Services\SaleService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class SaleIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(SaleService $sales)
     {
-        $sales = Sale::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('customer_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.sales.sale-index', compact('sales'));
+        return view('livewire.sales.sale-index', [
+            'sales' => $sales->paginate($this->search),
+        ]);
     }
 }

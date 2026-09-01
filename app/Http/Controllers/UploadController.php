@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Upload;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
+    public function __construct(private readonly UploadService $uploads) {}
+
     public function filepondUpload(Request $request)
     {
         $request->validate([
@@ -16,18 +17,7 @@ class UploadController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $uploaded_file = $request->file('image');
-            $filename = now()->timestamp.'.'.$uploaded_file->getClientOriginalExtension();
-            $folder = uniqid().'-'.now()->timestamp;
-
-            Storage::putFileAs('temp/'.$folder, $uploaded_file, $filename);
-
-            Upload::create([
-                'folder' => $folder,
-                'filename' => $filename,
-            ]);
-
-            return $folder;
+            return $this->uploads->stageFilepond($request->file('image'));
         }
 
         return false;
@@ -35,31 +25,19 @@ class UploadController extends Controller
 
     public function filepondDelete(Request $request)
     {
-        $upload = Upload::where('folder', $request->getContent())->first();
-
-        Storage::deleteDirectory('temp/'.$upload->folder);
-        $upload->delete();
+        $this->uploads->removeFilepond($request->getContent());
 
         return response(null);
     }
 
     public function dropzoneUpload(Request $request)
     {
-        $file = $request->file('file');
-
-        $filename = now()->timestamp.'.'.trim($file->getClientOriginalExtension());
-
-        Storage::putFileAs('temp/dropzone/', $file, $filename);
-
-        return response()->json([
-            'name' => $filename,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
+        return response()->json($this->uploads->stageDropzone($request->file('file')));
     }
 
     public function dropzoneDelete(Request $request)
     {
-        Storage::delete('temp/dropzone/'.$request->file_name);
+        $this->uploads->removeDropzone($request->file_name);
 
         return response()->json($request->file_name, 200);
     }

@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
-use App\Models\Product;
 use App\Models\Purchase;
-use App\Models\Supplier;
 use App\Services\PurchaseService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
@@ -53,7 +51,7 @@ class PurchaseController extends Controller
     {
         abort_if(Gate::denies('show_purchases'), 403);
 
-        $supplier = Supplier::findOrFail($purchase->supplier_id);
+        $supplier = $this->purchases->supplierFor($purchase);
 
         return view('purchase.show', compact('purchase', 'supplier'));
     }
@@ -62,30 +60,7 @@ class PurchaseController extends Controller
     {
         abort_if(Gate::denies('edit_purchases'), 403);
 
-        $purchase_details = $purchase->purchaseDetails;
-
-        Cart::instance('purchase')->destroy();
-
-        $cart = Cart::instance('purchase');
-
-        foreach ($purchase_details as $purchase_detail) {
-            $cart->add([
-                'id' => $purchase_detail->product_id,
-                'name' => $purchase_detail->product_name,
-                'qty' => $purchase_detail->quantity,
-                'price' => $purchase_detail->price,
-                'weight' => 1,
-                'options' => [
-                    'product_discount' => $purchase_detail->product_discount_amount,
-                    'product_discount_type' => $purchase_detail->product_discount_type,
-                    'sub_total' => $purchase_detail->sub_total,
-                    'code' => $purchase_detail->product_code,
-                    'stock' => Product::findOrFail($purchase_detail->product_id)->product_quantity,
-                    'product_tax' => $purchase_detail->product_tax_amount,
-                    'unit_price' => $purchase_detail->unit_price,
-                ],
-            ]);
-        }
+        $this->purchases->loadCart($purchase);
 
         return view('purchase.edit', compact('purchase'));
     }
@@ -109,7 +84,7 @@ class PurchaseController extends Controller
     {
         abort_if(Gate::denies('delete_purchases'), 403);
 
-        $purchase->delete();
+        $this->purchases->delete($purchase);
 
         session()->flash('warning', trans('purchase.purchase-deleted'));
 

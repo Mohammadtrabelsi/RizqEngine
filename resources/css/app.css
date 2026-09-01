@@ -2465,3 +2465,141 @@ hr { display: none; }
 [dir="rtl"] .justify-content-end   { justify-content: flex-start !important; }
 
 [x-cloak] { display: none !important; }
+
+/* -------------------------------------------------------------------------
+ * Media thumbnails & card hover — extracted from inline styles in the
+ * product / customer / supplier index views so the templates carry no
+ * inline CSS.
+ * ---------------------------------------------------------------------- */
+.media-thumb {
+    height: 160px;
+    background: #f8f9fa;
+}
+
+.media-thumb--lg {
+    height: 180px;
+}
+
+.thumb-cover {
+    object-fit: cover;
+}
+
+.thumb-placeholder-icon {
+    font-size: 3.5rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    color: #ccc;
+}
+
+.card-lift {
+    transition: all 0.3s ease;
+}
+
+.card-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* -------------------------------------------------------------------------
+ * Language switcher — moved out of the inline <style> in
+ * includes/language-switcher.blade.php.
+ * ---------------------------------------------------------------------- */
+.language-switcher { position: relative; display: inline-block; font-size: 14px; text-align: left; }
+.language-switcher__toggle {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    background: transparent; border: 1px solid rgba(128,128,128,.35);
+    border-radius: 6px; padding: 6px 10px; color: inherit; line-height: 1; font: inherit;
+}
+.language-switcher__toggle:hover { border-color: rgba(128,128,128,.6); }
+.language-switcher__globe { width: 16px; height: 16px; flex: 0 0 auto; }
+.language-switcher__current { font-weight: 600; }
+.language-switcher__caret { border: solid currentColor; border-width: 0 1.5px 1.5px 0;
+    display: inline-block; padding: 2.5px; transform: rotate(45deg); margin-left: 2px; opacity: .7; }
+.language-switcher__menu {
+    position: absolute; right: 0; top: calc(100% + 6px); min-width: 160px; margin: 0;
+    padding: 6px 0; list-style: none; background: #fff; color: #23282c;
+    border: 1px solid rgba(0,0,0,.12); border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.18); z-index: 1050; display: none;
+}
+.language-switcher.is-open .language-switcher__menu { display: block; }
+.language-switcher__item {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 8px 14px; color: #23282c; text-decoration: none; white-space: nowrap;
+}
+.language-switcher__item:hover { background: rgba(0,0,0,.06); color: #23282c; text-decoration: none; }
+.language-switcher__item.is-active { font-weight: 600; }
+.language-switcher__check { color: #2eb85c; font-weight: 700; }
+
+/* -------------------------------------------------------------------------
+ * Home dashboard — extracted from inline styles in home.blade.php.
+ * ---------------------------------------------------------------------- */
+.dash-kicker { color: #4f46e5; letter-spacing: 0.08em; font-size: 11px; }
+.dash-kicker--sm { font-size: 10px; }
+.dash-value { font-size: 28px; line-height: 1.2; font-family: var(--font-heading); }
+.dash-summary-value { font-size: 22px; font-family: var(--font-heading); }
+.dash-icon-badge { background: #eef2ff; color: #4f46e5; }
+.n-bars { display: flex; align-items: flex-end; gap: 1rem; height: 180px; }
+.n-bar-col { height: 100%; justify-content: flex-end; }
+.n-bar { background: #4f46e5; max-width: 36px; }
+.chart-container-sm { width: 100%; max-width: 320px; }
+.tag-paid { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.tag-unpaid { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.tag-muted { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* -------------------------------------------------------------------------
+ * Logo mark + wordmark — moved out of the inline styles in the old
+ * layouts/logo partial (now the <x-logo> component).
+ * ---------------------------------------------------------------------- */
+.logo { display: inline-flex; align-items: center; gap: var(--space-2, 6px); line-height: 1; }
+.logo-wordmark { font-family: var(--font-heading, 'Inter', sans-serif); font-weight: 500; font-size: 15px; letter-spacing: 0.01em; }
+
+/* -------------------------------------------------------------------------
+ * Landing page — extracted from inline styles in welcome.blade.php.
+ * ---------------------------------------------------------------------- */
+.lp-accent-text { color: #4f46e5; }
+.lp-feature__icon { background: #eef2ff; width: fit-content; }
+.lp-band--access { background: #f1f5f9; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
+.lp-section--flush { padding-top: 0; }
+
+/* -------------------------------------------------------------------------
+ * Shared view utilities — extracted from remaining inline styles/<style>
+ * blocks across the app views (avatars, icon tiles, thumbnails, auth screen,
+ * POS product cards, role checkboxes).
+ * ---------------------------------------------------------------------- */
+.avatar-100 { width: 100px; height: 100px; }
+.avatar-80 { width: 80px; height: 80px; }
+.icon-tile-48 { width: 48px; height: 48px; }
+.line-1 { line-height: 1; }
+.img-max-120 { max-width: 120px; }
+.img-max-180 { max-width: 180px; }
+.img-w-180 { width: 180px; }
+.logo-preview { max-height: 48px; max-width: 160px; }
+.img-contain-300 { max-height: 300px; object-fit: contain; }
+
+/* Auth screens */
+.auth-brand-link { text-decoration: none; color: var(--color-text); }
+.auth-card { max-width: 420px; }
+.auth-subtitle { font-size: 15px; line-height: 1.6; color: var(--color-neutral-300); }
+.auth-fineprint { font-size: 12px; }
+.auth-footnote { font-size: 13px; text-align: center; }
+.auth-alert-accent { border-color: var(--color-accent); color: var(--color-accent); background: rgba(145, 132, 217, 0.1); }
+.auth-aside { background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-right: 1px solid #e2e8f0; }
+
+/* POS product grid */
+.pos-thumb { height: 200px; }
+.pos-card-badge { opacity: 0.9; font-size: 11px; }
+.pos-card-price { font-size: 1.25rem; color: #2c3e50; }
+.cursor-pointer .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+.wire-loading-overlay { background-color: rgba(255, 255, 255, 0.8); z-index: 10; min-height: 300px; }
+
+/* Role permission checkboxes */
+.custom-control-label { cursor: pointer; }
+
+.pos-card { transition: all 0.3s ease; }
+
+.pos-stock-badge { left: 10px; top: 10px; }

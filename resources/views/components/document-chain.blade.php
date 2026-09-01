@@ -1,19 +1,3 @@
-{{--
-    Renders the Devis → Bon de Commande → Commande → Facture traceability chain.
-    Pass any of: $quotation, $bonCommande, $commande, $sale (all optional). The
-    current document should be marked by passing $current = 'quotation' | 'bon_commande'
-    | 'commande' | 'sale'.
---}}
-@php
-    $current = $current ?? null;
-    $steps = [
-        ['key' => 'quotation', 'label' => __('boncommande.devis'), 'ref' => $quotation->reference ?? null, 'url' => isset($quotation) ? route('quotations.show', $quotation->id) : null],
-        ['key' => 'bon_commande', 'label' => __('boncommande.bon_commande'), 'ref' => $bonCommande->reference ?? null, 'url' => isset($bonCommande) ? route('bon-commandes.show', $bonCommande->id) : null],
-        ['key' => 'commande', 'label' => __('commande.commande'), 'ref' => $commande->reference ?? null, 'url' => isset($commande) ? route('commandes.show', $commande->id) : null],
-        ['key' => 'sale', 'label' => __('commande.facture'), 'ref' => $sale->reference ?? null, 'url' => isset($sale) ? route('sales.show', $sale->id) : null],
-    ];
-@endphp
-
 <div class="card mb-4">
     <div class="card-body">
         <h6 class="mb-3">{{ __('boncommande.document_chain') }}</h6>

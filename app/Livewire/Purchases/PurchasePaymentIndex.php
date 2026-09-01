@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Purchases;
 
-use App\Models\PurchasePayment;
+use App\Services\PurchaseService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,23 +29,19 @@ class PurchasePaymentIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, PurchaseService $purchases): void
     {
         abort_if(Gate::denies('access_purchase_payments'), 403);
 
-        PurchasePayment::findOrFail($id)->delete();
+        $purchases->deletePayment($id);
 
         session()->flash('warning', trans('purchase.purchase-payment-deleted'));
     }
 
-    public function render()
+    public function render(PurchaseService $purchases)
     {
-        $payments = PurchasePayment::query()
-            ->where('purchase_id', $this->purchaseId)
-            ->when($this->search, fn ($q) => $q->where('reference', 'like', '%'.$this->search.'%'))
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.purchases.purchase-payment-index', compact('payments'));
+        return view('livewire.purchases.purchase-payment-index', [
+            'payments' => $purchases->paginatePayments($this->purchaseId, $this->search),
+        ]);
     }
 }

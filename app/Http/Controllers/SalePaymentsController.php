@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
 use App\Models\SalePayment;
 use App\Services\SaleService;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ class SalePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        $sale = Sale::findOrFail($sale_id);
+        $sale = $this->sales->findOrFail($sale_id);
 
         return view('sale.payments.index', compact('sale'));
 
@@ -27,7 +26,7 @@ class SalePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        $sale = Sale::findOrFail($sale_id);
+        $sale = $this->sales->findOrFail($sale_id);
 
         return view('sale.payments.create', compact('sale'));
     }
@@ -56,7 +55,7 @@ class SalePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        $sale = Sale::findOrFail($sale_id);
+        $sale = $this->sales->findOrFail($sale_id);
 
         return view('sale.payments.edit', compact('salePayment', 'sale'));
     }
@@ -85,7 +84,7 @@ class SalePaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        $salePayment->delete();
+        $this->sales->deletePayment($salePayment->id);
 
         session()->flash('warning', trans('sale.sale-payment-deleted'));
 

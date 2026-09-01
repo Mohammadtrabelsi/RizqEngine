@@ -2,12 +2,7 @@
     <i class="bi bi-eye"></i>
 </a>
 @can('delete_activity_logs')
-    <button id="delete" class="btn btn-danger btn-sm" onclick="
-        event.preventDefault();
-        {
-        document.getElementById('destroy{{ $data->id }}').submit();
-        }
-        ">
+    <button id="delete" class="btn btn-danger btn-sm" data-submit-form="destroy{{ $data->id }}">
         <i class="bi bi-trash"></i>
         <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('activity-logs.destroy', $data->id) }}" method="POST">
             @csrf

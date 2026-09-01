@@ -53,6 +53,93 @@ class ProductCatalogService
     }
 
     /**
+     * Paginate the product index applying the full set of catalogue filters.
+     *
+     * @param  array{
+     *     search?: string,
+     *     stock_status?: StockStatus|null,
+     *     category_id?: int|string|null,
+     *     supplier_id?: int|string|null,
+     *     min_price?: string|null,
+     *     max_price?: string|null,
+     *     expiry?: string|null,
+     * }  $filters
+     */
+    public function paginateIndex(array $filters = [], int $perPage = 12): LengthAwarePaginator
+    {
+        $search = $filters['search'] ?? '';
+        $stockStatus = $filters['stock_status'] ?? null;
+        $categoryId = $filters['category_id'] ?? '';
+        $supplierId = $filters['supplier_id'] ?? '';
+        $minPrice = $filters['min_price'] ?? '';
+        $maxPrice = $filters['max_price'] ?? '';
+        $expiry = $filters['expiry'] ?? '';
+
+        return Product::query()
+            ->with('category', 'supplier')
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where(function ($q) use ($term) {
+                    $q->where('product_name', 'like', $term)
+                        ->orWhere('product_code', 'like', $term);
+                });
+            })
+            ->when($stockStatus, function ($query) use ($stockStatus) {
+                $query->stockStatus($stockStatus);
+            })
+            ->when($categoryId !== '', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            })
+            ->when($supplierId !== '', function ($query) use ($supplierId) {
+                $query->where('supplier_id', $supplierId);
+            })
+            ->when(is_numeric($minPrice), function ($query) use ($minPrice) {
+                // Prices are persisted in cents (see Product::$product_price accessor).
+                $query->where('product_price', '>=', (int) round(((float) $minPrice) * 100));
+            })
+            ->when(is_numeric($maxPrice), function ($query) use ($maxPrice) {
+                $query->where('product_price', '<=', (int) round(((float) $maxPrice) * 100));
+            })
+            ->when($expiry === 'expired', fn ($query) => $query->expired())
+            ->when($expiry === 'expiring_soon', fn ($query) => $query->expiringSoon())
+            ->when($expiry === 'not_expired', function ($query) {
+                $query->where(function ($q) {
+                    $q->whereNull('expiry_date')
+                        ->orWhereDate('expiry_date', '>', now()->toDateString());
+                });
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Number of currently expired products that still hold stock.
+     */
+    public function expiredInStockCount(): int
+    {
+        return Product::query()->expired()->where('product_quantity', '>', 0)->count();
+    }
+
+    /**
+     * Force every expired product that still has stock to zero quantity,
+     * moving them to the "out of stock" status.
+     *
+     * @return int Number of products affected.
+     */
+    public function markExpiredOutOfStock(): int
+    {
+        return Product::query()
+            ->expired()
+            ->where('product_quantity', '>', 0)
+            ->update(['product_quantity' => 0]);
+    }
+
+    public function delete(int $id): void
+    {
+        Product::findOrFail($id)->delete();
+    }
+
+    /**
      * Paginate products, optionally filtered by category and/or stock status.
      */
     public function paginateByCategory(

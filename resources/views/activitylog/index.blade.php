@@ -9,15 +9,6 @@
     </ol>
 @endsection
 
-@php
-    $eventBadges = [
-        'created' => 'badge-success',
-        'updated' => 'badge-info',
-        'deleted' => 'badge-danger',
-        'restored' => 'badge-warning',
-    ];
-@endphp
-
 @section('content')
     <div class="container-fluid">
         <livewire:activity-logs.activity-log-index/>

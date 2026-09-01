@@ -2,11 +2,11 @@
 
 namespace App\Livewire\ActivityLogs;
 
+use App\Services\ActivityLogService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogIndex extends Component
 {
@@ -27,38 +27,43 @@ class ActivityLogIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, ActivityLogService $activities): void
     {
         abort_if(Gate::denies('delete_activity_logs'), 403);
 
-        Activity::findOrFail($id)->delete();
+        $activities->delete($id);
 
         session()->flash('warning', trans('activitylog.activity-log-deleted'));
     }
 
-    public function clear(): void
+    public function clear(ActivityLogService $activities): void
     {
         abort_if(Gate::denies('delete_activity_logs'), 403);
 
-        Activity::query()->delete();
+        $activities->clear();
 
         session()->flash('warning', trans('activitylog.activity-logs-cleared'));
 
         $this->resetPage();
     }
 
-    public function render()
+    /**
+     * Bootstrap badge class for an activity event name.
+     */
+    public function eventBadge(?string $event): string
     {
-        $activities = Activity::query()
-            ->with('causer')
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('description', 'like', $term)
-                    ->orWhere('log_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(15);
+        return [
+            'created' => 'badge-success',
+            'updated' => 'badge-info',
+            'deleted' => 'badge-danger',
+            'restored' => 'badge-warning',
+        ][$event] ?? 'badge-secondary';
+    }
 
-        return view('livewire.activity-logs.activity-log-index', compact('activities'));
+    public function render(ActivityLogService $activities)
+    {
+        return view('livewire.activity-logs.activity-log-index', [
+            'activities' => $activities->paginate($this->search),
+        ]);
     }
 }

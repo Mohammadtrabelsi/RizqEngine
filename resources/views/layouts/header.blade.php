@@ -5,10 +5,6 @@
     The `low_quantity_products` collection is injected by a view composer in
     AppServiceProvider. `title` / `subtitle` are passed in by the layout shell.
 --}}
-@php
-    $headerTitle = $title ?? trim($__env->yieldContent('title')) ?: config('app.name');
-    $headerSubtitle = $subtitle ?? (now()->isoFormat('dddd, D MMMM YYYY') . ' · ' . __('dash.all_registers'));
-@endphp
 
 <header class="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-4 border-b border-hairline bg-canvas px-5 py-4 lg:px-8">
     <div class="flex items-center gap-3">
@@ -19,8 +15,8 @@
             <svg class="h-4 w-4 text-ink-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
         <div class="min-w-0">
-            <h1 class="truncate font-display text-[22px] font-bold tracking-[-0.02em]">{{ $headerTitle }}</h1>
-            <p class="mt-0.5 text-[13px] text-body">{{ $headerSubtitle }}</p>
+            <h1 class="truncate font-display text-[22px] font-bold tracking-[-0.02em]">{{ $title ?? (trim($__env->yieldContent('title')) ?: config('app.name')) }}</h1>
+            <p class="mt-0.5 text-[13px] text-body">{{ $subtitle ?? (now()->isoFormat('dddd, D MMMM YYYY') . ' · ' . __('dash.all_registers')) }}</p>
         </div>
     </div>
 
@@ -79,15 +75,8 @@
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate text-[13.5px] font-semibold">{{ $product->product_name }}</p>
                                     <p class="font-mono text-[11.5px] text-muted">{{ $product->product_code }}</p>
-                                    @php
-                                        $notifKey = match(true) {
-                                            $product->product_quantity <= 0 => 'app.notif-desc-out',
-                                            $product->product_quantity <= $product->product_stock_alert => 'app.notif-desc-critical',
-                                            default => 'app.notif-desc-low',
-                                        };
-                                    @endphp
                                     <p class="mt-1 text-[11.5px] leading-snug text-body">
-                                        {{ __($notifKey, [
+                                        {{ __($product->stockAlertKey(), [
                                             'qty' => $product->product_quantity,
                                             'unit' => $product->product_unit,
                                             'alert' => $product->product_stock_alert,
@@ -144,7 +133,7 @@
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         {{ __('app.profile') }}
                     </a>
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    <a href="#" data-submit-form="logout-form"
                        class="flex items-center gap-2.5 rounded-ctl px-3 py-2.5 text-[13.5px] font-medium text-danger transition-colors hover:bg-danger/10">
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                         {{ __('app.logout') }}

@@ -109,4 +109,16 @@ class Commande extends Model
     {
         return $value / 100;
     }
+
+    /**
+     * Bootstrap badge class representing this commande's status.
+     */
+    public function statusBadgeClass(): string
+    {
+        return [
+            self::STATUS_PENDING => 'badge-info',
+            self::STATUS_CONFIRMED => 'badge-primary',
+            self::STATUS_INVOICED => 'badge-success',
+        ][$this->status] ?? 'badge-secondary';
+    }
 }

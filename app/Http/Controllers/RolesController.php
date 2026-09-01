@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\RoleService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -9,6 +10,8 @@ use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
+    public function __construct(private readonly RoleService $roles) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_user_management'), 403);
@@ -28,16 +31,12 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'permissions' => 'required|array',
         ]);
 
-        $role = Role::create([
-            'name' => $request->name,
-        ]);
-
-        $role->givePermissionTo($request->permissions);
+        $this->roles->create($data['name'], $data['permissions']);
 
         session()->flash('success', trans('user.role-created'));
 
@@ -55,16 +54,12 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'permissions' => 'required|array',
         ]);
 
-        $role->update([
-            'name' => $request->name,
-        ]);
-
-        $role->syncPermissions($request->permissions);
+        $this->roles->update($role->id, $data['name'], $data['permissions']);
 
         session()->flash('success', trans('user.role-updated'));
 
@@ -75,7 +70,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        $role->delete();
+        $this->roles->delete($role->id);
 
         session()->flash('success', trans('user.role-deleted'));
 

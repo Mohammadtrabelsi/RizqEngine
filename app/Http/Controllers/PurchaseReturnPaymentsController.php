@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PurchaseReturn;
 use App\Models\PurchaseReturnPayment;
 use App\Services\PurchaseReturnService;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ class PurchaseReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        $purchase_return = PurchaseReturn::findOrFail($purchase_return_id);
+        $purchase_return = $this->purchaseReturns->findOrFail($purchase_return_id);
 
         return view('purchasesreturn.payments.index', compact('purchase_return'));
 
@@ -27,7 +26,7 @@ class PurchaseReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        $purchase_return = PurchaseReturn::findOrFail($purchase_return_id);
+        $purchase_return = $this->purchaseReturns->findOrFail($purchase_return_id);
 
         return view('purchasesreturn.payments.create', compact('purchase_return'));
     }
@@ -56,7 +55,7 @@ class PurchaseReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        $purchase_return = PurchaseReturn::findOrFail($purchase_return_id);
+        $purchase_return = $this->purchaseReturns->findOrFail($purchase_return_id);
 
         return view('purchasesreturn.payments.edit', compact('purchaseReturnPayment', 'purchase_return'));
     }
@@ -85,7 +84,7 @@ class PurchaseReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        $purchaseReturnPayment->delete();
+        $this->purchaseReturns->deletePayment($purchaseReturnPayment->id);
 
         session()->flash('warning', trans('purchasesreturn.purchase-return-payment-deleted'));
 

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StoreSaleReturnRequest;
 use App\Http\Requests\UpdateSaleReturnRequest;
-use App\Models\Customer;
-use App\Models\Product;
 use App\Models\SaleReturn;
 use App\Services\SaleReturnService;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -53,7 +51,7 @@ class SalesReturnController extends Controller
     {
         abort_if(Gate::denies('show_sale_returns'), 403);
 
-        $customer = Customer::findOrFail($sale_return->customer_id);
+        $customer = $this->saleReturns->customerFor($sale_return);
 
         return view('salesreturn.show', compact('sale_return', 'customer'));
     }
@@ -62,30 +60,7 @@ class SalesReturnController extends Controller
     {
         abort_if(Gate::denies('edit_sale_returns'), 403);
 
-        $sale_return_details = $sale_return->saleReturnDetails;
-
-        Cart::instance('sale_return')->destroy();
-
-        $cart = Cart::instance('sale_return');
-
-        foreach ($sale_return_details as $sale_return_detail) {
-            $cart->add([
-                'id' => $sale_return_detail->product_id,
-                'name' => $sale_return_detail->product_name,
-                'qty' => $sale_return_detail->quantity,
-                'price' => $sale_return_detail->price,
-                'weight' => 1,
-                'options' => [
-                    'product_discount' => $sale_return_detail->product_discount_amount,
-                    'product_discount_type' => $sale_return_detail->product_discount_type,
-                    'sub_total' => $sale_return_detail->sub_total,
-                    'code' => $sale_return_detail->product_code,
-                    'stock' => Product::findOrFail($sale_return_detail->product_id)->product_quantity,
-                    'product_tax' => $sale_return_detail->product_tax_amount,
-                    'unit_price' => $sale_return_detail->unit_price,
-                ],
-            ]);
-        }
+        $this->saleReturns->loadCart($sale_return);
 
         return view('salesreturn.edit', compact('sale_return'));
     }
@@ -109,7 +84,7 @@ class SalesReturnController extends Controller
     {
         abort_if(Gate::denies('delete_sale_returns'), 403);
 
-        $sale_return->delete();
+        $this->saleReturns->delete($sale_return);
 
         session()->flash('warning', trans('salesreturn.sale-return-deleted'));
 

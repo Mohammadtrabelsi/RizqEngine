@@ -152,6 +152,32 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// --- Submit-a-referenced-form buttons --------------------------------------
+// Replaces inline `onclick="…getElementById('id').submit()"` handlers. A
+// control carrying `data-submit-form="<form id>"` submits that hidden form
+// (used for the delete/confirm/convert row actions and the logout link).
+document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-submit-form]');
+    if (!trigger) return;
+    event.preventDefault();
+    const form = document.getElementById(trigger.getAttribute('data-submit-form'));
+    if (form) form.submit();
+});
+
+// --- Language switcher dropdown --------------------------------------------
+// Toggles the .is-open state on the language switcher and closes any other
+// open one. Replaces the inline <script> in the language-switcher partial.
+document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('.language-switcher__toggle');
+    document.querySelectorAll('.language-switcher.is-open').forEach((el) => {
+        if (!toggle || toggle.parentElement !== el) el.classList.remove('is-open');
+    });
+    if (toggle) {
+        const open = toggle.parentElement.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+});
+
 // --- Dismissible alerts ----------------------------------------------------
 document.addEventListener('click', (event) => {
     const closer = event.target.closest('[data-dismiss="alert"]');

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Adjustments;
 
-use App\Models\Adjustment;
+use App\Services\AdjustmentService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -22,25 +22,19 @@ class AdjustmentIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, AdjustmentService $adjustments): void
     {
         abort_if(Gate::denies('delete_adjustments'), 403);
 
-        Adjustment::findOrFail($id)->delete();
+        $adjustments->delete($id);
 
         session()->flash('warning', trans('adjustment.adjustment-deleted'));
     }
 
-    public function render()
+    public function render(AdjustmentService $adjustments)
     {
-        $adjustments = Adjustment::query()
-            ->withCount('adjustedProducts')
-            ->when($this->search, function ($query) {
-                $query->where('reference', 'like', '%'.$this->search.'%');
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.adjustments.adjustment-index', compact('adjustments'));
+        return view('livewire.adjustments.adjustment-index', [
+            'adjustments' => $adjustments->paginate($this->search),
+        ]);
     }
 }

@@ -8,6 +8,7 @@ use App\Models\StockEntry;
 use App\Models\StockEntryDetail;
 use App\Models\StockExit;
 use App\Models\StockExitDetail;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -25,6 +26,73 @@ use Illuminate\Support\Facades\DB;
 class StockExitService
 {
     public function __construct(private StockService $stockService) {}
+
+    /**
+     * Paginate stock exits (with a count of their detail lines), optionally
+     * filtered by reference, destination or responsible party.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return StockExit::query()
+            ->withCount('details')
+            ->when($search, function ($query) use ($search) {
+                $query->where('reference', 'like', '%'.$search.'%')
+                    ->orWhere('destination', 'like', '%'.$search.'%')
+                    ->orWhere('responsible', 'like', '%'.$search.'%');
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function delete(int $id): void
+    {
+        StockExit::findOrFail($id)->delete();
+    }
+
+    public function deleteModel(StockExit $stockExit): void
+    {
+        $stockExit->delete();
+    }
+
+    /**
+     * Eager-load the relations a stock exit's detail view needs.
+     */
+    public function loadForShow(StockExit $stockExit): StockExit
+    {
+        return $stockExit->load(['details.product', 'entries.details.product', 'user']);
+    }
+
+    /**
+     * Eager-load the detail lines (with products) for the return-entry form.
+     */
+    public function loadForEntry(StockExit $stockExit): StockExit
+    {
+        return $stockExit->load('details.product');
+    }
+
+    /**
+     * Eager-load the "details" relation for API responses.
+     */
+    public function loadDetails(StockExit $stockExit): StockExit
+    {
+        return $stockExit->load('details');
+    }
+
+    /**
+     * Eager-load a stock entry's own detail lines for API responses.
+     */
+    public function loadEntryDetails(StockEntry $stockEntry): StockEntry
+    {
+        return $stockEntry->load('details');
+    }
+
+    /**
+     * Eager-load the relations a stock entry's detail view needs.
+     */
+    public function loadEntryForShow(StockEntry $stockEntry): StockEntry
+    {
+        return $stockEntry->load(['details.product', 'stockExit']);
+    }
 
     /**
      * Create and validate a Bon de Sortie, decreasing real stock.

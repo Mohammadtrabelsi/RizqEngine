@@ -2,7 +2,7 @@
 
 namespace App\Livewire\PurchaseReturns;
 
-use App\Models\PurchaseReturnPayment;
+use App\Services\PurchaseReturnService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,23 +29,19 @@ class PurchaseReturnPaymentIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, PurchaseReturnService $purchaseReturns): void
     {
         abort_if(Gate::denies('access_purchase_return_payments'), 403);
 
-        PurchaseReturnPayment::findOrFail($id)->delete();
+        $purchaseReturns->deletePayment($id);
 
         session()->flash('warning', trans('purchasesreturn.purchase-return-payment-deleted'));
     }
 
-    public function render()
+    public function render(PurchaseReturnService $purchaseReturns)
     {
-        $payments = PurchaseReturnPayment::query()
-            ->where('purchase_return_id', $this->purchaseReturnId)
-            ->when($this->search, fn ($q) => $q->where('reference', 'like', '%'.$this->search.'%'))
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.purchase-returns.purchase-return-payment-index', compact('payments'));
+        return view('livewire.purchase-returns.purchase-return-payment-index', [
+            'payments' => $purchaseReturns->paginatePayments($this->purchaseReturnId, $this->search),
+        ]);
     }
 }

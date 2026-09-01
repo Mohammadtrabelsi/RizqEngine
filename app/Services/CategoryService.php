@@ -4,12 +4,33 @@ namespace App\Services;
 
 use App\Models\Category;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Owns all persistence for product categories.
  */
 class CategoryService
 {
+    /**
+     * All categories ordered by name, for populating filter/select controls.
+     *
+     * @return Collection<int, Category>
+     */
+    public function ordered(): Collection
+    {
+        return Category::orderBy('category_name')->get();
+    }
+
+    /**
+     * Every category, for populating select controls (e.g. the POS screen).
+     *
+     * @return Collection<int, Category>
+     */
+    public function all(): Collection
+    {
+        return Category::all();
+    }
+
     public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
     {
         return Category::query()

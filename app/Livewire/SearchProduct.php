@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Category;
+use App\Services\CategoryService;
 use App\Services\ProductCatalogService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -21,14 +21,14 @@ class SearchProduct extends Component
 
     public $categories;
 
-    public function mount()
+    public function mount(CategoryService $categories)
     {
         $this->query = '';
         $this->how_many = 5;
         $this->category = '';
         $this->in_stock_only = false;
         $this->search_results = Collection::empty();
-        $this->categories = Category::orderBy('category_name')->get();
+        $this->categories = $categories->ordered();
     }
 
     public function render()

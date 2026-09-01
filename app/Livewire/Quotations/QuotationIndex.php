@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Quotations;
 
-use App\Models\Quotation;
+use App\Services\QuotationService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class QuotationIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(QuotationService $quotations)
     {
-        $quotations = Quotation::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('customer_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.quotations.quotation-index', compact('quotations'));
+        return view('livewire.quotations.quotation-index', [
+            'quotations' => $quotations->paginate($this->search),
+        ]);
     }
 }

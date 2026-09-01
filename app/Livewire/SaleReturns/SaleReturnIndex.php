@@ -2,7 +2,7 @@
 
 namespace App\Livewire\SaleReturns;
 
-use App\Models\SaleReturn;
+use App\Services\SaleReturnService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class SaleReturnIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(SaleReturnService $saleReturns)
     {
-        $sale_returns = SaleReturn::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('customer_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.sale-returns.sale-return-index', compact('sale_returns'));
+        return view('livewire.sale-returns.sale-return-index', [
+            'sale_returns' => $saleReturns->paginate($this->search),
+        ]);
     }
 }

@@ -252,4 +252,17 @@ class Product extends Model implements HasMedia
     {
         return $value / 100;
     }
+
+    /**
+     * Translation key describing this product's low-stock notification, based
+     * on how far its quantity has fallen relative to the stock alert level.
+     */
+    public function stockAlertKey(): string
+    {
+        return match (true) {
+            $this->product_quantity <= 0 => 'app.notif-desc-out',
+            $this->product_quantity <= $this->product_stock_alert => 'app.notif-desc-critical',
+            default => 'app.notif-desc-low',
+        };
+    }
 }

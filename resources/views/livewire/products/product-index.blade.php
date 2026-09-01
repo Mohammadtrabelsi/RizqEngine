@@ -109,16 +109,15 @@
     <div class="row">
         @forelse($products as $product)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="product-{{ $product->id }}">
-                <div class="card h-100 border-0 shadow-sm transition-all" style="transition: all 0.3s ease;">
+                <div class="card h-100 border-0 shadow-sm card-lift">
                     <!-- Image Section -->
-                    <div class="position-relative overflow-hidden" style="height: 180px; background: #f8f9fa;">
+                    <div class="position-relative overflow-hidden media-thumb media-thumb--lg">
                         <img src="{{ $product->getFirstMediaUrl('images', 'thumb') }}"
-                             class="w-100 h-100" style="object-fit: cover;" alt="{{ $product->product_name }}">
+                             class="w-100 h-100 thumb-cover" alt="{{ $product->product_name }}">
                         <!-- Stock Status Badge -->
                         <div class="position-absolute top-0 end-0 m-2 text-end">
-                            @php($status = $product->stock_status)
-                            <span class="badge bg-{{ $status->color() }}">
-                                <i class="bi bi-{{ $status->icon() }}"></i> {{ $status->label() }}
+                            <span class="badge bg-{{ $product->stock_status->color() }}">
+                                <i class="bi bi-{{ $product->stock_status->icon() }}"></i> {{ $product->stock_status->label() }}
                             </span>
                             @if($product->is_expired)
                                 <span class="badge bg-danger d-block mt-1">
@@ -221,7 +220,7 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center py-5">
-                        <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                        <i class="bi bi-inbox empty-state-icon"></i>
                         <p class="text-muted mt-3 mb-0">{{ __('product.no_products_found') }}</p>
                     </div>
                 </div>
@@ -232,14 +231,4 @@
     <div class="d-flex justify-content-center mt-4">
         {{ $products->links('pagination::bootstrap-5') }}
     </div>
-
-    <style>
-        .transition-all {
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
 </div>

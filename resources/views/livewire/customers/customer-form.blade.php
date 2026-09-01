@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label>{{ __('customer.profile_image') }}</label>
                                 @if ($customer && $customer->getFirstMediaUrl('images'))
-                                    <img src="{{ $customer->getFirstMediaUrl('images') }}" class="img-fluid img-thumbnail mb-2" alt="Customer Image" style="max-width: 120px;">
+                                    <img src="{{ $customer->getFirstMediaUrl('images') }}" class="img-max-120 img-fluid img-thumbnail mb-2" alt="Customer Image">
                                 @endif
                                 <input type="file" class="form-control-file @error('image') is-invalid @enderror" wire:model="image">
                                 @error('image') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror

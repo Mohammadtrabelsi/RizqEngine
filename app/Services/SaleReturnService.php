@@ -8,6 +8,7 @@ use App\Models\SaleReturn;
 use App\Models\SaleReturnDetail;
 use App\Models\SaleReturnPayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -24,6 +25,85 @@ class SaleReturnService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
     ) {}
+
+    /**
+     * Paginate sale returns, optionally filtered by reference or customer name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return SaleReturn::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('customer_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Paginate the payments recorded against a single sale return.
+     */
+    public function paginatePayments(int $saleReturnId, ?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return SaleReturnPayment::query()
+            ->where('sale_return_id', $saleReturnId)
+            ->when($search, fn ($q) => $q->where('reference', 'like', '%'.$search.'%'))
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function deletePayment(int $id): void
+    {
+        SaleReturnPayment::findOrFail($id)->delete();
+    }
+
+    public function findOrFail(int|string $id): SaleReturn
+    {
+        return SaleReturn::findOrFail($id);
+    }
+
+    /**
+     * The customer attached to a sale return, for the detail view.
+     */
+    public function customerFor(SaleReturn $sale_return): Customer
+    {
+        return Customer::findOrFail($sale_return->customer_id);
+    }
+
+    /**
+     * Reset the "sale_return" cart to the given return's saved line items,
+     * ready for editing.
+     */
+    public function loadCart(SaleReturn $sale_return): void
+    {
+        Cart::instance('sale_return')->destroy();
+        $cart = Cart::instance('sale_return');
+
+        foreach ($sale_return->saleReturnDetails as $sale_return_detail) {
+            $cart->add([
+                'id' => $sale_return_detail->product_id,
+                'name' => $sale_return_detail->product_name,
+                'qty' => $sale_return_detail->quantity,
+                'price' => $sale_return_detail->price,
+                'weight' => 1,
+                'options' => [
+                    'product_discount' => $sale_return_detail->product_discount_amount,
+                    'product_discount_type' => $sale_return_detail->product_discount_type,
+                    'sub_total' => $sale_return_detail->sub_total,
+                    'code' => $sale_return_detail->product_code,
+                    'stock' => Product::findOrFail($sale_return_detail->product_id)->product_quantity,
+                    'product_tax' => $sale_return_detail->product_tax_amount,
+                    'unit_price' => $sale_return_detail->unit_price,
+                ],
+            ]);
+        }
+    }
+
+    public function delete(SaleReturn $sale_return): void
+    {
+        $sale_return->delete();
+    }
 
     /**
      * @param  array<string, mixed>  $data

@@ -61,13 +61,12 @@
         @forelse($customers as $customer)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="customer-{{ $customer->id }}">
                 <div class="card h-100">
-                    <div class="position-relative overflow-hidden rounded-top" style="height: 160px; background: #f8f9fa;">
-                        @php($customerImage = $customer->getFirstMediaUrl('images'))
-                        @if ($customerImage)
-                            <img src="{{ $customerImage }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $customer->customer_name }}">
+                    <div class="position-relative overflow-hidden rounded-top media-thumb">
+                        @if ($customer->image_url)
+                            <img src="{{ $customer->image_url }}" class="w-100 h-100 thumb-cover" alt="{{ $customer->customer_name }}">
                         @else
                             <div class="d-flex align-items-center justify-content-center w-100 h-100 text-muted">
-                                <i class="bi bi-person-circle" style="font-size: 3.5rem;"></i>
+                                <i class="bi bi-person-circle thumb-placeholder-icon"></i>
                             </div>
                         @endif
                     </div>

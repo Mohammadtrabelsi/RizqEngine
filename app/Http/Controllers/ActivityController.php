@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -9,6 +10,8 @@ use Spatie\Activitylog\Models\Activity;
 
 class ActivityController extends Controller
 {
+    public function __construct(private readonly ActivityLogService $activities) {}
+
     public function index()
     {
         abort_if(Gate::denies('access_activity_logs'), 403);
@@ -21,16 +24,17 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('access_activity_logs'), 403);
 
-        $activity->load(['causer', 'subject']);
+        $activity = $this->activities->loadForShow($activity);
+        $changeSet = $this->activities->changeSet($activity);
 
-        return view('activitylog.show', compact('activity'));
+        return view('activitylog.show', compact('activity', 'changeSet'));
     }
 
     public function destroy(Activity $activity)
     {
         abort_if(Gate::denies('delete_activity_logs'), 403);
 
-        $activity->delete();
+        $this->activities->deleteModel($activity);
 
         session()->flash('warning', trans('activitylog.activity-log-deleted'));
 
@@ -41,7 +45,7 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('delete_activity_logs'), 403);
 
-        Activity::query()->delete();
+        $this->activities->clear();
 
         session()->flash('warning', trans('activitylog.activity-logs-cleared'));
 

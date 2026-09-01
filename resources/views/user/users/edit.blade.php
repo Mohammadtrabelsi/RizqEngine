@@ -70,7 +70,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="image">{{ __('users.profile_image') }} <span class="text-danger">*</span></label>
-                                <img style="width: 100px;height: 100px;" class="d-block mx-auto img-thumbnail img-fluid rounded-circle mb-2" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="Profile Image">
+                                <img class="avatar-100 d-block mx-auto img-thumbnail img-fluid rounded-circle mb-2" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="Profile Image">
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">
                             </div>
                         </div>
@@ -81,35 +81,9 @@
     </div>
 @endsection
 
-@section('third_party_scripts')
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-@endsection
 
 @push('page_scripts')
-    <script>
-        FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginFileValidateSize,
-            FilePondPluginFileValidateType
-        );
-        const fileElement = document.querySelector('input[id="image"]');
-        const pond = FilePond.create(fileElement, {
-            acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
-        });
-        FilePond.setOptions({
-            server: {
-                url: "{{ route('filepond.upload') }}",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                }
-            }
-        });
-    </script>
+    @include('includes.filepond-js')
 @endpush
 
 

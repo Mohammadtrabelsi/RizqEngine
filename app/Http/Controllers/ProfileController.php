@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Upload;
 use App\Rules\MatchCurrentPassword;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    public function __construct(private readonly UserService $users) {}
+
     public function edit()
     {
         return view('user.profile');
@@ -18,30 +18,16 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.auth()->id(),
         ]);
 
-        auth()->user()->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
-
-        if ($request->has('image')) {
-            $tempFile = Upload::where('folder', $request->image)->first();
-
-            if (auth()->user()->getFirstMedia('avatars')) {
-                auth()->user()->getFirstMedia('avatars')->delete();
-            }
-
-            if ($tempFile) {
-                auth()->user()->addMedia(Storage::path('temp/'.$request->image.'/'.$tempFile->filename))->toMediaCollection('avatars');
-
-                Storage::deleteDirectory('temp/'.$request->image);
-                $tempFile->delete();
-            }
-        }
+        $this->users->updateProfile(
+            auth()->user(),
+            $data,
+            $request->has('image') ? $request->image : null,
+        );
 
         session()->flash('success', trans('user.profile-updated'));
 
@@ -55,9 +41,7 @@ class ProfileController extends Controller
             'password' => 'required|min:8|max:255|confirmed',
         ]);
 
-        auth()->user()->update([
-            'password' => Hash::make($request->password),
-        ]);
+        $this->users->updatePassword(auth()->user(), $request->password);
 
         session()->flash('success', trans('user.password-updated'));
 

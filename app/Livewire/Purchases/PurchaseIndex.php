@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Purchases;
 
-use App\Models\Purchase;
+use App\Services\PurchaseService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class PurchaseIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(PurchaseService $purchases)
     {
-        $purchases = Purchase::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('supplier_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.purchases.purchase-index', compact('purchases'));
+        return view('livewire.purchases.purchase-index', [
+            'purchases' => $purchases->paginate($this->search),
+        ]);
     }
 }
