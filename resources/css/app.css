@@ -2601,3 +2601,5 @@ hr { display: none; }
 .custom-control-label { cursor: pointer; }
 
 .pos-card { transition: all 0.3s ease; }
+
+.pos-stock-badge { left: 10px; top: 10px; }

@@ -15,15 +15,12 @@
                             <div class="pos-thumb position-relative overflow-hidden">
                                 <img src="{{ $product->getFirstMediaUrl('images') }}" class="thumb-cover card-img-top h-100 w-100" alt="Product Image">
                                 <!-- Stock Badge -->
-                                <div class="badge mb-3 position-absolute" style="left:10px;top: 10px;
-                                    @if($product->product_quantity <= $product->product_stock_alert)
-                                        background-color: #dc3545;
-                                    @elseif($product->product_quantity <= ($product->product_stock_alert * 2))
-                                        background-color: #ffc107;
-                                    @else
-                                        background-color: #28a745;
-                                    @endif
-                                ">
+                                <div @class([
+                                    'badge mb-3 position-absolute pos-stock-badge',
+                                    'bg-danger' => $product->product_quantity <= $product->product_stock_alert,
+                                    'bg-warning' => $product->product_quantity > $product->product_stock_alert && $product->product_quantity <= $product->product_stock_alert * 2,
+                                    'bg-success' => $product->product_quantity > $product->product_stock_alert * 2,
+                                ])>
                                     <i class="bi bi-box2"></i> {{ $product->product_quantity }} {{ $product->product_unit }}
                                 </div>
                                 <!-- Stock Status Overlay -->
