@@ -49,7 +49,7 @@ class StockExitController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return response()->json($stockExit->load('details'), 201);
+        return response()->json($this->stockExits->loadDetails($stockExit), 201);
     }
 
     /**
@@ -76,6 +76,6 @@ class StockExitController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return response()->json($entry->load('details'), 201);
+        return response()->json($this->stockExits->loadEntryDetails($entry), 201);
     }
 }

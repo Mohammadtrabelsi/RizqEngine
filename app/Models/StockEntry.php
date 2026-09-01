@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class StockEntry extends Model
 {
-    use HasFactory, RecordsActivity;
+    use HasFactory, RecordsActivity, TracksUserActions;
 
     protected $guarded = [];
 

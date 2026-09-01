@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StorePurchaseReturnRequest;
 use App\Http\Requests\UpdatePurchaseReturnRequest;
-use App\Models\Product;
 use App\Models\PurchaseReturn;
-use App\Models\Supplier;
 use App\Services\PurchaseReturnService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
@@ -53,7 +51,7 @@ class PurchasesReturnController extends Controller
     {
         abort_if(Gate::denies('show_purchase_returns'), 403);
 
-        $supplier = Supplier::findOrFail($purchase_return->supplier_id);
+        $supplier = $this->purchaseReturns->supplierFor($purchase_return);
 
         return view('purchasesreturn.show', compact('purchase_return', 'supplier'));
     }
@@ -62,30 +60,7 @@ class PurchasesReturnController extends Controller
     {
         abort_if(Gate::denies('edit_purchase_returns'), 403);
 
-        $purchase_return_details = $purchase_return->purchaseReturnDetails;
-
-        Cart::instance('purchase_return')->destroy();
-
-        $cart = Cart::instance('purchase_return');
-
-        foreach ($purchase_return_details as $purchase_return_detail) {
-            $cart->add([
-                'id' => $purchase_return_detail->product_id,
-                'name' => $purchase_return_detail->product_name,
-                'qty' => $purchase_return_detail->quantity,
-                'price' => $purchase_return_detail->price,
-                'weight' => 1,
-                'options' => [
-                    'product_discount' => $purchase_return_detail->product_discount_amount,
-                    'product_discount_type' => $purchase_return_detail->product_discount_type,
-                    'sub_total' => $purchase_return_detail->sub_total,
-                    'code' => $purchase_return_detail->product_code,
-                    'stock' => Product::findOrFail($purchase_return_detail->product_id)->product_quantity,
-                    'product_tax' => $purchase_return_detail->product_tax_amount,
-                    'unit_price' => $purchase_return_detail->unit_price,
-                ],
-            ]);
-        }
+        $this->purchaseReturns->loadCart($purchase_return);
 
         return view('purchasesreturn.edit', compact('purchase_return'));
     }
@@ -109,7 +84,7 @@ class PurchasesReturnController extends Controller
     {
         abort_if(Gate::denies('delete_purchase_returns'), 403);
 
-        $purchase_return->delete();
+        $this->purchaseReturns->delete($purchase_return);
 
         session()->flash('warning', trans('purchasesreturn.purchase-return-deleted'));
 

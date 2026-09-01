@@ -16,7 +16,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="user-{{ $user->id }}">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <img src="{{ $user->getFirstMediaUrl('avatars') }}" style="width:80px;height:80px;" class="img-thumbnail rounded-circle mb-3" alt="{{ $user->name }}">
+                        <img src="{{ $user->getFirstMediaUrl('avatars') }}" class="avatar-80 img-thumbnail rounded-circle mb-3" alt="{{ $user->name }}">
                         <h5 class="card-title mb-1">{{ $user->name }}</h5>
                         <p class="text-muted mb-2"><small>{{ $user->email }}</small></p>
                         <div class="mb-2">

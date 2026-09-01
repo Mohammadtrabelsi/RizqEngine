@@ -17,7 +17,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="category-{{ $category->id }}">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <img src="{{ default_category_image() }}" alt="{{ $category->category_name }}" class="img-thumbnail mb-2" width="80" height="80" style="object-fit: cover;">
+                        <img src="{{ default_category_image() }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
                         <h5 class="card-title mb-1">{{ $category->category_name }}</h5>
                         <p class="text-muted mb-2"><small>{{ $category->category_code }}</small></p>
                         <span class="badge bg-info mb-3">{{ $category->products_count }} products</span>

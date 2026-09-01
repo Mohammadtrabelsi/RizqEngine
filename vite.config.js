@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => {
                 'resources/js/chart-config.js',
                 'resources/js/filepond.js',
                 'resources/js/login.js',
+                'resources/js/money-mask.js',
+                'resources/js/product-dropzone.js',
+                'resources/js/pos-checkout.js',
             ]),
         ],
         server: {

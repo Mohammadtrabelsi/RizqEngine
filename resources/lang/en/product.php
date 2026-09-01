@@ -81,4 +81,13 @@ return [
     'upc_e' => 'UPC E',
     'update_category' => 'Update category',
     'update_product' => 'Update Product',
+    'expiry_date' => 'Expiry Date',
+    'expiry' => 'Expiry',
+    'expired' => 'Expired',
+    'expiring_soon' => 'Expiring Soon',
+    'not_expired' => 'Not Expired',
+    'mark_expired_out_of_stock' => 'Mark expired as out of stock',
+    'expired-marked-out-of-stock' => ':count expired product(s) moved to out of stock',
+    'no-expired-products' => 'No expired products with remaining stock',
+    'expired-in-stock-notice' => '{1} :count expired product still has stock|[2,*] :count expired products still have stock',
 ];

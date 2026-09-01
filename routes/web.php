@@ -8,6 +8,12 @@ use App\Livewire\Customers\CustomerForm;
 use App\Livewire\Customers\CustomerIndex;
 use App\Livewire\Customers\CustomerShow;
 use App\Livewire\Dashboard as RedesignDashboard;
+use App\Livewire\Finance\InvoiceArchive;
+use App\Livewire\Finance\MonthlyBudgetForm;
+use App\Livewire\Finance\MonthlyBudgetIndex;
+use App\Livewire\Finance\MonthlyBudgetShow;
+use App\Livewire\Finance\OutingForm;
+use App\Livewire\Finance\OutingIndex;
 use App\Livewire\LandingPage as RedesignLandingPage;
 use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierIndex;
@@ -140,6 +146,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/units/create', UnitForm::class)->name('units.create');
         Route::get('/units/{unit}/edit', UnitForm::class)->name('units.edit');
     });
+});
+
+Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
+    // Financial Assistant — monthly budgets, outings and invoice archive.
+    Route::get('/monthly-budgets', MonthlyBudgetIndex::class)->name('monthly-budgets.index');
+    Route::get('/monthly-budgets/create', MonthlyBudgetForm::class)->name('monthly-budgets.create');
+    Route::get('/monthly-budgets/{monthlyBudget}', MonthlyBudgetShow::class)->name('monthly-budgets.show');
+    Route::get('/monthly-budgets/{monthlyBudget}/edit', MonthlyBudgetForm::class)->name('monthly-budgets.edit');
+
+    Route::get('/outings', OutingIndex::class)->name('outings.index');
+    Route::get('/outings/create', OutingForm::class)->name('outings.create');
+    Route::get('/outings/{outing}/edit', OutingForm::class)->name('outings.edit');
+
+    Route::get('/invoice-archive', InvoiceArchive::class)->name('invoice-archive.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {

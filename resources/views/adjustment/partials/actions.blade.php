@@ -1,5 +1,5 @@
 @can('edit_adjustments')
-    <a href="{{ route('adjustments.edit', $data->id) }}" class="btn btn-outline-info btn-sm">
+    <a href="{{ route('adjustments.edit', $data->id) }}" class="btn btn-outline-primary btn-sm">
         <i class="bi bi-pencil"></i>
     </a>
 @endcan
@@ -9,12 +9,7 @@
     </a>
 @endcan
 @can('delete_adjustments')
-    <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
-        event.preventDefault();
-        {
-        document.getElementById('destroy{{ $data->id }}').submit()
-        }
-        ">
+    <button id="delete" class="btn btn-outline-danger btn-sm" data-submit-form="destroy{{ $data->id }}">
         <i class="bi bi-trash"></i>
         <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('adjustments.destroy', $data->id) }}" method="POST">
             @csrf

@@ -8,6 +8,7 @@ use App\Models\PurchaseReturnDetail;
 use App\Models\PurchaseReturnPayment;
 use App\Models\Supplier;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -24,6 +25,85 @@ class PurchaseReturnService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
     ) {}
+
+    /**
+     * Paginate purchase returns, optionally filtered by reference or supplier name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return PurchaseReturn::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('supplier_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Paginate the payments recorded against a single purchase return.
+     */
+    public function paginatePayments(int $purchaseReturnId, ?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return PurchaseReturnPayment::query()
+            ->where('purchase_return_id', $purchaseReturnId)
+            ->when($search, fn ($q) => $q->where('reference', 'like', '%'.$search.'%'))
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function deletePayment(int $id): void
+    {
+        PurchaseReturnPayment::findOrFail($id)->delete();
+    }
+
+    public function findOrFail(int|string $id): PurchaseReturn
+    {
+        return PurchaseReturn::findOrFail($id);
+    }
+
+    /**
+     * The supplier attached to a purchase return, for the detail view.
+     */
+    public function supplierFor(PurchaseReturn $purchase_return): Supplier
+    {
+        return Supplier::findOrFail($purchase_return->supplier_id);
+    }
+
+    /**
+     * Reset the "purchase_return" cart to the given return's saved line items,
+     * ready for editing.
+     */
+    public function loadCart(PurchaseReturn $purchase_return): void
+    {
+        Cart::instance('purchase_return')->destroy();
+        $cart = Cart::instance('purchase_return');
+
+        foreach ($purchase_return->purchaseReturnDetails as $purchase_return_detail) {
+            $cart->add([
+                'id' => $purchase_return_detail->product_id,
+                'name' => $purchase_return_detail->product_name,
+                'qty' => $purchase_return_detail->quantity,
+                'price' => $purchase_return_detail->price,
+                'weight' => 1,
+                'options' => [
+                    'product_discount' => $purchase_return_detail->product_discount_amount,
+                    'product_discount_type' => $purchase_return_detail->product_discount_type,
+                    'sub_total' => $purchase_return_detail->sub_total,
+                    'code' => $purchase_return_detail->product_code,
+                    'stock' => Product::findOrFail($purchase_return_detail->product_id)->product_quantity,
+                    'product_tax' => $purchase_return_detail->product_tax_amount,
+                    'unit_price' => $purchase_return_detail->unit_price,
+                ],
+            ]);
+        }
+    }
+
+    public function delete(PurchaseReturn $purchase_return): void
+    {
+        $purchase_return->delete();
+    }
 
     /**
      * @param  array<string, mixed>  $data

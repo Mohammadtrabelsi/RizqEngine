@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Mail\QuotationMail;
 use App\Models\Quotation;
+use App\Services\QuotationService;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendQuotationEmailController extends Controller
 {
+    public function __construct(private readonly QuotationService $quotations) {}
+
     public function __invoke(Quotation $quotation)
     {
         try {
-            Mail::to($quotation->customer->customer_email)->send(new QuotationMail($quotation));
+            Mail::to($this->quotations->recipientEmail($quotation))->send(new QuotationMail($quotation));
 
-            $quotation->update([
-                'status' => 'Sent',
-            ]);
+            $this->quotations->markSent($quotation);
 
             session()->flash('success', trans('quotation.email-sent'));
 

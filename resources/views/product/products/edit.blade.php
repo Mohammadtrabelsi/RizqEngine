@@ -35,7 +35,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="product_code">{{ __('product.product_code') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="product_code" required value="{{ $product->product_code }}">
+                                        <input type="number" min="0" step="1" class="form-control" name="product_code" required value="{{ $product->product_code }}">
                                     </div>
                                 </div>
                             </div>
@@ -53,9 +53,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="supplier_id">{{ __('product.supplier') }}</label>
-                                        <select class="form-control" name="supplier_id" id="supplier_id">
-                                            <option value="">{{ __('product.select_supplier') }}</option>
+                                        <label for="supplier_id">{{ __('product.supplier') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="supplier_id" id="supplier_id" required>
+                                            <option value="" disabled>{{ __('product.select_supplier') }}</option>
                                             @foreach(\App\Models\Supplier::all() as $supplier)
                                                 <option value="{{ $supplier->id }}" {{ $product->supplier_id == $supplier->id ? 'selected' : '' }}>{{ $supplier->supplier_name }}</option>
                                             @endforeach
@@ -84,13 +84,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_cost">{{ __('product.cost') }} <span class="text-danger">*</span></label>
-                                        <input id="product_cost" type="text" class="form-control" min="0" name="product_cost" required value="{{ $product->product_cost }}">
+                                        <input id="product_cost" type="text" class="form-control" min="0" name="product_cost" data-money-mask data-money-prefill required value="{{ $product->product_cost }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_price">{{ __('product.price') }} <span class="text-danger">*</span></label>
-                                        <input id="product_price" type="text" class="form-control" min="0" name="product_price" required value="{{ $product->product_price }}">
+                                        <input id="product_price" type="text" class="form-control" min="0" name="product_price" data-money-mask data-money-prefill required value="{{ $product->product_price }}">
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_stock_alert">{{ __('product.stock_alert') }} <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ $product->product_stock_alert }}" min="0">
+                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ $product->product_stock_alert }}" min="10">
                                     </div>
                                 </div>
                             </div>
@@ -139,6 +139,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="expiry_date">{{ __('product.expiry_date') }}</label>
+                                        <input type="date" class="form-control" name="expiry_date" id="expiry_date" value="{{ old('expiry_date', optional($product->expiry_date)->format('Y-m-d')) }}">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="product_note">Note</label>
                                 <textarea name="product_note" id="product_note" rows="4 " class="form-control">{{ $product->product_note }}</textarea>
@@ -168,76 +177,9 @@
     </div>
 @endsection
 
-@section('third_party_scripts')
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-@endsection
 
 @push('page_scripts')
-    <script>
-        var uploadedDocumentMap = {}
-        Dropzone.options.documentDropzone = {
-            url: '{{ route('dropzone.upload') }}',
-            maxFilesize: 1,
-            acceptedFiles: '.jpg, .jpeg, .png',
-            maxFiles: 3,
-            addRemoveLinks: true,
-            dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            success: function (file, response) {
-                $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
-                uploadedDocumentMap[file.name] = response.name;
-            },
-            removedfile: function (file) {
-                file.previewElement.remove();
-                var name = '';
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name;
-                } else {
-                    name = uploadedDocumentMap[file.name];
-                }
-                $('form').find('input[name="document[]"][value="' + name + '"]').remove();
-            },
-            init: function () {
-                @if(isset($product) && $product->getMedia('images'))
-                var files = {!! json_encode($product->getMedia('images')) !!};
-                for (var i in files) {
-                    var file = files[i];
-                    this.options.addedfile.call(this, file);
-                    this.options.thumbnail.call(this, file, file.original_url);
-                    file.previewElement.classList.add('dz-complete');
-                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
-                }
-                @endif
-            }
-        }
-    </script>
-
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#product_cost').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
-            $('#product_price').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
-
-            $('#product_cost').maskMoney('mask');
-            $('#product_price').maskMoney('mask');
-
-            $('#product-form').submit(function () {
-                var product_cost = $('#product_cost').maskMoney('unmasked')[0];
-                var product_price = $('#product_price').maskMoney('unmasked')[0];
-                $('#product_cost').val(product_cost);
-                $('#product_price').val(product_price);
-            });
-        });
-    </script>
+    @include('includes.product-dropzone-js')
+    @include('includes.money-mask-js')
 @endpush
 

@@ -3,7 +3,7 @@
 namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
-use App\Models\ExpenseCategory;
+use App\Services\ExpenseService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
@@ -50,14 +50,14 @@ class ExpenseForm extends Component
         ];
     }
 
-    public function save()
+    public function save(ExpenseService $expenses)
     {
         $this->validate();
 
         if ($this->expenseId) {
             abort_if(Gate::denies('edit_expenses'), 403);
 
-            Expense::findOrFail($this->expenseId)->update([
+            $expenses->update($this->expenseId, [
                 'date' => $this->date,
                 'reference' => $this->reference,
                 'category_id' => $this->category_id,
@@ -69,7 +69,7 @@ class ExpenseForm extends Component
         } else {
             abort_if(Gate::denies('create_expenses'), 403);
 
-            Expense::create([
+            $expenses->create([
                 'date' => $this->date,
                 'category_id' => $this->category_id,
                 'amount' => $this->amount,
@@ -82,10 +82,10 @@ class ExpenseForm extends Component
         return redirect()->route('expenses.index');
     }
 
-    public function render()
+    public function render(ExpenseService $expenses)
     {
         return view('livewire.expenses.expense-form', [
-            'categories' => ExpenseCategory::all(),
+            'categories' => $expenses->categories(),
         ]);
     }
 }

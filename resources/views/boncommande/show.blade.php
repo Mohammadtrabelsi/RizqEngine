@@ -14,13 +14,7 @@
     <div class="container-fluid">
         @include('utils.alerts')
 
-        @include('partials.document-chain', [
-            'current' => 'bon_commande',
-            'quotation' => $bonCommande->quotation,
-            'bonCommande' => $bonCommande,
-            'commande' => $bonCommande->commande,
-            'sale' => optional($bonCommande->commande)->sale,
-        ])
+        <x-document-chain current="bon_commande" :quotation="$bonCommande->quotation" :bon-commande="$bonCommande" :commande="$bonCommande->commande" :sale="optional($bonCommande->commande)->sale" />
 
         <div class="card">
             <div class="card-header d-flex flex-wrap align-items-center">

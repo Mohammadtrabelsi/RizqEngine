@@ -2,12 +2,12 @@
 
 return [
     'Go Home' => 'الذهاب إلى الصفحة الرئيسية',
-    'Go to page :page' => '[TODO] Go to page :page',
+    'Go to page :page' => 'الذهاب إلى الصفحة :page',
     'Maybe, the CSRF token is missing.' => 'ربما يكون رمز CSRF مفقودًا.',
     'Oh no' => 'عذرًا',
     'Page Expired' => 'انتهت صلاحية الصفحة',
     'Page Not Found' => 'الصفحة غير موجودة',
-    'Pagination Navigation' => '[TODO] Pagination Navigation',
+    'Pagination Navigation' => 'التنقل بين الصفحات',
     'Server Error' => 'خطأ في الخادم',
     'Something went wrong. Call the dev!!!' => 'حدث خطأ ما. يرجى الاتصال بالمطور!',
     'Sorry, the page you are looking for could not be found.' => 'عذرًا، تعذر العثور على الصفحة التي تبحث عنها.',

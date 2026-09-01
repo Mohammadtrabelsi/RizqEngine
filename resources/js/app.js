@@ -59,6 +59,24 @@ document.addEventListener('click', (event) => {
     trigger.setAttribute('aria-expanded', String(willShow));
 });
 
+// --- Sidebar submenu toggle ------------------------------------------------
+// Expands/collapses a collapsible sidebar section. The button carries
+// `.is-open` (drives the caret) and its sibling `.app-sidebar-sublist` carries
+// `.is-open` (drives visibility). Server-rendered state opens the section that
+// contains the current route.
+document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-toggle="submenu"]');
+    if (!trigger) return;
+    event.preventDefault();
+    const sublist = trigger.parentElement
+        ? trigger.parentElement.querySelector('.app-sidebar-sublist')
+        : null;
+    const willOpen = !trigger.classList.contains('is-open');
+    trigger.classList.toggle('is-open', willOpen);
+    trigger.setAttribute('aria-expanded', String(willOpen));
+    if (sublist) sublist.classList.toggle('is-open', willOpen);
+});
+
 // --- Price detail toggle (cart) --------------------------------------------
 // Replaces the former Alpine `x-data`/`x-show` toggle: clicking (or pressing
 // Enter/Space on) the net unit price reveals the price breakdown.
@@ -131,6 +149,32 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         closeModal(document.querySelector('.modal.show'));
         closeAllDropdowns(null);
+    }
+});
+
+// --- Submit-a-referenced-form buttons --------------------------------------
+// Replaces inline `onclick="…getElementById('id').submit()"` handlers. A
+// control carrying `data-submit-form="<form id>"` submits that hidden form
+// (used for the delete/confirm/convert row actions and the logout link).
+document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-submit-form]');
+    if (!trigger) return;
+    event.preventDefault();
+    const form = document.getElementById(trigger.getAttribute('data-submit-form'));
+    if (form) form.submit();
+});
+
+// --- Language switcher dropdown --------------------------------------------
+// Toggles the .is-open state on the language switcher and closes any other
+// open one. Replaces the inline <script> in the language-switcher partial.
+document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('.language-switcher__toggle');
+    document.querySelectorAll('.language-switcher.is-open').forEach((el) => {
+        if (!toggle || toggle.parentElement !== el) el.classList.remove('is-open');
+    });
+    if (toggle) {
+        const open = toggle.parentElement.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 });
 

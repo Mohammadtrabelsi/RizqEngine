@@ -11,6 +11,7 @@ use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\SalePayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -27,6 +28,85 @@ class SaleService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
     ) {}
+
+    /**
+     * Paginate sales, optionally filtered by reference or customer name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return Sale::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('customer_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Paginate the payments recorded against a single sale.
+     */
+    public function paginatePayments(int $saleId, ?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return SalePayment::query()
+            ->where('sale_id', $saleId)
+            ->when($search, fn ($q) => $q->where('reference', 'like', '%'.$search.'%'))
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function deletePayment(int $id): void
+    {
+        SalePayment::findOrFail($id)->delete();
+    }
+
+    public function findOrFail(int|string $id): Sale
+    {
+        return Sale::findOrFail($id);
+    }
+
+    /**
+     * The customer attached to a sale, for the detail view.
+     */
+    public function customerFor(Sale $sale): Customer
+    {
+        return Customer::findOrFail($sale->customer_id);
+    }
+
+    /**
+     * Reset the "sale" cart to the given sale's saved line items, ready for
+     * editing.
+     */
+    public function loadCart(Sale $sale): void
+    {
+        Cart::instance('sale')->destroy();
+        $cart = Cart::instance('sale');
+
+        foreach ($sale->saleDetails as $sale_detail) {
+            $cart->add([
+                'id' => $sale_detail->product_id,
+                'name' => $sale_detail->product_name,
+                'qty' => $sale_detail->quantity,
+                'price' => $sale_detail->price,
+                'weight' => 1,
+                'options' => [
+                    'product_discount' => $sale_detail->product_discount_amount,
+                    'product_discount_type' => $sale_detail->product_discount_type,
+                    'sub_total' => $sale_detail->sub_total,
+                    'code' => $sale_detail->product_code,
+                    'stock' => Product::findOrFail($sale_detail->product_id)->product_quantity,
+                    'product_tax' => $sale_detail->product_tax_amount,
+                    'unit_price' => $sale_detail->unit_price,
+                ],
+            ]);
+        }
+    }
+
+    public function delete(Sale $sale): void
+    {
+        $sale->delete();
+    }
 
     /**
      * Create a sale from the "sale" cart instance.

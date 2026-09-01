@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Commandes;
 
-use App\Models\Commande;
+use App\Services\CommandeService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class CommandeIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(CommandeService $commandes)
     {
-        $commandes = Commande::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('customer_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.commandes.commande-index', compact('commandes'));
+        return view('livewire.commandes.commande-index', [
+            'commandes' => $commandes->paginate($this->search),
+        ]);
     }
 }

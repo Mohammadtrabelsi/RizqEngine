@@ -72,6 +72,8 @@
         </div>
     </div>
 
+    @include('livewire.reports.partials.summary-cards', ['countLabel' => __('report.purchase-returns')])
+
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">

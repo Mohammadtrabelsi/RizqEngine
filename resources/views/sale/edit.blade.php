@@ -79,7 +79,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="paid_amount">{{ __('sales.amount_received') }} <span class="text-danger">*</span></label>
-                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" required value="{{ $sale->paid_amount }}" readonly>
+                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" data-money-mask data-money-allow-zero data-money-prefill required value="{{ $sale->paid_amount }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -103,22 +103,5 @@
 @endsection
 
 @push('page_scripts')
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#paid_amount').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-                allowZero: true,
-            });
-
-            $('#paid_amount').maskMoney('mask');
-
-            $('#sale-form').submit(function () {
-                var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
-                $('#paid_amount').val(paid_amount);
-            });
-        });
-    </script>
+    @include('includes.money-mask-js')
 @endpush

@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'expenses.body' => '[TODO] Expenses.body',
-    'expenses.title' => '[TODO] Expenses.title',
-    'products.body' => '[TODO] Products.body',
-    'products.title' => '[TODO] Products.title',
-    'purchases.body' => '[TODO] Purchases.body',
-    'purchases.title' => '[TODO] Purchases.title',
-    'reporting.body' => '[TODO] Reporting.body',
-    'reporting.title' => '[TODO] Reporting.title',
-    'roles.body' => '[TODO] Roles.body',
-    'roles.title' => '[TODO] Roles.title',
-    'sales.body' => '[TODO] Sales.body',
-    'sales.title' => '[TODO] Sales.title',
+    'expenses.body' => 'Gérer et suivre les dépenses quotidiennes et opérationnelles.',
+    'expenses.title' => 'Dépenses',
+    'products.body' => 'Gérer l\'inventaire, les produits et les détails des prix.',
+    'products.title' => 'Produits',
+    'purchases.body' => 'Gérer les achats, les bons de commande et les fournisseurs.',
+    'purchases.title' => 'Achats',
+    'reporting.body' => 'Afficher les rapports, les analyses financières et les statistiques.',
+    'reporting.title' => 'Rapports',
+    'roles.body' => 'Gérer les rôles et les autorisations des utilisateurs.',
+    'roles.title' => 'Rôles et autorisations',
+    'sales.body' => 'Suivre les ventes, les factures et les points de vente.',
+    'sales.title' => 'Ventes',
 ];

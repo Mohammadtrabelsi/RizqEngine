@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Sales;
 
-use App\Models\SalePayment;
+use App\Services\SaleService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,23 +29,19 @@ class SalePaymentIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, SaleService $sales): void
     {
         abort_if(Gate::denies('access_sale_payments'), 403);
 
-        SalePayment::findOrFail($id)->delete();
+        $sales->deletePayment($id);
 
         session()->flash('warning', trans('sale.sale-payment-deleted'));
     }
 
-    public function render()
+    public function render(SaleService $sales)
     {
-        $payments = SalePayment::query()
-            ->where('sale_id', $this->saleId)
-            ->when($this->search, fn ($q) => $q->where('reference', 'like', '%'.$this->search.'%'))
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.sales.sale-payment-index', compact('payments'));
+        return view('livewire.sales.sale-payment-index', [
+            'payments' => $sales->paginatePayments($this->saleId, $this->search),
+        ]);
     }
 }

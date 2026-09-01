@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,9 +18,17 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  */
 class Customer extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, RecordsActivity;
+    use HasFactory, InteractsWithMedia, RecordsActivity, TracksUserActions;
 
     protected $guarded = [];
+
+    /**
+     * URL of the customer's profile image, or an empty string when none is set.
+     */
+    public function getImageUrlAttribute(): string
+    {
+        return $this->getFirstMediaUrl('images');
+    }
 
     protected static function newFactory()
     {

@@ -6,6 +6,8 @@ use App\Exceptions\ConversionException;
 use App\Models\BonCommande;
 use App\Models\Commande;
 use App\Models\CommandeDetails;
+use App\Models\Customer;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -18,6 +20,39 @@ use Illuminate\Support\Facades\DB;
  */
 class CommandeService
 {
+    /**
+     * Paginate commandes, optionally filtered by reference or customer name.
+     */
+    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    {
+        return Commande::query()
+            ->when($search, function ($query) use ($search) {
+                $term = '%'.$search.'%';
+                $query->where('reference', 'like', $term)
+                    ->orWhere('customer_name', 'like', $term);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Load a commande with the relations needed by its detail view and return
+     * the attached customer.
+     *
+     * @return array{0: Commande, 1: Customer}
+     */
+    public function showData(Commande $commande): array
+    {
+        $commande->load(['commandeDetails.product', 'bonCommande.quotation', 'sale']);
+
+        return [$commande, Customer::findOrFail($commande->customer_id)];
+    }
+
+    public function delete(Commande $commande): void
+    {
+        $commande->delete();
+    }
+
     /**
      * @var string[]
      */

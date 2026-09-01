@@ -23,7 +23,7 @@
                         </ul>
                         <div class="btn-group">
                             @can('edit_adjustments')
-                                <a href="{{ route('adjustments.edit', $adjustment->id) }}" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('adjustments.edit', $adjustment->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_adjustments')
                                 <a href="{{ route('adjustments.show', $adjustment->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>

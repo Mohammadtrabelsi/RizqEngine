@@ -21,23 +21,12 @@
 </head>
 <body class="lp bg-slate-50 text-slate-900">
 
-    @php
-        $triangle = function ($size = 24, $stroke = 8) {
-            $h = round($size * 90 / 100);
-            return '<svg width="'.$size.'" height="'.$h.'" viewBox="0 0 100 90" aria-hidden="true" style="display:inline-block; vertical-align:middle;">'
-                .'<polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="#0f172a" stroke-width="'.$stroke.'" stroke-linejoin="round"></polygon>'
-                .'<polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="#0f172a" stroke-width="'.$stroke.'" stroke-linejoin="round"></polygon>'
-                .'<polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="#0f172a" stroke-width="'.$stroke.'" stroke-linejoin="round"></polygon>'
-                .'<polygon points="27.5,47.5 72.5,47.5 50,90" fill="#4f46e5" stroke="#4f46e5" stroke-width="'.$stroke.'" stroke-linejoin="round"></polygon>'
-                .'</svg>';
-        };
-    @endphp
 
     {{-- Navigation --}}
     <nav class="lp-nav bg-white border-bottom border-slate-200">
         <div class="lp-wrap lp-nav__inner">
             <a class="lp-brand font-weight-bold text-slate-900" href="{{ route('welcome') }}">
-                {!! $triangle(22, 8) !!}
+                <x-logo :size="22" :sw="8" stroke="#0f172a" accent="#4f46e5" />
                 Triangle POS
             </a>
             <div class="lp-nav__links">
@@ -54,7 +43,7 @@
     <header class="lp-wrap lp-hero">
         <div class="lp-hero__copy">
             <span class="lp-kicker text-indigo-600 font-weight-bold">Point of Sale &amp; Inventory Platform</span>
-            <h1 class="lp-title text-slate-900">Run your store with <span style="color:#4f46e5;">Triangle POS</span></h1>
+            <h1 class="lp-title text-slate-900">Run your store with <span class="lp-accent-text">Triangle POS</span></h1>
             <p class="lp-lead text-slate-600">A complete, production-ready POS and inventory platform. Manage products, stock, purchases, sales, returns, expenses and staff — with real-time reporting and fine-grained access control.</p>
             <div class="lp-hero__actions">
                 <a href="{{ route('login') }}" class="btn btn-primary btn-lg shadow-sm">{{ __('general.get-started') }}</a>
@@ -64,7 +53,7 @@
         <div class="lp-hero__media">
             <div class="lp-shot bg-white border rounded-lg shadow-sm">
                 <div class="d-flex flex-column align-items-center gap-2 p-4 text-center">
-                    {!! $triangle(48, 6) !!}
+                    <x-logo :size="48" :sw="6" stroke="#0f172a" accent="#4f46e5" />
                     <span class="fw-semibold text-indigo-600 fs-5 mt-2">Triangle POS Operations Control</span>
                     <span class="text-slate-500 small">Real-Time Till & Inventory Engine</span>
                 </div>
@@ -79,19 +68,9 @@
             <p class="text-slate-600">One unified system for every part of running a store, from stock room to checkout till.</p>
         </div>
         <div class="lp-features">
-            @php
-                $features = [
-                    ['title' => 'Products & inventory', 'desc' => 'Track stock levels, variants, barcodes and categories across every store location.'],
-                    ['title' => 'Purchases & suppliers', 'desc' => 'Manage supplier orders, incoming purchase batches and cost of goods seamlessly.'],
-                    ['title' => 'Sales & Till POS', 'desc' => 'A lightning-fast checkout counter flow optimized for high-volume store hours.'],
-                    ['title' => 'Returns & Refunds', 'desc' => 'Process customer returns, exchanges and store credit without breaking stock counts.'],
-                    ['title' => 'Expense Tracking', 'desc' => 'Log day-to-day store expenses and automatically connect them to net income.'],
-                    ['title' => 'People & Roles', 'desc' => 'Manage cashier, manager and owner accounts with granular permission sets.'],
-                ];
-            @endphp
             @foreach($features as $f)
                 <div class="card lp-feature bg-white border rounded-lg shadow-sm">
-                    <span class="lp-feature__icon rounded p-2" style="background:#eef2ff; width:fit-content;">{!! $triangle(22, 8) !!}</span>
+                    <span class="lp-feature__icon rounded p-2"><x-logo :size="22" :sw="8" stroke="#0f172a" accent="#4f46e5" /></span>
                     <h3 class="text-slate-900 mt-2">{{ $f['title'] }}</h3>
                     <p class="text-slate-600 mb-0 small">{{ $f['desc'] }}</p>
                 </div>
@@ -100,20 +79,13 @@
     </section>
 
     {{-- Role-based access band --}}
-    <section id="access" class="lp-band py-5" style="background:#f1f5f9; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0;">
+    <section id="access" class="lp-band lp-band--access py-5">
         <div class="lp-wrap lp-band__inner">
             <div class="lp-band__copy">
                 <h2 class="text-slate-900">{{ __('general.role-based-access') }}</h2>
                 <p class="text-slate-600">{{ __('general.role-based-access-description') }}</p>
             </div>
             <div class="lp-roles d-flex flex-column gap-2">
-                @php
-                    $roles = [
-                        ['name' => 'Owner', 'access' => 'Full administrative access & financial reporting'],
-                        ['name' => 'Manager', 'access' => 'Full inventory, purchasing & sales management'],
-                        ['name' => 'Cashier', 'access' => 'POS checkout till & returns processing only'],
-                    ];
-                @endphp
                 @foreach($roles as $r)
                     <div class="lp-role bg-white border rounded-md p-3 d-flex justify-content-between align-items-center shadow-sm">
                         <span class="lp-role__name font-weight-bold text-slate-900">{{ $r['name'] }}</span>
@@ -130,7 +102,7 @@
             <div class="lp-hero__media">
                 <div class="lp-shot bg-white border rounded-lg shadow-sm">
                     <div class="d-flex flex-column align-items-center gap-2 p-4 text-center">
-                        <i class="bi bi-graph-up-arrow fs-1" style="color:#4f46e5;"></i>
+                        <i class="bi bi-graph-up-arrow fs-1 lp-accent-text"></i>
                         <span class="fw-semibold text-indigo-600 fs-5">Live Profit &amp; Loss Analytics</span>
                         <span class="text-slate-500 small">Instant Margin &amp; Revenue Reports</span>
                     </div>
@@ -144,7 +116,7 @@
     </section>
 
     {{-- CTA --}}
-    <section class="lp-wrap lp-section" style="padding-top:0">
+    <section class="lp-wrap lp-section lp-section--flush">
         <div class="lp-cta bg-white border rounded-lg p-4 p-md-5 shadow-sm">
             <div>
                 <h2 class="text-slate-900">{{ __('general.ready-to-run-your-store') }}</h2>

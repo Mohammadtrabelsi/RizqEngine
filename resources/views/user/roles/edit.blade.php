@@ -11,11 +11,6 @@
 @endsection
 
 @push('page_css')
-    <style>
-        .custom-control-label {
-            cursor: pointer;
-        }
-    </style>
 @endpush
 
 @section('content')

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Sale;
+use App\Models\SalePayment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -51,7 +52,7 @@ class SaleDatabaseSeeder extends Seeder
 
             $dueAmount = $totalAmount - $paidAmount;
 
-            Sale::create([
+            $sale = Sale::create([
                 'date' => $date->toDateString(),
                 'customer_id' => $customer->id,
                 'customer_name' => $customer->customer_name,
@@ -68,6 +69,19 @@ class SaleDatabaseSeeder extends Seeder
                 'payment_method' => $paymentMethods[array_rand($paymentMethods)],
                 'note' => 'Seeded sale for testing purposes.',
             ]);
+
+            if ($paidAmount > 0) {
+                SalePayment::create([
+                    'sale_id' => $sale->id,
+                    // The amount setter scales to cents; the stored paid amount
+                    // is already in cents, so scale it back to major units here.
+                    'amount' => $paidAmount / 100,
+                    'date' => $date->toDateString(),
+                    'reference' => 'INV/'.str_pad((string) $sale->id, 6, '0', STR_PAD_LEFT),
+                    'payment_method' => $sale->payment_method,
+                    'note' => 'Seeded sale payment.',
+                ]);
+            }
         }
     }
 }

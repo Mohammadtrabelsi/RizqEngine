@@ -41,7 +41,7 @@
                                     <th>{{ __('product.code') }}</th>
                                     <th>{{ __('product.name') }}</th>
                                     <th class="text-end">{{ __('stockexit.quantity_out') }}</th>
-                                    <th style="width: 180px;">{{ __('stockexit.quantity_received') }}</th>
+                                    <th class="img-w-180">{{ __('stockexit.quantity_received') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

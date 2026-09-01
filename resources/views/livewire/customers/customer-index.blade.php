@@ -14,37 +14,45 @@
         </div>
     </div>
 
-    <div class="row align-items-end">
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('customer.city') }}</label>
-            <select wire:model.live="city" class="form-select">
-                <option value="">{{ __('app.all') }}</option>
-                @foreach($cities as $c)
-                    <option value="{{ $c }}">{{ $c }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('customer.country') }}</label>
-            <select wire:model.live="country" class="form-select">
-                <option value="">{{ __('app.all') }}</option>
-                @foreach($countries as $c)
-                    <option value="{{ $c }}">{{ $c }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('customer.tax_identification_number') }}</label>
-            <select wire:model.live="hasTaxId" class="form-select">
-                <option value="">{{ __('app.all') }}</option>
-                <option value="yes">{{ __('app.yes') }}</option>
-                <option value="no">{{ __('app.no') }}</option>
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary w-100">
-                <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
-            </button>
+    {{-- Filters container --}}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h6 class="card-title text-muted mb-3">
+                <i class="bi bi-funnel"></i> {{ __('app.filters') }}
+            </h6>
+            <div class="row align-items-end">
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('customer.city') }}</label>
+                    <select wire:model.live="city" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($cities as $c)
+                            <option value="{{ $c }}">{{ $c }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('customer.country') }}</label>
+                    <select wire:model.live="country" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($countries as $c)
+                            <option value="{{ $c }}">{{ $c }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('customer.tax_identification_number') }}</label>
+                    <select wire:model.live="hasTaxId" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        <option value="yes">{{ __('app.yes') }}</option>
+                        <option value="no">{{ __('app.no') }}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -53,13 +61,12 @@
         @forelse($customers as $customer)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="customer-{{ $customer->id }}">
                 <div class="card h-100">
-                    <div class="position-relative overflow-hidden rounded-top" style="height: 160px; background: #f8f9fa;">
-                        @php($customerImage = $customer->getFirstMediaUrl('images'))
-                        @if ($customerImage)
-                            <img src="{{ $customerImage }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $customer->customer_name }}">
+                    <div class="position-relative overflow-hidden rounded-top media-thumb">
+                        @if ($customer->image_url)
+                            <img src="{{ $customer->image_url }}" class="w-100 h-100 thumb-cover" alt="{{ $customer->customer_name }}">
                         @else
                             <div class="d-flex align-items-center justify-content-center w-100 h-100 text-muted">
-                                <i class="bi bi-person-circle" style="font-size: 3.5rem;"></i>
+                                <i class="bi bi-person-circle thumb-placeholder-icon"></i>
                             </div>
                         @endif
                     </div>
@@ -74,7 +81,7 @@
                         </ul>
                         <div class="btn-group">
                             @can('edit_customers')
-                                <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_customers')
                                 <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>

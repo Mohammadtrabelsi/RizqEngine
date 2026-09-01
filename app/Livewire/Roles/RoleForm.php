@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Roles;
 
+use App\Services\RoleService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleForm extends Component
@@ -17,20 +17,20 @@ class RoleForm extends Component
 
     public bool $selectAll = false;
 
-    public function mount(?Role $role = null): void
+    public function mount(?Role $role = null, ?RoleService $roles = null): void
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
         if ($role && $role->exists) {
             $this->roleId = $role->id;
             $this->name = (string) $role->name;
-            $this->permissions = $role->permissions->pluck('name')->all();
+            $this->permissions = ($roles ?? app(RoleService::class))->permissionNames($role);
         }
     }
 
-    public function updatedSelectAll($value): void
+    public function updatedSelectAll($value, RoleService $roles): void
     {
-        $this->permissions = $value ? Permission::pluck('name')->all() : [];
+        $this->permissions = $value ? $roles->allPermissionNames() : [];
     }
 
     protected function rules(): array
@@ -41,21 +41,18 @@ class RoleForm extends Component
         ];
     }
 
-    public function save()
+    public function save(RoleService $roles)
     {
         abort_if(Gate::denies('access_user_management'), 403);
 
         $this->validate();
 
         if ($this->roleId) {
-            $role = Role::findOrFail($this->roleId);
-            $role->update(['name' => $this->name]);
-            $role->syncPermissions($this->permissions);
+            $roles->update($this->roleId, $this->name, $this->permissions);
 
             session()->flash('success', trans('user.role-updated'));
         } else {
-            $role = Role::create(['name' => $this->name]);
-            $role->givePermissionTo($this->permissions);
+            $roles->create($this->name, $this->permissions);
 
             session()->flash('success', trans('user.role-created'));
         }

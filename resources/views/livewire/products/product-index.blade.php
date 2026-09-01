@@ -1,4 +1,23 @@
 <div>
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session()->has('info'))
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session()->has('warning'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('warning') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="row align-items-center">
         <div class="col-12 col-md-4 mb-3">
             <a href="{{ route('products.create') }}" class="btn btn-primary">
@@ -10,45 +29,79 @@
         </div>
     </div>
 
-    <div class="row align-items-end">
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
-            <select wire:model.live="categoryId" class="form-select" aria-label="Filter by category">
-                <option value="">{{ __('app.all') }}</option>
-                @foreach($this->categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-12 col-md-3 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('product.supplier') }}</label>
-            <select wire:model.live="supplierId" class="form-select" aria-label="Filter by supplier">
-                <option value="">{{ __('app.all') }}</option>
-                @foreach($this->suppliers as $supplier)
-                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-12 col-md-2 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('product.stock') }}</label>
-            <select wire:model.live="stockStatus" class="form-select" aria-label="Filter by stock status">
-                @foreach($this->stockStatusOptions as $value => $label)
-                    <option value="{{ $value }}">{{ $label }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-6 col-md-2 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('product.min_price') }}</label>
-            <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="form-control" placeholder="0">
-        </div>
-        <div class="col-6 col-md-2 mb-3">
-            <label class="form-label small text-muted mb-1">{{ __('product.max_price') }}</label>
-            <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="form-control" placeholder="∞">
-        </div>
-        <div class="col-12 mb-3">
-            <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
-            </button>
+    {{-- Expired stock manager --}}
+    @can('edit_products')
+        @if($this->expiredInStockCount > 0)
+            <div class="alert alert-warning d-flex flex-wrap align-items-center justify-content-between gap-2" role="alert">
+                <span>
+                    <i class="bi bi-exclamation-octagon-fill"></i>
+                    {{ trans_choice('product.expired-in-stock-notice', $this->expiredInStockCount, ['count' => $this->expiredInStockCount]) }}
+                </span>
+                <button type="button"
+                        class="btn btn-warning btn-sm"
+                        wire:click="markExpiredOutOfStock"
+                        wire:confirm="{{ __('app.are_you_sure') }}">
+                    <i class="bi bi-box-seam"></i> {{ __('product.mark_expired_out_of_stock') }}
+                </button>
+            </div>
+        @endif
+    @endcan
+
+    {{-- Filters container --}}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h6 class="card-title text-muted mb-3">
+                <i class="bi bi-funnel"></i> {{ __('app.filters') }}
+            </h6>
+            <div class="row align-items-end">
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
+                    <select wire:model.live="categoryId" class="form-select" aria-label="Filter by category">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($this->categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('product.supplier') }}</label>
+                    <select wire:model.live="supplierId" class="form-select" aria-label="Filter by supplier">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($this->suppliers as $supplier)
+                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('product.stock') }}</label>
+                    <select wire:model.live="stockStatus" class="form-select" aria-label="Filter by stock status">
+                        @foreach($this->stockStatusOptions as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('product.expiry') }}</label>
+                    <select wire:model.live="expiry" class="form-select" aria-label="Filter by expiry">
+                        @foreach($this->expiryOptions as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('product.min_price') }}</label>
+                    <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="form-control" placeholder="0">
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('product.max_price') }}</label>
+                    <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="form-control" placeholder="∞">
+                </div>
+                <div class="col-12 col-md-6 mb-3 d-flex align-items-end">
+                    <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -56,17 +109,21 @@
     <div class="row">
         @forelse($products as $product)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="product-{{ $product->id }}">
-                <div class="card h-100 border-0 shadow-sm transition-all" style="transition: all 0.3s ease;">
+                <div class="card h-100 border-0 shadow-sm card-lift">
                     <!-- Image Section -->
-                    <div class="position-relative overflow-hidden" style="height: 180px; background: #f8f9fa;">
+                    <div class="position-relative overflow-hidden media-thumb media-thumb--lg">
                         <img src="{{ $product->getFirstMediaUrl('images', 'thumb') }}"
-                             class="w-100 h-100" style="object-fit: cover;" alt="{{ $product->product_name }}">
+                             class="w-100 h-100 thumb-cover" alt="{{ $product->product_name }}">
                         <!-- Stock Status Badge -->
-                        <div class="position-absolute top-0 end-0 m-2">
-                            @php($status = $product->stock_status)
-                            <span class="badge bg-{{ $status->color() }}">
-                                <i class="bi bi-{{ $status->icon() }}"></i> {{ $status->label() }}
+                        <div class="position-absolute top-0 end-0 m-2 text-end">
+                            <span class="badge bg-{{ $product->stock_status->color() }}">
+                                <i class="bi bi-{{ $product->stock_status->icon() }}"></i> {{ $product->stock_status->label() }}
                             </span>
+                            @if($product->is_expired)
+                                <span class="badge bg-danger d-block mt-1">
+                                    <i class="bi bi-calendar-x"></i> {{ __('product.expired') }}
+                                </span>
+                            @endif
                         </div>
                     </div>
 
@@ -128,12 +185,20 @@
                                 <small class="text-muted">Alert Level</small>
                                 <small class="fw-bold">{{ $product->product_stock_alert }}</small>
                             </div>
+                            @if($product->expiry_date)
+                                <div class="d-flex justify-content-between mt-1">
+                                    <small class="text-muted">{{ __('product.expiry_date') }}</small>
+                                    <small class="fw-bold {{ $product->is_expired ? 'text-danger' : '' }}">
+                                        {{ $product->expiry_date->format('Y-m-d') }}
+                                    </small>
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Action Buttons -->
                         <div class="btn-group w-100 mt-auto" role="group">
                             @can('edit_products')
-                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-info btn-sm" title="Edit">
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-primary btn-sm" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             @endcan
@@ -155,7 +220,7 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center py-5">
-                        <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                        <i class="bi bi-inbox empty-state-icon"></i>
                         <p class="text-muted mt-3 mb-0">{{ __('product.no_products_found') }}</p>
                     </div>
                 </div>
@@ -166,14 +231,4 @@
     <div class="d-flex justify-content-center mt-4">
         {{ $products->links('pagination::bootstrap-5') }}
     </div>
-
-    <style>
-        .transition-all {
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
 </div>

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\BonCommandes;
 
-use App\Models\BonCommande;
+use App\Services\BonCommandeService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -27,17 +27,10 @@ class BonCommandeIndex extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(BonCommandeService $bonCommandes)
     {
-        $bonCommandes = BonCommande::query()
-            ->when($this->search, function ($query) {
-                $term = '%'.$this->search.'%';
-                $query->where('reference', 'like', $term)
-                    ->orWhere('customer_name', 'like', $term);
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.boncommandes.bon-commande-index', compact('bonCommandes'));
+        return view('livewire.boncommandes.bon-commande-index', [
+            'bonCommandes' => $bonCommandes->paginate($this->search),
+        ]);
     }
 }

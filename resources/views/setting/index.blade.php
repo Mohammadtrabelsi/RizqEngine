@@ -61,7 +61,7 @@
                                     <div class="form-group">
                                         <label class="d-block">Current Logo</label>
                                         @if($settings->client_logo)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($settings->client_logo) }}" alt="Client Logo" style="max-height: 48px; max-width: 160px;">
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($settings->client_logo) }}" alt="Client Logo" class="logo-preview">
                                         @else
                                             <span class="text-muted">No logo uploaded</span>
                                         @endif

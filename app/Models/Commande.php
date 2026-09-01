@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\GeneratesDocumentReference;
 use App\Traits\RecordsActivity;
+use App\Traits\TracksUserActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,7 +24,7 @@ use Illuminate\Support\Carbon;
  */
 class Commande extends Model
 {
-    use GeneratesDocumentReference, HasFactory, RecordsActivity;
+    use GeneratesDocumentReference, HasFactory, RecordsActivity, TracksUserActions;
 
     public const STATUS_PENDING = 'pending';
 
@@ -107,5 +108,17 @@ class Commande extends Model
     public function getDiscountAmountAttribute($value)
     {
         return $value / 100;
+    }
+
+    /**
+     * Bootstrap badge class representing this commande's status.
+     */
+    public function statusBadgeClass(): string
+    {
+        return [
+            self::STATUS_PENDING => 'badge-info',
+            self::STATUS_CONFIRMED => 'badge-primary',
+            self::STATUS_INVOICED => 'badge-success',
+        ][$this->status] ?? 'badge-secondary';
     }
 }

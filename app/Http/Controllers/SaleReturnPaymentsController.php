@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SaleReturn;
 use App\Models\SaleReturnPayment;
 use App\Services\SaleReturnService;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ class SaleReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        $sale_return = SaleReturn::findOrFail($sale_return_id);
+        $sale_return = $this->saleReturns->findOrFail($sale_return_id);
 
         return view('salesreturn.payments.index', compact('sale_return'));
 
@@ -27,7 +26,7 @@ class SaleReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        $sale_return = SaleReturn::findOrFail($sale_return_id);
+        $sale_return = $this->saleReturns->findOrFail($sale_return_id);
 
         return view('salesreturn.payments.create', compact('sale_return'));
     }
@@ -56,7 +55,7 @@ class SaleReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        $sale_return = SaleReturn::findOrFail($sale_return_id);
+        $sale_return = $this->saleReturns->findOrFail($sale_return_id);
 
         return view('salesreturn.payments.edit', compact('saleReturnPayment', 'sale_return'));
     }
@@ -85,7 +84,7 @@ class SaleReturnPaymentsController extends Controller
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        $saleReturnPayment->delete();
+        $this->saleReturns->deletePayment($saleReturnPayment->id);
 
         session()->flash('warning', trans('salesreturn.sale-return-payment-deleted'));
 

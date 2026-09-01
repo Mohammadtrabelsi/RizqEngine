@@ -2,7 +2,7 @@
 
 namespace App\Livewire\SaleReturns;
 
-use App\Models\SaleReturnPayment;
+use App\Services\SaleReturnService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,23 +29,19 @@ class SaleReturnPaymentIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, SaleReturnService $saleReturns): void
     {
         abort_if(Gate::denies('access_sale_return_payments'), 403);
 
-        SaleReturnPayment::findOrFail($id)->delete();
+        $saleReturns->deletePayment($id);
 
         session()->flash('warning', trans('salesreturn.sale-return-payment-deleted'));
     }
 
-    public function render()
+    public function render(SaleReturnService $saleReturns)
     {
-        $payments = SaleReturnPayment::query()
-            ->where('sale_return_id', $this->saleReturnId)
-            ->when($this->search, fn ($q) => $q->where('reference', 'like', '%'.$this->search.'%'))
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.sale-returns.sale-return-payment-index', compact('payments'));
+        return view('livewire.sale-returns.sale-return-payment-index', [
+            'payments' => $saleReturns->paginatePayments($this->saleReturnId, $this->search),
+        ]);
     }
 }

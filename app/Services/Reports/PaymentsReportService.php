@@ -39,6 +39,38 @@ class PaymentsReportService
     }
 
     /**
+     * Aggregate totals for the payments matching the given filters. Amounts are
+     * stored as integer cents, so the summed value is scaled back to major
+     * units. Returns zeroed totals for an unknown type.
+     *
+     * @return array{count: int, total_amount: float}
+     */
+    public function summary(
+        ?string $type,
+        ?string $startDate,
+        ?string $endDate,
+        ?string $paymentMethod
+    ): array {
+        $query = $this->queryFor($type);
+
+        if (! $query) {
+            return ['count' => 0, 'total_amount' => 0.0];
+        }
+
+        $totals = $query
+            ->when($startDate, fn ($q) => $q->whereDate('date', '>=', $startDate))
+            ->when($endDate, fn ($q) => $q->whereDate('date', '<=', $endDate))
+            ->when($paymentMethod, fn ($q) => $q->where('payment_method', $paymentMethod))
+            ->selectRaw('COUNT(*) as count, COALESCE(SUM(amount), 0) as total_amount')
+            ->first();
+
+        return [
+            'count' => (int) $totals->count,
+            'total_amount' => $totals->total_amount / 100,
+        ];
+    }
+
+    /**
      * Base query builder for the requested payment type, eager loading its
      * parent document. Returns null when the type is not recognised.
      */
