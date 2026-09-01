@@ -17,13 +17,13 @@ class StatusPill extends Component
 
     public function __construct(string $status = 'draft')
     {
-        [$this->classes, $this->label] = $this->resolve($status);
+        [$this->classes, $this->label] = $this->attributesForStatus($status);
     }
 
     /**
      * @return array{0: string, 1: string} [utility classes, translated label]
      */
-    private function resolve(string $status): array
+    private function attributesForStatus(string $status): array
     {
         $map = [
             'paid' => ['bg-ok-bg text-ok', __('status.paid')],

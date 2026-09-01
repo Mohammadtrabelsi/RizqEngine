@@ -107,39 +107,39 @@ class Dashboard extends Component
     }
 
     #[Computed]
-    public function salesToday(DashboardService $dashboard): float
+    public function salesToday(): float
     {
-        return $dashboard->salesTotal($this->range());
+        return $this->dashboard()->salesTotal($this->range());
     }
 
     #[Computed]
-    public function salesCount(DashboardService $dashboard): int
+    public function salesCount(): int
     {
-        return $dashboard->salesCount($this->range());
+        return $this->dashboard()->salesCount($this->range());
     }
 
     #[Computed]
-    public function txCount(DashboardService $dashboard): int
+    public function txCount(): int
     {
-        return $dashboard->transactionCount($this->range());
+        return $this->dashboard()->transactionCount($this->range());
     }
 
     #[Computed]
-    public function lowStockCount(DashboardService $dashboard): int
+    public function lowStockCount(): int
     {
-        return $dashboard->lowStockCount();
+        return $this->dashboard()->lowStockCount();
     }
 
     #[Computed]
-    public function expensesToday(DashboardService $dashboard): float
+    public function expensesToday(): float
     {
-        return $dashboard->expensesTotal($this->range());
+        return $this->dashboard()->expensesTotal($this->range());
     }
 
     #[Computed]
-    public function expenseCount(DashboardService $dashboard): int
+    public function expenseCount(): int
     {
-        return $dashboard->expenseCount($this->range());
+        return $this->dashboard()->expenseCount($this->range());
     }
 
     #[Computed]
@@ -149,27 +149,27 @@ class Dashboard extends Component
     }
 
     #[Computed]
-    public function pendingOrders(DashboardService $dashboard): int
+    public function pendingOrders(): int
     {
-        return $dashboard->pendingOrders();
+        return $this->dashboard()->pendingOrders();
     }
 
     #[Computed]
-    public function unreadCount(DashboardService $dashboard): int
+    public function unreadCount(): int
     {
-        return $dashboard->unreadNotificationCount();
+        return $this->dashboard()->unreadNotificationCount();
     }
 
     #[Computed]
-    public function salesDeltaLabel(DashboardService $dashboard): string
+    public function salesDeltaLabel(): string
     {
-        return $this->deltaLabel($this->salesToday, $dashboard->salesTotal($this->previousRange()));
+        return $this->deltaLabel($this->salesToday, $this->dashboard()->salesTotal($this->previousRange()));
     }
 
     #[Computed]
-    public function expensesDeltaLabel(DashboardService $dashboard): string
+    public function expensesDeltaLabel(): string
     {
-        return $this->deltaLabel($this->expensesToday, $dashboard->expensesTotal($this->previousRange()));
+        return $this->deltaLabel($this->expensesToday, $this->dashboard()->expensesTotal($this->previousRange()));
     }
 
     protected function deltaLabel(float $current, float $previous): string
@@ -184,6 +184,11 @@ class Dashboard extends Component
         return $sign.number_format($pct, 1).'%';
     }
 
+    protected function dashboard(): DashboardService
+    {
+        return app(DashboardService::class);
+    }
+
     /**
      * 14 stacked bar pairs (revenue on top, COGS below), pre-scaled to pixels
      * for the pure-CSS chart.
@@ -191,9 +196,9 @@ class Dashboard extends Component
      * @return Collection<int, array{label: string, revenue: float, cogs: float, revenue_px: int, cogs_px: int}>
      */
     #[Computed]
-    public function series(DashboardService $dashboard): Collection
+    public function series(): Collection
     {
-        return $dashboard->series();
+        return $this->dashboard()->series();
     }
 
     #[Computed]
@@ -221,21 +226,21 @@ class Dashboard extends Component
     }
 
     #[Computed]
-    public function receivables(DashboardService $dashboard): float
+    public function receivables(): float
     {
-        return $dashboard->receivables();
+        return $this->dashboard()->receivables();
     }
 
     #[Computed]
-    public function debtorCount(DashboardService $dashboard): int
+    public function debtorCount(): int
     {
-        return $dashboard->debtorCount();
+        return $this->dashboard()->debtorCount();
     }
 
     #[Computed]
-    public function supplierDebt(DashboardService $dashboard): float
+    public function supplierDebt(): float
     {
-        return $dashboard->supplierDebt();
+        return $this->dashboard()->supplierDebt();
     }
 
     #[Computed]
@@ -248,18 +253,18 @@ class Dashboard extends Component
      * @return Collection<int, array{reference: string, customer: string, status: string, total: float}>
      */
     #[Computed]
-    public function recentTransactions(DashboardService $dashboard): Collection
+    public function recentTransactions(): Collection
     {
-        return $dashboard->recentTransactions();
+        return $this->dashboard()->recentTransactions();
     }
 
     /**
      * @return Collection<int, array{name: string, reorder_point: int, stock: int}>
      */
     #[Computed]
-    public function restockQueue(DashboardService $dashboard): Collection
+    public function restockQueue(): Collection
     {
-        return $dashboard->restockQueue();
+        return $this->dashboard()->restockQueue();
     }
 
     public function money(float|int $value): string
