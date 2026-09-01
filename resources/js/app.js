@@ -164,6 +164,20 @@ document.addEventListener('click', (event) => {
     if (form) form.submit();
 });
 
+// --- Language switcher dropdown --------------------------------------------
+// Toggles the .is-open state on the language switcher and closes any other
+// open one. Replaces the inline <script> in the language-switcher partial.
+document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('.language-switcher__toggle');
+    document.querySelectorAll('.language-switcher.is-open').forEach((el) => {
+        if (!toggle || toggle.parentElement !== el) el.classList.remove('is-open');
+    });
+    if (toggle) {
+        const open = toggle.parentElement.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+});
+
 // --- Dismissible alerts ----------------------------------------------------
 document.addEventListener('click', (event) => {
     const closer = event.target.closest('[data-dismiss="alert"]');

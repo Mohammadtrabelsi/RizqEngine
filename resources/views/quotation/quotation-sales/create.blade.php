@@ -86,9 +86,9 @@
                                     <div class="form-group">
                                         <label for="paid_amount">{{ __('sales.paid_amount') }} <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required>
+                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" data-money-mask data-money-allow-zero required>
                                             <div class="input-group-append">
-                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
+                                                <button id="getTotalAmount" class="btn btn-primary" type="button" data-money-fill="#paid_amount" data-money-value="{{ Cart::instance('sale')->total() }}">
                                                     <i class="bi bi-check-square"></i>
                                                 </button>
                                             </div>
@@ -118,24 +118,5 @@
 @endsection
 
 @push('page_scripts')
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#paid_amount').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-                allowZero: true,
-            });
-
-            $('#getTotalAmount').click(function () {
-                $('#paid_amount').maskMoney('mask', {{ Cart::instance('sale')->total() }});
-            });
-
-            $('#sale-form').submit(function () {
-                var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
-                $('#paid_amount').val(paid_amount);
-            });
-        });
-    </script>
+    @include('includes.money-mask-js')
 @endpush

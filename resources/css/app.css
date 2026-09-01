@@ -2501,3 +2501,33 @@ hr { display: none; }
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
 }
+
+/* -------------------------------------------------------------------------
+ * Language switcher — moved out of the inline <style> in
+ * includes/language-switcher.blade.php.
+ * ---------------------------------------------------------------------- */
+.language-switcher { position: relative; display: inline-block; font-size: 14px; text-align: left; }
+.language-switcher__toggle {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    background: transparent; border: 1px solid rgba(128,128,128,.35);
+    border-radius: 6px; padding: 6px 10px; color: inherit; line-height: 1; font: inherit;
+}
+.language-switcher__toggle:hover { border-color: rgba(128,128,128,.6); }
+.language-switcher__globe { width: 16px; height: 16px; flex: 0 0 auto; }
+.language-switcher__current { font-weight: 600; }
+.language-switcher__caret { border: solid currentColor; border-width: 0 1.5px 1.5px 0;
+    display: inline-block; padding: 2.5px; transform: rotate(45deg); margin-left: 2px; opacity: .7; }
+.language-switcher__menu {
+    position: absolute; right: 0; top: calc(100% + 6px); min-width: 160px; margin: 0;
+    padding: 6px 0; list-style: none; background: #fff; color: #23282c;
+    border: 1px solid rgba(0,0,0,.12); border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.18); z-index: 1050; display: none;
+}
+.language-switcher.is-open .language-switcher__menu { display: block; }
+.language-switcher__item {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 8px 14px; color: #23282c; text-decoration: none; white-space: nowrap;
+}
+.language-switcher__item:hover { background: rgba(0,0,0,.06); color: #23282c; text-decoration: none; }
+.language-switcher__item.is-active { font-weight: 600; }
+.language-switcher__check { color: #2eb85c; font-weight: 700; }

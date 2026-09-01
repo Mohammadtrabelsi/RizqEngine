@@ -51,9 +51,9 @@
                                     <div class="form-group">
                                         <label for="amount">{{ __('sales.amount') }} <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input id="amount" type="text" class="form-control" name="amount" required value="{{ old('amount') }}">
+                                            <input id="amount" type="text" class="form-control" name="amount" data-money-mask required value="{{ old('amount') }}">
                                             <div class="input-group-append">
-                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
+                                                <button id="getTotalAmount" class="btn btn-primary" type="button" data-money-fill="#amount" data-money-value="{{ $sale->due_amount }}">
                                                     <i class="bi bi-check-square"></i>
                                                 </button>
                                             </div>
@@ -91,24 +91,6 @@
 @endsection
 
 @push('page_scripts')
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#amount').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
-
-            $('#getTotalAmount').click(function () {
-                $('#amount').maskMoney('mask', {{ $sale->due_amount }});
-            });
-
-            $('#payment-form').submit(function () {
-                var amount = $('#amount').maskMoney('unmasked')[0];
-                $('#amount').val(amount);
-            });
-        });
-    </script>
+    @include('includes.money-mask-js')
 @endpush
 

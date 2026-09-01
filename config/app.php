@@ -167,6 +167,13 @@ return [
 
     'available_locales' => ['en', 'ar', 'fr'],
 
+    // Display names for the language switcher, keyed by locale code.
+    'locale_names' => [
+        'en' => 'English',
+        'fr' => 'Français',
+        'ar' => 'العربية',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
