@@ -92,19 +92,21 @@ class SupplierService
         return Supplier::findOrFail($id);
     }
 
-    public function create(array $data, $image = null): Supplier
+    public function create(array $data, $image = null, $document = null): Supplier
     {
         $supplier = Supplier::create($data);
         $this->syncImage($supplier, $image);
+        $this->syncDocument($supplier, $document);
 
         return $supplier;
     }
 
-    public function update(int $id, array $data, $image = null): Supplier
+    public function update(int $id, array $data, $image = null, $document = null): Supplier
     {
         $supplier = Supplier::findOrFail($id);
         $supplier->update($data);
         $this->syncImage($supplier, $image);
+        $this->syncDocument($supplier, $document);
 
         return $supplier;
     }
@@ -130,5 +132,24 @@ class SupplierService
         $supplier->addMedia($image->getRealPath())
             ->usingFileName($image->getClientOriginalName())
             ->toMediaCollection('images');
+    }
+
+    /**
+     * Replace the supplier's description document with the freshly uploaded
+     * file, if any.
+     */
+    protected function syncDocument(Supplier $supplier, $document): void
+    {
+        if (! $document) {
+            return;
+        }
+
+        if ($supplier->getFirstMedia('documents')) {
+            $supplier->getFirstMedia('documents')->delete();
+        }
+
+        $supplier->addMedia($document->getRealPath())
+            ->usingFileName($document->getClientOriginalName())
+            ->toMediaCollection('documents');
     }
 }
