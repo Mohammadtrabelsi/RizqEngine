@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\DB;
 class StockService
 {
     /**
+     * Minimum on-hand quantity every product must retain. Stock-out and
+     * absolute-set operations may never drive a product below this floor.
+     */
+    public const MINIMUM_STOCK = 10;
+
+    /**
      * Add stock to a product and record an "in" movement.
      */
     public function stockIn(Product $product, int $quantity, ?string $note = null, ?string $referenceType = 'Manual', ?int $referenceId = null): Product
@@ -47,9 +53,12 @@ class StockService
         return DB::transaction(function () use ($product, $quantity, $note, $referenceType, $referenceId) {
             $product = Product::lockForUpdate()->findOrFail($product->id);
 
-            if ($product->product_quantity < $quantity) {
+            if ($product->product_quantity - $quantity < self::MINIMUM_STOCK) {
+                $available = max(0, $product->product_quantity - self::MINIMUM_STOCK);
+
                 throw new InsufficientStockException(
-                    "Cannot remove {$quantity} unit(s) from \"{$product->product_name}\"; only {$product->product_quantity} in stock."
+                    "Cannot remove {$quantity} unit(s) from \"{$product->product_name}\"; ".
+                    "stock may not drop below ".self::MINIMUM_STOCK." (only {$available} removable, {$product->product_quantity} in stock)."
                 );
             }
 
@@ -66,8 +75,10 @@ class StockService
      */
     public function setQuantity(Product $product, int $newQuantity, ?string $note = null): Product
     {
-        if ($newQuantity < 0) {
-            throw new InsufficientStockException('Stock quantity cannot be negative.');
+        if ($newQuantity < self::MINIMUM_STOCK) {
+            throw new InsufficientStockException(
+                'Stock quantity may not be set below the minimum of '.self::MINIMUM_STOCK.'.'
+            );
         }
 
         return DB::transaction(function () use ($product, $newQuantity, $note) {
