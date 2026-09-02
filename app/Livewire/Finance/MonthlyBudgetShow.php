@@ -4,6 +4,7 @@ namespace App\Livewire\Finance;
 
 use App\Models\FixedPayment;
 use App\Models\MonthlyBudget;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -79,7 +80,7 @@ class MonthlyBudgetShow extends Component
         $payment = FixedPayment::where('monthly_budget_id', $this->budget->id)->findOrFail($id);
 
         if ($payment->invoice_path) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($payment->invoice_path);
+            Storage::disk('public')->delete($payment->invoice_path);
         }
 
         $payment->delete();

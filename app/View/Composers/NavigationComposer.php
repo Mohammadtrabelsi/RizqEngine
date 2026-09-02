@@ -8,6 +8,7 @@ use Illuminate\View\View;
 /**
  * Supplies the primary/secondary navigation their "active section" flags and
  * the store settings, so the sidebar and secondary-menu Blade views carry no
+ *
  * @php routing logic.
  */
 class NavigationComposer

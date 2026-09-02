@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\HomeController;
 use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Owns every query behind the classic home dashboard and its AJAX charts,
- * keeping the reporting SQL out of {@see \App\Http\Controllers\HomeController}.
+ * keeping the reporting SQL out of {@see HomeController}.
  *
  * Monetary columns are stored as integer cents and converted to major units
  * before leaving this service.
@@ -29,7 +30,7 @@ class HomeReportService
      * Assemble the full home-dashboard view payload for the given range.
      *
      * @param  string  $fromDate  Y-m-d
-     * @param  string  $toDate    Y-m-d
+     * @param  string  $toDate  Y-m-d
      * @return array<string, mixed>
      */
     public function dashboardData(string $fromDate, string $toDate): array
