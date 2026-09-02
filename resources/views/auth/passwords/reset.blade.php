@@ -24,7 +24,7 @@
         </a>
 
         <div class="auth-card">
-            <div class="login-brand-lead">{{ __('login.welcome') }}</div>
+            <div class="login-brand-lead text-white">{{ __('login.welcome') }}</div>
             <div class="auth-subtitle">{{ __('login.description') }}</div>
         </div>
 

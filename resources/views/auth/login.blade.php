@@ -32,7 +32,7 @@
         </div>
 
         <div class="login-brand__copy">
-            <h1 class="login-brand__title text-slate-900 font-weight-bold">{{ __('login.welcome') }}</h1>
+            <h1 class="login-brand__title text-white font-weight-bold">{{ __('login.welcome') }}</h1>
             <p class="login-brand__text text-slate-600 mb-0">{{ __('login.description') }}</p>
         </div>
 

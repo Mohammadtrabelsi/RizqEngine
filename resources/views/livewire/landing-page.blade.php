@@ -118,7 +118,7 @@
     <section class="mx-auto max-w-[1440px] px-6 pb-24 lg:px-12">
         <div class="flex flex-wrap items-center justify-between gap-12 rounded-panel bg-ink p-8 text-white lg:p-12">
             <div>
-                <h2 class="font-display text-[26px] font-bold tracking-[-0.03em] lg:text-[34px]">{{ __('landing.cta_title') }}</h2>
+                <h2 class="font-display text-white text-[26px] font-bold tracking-[-0.03em] lg:text-[34px]">{{ __('landing.cta_title') }}</h2>
                 <p class="mt-3 text-base text-white/70">{{ __('landing.cta_lead') }}</p>
             </div>
             <a href="{{ route('redesign.login') }}" class="rounded-field bg-accent px-7 py-4 text-[15px] font-semibold text-white transition-colors hover:brightness-110">
