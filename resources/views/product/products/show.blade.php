@@ -72,19 +72,19 @@
                 <!-- Pricing & Cost -->
                 <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom">
-                        <h5 class="mb-0"><i class="bi bi-cash-coin"></i> Pricing & Cost</h5>
+                        <h5 class="mb-0"><i class="bi bi-cash-coin"></i> {{ __('product.pricing_and_cost') }}</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="p-3 bg-light rounded">
-                                    <small class="text-muted d-block mb-1">Cost Price</small>
+                                    <small class="text-muted d-block mb-1">{{ __('product.cost_price') }}</small>
                                     <h4 class="mb-0 text-success">{{ format_currency($product->product_cost) }}</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="p-3 bg-light rounded">
-                                    <small class="text-muted d-block mb-1">Selling Price</small>
+                                    <small class="text-muted d-block mb-1">{{ __('product.selling_price') }}</small>
                                     <h4 class="mb-0 text-primary">{{ format_currency($product->product_price) }}</h4>
                                 </div>
                             </div>
@@ -106,13 +106,13 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="p-3 bg-light rounded">
-                                    <small class="text-muted d-block mb-1">Current Quantity</small>
+                                    <small class="text-muted d-block mb-1">{{ __('product.current_quantity') }}</small>
                                     <h4 class="mb-0">{{ $product->product_quantity }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="p-3 bg-light rounded">
-                                    <small class="text-muted d-block mb-1">Alert Threshold</small>
+                                    <small class="text-muted d-block mb-1">{{ __('product.alert_threshold') }}</small>
                                     <h4 class="mb-0">{{ $product->product_stock_alert }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
                                 </div>
                             </div>
@@ -121,13 +121,13 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="p-3 bg-success bg-opacity-10 rounded">
-                                            <small class="text-muted d-block mb-1">By Cost Price</small>
+                                            <small class="text-muted d-block mb-1">{{}}</small>
                                             <h5 class="mb-0 text-success">{{ format_currency($product->product_cost * $product->product_quantity) }}</h5>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="p-3 bg-primary bg-opacity-10 rounded">
-                                            <small class="text-muted d-block mb-1">By Selling Price</small>
+                                            <small class="text-muted d-block mb-1"></small>
                                             <h5 class="mb-0 text-primary">{{ format_currency($product->product_price * $product->product_quantity) }}</h5>
                                         </div>
                                     </div>
@@ -140,19 +140,19 @@
                 <!-- Tax Information -->
                 <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom">
-                        <h5 class="mb-0"><i class="bi bi-calculator"></i> Tax Information</h5>
+                        <h5 class="mb-0"><i class="bi bi-calculator"></i> {{ __('product.tax_information') }}</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
-                                    <label class="text-muted small">Tax Rate</label>
+                                    <label class="text-muted small">{{ __('product.tax_rate') }}</label>
                                     <span class="fw-bold">{{ $product->product_order_tax ?? 'N/A' }}%</span>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
-                                    <label class="text-muted small">Tax Type</label>
+                                    <label class="text-muted small">{{ __('product.tax_type') }}</label>
                                     <span class="badge bg-{{ $product->product_tax_type == 1 ? 'warning' : 'success' }}">
                                         @if($product->product_tax_type == 1)
                                             Exclusive
@@ -171,26 +171,26 @@
                 <!-- Orders -->
                 <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="bi bi-receipt"></i> Orders</h5>
+                        <h5 class="mb-0"><i class="bi bi-receipt"></i> {{ __('product.orders') }}</h5>
                         <span class="badge bg-secondary">{{ $orders->count() }}</span>
                     </div>
                     <div class="card-body p-0">
                         @if($orders->isEmpty())
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
-                                This product does not appear on any order yet.
+                                {{ __('product.no_orders') }}
                             </div>
                         @else
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Date</th>
-                                            <th>Type</th>
-                                            <th>Reference</th>
-                                            <th>Customer</th>
-                                            <th>Status</th>
-                                            <th class="text-end">Quantity</th>
+                                            <th>{{ __('product.date') }}</th>
+                                            <th>{{ __('product.type') }}</th>
+                                            <th>{{ __('product.reference') }}</th>
+                                            <th>{{ __('product.customer') }}</th>
+                                            <th>{{ __('product.status') }}</th>
+                                            <th class="text-end">{{ __('product.quantity') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -225,27 +225,27 @@
                 <!-- Transaction History -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="bi bi-clock-history"></i> Transaction History</h5>
+                        <h5 class="mb-0"><i class="bi bi-clock-history"></i> {{ __('product.transaction_history') }}</h5>
                         <span class="badge bg-secondary">{{ $transactions->count() }}</span>
                     </div>
                     <div class="card-body p-0">
                         @if($transactions->isEmpty())
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
-                                No transactions recorded for this product yet.
+                                {{ __('product.no_transactions') }}
                             </div>
                         @else
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Date</th>
-                                            <th>Type</th>
-                                            <th>Reference</th>
-                                            <th>Party</th>
-                                            <th class="text-end">Quantity</th>
-                                            <th class="text-end">Unit Price</th>
-                                            <th class="text-end">Subtotal</th>
+                                            <th>{{ __('product.date') }}</th>
+                                            <th>{{ __('product.type') }}</th>
+                                            <th>{{ __('product.reference') }}</th>
+                                            <th>{{ __('product.party') }}</th>
+                                            <th class="text-end">{{ __('product.quantity') }}</th>
+                                            <th class="text-end">{{ __('product.unit_price') }}</th>
+                                            <th class="text-end">{{ __('product.subtotal') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -284,7 +284,7 @@
                 <!-- Product Image -->
                 <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom">
-                        <h5 class="mb-0"><i class="bi bi-image"></i> Product Image</h5>
+                        <h5 class="mb-0"><i class="bi bi-image"></i> {{ __('product.product_image') }}</h5>
                     </div>
                     <div class="card-body text-center">
                         @forelse($product->getMedia('images') as $media)
@@ -298,7 +298,7 @@
                 <!-- Barcode Section -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-light border-bottom">
-                        <h5 class="mb-0"><i class="bi bi-qr-code"></i> Barcode</h5>
+                        <h5 class="mb-0"><i class="bi bi-qr-code"></i> {{ __('product.barcode') }}</h5>
                     </div>
                     <div class="card-body text-center">
                         <div class="mb-3">
