@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'products' => 'Importer des produits',
+    'customers' => 'Importer des clients',
+    'suppliers' => 'Importer des fournisseurs',
+    'back' => 'Retour',
+    'intro' => 'Téléversez un fichier CSV pour créer des enregistrements en masse. La première ligne doit contenir les noms des colonnes. Les lignes sont validées avant tout enregistrement, et seules les lignes valides sont importées.',
+    'expected_columns' => 'Colonnes attendues',
+    'csv_file' => 'Fichier CSV',
+    'preview' => 'Aperçu',
+    'loading' => 'Chargement',
+    'valid_rows' => 'Lignes valides',
+    'invalid_rows' => 'Lignes en erreur',
+    'import_selected' => 'Importer :count ligne(s) valide(s)',
+    'confirm' => 'Importer :count ligne(s) valide(s) ? Les lignes en erreur sont ignorées.',
+    'no_rows' => 'Le fichier ne contient aucune ligne de données.',
+    'status' => 'Statut',
+    'ok' => 'Valide',
+    'success' => ':count enregistrement(s) importé(s) avec succès.',
+    'nothing_valid' => 'Aucune ligne valide à importer.',
+    'read_failed' => 'Le fichier téléversé n\'a pas pu être lu.',
+    'empty_file' => 'Le fichier téléversé est vide.',
+    'missing_columns' => 'Il manque des colonnes obligatoires dans le fichier : :columns.',
+];

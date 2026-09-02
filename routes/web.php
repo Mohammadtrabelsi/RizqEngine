@@ -5,6 +5,7 @@ use App\Livewire\Auth\Login as RedesignLogin;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
+use App\Livewire\Customers\CustomerImport;
 use App\Livewire\Customers\CustomerIndex;
 use App\Livewire\Customers\CustomerShow;
 use App\Livewire\Dashboard as RedesignDashboard;
@@ -17,7 +18,9 @@ use App\Livewire\Finance\MonthlyBudgetShow;
 use App\Livewire\Finance\OutingForm;
 use App\Livewire\Finance\OutingIndex;
 use App\Livewire\LandingPage as RedesignLandingPage;
+use App\Livewire\Products\ProductImport;
 use App\Livewire\Suppliers\SupplierForm;
+use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
 use App\Livewire\Suppliers\SupplierShow;
 use App\Livewire\Units\UnitForm;
@@ -108,6 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Print Barcode
     Route::get('/products/print-barcode', 'BarcodeController@printBarcode')->name('barcode.print');
     // Product
+    Route::get('/products/import', ProductImport::class)->name('products.import');
     Route::resource('products', 'ProductController');
     // Product Category
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
@@ -118,12 +122,14 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'parties', 'namespace' => '\\'], function () {
     // Customers (full-page Livewire components)
     Route::get('customers', CustomerIndex::class)->name('customers.index');
+    Route::get('customers/import', CustomerImport::class)->name('customers.import');
     Route::get('customers/create', CustomerForm::class)->name('customers.create');
     Route::get('customers/{customer}', CustomerShow::class)->name('customers.show');
     Route::get('customers/{customer}/edit', CustomerForm::class)->name('customers.edit');
 
     // Suppliers (full-page Livewire components)
     Route::get('suppliers', SupplierIndex::class)->name('suppliers.index');
+    Route::get('suppliers/import', SupplierImport::class)->name('suppliers.import');
     Route::get('suppliers/create', SupplierForm::class)->name('suppliers.create');
     Route::get('suppliers/{supplier}', SupplierShow::class)->name('suppliers.show');
     Route::get('suppliers/{supplier}/edit', SupplierForm::class)->name('suppliers.edit');

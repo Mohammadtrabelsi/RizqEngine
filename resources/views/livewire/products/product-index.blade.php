@@ -23,6 +23,11 @@
             <a href="{{ route('products.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
             </a>
+            @can('create_products')
+            <a href="{{ route('products.import') }}" class="btn btn-outline-primary">
+                <i class="bi bi-upload"></i> {{ __('nav.import_products') }}
+            </a>
+            @endcan
         </div>
         <div class="col-12 col-md-8 mb-3">
             <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">

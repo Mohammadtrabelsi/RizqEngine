@@ -24,6 +24,7 @@ class NavigationComposer
             'inOrders' => Request::routeIs('bon-commandes.*') || Request::routeIs('commandes.*'),
             'inExpenses' => Request::routeIs('expenses.*') || Request::routeIs('expense-categories.*'),
             'inParties' => Request::routeIs('customers.*') || Request::routeIs('suppliers.*'),
+            'inImports' => Request::routeIs('products.import') || Request::routeIs('customers.import') || Request::routeIs('suppliers.import'),
             'inReports' => Request::routeIs('*-report.index'),
             'inUsers' => Request::routeIs('users*') || Request::routeIs('roles*'),
             'inSettings' => Request::routeIs('currencies*') || Request::routeIs('units*') || Request::routeIs('settings*') || Request::routeIs('drivers*') || Request::routeIs('vehicles*'),
