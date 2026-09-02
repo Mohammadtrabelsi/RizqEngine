@@ -75,7 +75,7 @@ Auth::routes(['register' => false]);
 // Route the framework login screen to the Triangle POS sign-in. Registered
 // after Auth::routes so it wins URI matching for GET /login; the POST /login
 // handler and the other auth routes stay intact.
-Route::redirect('/login', '/sign-in')->name('login');
+Route::redirect('/login', '/sign-in')->name('login.redirect');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')
