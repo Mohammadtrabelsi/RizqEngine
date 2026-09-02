@@ -121,13 +121,13 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="p-3 bg-success bg-opacity-10 rounded">
-                                            <small class="text-muted d-block mb-1">{{__('product.by_cost')}}</small>
+                                            <small class="text-white d-block mb-1">{{__('product.by_cost')}}</small>
                                             <h5 class="mb-0 text-success">{{ format_currency($product->product_cost * $product->product_quantity) }}</h5>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="p-3 bg-primary bg-opacity-10 rounded">
-                                            <small class="text-muted d-block mb-1">{{__('product.by_price')}}</small>
+                                            <small class="text-white d-block mb-1">{{__('product.by_price')}}</small>
                                             <h5 class="mb-0 text-primary">{{ format_currency($product->product_price * $product->product_quantity) }}</h5>
                                         </div>
                                     </div>
