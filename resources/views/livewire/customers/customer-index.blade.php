@@ -7,6 +7,9 @@
                 <a href="{{ route('customers.create') }}" class="btn btn-primary">
                     {{ __('customer.add_customer') }} <i class="bi bi-plus"></i>
                 </a>
+                <a href="{{ route('customers.import') }}" class="btn btn-outline-primary">
+                    {{ __('nav.import_customers') }} <i class="bi bi-upload"></i>
+                </a>
             @endcan
         </div>
         <div class="col-12 col-md-6 mb-3">

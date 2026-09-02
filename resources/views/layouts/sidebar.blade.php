@@ -217,6 +217,28 @@
             </li>
             @endcan
 
+            {{-- DATA IMPORT --}}
+            @canany(['create_products', 'create_customers', 'create_suppliers'])
+            <li class="app-sidebar-heading">{{ __('nav.group.imports') }}</li>
+            <li class="app-sidebar-item {{ $inImports ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inImports ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inImports ? 'true' : 'false' }}">
+                    <span>{{ __('nav.imports') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inImports ? 'is-open' : '' }}">
+                    @can('create_products')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('products.import') ? 'is-active' : '' }}" href="{{ route('products.import') }}">{{ __('nav.import_products') }}</a></li>
+                    @endcan
+                    @can('create_customers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('customers.import') ? 'is-active' : '' }}" href="{{ route('customers.import') }}">{{ __('nav.import_customers') }}</a></li>
+                    @endcan
+                    @can('create_suppliers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('suppliers.import') ? 'is-active' : '' }}" href="{{ route('suppliers.import') }}">{{ __('nav.import_suppliers') }}</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endcanany
+
             {{-- INSIGHT --}}
             @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units', 'access_drivers', 'access_vehicles'])
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
