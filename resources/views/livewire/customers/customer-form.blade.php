@@ -23,6 +23,18 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
+                                <label>{{ __('customer.client_type') }} <span class="text-danger">*</span></label>
+                                <select class="form-control @error('client_type') is-invalid @enderror" wire:model.live="client_type">
+                                    <option value="physical_person">{{ __('customer.physical_person') }}</option>
+                                    <option value="legal_entity">{{ __('customer.legal_entity') }}</option>
+                                </select>
+                                @error('client_type') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
                                 <label>{{ __('customer.customer_email') }} <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control @error('customer_email') is-invalid @enderror" wire:model="customer_email">
                                 @error('customer_email') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
@@ -55,7 +67,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>{{ __('customer.tax_identification_number') }}</label>
+                                <label>{{ __('customer.tax_identification_number') }} @if ($client_type === 'legal_entity')<span class="text-danger">*</span>@endif</label>
                                 <input type="text" class="form-control @error('tax_identification_number') is-invalid @enderror" wire:model="tax_identification_number">
                                 @error('tax_identification_number') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
                             </div>

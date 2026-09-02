@@ -5,6 +5,7 @@ namespace App\Livewire\Customers;
 use App\Models\Customer;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -17,6 +18,8 @@ class CustomerForm extends Component
     public ?Customer $customer = null;
 
     public string $customer_name = '';
+
+    public string $client_type = Customer::TYPE_PHYSICAL_PERSON;
 
     public string $customer_email = '';
 
@@ -50,6 +53,7 @@ class CustomerForm extends Component
             $this->customer = $customer;
             $this->customerId = $customer->id;
             $this->customer_name = (string) $customer->customer_name;
+            $this->client_type = (string) ($customer->client_type ?: Customer::TYPE_PHYSICAL_PERSON);
             $this->customer_email = (string) $customer->customer_email;
             $this->customer_phone = (string) $customer->customer_phone;
             $this->whatsapp_number = (string) $customer->whatsapp_number;
@@ -69,11 +73,19 @@ class CustomerForm extends Component
     {
         return [
             'customer_name' => 'required|string|max:255',
+            'client_type' => ['required', 'string', Rule::in(Customer::clientTypes())],
             'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
             'whatsapp_number' => 'nullable|string|max:255',
             'responsible_person' => 'nullable|string|max:255',
-            'tax_identification_number' => 'nullable|string|max:255',
+            // The tax identification number (matricule fiscal) is mandatory
+            // for legal entities and optional for physical persons.
+            'tax_identification_number' => [
+                Rule::requiredIf($this->client_type === Customer::TYPE_LEGAL_ENTITY),
+                'nullable',
+                'string',
+                'max:255',
+            ],
             'iban' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
@@ -81,6 +93,13 @@ class CustomerForm extends Component
             'note' => 'nullable|string|max:2000',
             'image' => 'nullable|image|max:2048',
             'document' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,txt,jpg,jpeg,png|max:10240',
+        ];
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'tax_identification_number.required' => trans('customer.legal_entity_tax_required'),
         ];
     }
 
