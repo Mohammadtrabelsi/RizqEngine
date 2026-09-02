@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — unified admin shell (slot-based) for full-page Livewire
+    RizqEngine — unified admin shell (slot-based) for full-page Livewire
     components: `->layout('components.layouts.admin', ['title' => ...])`.
     Shares the exact same sidebar / header / footer partials as the traditional
     layouts/app.blade.php, so every admin screen has identical chrome.

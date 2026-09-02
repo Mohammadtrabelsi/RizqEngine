@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — primary navigation as a horizontal menu bar.
+    RizqEngine — primary navigation as a horizontal menu bar.
     Each top-level section is a direct route link. The section's own
     items are rendered inline in a secondary navbar (menu-secondary)
     instead of hover dropdowns.

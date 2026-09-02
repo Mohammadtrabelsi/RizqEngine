@@ -3,7 +3,7 @@
     <div class="hidden flex-col justify-between overflow-hidden bg-ink px-16 py-14 text-white lg:flex">
         <div class="flex items-center gap-3">
             <x-logo-mark tone="dark" />
-            <span class="font-display text-lg font-bold">Triangle POS</span>
+            <span class="font-display text-lg font-bold">RizqEngine</span>
         </div>
 
         <div class="max-w-[560px]">
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <p class="text-[13px] text-white/45">© {{ now()->year }} Triangle POS</p>
+        <p class="text-[13px] text-white/45">© {{ now()->year }} RizqEngine</p>
     </div>
 
     <div class="grid place-items-center bg-canvas px-6 py-14 lg:px-12">

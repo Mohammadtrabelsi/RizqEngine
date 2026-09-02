@@ -3,7 +3,7 @@
     <header class="sticky top-0 z-40 flex items-center justify-between gap-8 border-b border-hairline bg-canvas/85 px-12 py-[18px] backdrop-blur-md">
         <a href="{{ route('home') }}" class="flex items-center gap-3">
             <x-logo-mark />
-            <span class="font-display text-lg font-bold tracking-[-0.01em]">Triangle POS</span>
+            <span class="font-display text-lg font-bold tracking-[-0.01em]">RizqEngine</span>
         </a>
 
         <nav class="flex items-center gap-[30px] text-sm font-medium text-ink-3">
@@ -127,7 +127,7 @@
         </div>
 
         <div class="mt-8 flex justify-between text-[13px] text-muted">
-            <span>© {{ now()->year }} Triangle POS</span>
+            <span>© {{ now()->year }} RizqEngine</span>
             <span class="font-mono">Laravel · Livewire</span>
         </div>
     </section>

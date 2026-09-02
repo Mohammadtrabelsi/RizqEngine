@@ -1,7 +1,7 @@
 # Docker Development Environment
 
 A self-contained Docker setup for running a Laravel application (such as
-**Triangle POS**) locally. It runs four containers wired together on a private
+**RizqEngine**) locally. It runs four containers wired together on a private
 network:
 
 | Service      | Image             | Purpose                                    |
@@ -55,7 +55,7 @@ id -g    # -> GID
 
 ### 2. Put a Laravel project in `src/`
 
-**Option A — you already have a project** (e.g. this Triangle POS repo):
+**Option A — you already have a project** (e.g. this RizqEngine repo):
 copy or clone it into `src/` so that `src/artisan`, `src/composer.json`, and
 `src/public/` exist.
 

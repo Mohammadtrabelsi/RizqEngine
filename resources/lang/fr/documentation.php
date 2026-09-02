@@ -3,7 +3,7 @@
 return [
     'documentation' => 'Documentation',
     'home' => 'Accueil',
-    'intro' => 'Bienvenue dans Triangle POS. Ce guide vous présente les principales sections du système afin que vous puissiez gérer en toute confiance vos produits, ventes, achats et rapports. Utilisez le sommaire à gauche pour accéder à un sujet.',
+    'intro' => 'Bienvenue dans RizqEngine. Ce guide vous présente les principales sections du système afin que vous puissiez gérer en toute confiance vos produits, ventes, achats et rapports. Utilisez le sommaire à gauche pour accéder à un sujet.',
     'need_help' => 'Besoin d\'aide supplémentaire ?',
     'need_help_body' => 'Si vous ne trouvez pas ce que vous cherchez, contactez votre administrateur système ou ouvrez un ticket sur le dépôt du projet.',
     'page_title' => 'Guide utilisateur & documentation',
@@ -12,7 +12,7 @@ return [
             'title' => 'Premiers pas',
             'body' => [
                 0 => 'Connectez-vous avec l\'e-mail et le mot de passe fournis par votre administrateur. Après connexion, vous arrivez sur le tableau de bord (Accueil).',
-                1 => 'Ce que vous pouvez voir et faire dépend de votre rôle. Triangle POS propose les rôles Super Admin, Admin, Propriétaire, Gérant et Caissier, chacun ayant ses propres permissions.',
+                1 => 'Ce que vous pouvez voir et faire dépend de votre rôle. RizqEngine propose les rôles Super Admin, Admin, Propriétaire, Gérant et Caissier, chacun ayant ses propres permissions.',
                 2 => 'Utilisez la barre latérale à gauche pour naviguer entre les modules. Les éléments de menu pour lesquels vous n\'avez pas de permission sont masqués automatiquement.',
                 3 => 'Vous pouvez changer la langue de l\'interface et basculer entre les thèmes clair et sombre depuis la barre d\'en-tête en haut.',
             ],

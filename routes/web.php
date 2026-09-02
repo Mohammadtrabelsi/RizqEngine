@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Public front page — the Triangle POS landing screen.
+// Public front page — the RizqEngine landing screen.
 // Namespace reset (\\) so the class-string action is not prefixed with the
 // controller namespace configured in RouteServiceProvider.
 Route::group(['namespace' => '\\'], function () {
@@ -72,7 +72,7 @@ Route::group(['namespace' => '\\'], function () {
 
 Auth::routes(['register' => false]);
 
-// Route the framework login screen to the Triangle POS sign-in. Registered
+// Route the framework login screen to the RizqEngine sign-in. Registered
 // after Auth::routes so it wins URI matching for GET /login; the POST /login
 // handler and the other auth routes stay intact.
 Route::redirect('/login', '/sign-in')->name('login.redirect');

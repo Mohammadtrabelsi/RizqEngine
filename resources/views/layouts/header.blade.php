@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — shared admin header.
+    RizqEngine — shared admin header.
     Redesign shell look (unified with the dashboard): page title + date subline,
     language switcher, POS shortcut, low-stock notifications and a user menu.
     The `low_quantity_products` collection is injected by a view composer in

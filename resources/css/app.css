@@ -1,5 +1,5 @@
 /*
- * Triangle POS — application stylesheet, Premium Light Design System.
+ * RizqEngine — application stylesheet, Premium Light Design System.
  * Driven by Vite, Tailwind CSS engine, crisp Slate surfaces (#f8fafc / #ffffff),
  * deep ink text (#0f172a), and vibrant Indigo accent (#4f46e5).
  */
@@ -29,7 +29,7 @@
 }
 
 /* -------------------------------------------------------------------------
- * Triangle POS redesign tokens (landing / sign-in / dashboard).
+ * RizqEngine redesign tokens (landing / sign-in / dashboard).
  * Scoped, single-indigo-accent palette from the design handoff. These add
  * new utility names (accent, ink, canvas, warn, ok, hairline …) and do not
  * repurpose the existing "Light" design system above.

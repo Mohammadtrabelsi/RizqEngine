@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — primary navigation as a vertical sidebar.
+    RizqEngine — primary navigation as a vertical sidebar.
     Single-accent ink design, unified with the redesign dashboard shell:
     text items grouped under mono headings, an accent-filled active item, and a
     shift card pinned to the bottom. Sections with more than one destination are
@@ -17,7 +17,7 @@
                 @endif
             @else
                 <x-logo-mark tone="dark" />
-                <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'Triangle POS' }}</span>
+                <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'RizqEngine' }}</span>
             @endif
         </a>
         <button class="app-sidebar-close d-lg-none" type="button"
