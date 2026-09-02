@@ -57,17 +57,39 @@ class CategoryService
         return Category::findOrFail($id);
     }
 
-    public function create(array $data): Category
+    public function create(array $data, $image = null): Category
     {
-        return Category::create($data);
+        $category = Category::create($data);
+        $this->syncImage($category, $image);
+
+        return $category;
     }
 
-    public function update(int $id, array $data): Category
+    public function update(int $id, array $data, $image = null): Category
     {
         $category = Category::findOrFail($id);
         $category->update($data);
+        $this->syncImage($category, $image);
 
         return $category;
+    }
+
+    /**
+     * Replace the category's image with the freshly uploaded file, if any.
+     */
+    protected function syncImage(Category $category, $image): void
+    {
+        if (! $image) {
+            return;
+        }
+
+        if ($category->getFirstMedia('images')) {
+            $category->getFirstMedia('images')->delete();
+        }
+
+        $category->addMedia($image->getRealPath())
+            ->usingFileName($image->getClientOriginalName())
+            ->toMediaCollection('images');
     }
 
     /**
