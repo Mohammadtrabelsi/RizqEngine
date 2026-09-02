@@ -49,6 +49,7 @@ return [
     'sales-report' => 'تقرير المبيعات',
     'sales-return-report' => 'تقرير مرتجعات المبيعات',
     'settings' => 'الإعدادات',
+    'stock' => 'المخزون',
     'stock-adjustments' => 'تسويات المخزون',
     'stock-exits' => 'إذن صرف وإرجاع',
     'create-stock-exit' => 'إنشاء إذن صرف',
