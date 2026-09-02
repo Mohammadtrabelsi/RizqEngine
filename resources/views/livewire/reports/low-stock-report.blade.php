@@ -36,34 +36,43 @@
                         <input wire:model.live="only_out_of_stock" type="checkbox" class="form-check-input" id="only_out_of_stock">
                         <label class="form-check-label" for="only_out_of_stock">{{ __('report.show-only-out-of-stock-products') }}</label>
                     </div>
-                    <div class="d-flex justify-content-center mb-3">{{ $products->links('pagination::bootstrap-5') }}</div>
-                    <div class="row">
-                        @forelse($products as $product)
-                            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                                <div class="card border h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-start mb-2">
-                                            <h6 class="mb-0">{{ $product->product_name }}</h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-muted small text-uppercase">
+                                    <th scope="col">{{ __('report.product') }}</th>
+                                    <th scope="col">{{ __('report.reference') }}</th>
+                                    <th scope="col">{{ __('report.category') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.in-stock') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.alert-level') }}</th>
+                                    <th scope="col" class="text-center">{{ __('report.status') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($products as $product)
+                                    <tr>
+                                        <td class="fw-bold">{{ $product->product_name }}</td>
+                                        <td class="text-muted">{{ $product->product_code }}</td>
+                                        <td>{{ optional($product->category)->category_name }}</td>
+                                        <td class="text-end @if($product->product_quantity <= 0) text-danger fw-bold @endif">{{ $product->product_quantity }}</td>
+                                        <td class="text-end">{{ $product->product_stock_alert }}</td>
+                                        <td class="text-center">
                                             @if($product->product_quantity <= 0)
                                                 <span class="badge badge-danger">{{ __('report.out-of-stock') }}</span>
                                             @else
                                                 <span class="badge badge-warning">{{ __('report.low-stock') }}</span>
                                             @endif
-                                        </div>
-                                        <p class="text-muted small mb-2">{{ $product->product_code }}</p>
-                                        <ul class="list-group list-group-flush mb-0">
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.category') }}</span><span>{{ optional($product->category)->category_name }}</span></li>
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.in-stock') }}</span><span>{{ $product->product_quantity }}</span></li>
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.alert-level') }}</span><span>{{ $product->product_stock_alert }}</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="col-12 text-center">{{ __('report.all-products-above-alert-level') }}</div>
-                        @endforelse
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted py-4">{{ __('report.all-products-above-alert-level') }}</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
-                    {{ $products->links('pagination::bootstrap-5') }}
+                    <div @class(['mt-3' => $products->hasPages()])>{{ $products->links('pagination::bootstrap-5') }}</div>
                 </div>
             </div>
         </div>

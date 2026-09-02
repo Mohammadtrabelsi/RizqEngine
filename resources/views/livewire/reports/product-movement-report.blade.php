@@ -58,24 +58,32 @@
                 <div class="card-body">
                     <h5 class="mb-3">{{ $direction === 'slow' ? __('report.slow-moving-products') : __('report.fast-moving-products') }}</h5>
                     <div class="table-responsive">
-                        <div class="row">
-                            @forelse($products as $index => $product)
-                                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                                    <div class="card border h-100">
-                                        <div class="card-body">
-                                            <h6 class="mb-1">{{ $index + 1 }}. {{ $product->product_name }}</h6>
-                                            <p class="text-muted small mb-2">{{ $product->product_code }}</p>
-                                            <ul class="list-group list-group-flush mb-0">
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.units-sold') }}</span><span>{{ $product->units_sold }}</span></li>
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.current-stock') }}</span><span>{{ $product->product_quantity }}</span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="col-12 text-center">{{ __('report.no-sales-data') }}</div>
-                            @endforelse
-                        </div>
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-muted small text-uppercase">
+                                    <th scope="col" class="text-center">{{ __('report.ranking') }}</th>
+                                    <th scope="col">{{ __('report.product') }}</th>
+                                    <th scope="col">{{ __('report.reference') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.units-sold') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.current-stock') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($products as $index => $product)
+                                    <tr>
+                                        <td class="text-center fw-bold">{{ $index + 1 }}</td>
+                                        <td>{{ $product->product_name }}</td>
+                                        <td class="text-muted">{{ $product->product_code }}</td>
+                                        <td class="text-end">{{ $product->units_sold }}</td>
+                                        <td class="text-end">{{ $product->product_quantity }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">{{ __('report.no-sales-data') }}</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
