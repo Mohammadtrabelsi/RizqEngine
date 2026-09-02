@@ -12,6 +12,7 @@
                     @endif
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_name') }}</span><span>{{ $customer->customer_name }}</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.client_type') }}</span><span>{{ __('customer.'.($customer->client_type ?: 'physical_person')) }}</span></li>
                         <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_email') }}</span><span>{{ $customer->customer_email }}</span></li>
                         <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.customer_phone') }}</span><span>{{ $customer->customer_phone }}</span></li>
                         <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('customer.whatsapp_number') }}</span><span>{{ $customer->whatsapp_number ?: '—' }}</span></li>

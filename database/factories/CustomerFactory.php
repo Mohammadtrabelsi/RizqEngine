@@ -23,6 +23,7 @@ class CustomerFactory extends Factory
     {
         return [
             'customer_name' => $this->faker->name(),
+            'client_type' => $this->faker->randomElement(Customer::clientTypes()),
             'customer_email' => $this->faker->safeEmail(),
             'customer_phone' => $this->faker->phoneNumber(),
             'whatsapp_number' => $this->faker->phoneNumber(),

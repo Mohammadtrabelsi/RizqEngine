@@ -13,6 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 /**
  * @property int $id
  * @property string $customer_name
+ * @property string $client_type
  * @property string $customer_email
  * @property string|null $whatsapp_number
  * @property string|null $responsible_person
@@ -24,7 +25,41 @@ class Customer extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, RecordsActivity, TracksUserActions;
 
+    /**
+     * Client classified as an individual (a physical person).
+     */
+    public const TYPE_PHYSICAL_PERSON = 'physical_person';
+
+    /**
+     * Client classified as an organisation (a legal entity / company).
+     * Legal entities are required to provide a tax identification number
+     * (matricule fiscal).
+     */
+    public const TYPE_LEGAL_ENTITY = 'legal_entity';
+
     protected $guarded = [];
+
+    /**
+     * The supported client classifications.
+     *
+     * @return array<int, string>
+     */
+    public static function clientTypes(): array
+    {
+        return [
+            self::TYPE_PHYSICAL_PERSON,
+            self::TYPE_LEGAL_ENTITY,
+        ];
+    }
+
+    /**
+     * Whether the client is classified as a legal entity, and therefore
+     * required to carry a tax identification number (matricule fiscal).
+     */
+    public function isLegalEntity(): bool
+    {
+        return $this->client_type === self::TYPE_LEGAL_ENTITY;
+    }
 
     /**
      * URL of the customer's profile image, or an empty string when none is set.
