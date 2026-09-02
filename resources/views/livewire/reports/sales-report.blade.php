@@ -83,45 +83,55 @@
                             <span class="sr-only">{{ __('report.loading') }}</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center mb-3">{{ $sales->links('pagination::bootstrap-5') }}</div>
-                    <div class="row">
-                        @forelse($sales as $sale)
-                            <div class="col-xl-4 col-lg-6 mb-4">
-                                <div class="card border h-100">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold">{{ $sale->reference }}</span>
-                                        @if ($sale->status == 'Pending')
-                                            <span class="badge badge-info">{{ $sale->status }}</span>
-                                        @elseif ($sale->status == 'Shipped')
-                                            <span class="badge badge-primary">{{ $sale->status }}</span>
-                                        @else
-                                            <span class="badge badge-success">{{ $sale->status }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="mb-2"><i class="bi bi-person"></i> {{ $sale->customer_name }}</p>
-                                        <ul class="list-group list-group-flush mb-0">
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.date') }}</span><span>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</span></li>
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.total') }}</span><span>{{ format_currency($sale->total_amount) }}</span></li>
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.paid') }}</span><span>{{ format_currency($sale->paid_amount) }}</span></li>
-                                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('report.due') }}</span><span>{{ format_currency($sale->due_amount) }}</span></li>
-                                            <li class="list-group-item d-flex justify-content-between px-0">
-                                                <span>{{ __('report.payment-status') }}</span>
-                                                @if ($sale->payment_status == 'Partial')
-                                                    <span class="badge badge-warning">{{ $sale->payment_status }}</span>
-                                                @elseif ($sale->payment_status == 'Paid')
-                                                    <span class="badge badge-success">{{ $sale->payment_status }}</span>
-                                                @else
-                                                    <span class="badge badge-danger">{{ $sale->payment_status }}</span>
-                                                @endif
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="col-12"><span class="text-danger">{{ __('report.no-sales-data') }}</span></div>
-                        @endforelse
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-muted small text-uppercase">
+                                    <th scope="col">{{ __('report.reference') }}</th>
+                                    <th scope="col">{{ __('report.customer') }}</th>
+                                    <th scope="col">{{ __('report.date') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.total') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.paid') }}</th>
+                                    <th scope="col" class="text-end">{{ __('report.due') }}</th>
+                                    <th scope="col" class="text-center">{{ __('report.status') }}</th>
+                                    <th scope="col" class="text-center">{{ __('report.payment-status') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($sales as $sale)
+                                    <tr>
+                                        <td class="fw-bold">{{ $sale->reference }}</td>
+                                        <td><i class="bi bi-person text-muted"></i> {{ $sale->customer_name }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</td>
+                                        <td class="text-end">{{ format_currency($sale->total_amount) }}</td>
+                                        <td class="text-end text-success">{{ format_currency($sale->paid_amount) }}</td>
+                                        <td class="text-end @if($sale->due_amount > 0) text-danger fw-bold @else text-muted @endif">{{ format_currency($sale->due_amount) }}</td>
+                                        <td class="text-center">
+                                            @if ($sale->status == 'Pending')
+                                                <span class="badge badge-info">{{ $sale->status }}</span>
+                                            @elseif ($sale->status == 'Shipped')
+                                                <span class="badge badge-primary">{{ $sale->status }}</span>
+                                            @else
+                                                <span class="badge badge-success">{{ $sale->status }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if ($sale->payment_status == 'Partial')
+                                                <span class="badge badge-warning">{{ $sale->payment_status }}</span>
+                                            @elseif ($sale->payment_status == 'Paid')
+                                                <span class="badge badge-success">{{ $sale->payment_status }}</span>
+                                            @else
+                                                <span class="badge badge-danger">{{ $sale->payment_status }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted py-4">{{ __('report.no-sales-data') }}</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                     <div @class(['mt-3' => $sales->hasPages()])>
                         {{ $sales->links('pagination::bootstrap-5') }}
