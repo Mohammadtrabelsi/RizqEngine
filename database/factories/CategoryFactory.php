@@ -24,6 +24,9 @@ class CategoryFactory extends Factory
         return [
             'category_code' => strtoupper($this->faker->unique()->bothify('CA_##')),
             'category_name' => $this->faker->unique()->word(),
+            'description' => $this->faker->optional()->sentence(),
+            'color' => $this->faker->hexColor(),
+            'is_active' => true,
         ];
     }
 }

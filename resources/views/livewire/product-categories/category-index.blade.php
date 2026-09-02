@@ -17,10 +17,25 @@
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="category-{{ $category->id }}">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <img src="{{ default_category_image() }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
-                        <h5 class="card-title mb-1">{{ $category->category_name }}</h5>
+                        <img src="{{ $category->image_url }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
+                        <h5 class="card-title mb-1">
+                            @if ($category->color)
+                                <span class="d-inline-block rounded-circle align-middle me-1" style="width: 12px; height: 12px; background-color: {{ $category->color }};"></span>
+                            @endif
+                            {{ $category->category_name }}
+                        </h5>
                         <p class="text-muted mb-2"><small>{{ $category->category_code }}</small></p>
-                        <span class="badge bg-info mb-3">{{ $category->products_count }} products</span>
+                        @if ($category->description)
+                            <p class="text-muted mb-2"><small>{{ \Illuminate\Support\Str::limit($category->description, 60) }}</small></p>
+                        @endif
+                        <div class="mb-3">
+                            <span class="badge bg-info">{{ $category->products_count }} products</span>
+                            @if ($category->is_active)
+                                <span class="badge bg-success">{{ __('product.category_active') }}</span>
+                            @else
+                                <span class="badge bg-secondary">{{ __('product.category_inactive') }}</span>
+                            @endif
+                        </div>
                         <div class="btn-group d-block">
                             <a href="{{ route('product-categories.edit', $category->id) }}" class="btn btn-info btn-sm">
                                 <i class="bi bi-pencil"></i>
