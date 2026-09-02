@@ -50,6 +50,22 @@ class StockExit extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /**
+     * @return BelongsTo<Driver, $this>
+     */
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(Driver::class, 'driver_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo<Vehicle, $this>
+     */
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
+    }
+
     public function isClosed(): bool
     {
         return $this->status === self::STATUS_CLOSED;

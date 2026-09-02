@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InsufficientStockException;
+use App\Models\Driver;
 use App\Models\StockExit;
+use App\Models\Vehicle;
 use App\Services\StockExitService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -24,7 +26,10 @@ class StockExitController extends Controller
     {
         abort_if(Gate::denies('create_stock_exits'), 403);
 
-        return view('stockexit.create');
+        return view('stockexit.create', [
+            'drivers' => Driver::orderBy('name')->get(),
+            'vehicles' => Vehicle::orderBy('registration')->get(),
+        ]);
     }
 
     public function store(Request $request)
@@ -36,6 +41,8 @@ class StockExitController extends Controller
             'reason' => 'nullable|string|max:255',
             'destination' => 'nullable|string|max:255',
             'responsible' => 'nullable|string|max:255',
+            'driver_id' => 'nullable|integer|exists:drivers,id',
+            'vehicle_id' => 'nullable|integer|exists:vehicles,id',
             'note' => 'nullable|string|max:1000',
             'product_ids' => 'required|array|min:1',
             'product_ids.*' => 'required|integer|exists:products,id',

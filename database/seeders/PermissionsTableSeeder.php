@@ -47,6 +47,16 @@ class PermissionsTableSeeder extends Seeder
             'show_stock_exits',
             'delete_stock_exits',
             'create_stock_entries',
+            // Drivers (Chauffeurs)
+            'access_drivers',
+            'create_drivers',
+            'edit_drivers',
+            'delete_drivers',
+            // Vehicles (Véhicules)
+            'access_vehicles',
+            'create_vehicles',
+            'edit_vehicles',
+            'delete_vehicles',
             // Quotaions
             'access_quotations',
             'create_quotations',

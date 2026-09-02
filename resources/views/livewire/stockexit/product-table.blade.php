@@ -18,16 +18,20 @@
                             </div>
                             <div class="card-body">
                                 <p class="mb-2"><span class="fw-bold">{{ __('product.code') }}:</span> {{ $product['product_code'] }}</p>
+                                @php($stock = (int) ($product['product_quantity'] ?? 0))
                                 <p class="mb-3">
                                     <span class="fw-bold">{{ __('product.stock') }}:</span>
-                                    <span class="badge badge-info">
-                                        {{ $product['product_quantity'] }} {{ $product['product_unit'] ?? '' }}
+                                    <span class="badge {{ $stock > 0 ? 'badge-info' : 'badge-danger bg-danger' }}">
+                                        {{ $stock }} {{ $product['product_unit'] ?? '' }}
                                     </span>
                                 </p>
                                 <input type="hidden" name="product_ids[]" value="{{ $product['id'] }}">
                                 <div class="mb-1">
                                     <label class="form-label fw-bold">{{ __('stockexit.quantity_out') }}</label>
-                                    <input type="number" name="quantities[]" min="1" max="{{ $product['product_quantity'] }}" class="form-control" value="1" required>
+                                    <input type="number" name="quantities[]" min="1" @if($stock > 0) max="{{ $stock }}" @endif class="form-control" value="1" required @disabled($stock <= 0)>
+                                    @if($stock <= 0)
+                                        <small class="text-danger d-block mt-1">{{ __('stockexit.out_of_stock') }}</small>
+                                    @endif
                                 </div>
                             </div>
                         </div>

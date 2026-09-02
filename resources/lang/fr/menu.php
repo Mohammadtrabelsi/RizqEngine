@@ -59,5 +59,7 @@ return [
     'transactions' => 'Transactions',
     'system-settings' => 'Paramètres du système',
     'units' => 'Unités',
+    'drivers' => 'Chauffeurs',
+    'vehicles' => 'Véhicules',
     'user-management' => 'Gestion des utilisateurs',
 ];

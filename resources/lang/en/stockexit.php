@@ -10,6 +10,7 @@ return [
     'entry_details' => 'Entry voucher details',
     'no_exits_found' => 'No exit voucher found',
     'no_products_selected' => 'No product selected',
+    'out_of_stock' => 'Out of stock: this product cannot be issued.',
 
     'reference' => 'Reference',
     'auto_generated' => 'Auto generated',
@@ -24,6 +25,11 @@ return [
     'reason_jobsite' => 'Job site',
     'reason_subcontracting' => 'Subcontracting',
     'reason_transfer' => 'Transfer',
+
+    'driver' => 'Driver',
+    'vehicle' => 'Vehicle',
+    'select_driver' => '— Select a driver —',
+    'select_vehicle' => '— Select a vehicle —',
 
     'status_in_transit' => 'In transit / Out',
     'status_closed' => 'Closed',

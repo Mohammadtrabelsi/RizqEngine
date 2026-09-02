@@ -64,6 +64,36 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="driver_id">{{ __('stockexit.driver') }}</label>
+                                        <select name="driver_id" id="driver_id" class="form-control">
+                                            <option value="">{{ __('stockexit.select_driver') }}</option>
+                                            @foreach($drivers as $driver)
+                                                <option value="{{ $driver->id }}" @selected(old('driver_id') == $driver->id)>{{ $driver->name }}{{ $driver->phone ? ' — '.$driver->phone : '' }}</option>
+                                            @endforeach
+                                        </select>
+                                        @can('create_drivers')
+                                            <small class="form-text"><a href="{{ route('drivers.create') }}" target="_blank">{{ __('drivers.add_driver') }}</a></small>
+                                        @endcan
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="vehicle_id">{{ __('stockexit.vehicle') }}</label>
+                                        <select name="vehicle_id" id="vehicle_id" class="form-control">
+                                            <option value="">{{ __('stockexit.select_vehicle') }}</option>
+                                            @foreach($vehicles as $vehicle)
+                                                <option value="{{ $vehicle->id }}" @selected(old('vehicle_id') == $vehicle->id)>{{ $vehicle->label }}</option>
+                                            @endforeach
+                                        </select>
+                                        @can('create_vehicles')
+                                            <small class="form-text"><a href="{{ route('vehicles.create') }}" target="_blank">{{ __('vehicles.add_vehicle') }}</a></small>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
 
                             <livewire:stock-exit.product-table/>
 

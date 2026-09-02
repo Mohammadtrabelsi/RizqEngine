@@ -33,6 +33,11 @@
                     <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.responsible') }}</span>{{ $stockExit->responsible ?: '—' }}</div>
                 </div>
 
+                <div class="row mb-4">
+                    <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.driver') }}</span>{{ $stockExit->driver?->name ?: '—' }}</div>
+                    <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.vehicle') }}</span>{{ $stockExit->vehicle?->label ?: '—' }}</div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
