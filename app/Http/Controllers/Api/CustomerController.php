@@ -39,9 +39,9 @@ class CustomerController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $this->validated($request);
-        unset($data['image']);
+        unset($data['image'], $data['document']);
 
-        $customer = $this->customers->create($data, $request->file('image'));
+        $customer = $this->customers->create($data, $request->file('image'), $request->file('document'));
 
         return response()->json($customer, 201);
     }
@@ -52,9 +52,9 @@ class CustomerController extends Controller
     public function update(Request $request, int $id): JsonResponse
     {
         $data = $this->validated($request);
-        unset($data['image']);
+        unset($data['image'], $data['document']);
 
-        $customer = $this->customers->update($id, $data, $request->file('image'));
+        $customer = $this->customers->update($id, $data, $request->file('image'), $request->file('document'));
 
         return response()->json($customer);
     }
@@ -78,11 +78,16 @@ class CustomerController extends Controller
             'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
+            'whatsapp_number' => 'nullable|string|max:255',
+            'responsible_person' => 'nullable|string|max:255',
             'tax_identification_number' => 'nullable|string|max:255',
+            'iban' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'address' => 'required|string|max:500',
+            'note' => 'nullable|string|max:2000',
             'image' => 'nullable|image|max:2048',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,txt,jpg,jpeg,png|max:10240',
         ]);
     }
 }

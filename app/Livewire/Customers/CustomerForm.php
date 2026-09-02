@@ -22,7 +22,13 @@ class CustomerForm extends Component
 
     public string $customer_phone = '';
 
+    public string $whatsapp_number = '';
+
+    public string $responsible_person = '';
+
     public string $tax_identification_number = '';
+
+    public string $iban = '';
 
     public string $city = '';
 
@@ -30,7 +36,11 @@ class CustomerForm extends Component
 
     public string $address = '';
 
+    public string $note = '';
+
     public $image;
+
+    public $document;
 
     public function mount(?Customer $customer = null): void
     {
@@ -42,10 +52,14 @@ class CustomerForm extends Component
             $this->customer_name = (string) $customer->customer_name;
             $this->customer_email = (string) $customer->customer_email;
             $this->customer_phone = (string) $customer->customer_phone;
+            $this->whatsapp_number = (string) $customer->whatsapp_number;
+            $this->responsible_person = (string) $customer->responsible_person;
             $this->tax_identification_number = (string) $customer->tax_identification_number;
+            $this->iban = (string) $customer->iban;
             $this->city = (string) $customer->city;
             $this->country = (string) $customer->country;
             $this->address = (string) $customer->address;
+            $this->note = (string) $customer->note;
         } else {
             abort_if(Gate::denies('create_customers'), 403);
         }
@@ -57,11 +71,16 @@ class CustomerForm extends Component
             'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
+            'whatsapp_number' => 'nullable|string|max:255',
+            'responsible_person' => 'nullable|string|max:255',
             'tax_identification_number' => 'nullable|string|max:255',
+            'iban' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'address' => 'required|string|max:500',
+            'note' => 'nullable|string|max:2000',
             'image' => 'nullable|image|max:2048',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,txt,jpg,jpeg,png|max:10240',
         ];
     }
 
@@ -72,14 +91,17 @@ class CustomerForm extends Component
         $image = $data['image'] ?? null;
         unset($data['image']);
 
+        $document = $data['document'] ?? null;
+        unset($data['document']);
+
         if ($this->customerId) {
             abort_if(Gate::denies('update_customers'), 403);
-            $customers->update($this->customerId, $data, $image);
+            $customers->update($this->customerId, $data, $image, $document);
 
             session()->flash('info', trans('people.customer-updated'));
         } else {
             abort_if(Gate::denies('create_customers'), 403);
-            $customers->create($data, $image);
+            $customers->create($data, $image, $document);
 
             session()->flash('success', trans('people.customer-created'));
         }

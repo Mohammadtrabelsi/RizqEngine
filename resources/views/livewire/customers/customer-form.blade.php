@@ -39,9 +39,34 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
+                                <label>{{ __('customer.whatsapp_number') }}</label>
+                                <input type="text" class="form-control @error('whatsapp_number') is-invalid @enderror" wire:model="whatsapp_number">
+                                @error('whatsapp_number') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ __('customer.responsible_person') }}</label>
+                                <input type="text" class="form-control @error('responsible_person') is-invalid @enderror" wire:model="responsible_person">
+                                @error('responsible_person') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
                                 <label>{{ __('customer.tax_identification_number') }}</label>
                                 <input type="text" class="form-control @error('tax_identification_number') is-invalid @enderror" wire:model="tax_identification_number">
                                 @error('tax_identification_number') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ __('customer.iban') }}</label>
+                                <input type="text" class="form-control @error('iban') is-invalid @enderror" wire:model="iban">
+                                @error('iban') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
@@ -72,6 +97,26 @@
                     </div>
                     <div class="form-row">
                         <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>{{ __('customer.note') }}</label>
+                                <textarea class="form-control @error('note') is-invalid @enderror" rows="3" wire:model="note"></textarea>
+                                @error('note') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ __('customer.document') }}</label>
+                                @if ($customer && $customer->getFirstMediaUrl('documents'))
+                                    <a href="{{ $customer->getFirstMediaUrl('documents') }}" target="_blank" class="d-block mb-2">{{ $customer->getFirstMedia('documents')->file_name }}</a>
+                                @endif
+                                <input type="file" class="form-control-file @error('document') is-invalid @enderror" wire:model="document">
+                                <small class="form-text text-muted">{{ __('customer.document_hint') }}</small>
+                                @error('document') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>{{ __('customer.profile_image') }}</label>
                                 @if ($customer && $customer->getFirstMediaUrl('images'))

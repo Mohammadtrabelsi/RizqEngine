@@ -25,10 +25,14 @@ class SupplierFactory extends Factory
             'supplier_name' => $this->faker->name(),
             'supplier_email' => $this->faker->safeEmail(),
             'supplier_phone' => $this->faker->phoneNumber(),
+            'whatsapp_number' => $this->faker->phoneNumber(),
+            'responsible_person' => $this->faker->name(),
             'tax_identification_number' => $this->faker->numerify('TIN-#########'),
+            'iban' => $this->faker->iban(),
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
             'address' => $this->faker->streetAddress(),
+            'note' => $this->faker->sentence(),
         ];
     }
 }
