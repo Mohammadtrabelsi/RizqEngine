@@ -67,25 +67,47 @@
             </li>
             @endcan
 
-            @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
-            <li class="app-sidebar-item {{ $inTransactions ? 'is-active' : '' }}">
-                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inTransactions ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inTransactions ? 'true' : 'false' }}">
-                    <span>{{ __('nav.transactions') }}</span>
+            @canany(['access_sales', 'access_sale_returns'])
+            <li class="app-sidebar-item {{ $inSales ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSales ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSales ? 'true' : 'false' }}">
+                    <span>{{ __('nav.sales') }}</span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
-                <ul class="app-sidebar-sublist {{ $inTransactions ? 'is-open' : '' }}">
+                <ul class="app-sidebar-sublist {{ $inSales ? 'is-open' : '' }}">
                     @can('access_sales')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('sales.*') || request()->routeIs('sale-payments*') ? 'is-active' : '' }}" href="{{ route('sales.index') }}">{{ __('menu.all-sales') }}</a></li>
                     @endcan
                     @can('access_sale_returns')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments*') ? 'is-active' : '' }}" href="{{ route('sale-returns.index') }}">{{ __('menu.all-sale-returns') }}</a></li>
                     @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            @canany(['access_purchases', 'access_purchase_returns'])
+            <li class="app-sidebar-item {{ $inPurchases ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inPurchases ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inPurchases ? 'true' : 'false' }}">
+                    <span>{{ __('nav.purchases') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inPurchases ? 'is-open' : '' }}">
                     @can('access_purchases')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') ? 'is-active' : '' }}" href="{{ route('purchases.index') }}">{{ __('menu.all-purchases') }}</a></li>
                     @endcan
                     @can('access_purchase_returns')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments*') ? 'is-active' : '' }}" href="{{ route('purchase-returns.index') }}">{{ __('menu.all-purchase-returns') }}</a></li>
                     @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits'])
+            <li class="app-sidebar-item {{ $inStock ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inStock ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inStock ? 'true' : 'false' }}">
+                    <span>{{ __('nav.stock') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inStock ? 'is-open' : '' }}">
                     @can('access_stock_exits')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') ? 'is-active' : '' }}" href="{{ route('stock-exits.index') }}">{{ __('menu.all-stock-exits') }}</a></li>
                     @endcan

@@ -112,7 +112,7 @@ class ProductCart extends Component
             ],
         ]);
 
-        $this->check_quantity[$product['id']] = $product['product_quantity'];
+        $this->check_quantity[$product['id']] = max(0, $product['product_quantity'] - \App\Services\StockService::MINIMUM_STOCK);
         $this->quantity[$product['id']] = 1;
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;

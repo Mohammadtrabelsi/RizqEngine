@@ -23,21 +23,22 @@
                 @endcan
             @endif
 
-            @if ($inTransactions)
-                @can('access_adjustments')
-                    @can('create_adjustments')
-                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('adjustments.create') ? 'is-active' : '' }}" href="{{ route('adjustments.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-adjustment') }}</span></a></li>
+            @if ($inSales)
+                @can('access_sales')
+                    @can('create_sales')
+                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sales.create') ? 'is-active' : '' }}" href="{{ route('sales.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-sale') }}</span></a></li>
                     @endcan
-                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('adjustments.index') ? 'is-active' : '' }}" href="{{ route('adjustments.index') }}"><i class="bi bi-clipboard-check"></i> <span>{{ __('menu.all-adjustments') }}</span></a></li>
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sales.index') ? 'is-active' : '' }}" href="{{ route('sales.index') }}"><i class="bi bi-receipt"></i> <span>{{ __('menu.all-sales') }}</span></a></li>
                 @endcan
-                @canany(['access_stock_exits', 'create_stock_exits'])
-                    @can('create_stock_exits')
-                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('stock-exits.create') ? 'is-active' : '' }}" href="{{ route('stock-exits.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-stock-exit') }}</span></a></li>
+                @can('access_sale_returns')
+                    @can('create_sale_returns')
+                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sale-returns.create') ? 'is-active' : '' }}" href="{{ route('sale-returns.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-sale-return') }}</span></a></li>
                     @endcan
-                    @can('access_stock_exits')
-                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('stock-exits.index') ? 'is-active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-box-arrow-up"></i> <span>{{ __('menu.all-stock-exits') }}</span></a></li>
-                    @endcan
-                @endcanany
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sale-returns.index') ? 'is-active' : '' }}" href="{{ route('sale-returns.index') }}"><i class="bi bi-arrow-return-left"></i> <span>{{ __('menu.all-sale-returns') }}</span></a></li>
+                @endcan
+            @endif
+
+            @if ($inPurchases)
                 @can('access_purchases')
                     @can('create_purchase')
                         <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('purchases.create') ? 'is-active' : '' }}" href="{{ route('purchases.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-purchase') }}</span></a></li>
@@ -50,17 +51,22 @@
                     @endcan
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('purchase-returns.index') ? 'is-active' : '' }}" href="{{ route('purchase-returns.index') }}"><i class="bi bi-arrow-return-right"></i> <span>{{ __('menu.all-purchase-returns') }}</span></a></li>
                 @endcan
-                @can('access_sales')
-                    @can('create_sales')
-                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sales.create') ? 'is-active' : '' }}" href="{{ route('sales.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-sale') }}</span></a></li>
+            @endif
+
+            @if ($inStock)
+                @canany(['access_stock_exits', 'create_stock_exits'])
+                    @can('create_stock_exits')
+                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('stock-exits.create') ? 'is-active' : '' }}" href="{{ route('stock-exits.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-stock-exit') }}</span></a></li>
                     @endcan
-                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sales.index') ? 'is-active' : '' }}" href="{{ route('sales.index') }}"><i class="bi bi-receipt"></i> <span>{{ __('menu.all-sales') }}</span></a></li>
-                @endcan
-                @can('access_sale_returns')
-                    @can('create_sale_returns')
-                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sale-returns.create') ? 'is-active' : '' }}" href="{{ route('sale-returns.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-sale-return') }}</span></a></li>
+                    @can('access_stock_exits')
+                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('stock-exits.index') ? 'is-active' : '' }}" href="{{ route('stock-exits.index') }}"><i class="bi bi-box-arrow-up"></i> <span>{{ __('menu.all-stock-exits') }}</span></a></li>
                     @endcan
-                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sale-returns.index') ? 'is-active' : '' }}" href="{{ route('sale-returns.index') }}"><i class="bi bi-arrow-return-left"></i> <span>{{ __('menu.all-sale-returns') }}</span></a></li>
+                @endcanany
+                @can('access_adjustments')
+                    @can('create_adjustments')
+                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('adjustments.create') ? 'is-active' : '' }}" href="{{ route('adjustments.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-adjustment') }}</span></a></li>
+                    @endcan
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('adjustments.index') ? 'is-active' : '' }}" href="{{ route('adjustments.index') }}"><i class="bi bi-clipboard-check"></i> <span>{{ __('menu.all-adjustments') }}</span></a></li>
                 @endcan
             @endif
 
