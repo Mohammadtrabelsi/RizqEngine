@@ -1,14 +1,12 @@
 <?php
 
 return [
+    '' => '[TODO] ',
     'add_customer' => 'إضافة عميل',
     'address' => 'العنوان',
     'city' => 'المدينة',
     'client_type' => 'نوع العميل',
     'country' => 'البلد',
-    'legal_entity' => 'شخص اعتباري',
-    'legal_entity_tax_required' => 'رقم التعريف الضريبي (المعرف الجبائي) مطلوب للأشخاص الاعتباريين.',
-    'physical_person' => 'شخص طبيعي',
     'create' => 'إنشاء',
     'customer_details' => 'تفاصيل العميل',
     'customer_email' => 'البريد الإلكتروني للعميل',
@@ -19,8 +17,11 @@ return [
     'document_hint' => 'ملف PDF أو Word أو Excel أو نص أو صورة حتى 10 ميجابايت.',
     'edit' => 'تعديل',
     'iban' => 'رقم الآيبان (IBAN)',
+    'legal_entity' => 'شخص اعتباري',
+    'legal_entity_tax_required' => 'رقم التعريف الضريبي (المعرف الجبائي) مطلوب للأشخاص الاعتباريين.',
     'no_customers_found' => 'لم يتم العثور على عملاء',
     'note' => 'ملاحظة',
+    'physical_person' => 'شخص طبيعي',
     'profile_image' => 'صورة العميل',
     'responsible_person' => 'الشخص المسؤول',
     'tax_identification_number' => 'رقم التعريف الضريبي (TIN)',

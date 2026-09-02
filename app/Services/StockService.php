@@ -58,7 +58,7 @@ class StockService
 
                 throw new InsufficientStockException(
                     "Cannot remove {$quantity} unit(s) from \"{$product->product_name}\"; ".
-                    "stock may not drop below ".self::MINIMUM_STOCK." (only {$available} removable, {$product->product_quantity} in stock)."
+                    'stock may not drop below '.self::MINIMUM_STOCK." (only {$available} removable, {$product->product_quantity} in stock)."
                 );
             }
 
