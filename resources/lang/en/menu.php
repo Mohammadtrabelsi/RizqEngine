@@ -59,5 +59,7 @@ return [
     'transactions' => 'Transactions',
     'system-settings' => 'System Settings',
     'units' => 'Units',
+    'drivers' => 'Drivers',
+    'vehicles' => 'Vehicles',
     'user-management' => 'User Management',
 ];

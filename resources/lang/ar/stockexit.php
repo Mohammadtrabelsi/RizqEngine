@@ -10,6 +10,7 @@ return [
     'entry_details' => 'تفاصيل إذن الإدخال',
     'no_exits_found' => 'لا يوجد إذن صرف',
     'no_products_selected' => 'لم يتم اختيار أي منتج',
+    'out_of_stock' => 'نفد المخزون: لا يمكن إخراج هذا المنتج.',
 
     'reference' => 'المرجع',
     'auto_generated' => 'يُنشأ تلقائياً',
@@ -24,6 +25,11 @@ return [
     'reason_jobsite' => 'ورشة',
     'reason_subcontracting' => 'مناولة',
     'reason_transfer' => 'تحويل',
+
+    'driver' => 'السائق',
+    'vehicle' => 'المركبة',
+    'select_driver' => '— اختر سائقًا —',
+    'select_vehicle' => '— اختر مركبة —',
 
     'status_in_transit' => 'قيد النقل / مصروف',
     'status_closed' => 'مُغلق',

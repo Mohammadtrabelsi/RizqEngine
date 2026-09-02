@@ -218,7 +218,7 @@
             @endcan
 
             {{-- INSIGHT --}}
-            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units'])
+            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units', 'access_drivers', 'access_vehicles'])
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
             @endcanany
             @can('access_reports')
@@ -242,7 +242,7 @@
             </li>
             @endcan
 
-            @canany(['access_currencies', 'access_settings', 'access_units'])
+            @canany(['access_currencies', 'access_settings', 'access_units', 'access_drivers', 'access_vehicles'])
             <li class="app-sidebar-item {{ $inSettings ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSettings ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSettings ? 'true' : 'false' }}">
                     <span>{{ __('nav.settings') }}</span>
@@ -254,6 +254,12 @@
                     @endcan
                     @can('access_units')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('units*') ? 'is-active' : '' }}" href="{{ route('units.index') }}">{{ __('menu.units') }}</a></li>
+                    @endcan
+                    @can('access_drivers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('drivers*') ? 'is-active' : '' }}" href="{{ route('drivers.index') }}">{{ __('menu.drivers') }}</a></li>
+                    @endcan
+                    @can('access_vehicles')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('vehicles*') ? 'is-active' : '' }}" href="{{ route('vehicles.index') }}">{{ __('menu.vehicles') }}</a></li>
                     @endcan
                     @can('access_currencies')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('currencies*') ? 'is-active' : '' }}" href="{{ route('currencies.index') }}">{{ __('menu.currencies') }}</a></li>

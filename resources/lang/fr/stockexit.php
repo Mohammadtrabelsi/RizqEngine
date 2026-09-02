@@ -10,6 +10,7 @@ return [
     'entry_details' => 'Détails du bon d\'entrée',
     'no_exits_found' => 'Aucun bon de sortie trouvé',
     'no_products_selected' => 'Aucun produit sélectionné',
+    'out_of_stock' => 'Rupture de stock : ce produit ne peut pas sortir.',
 
     'reference' => 'Référence',
     'auto_generated' => 'Générée automatiquement',
@@ -24,6 +25,11 @@ return [
     'reason_jobsite' => 'Chantier',
     'reason_subcontracting' => 'Sous-traitance',
     'reason_transfer' => 'Transfert',
+
+    'driver' => 'Chauffeur',
+    'vehicle' => 'Véhicule',
+    'select_driver' => '— Sélectionner un chauffeur —',
+    'select_vehicle' => '— Sélectionner un véhicule —',
 
     'status_in_transit' => 'En transit / Déstocké',
     'status_closed' => 'Clôturé',

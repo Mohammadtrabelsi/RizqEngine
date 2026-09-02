@@ -128,6 +128,12 @@
                 @can('access_units')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('units*') ? 'is-active' : '' }}" href="{{ route('units.index') }}"><i class="bi bi-calculator"></i> <span>{{ __('menu.units') }}</span></a></li>
                 @endcan
+                @can('access_drivers')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('drivers*') ? 'is-active' : '' }}" href="{{ route('drivers.index') }}"><i class="bi bi-person-badge"></i> <span>{{ __('menu.drivers') }}</span></a></li>
+                @endcan
+                @can('access_vehicles')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('vehicles*') ? 'is-active' : '' }}" href="{{ route('vehicles.index') }}"><i class="bi bi-truck"></i> <span>{{ __('menu.vehicles') }}</span></a></li>
+                @endcan
                 @can('access_currencies')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('currencies*') ? 'is-active' : '' }}" href="{{ route('currencies.index') }}"><i class="bi bi-cash-stack"></i> <span>{{ __('menu.currencies') }}</span></a></li>
                 @endcan

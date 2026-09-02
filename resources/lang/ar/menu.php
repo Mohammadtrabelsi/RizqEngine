@@ -59,5 +59,7 @@ return [
     'transactions' => 'المعاملات',
     'system-settings' => 'إعدادات النظام',
     'units' => 'الوحدات',
+    'drivers' => 'السائقون',
+    'vehicles' => 'المركبات',
     'user-management' => 'إدارة المستخدمين',
 ];

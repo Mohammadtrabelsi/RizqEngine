@@ -59,7 +59,7 @@ class StockExitService
      */
     public function loadForShow(StockExit $stockExit): StockExit
     {
-        return $stockExit->load(['details.product', 'entries.details.product', 'user']);
+        return $stockExit->load(['details.product', 'entries.details.product', 'user', 'driver', 'vehicle']);
     }
 
     /**
@@ -97,7 +97,7 @@ class StockExitService
     /**
      * Create and validate a Bon de Sortie, decreasing real stock.
      *
-     * @param  array<string, mixed>  $attributes  date, reason, destination, responsible, note
+     * @param  array<string, mixed>  $attributes  date, reason, destination, responsible, driver_id, vehicle_id, note
      * @param  array<int, array{product_id:int, quantity:int}>  $lines
      */
     public function createExit(array $attributes, array $lines): StockExit
@@ -108,6 +108,8 @@ class StockExitService
                 'reason' => $attributes['reason'] ?? null,
                 'destination' => $attributes['destination'] ?? null,
                 'responsible' => $attributes['responsible'] ?? null,
+                'driver_id' => $attributes['driver_id'] ?? null,
+                'vehicle_id' => $attributes['vehicle_id'] ?? null,
                 'note' => $attributes['note'] ?? null,
                 'status' => StockExit::STATUS_IN_TRANSIT,
                 'user_id' => auth()->id(),
