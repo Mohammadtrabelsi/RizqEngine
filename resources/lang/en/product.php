@@ -8,6 +8,8 @@ return [
     'alert_threshold' => 'Alert threshold',
     'barcode' => 'Barcode',
     'barcode_symbology' => 'Barcode Symbology',
+    'by_cost' => 'By cost',
+    'by_price' => 'By price',
     'categories' => 'Categories',
     'category' => 'Category',
     'category_code' => 'Category code',

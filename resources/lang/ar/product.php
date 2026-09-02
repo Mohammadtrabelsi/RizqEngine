@@ -6,6 +6,8 @@ return [
     'alert_threshold' => 'حد التنبيه',
     'barcode' => 'الباركود',
     'barcode_symbology' => 'ترميز الباركود',
+    'by_cost' => 'حسب التكلفة',
+    'by_price' => 'حسب السعر',
     'categories' => 'الفئات',
     'category' => 'الفئة',
     'category_code' => 'رمز الفئة',

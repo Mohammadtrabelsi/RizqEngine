@@ -8,6 +8,8 @@ return [
     'alert_threshold' => 'Seuil d\'alerte',
     'barcode' => 'Code-barres',
     'barcode_symbology' => 'Symbologie du code-barres',
+    'by_cost' => 'Par coût',
+    'by_price' => 'Par prix',
     'categories' => 'Catégories',
     'category' => 'Catégorie',
     'category_code' => 'Code de la catégorie',
