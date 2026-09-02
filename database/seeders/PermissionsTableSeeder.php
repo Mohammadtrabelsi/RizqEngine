@@ -156,7 +156,7 @@ class PermissionsTableSeeder extends Seeder
     }
 
     /**
-     * Seed the three business roles shown in the Triangle POS design system.
+     * Seed the three business roles shown in the RizqEngine design system.
      * These gate the sidebar via the same @can permission checks the app
      * already uses — a user's role determines exactly which nav sections
      * (and screens) they can reach.

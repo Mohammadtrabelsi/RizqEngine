@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — secondary (inline) navigation bar.
+    RizqEngine — secondary (inline) navigation bar.
     Renders the items of the currently-active primary section inline,
     replacing the old hover dropdowns. Shown only for sections that have
     more than a single destination.

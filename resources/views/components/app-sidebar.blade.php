@@ -4,7 +4,7 @@
 <aside {{ $attributes->merge(['class' => 'flex h-full flex-col gap-[26px] bg-ink px-4 py-[22px] text-white']) }}>
     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-2">
         <x-logo-mark tone="dark" />
-        <span class="font-display text-base font-bold">Triangle POS</span>
+        <span class="font-display text-base font-bold">RizqEngine</span>
     </a>
 
     @foreach ($groups as $groupKey => $items)

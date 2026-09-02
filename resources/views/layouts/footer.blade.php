@@ -1,13 +1,13 @@
-{{-- Triangle POS — shared admin footer (unified redesign shell look). --}}
+{{-- RizqEngine — shared admin footer (unified redesign shell look). --}}
 <footer class="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-hairline bg-canvas px-5 py-4 text-[12.5px] text-body lg:px-8">
     <div class="flex items-center gap-2.5">
         <x-logo-mark tone="light" />
-        <span class="font-display text-sm font-bold text-ink">Triangle POS</span>
+        <span class="font-display text-sm font-bold text-ink">RizqEngine</span>
         <span class="hidden text-muted sm:inline">· {{ __('app.point-of-sale') }}</span>
     </div>
 
     <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <span>&copy; {{ date('Y') }} Triangle POS. {{ __('app.all-rights-reserved') }}</span>
+        <span>&copy; {{ date('Y') }} RizqEngine. {{ __('app.all-rights-reserved') }}</span>
         <span class="text-hairline">•</span>
         <span>
             {{ __('app.developed-by') }}
