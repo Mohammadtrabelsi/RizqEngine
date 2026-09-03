@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\Drivers\DriverForm;
+use App\Livewire\Vehicles\VehicleForm;
 use App\Models\Driver;
 use App\Models\Product;
 use App\Models\StockExit;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
@@ -30,8 +33,8 @@ class DriverVehicleTest extends TestCase
     {
         $user = $this->userWith(['access_drivers', 'create_drivers']);
 
-        \Livewire\Livewire::actingAs($user)
-            ->test(\App\Livewire\Drivers\DriverForm::class)
+        Livewire::actingAs($user)
+            ->test(DriverForm::class)
             ->set('name', 'Ali Ben Salah')
             ->set('phone', '20123456')
             ->set('license_number', 'TN-42')
@@ -48,8 +51,8 @@ class DriverVehicleTest extends TestCase
     {
         $user = $this->userWith(['access_vehicles', 'create_vehicles']);
 
-        \Livewire\Livewire::actingAs($user)
-            ->test(\App\Livewire\Vehicles\VehicleForm::class)
+        Livewire::actingAs($user)
+            ->test(VehicleForm::class)
             ->set('registration', '123-TUN-45')
             ->set('brand', 'Renault')
             ->set('model', 'Master')

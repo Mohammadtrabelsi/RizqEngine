@@ -179,7 +179,7 @@ class SaleService
      * cents to match the rest of the sales pipeline.
      *
      * @param  array<int, array{product:Product, quantity:int, unit_price:int}>  $lines
-     *                                                                            unit_price is expressed in cents.
+     *                                                                                   unit_price is expressed in cents.
      * @param  array<string, mixed>  $meta  date, note, payment_method
      */
     public function createInvoiceFromLines(Customer $customer, array $lines, array $meta = []): Sale

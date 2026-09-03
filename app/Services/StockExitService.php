@@ -172,7 +172,7 @@ class StockExitService
      * Bon de Sortie is closed automatically once every line is fully settled.
      *
      * @param  array<int, array{detail_id:int, returned:int, lost?:int}>  $received
-     *                                                                              The physically confirmed return (and optional write-off) per exit line.
+     *                                                                               The physically confirmed return (and optional write-off) per exit line.
      *
      * @throws StockInconsistencyException when the exit is already closed, when a
      *                                     line's returned+lost exceeds what is still

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\StockInconsistencyException;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\StockExit;
 use App\Services\StockExitService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -130,7 +130,7 @@ class ConsignmentStockExitTest extends TestCase
 
         $detail = $exit->details()->first();
 
-        $this->expectException(\App\Exceptions\StockInconsistencyException::class);
+        $this->expectException(StockInconsistencyException::class);
         $service->createConsignmentReturn(
             $exit->fresh(),
             [['detail_id' => $detail->id, 'returned' => 11]],
