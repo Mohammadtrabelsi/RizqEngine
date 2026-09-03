@@ -196,7 +196,7 @@ class StockExitService
             ];
         }
 
-        $details = $stockExit->details()->get();
+        $details = $stockExit->details()->with('product')->get();
 
         // Pre-flight: block the whole operation on any inconsistency before we
         // touch the stock — never settle more than what is still outstanding.
