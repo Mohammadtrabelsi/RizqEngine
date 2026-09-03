@@ -27,7 +27,8 @@ class NavigationComposer
             'inImports' => Request::routeIs('products.import') || Request::routeIs('customers.import') || Request::routeIs('suppliers.import'),
             'inReports' => Request::routeIs('*-report.index'),
             'inUsers' => Request::routeIs('users*') || Request::routeIs('roles*'),
-            'inSettings' => Request::routeIs('currencies*') || Request::routeIs('units*') || Request::routeIs('settings*') || Request::routeIs('drivers*') || Request::routeIs('vehicles*'),
+            'inFleet' => Request::routeIs('drivers*') || Request::routeIs('vehicles*'),
+            'inSettings' => Request::routeIs('currencies*') || Request::routeIs('units*') || Request::routeIs('settings*'),
         ];
 
         $flags['hasSecondary'] = in_array(true, $flags, true);
