@@ -208,6 +208,15 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
     Route::get('/vehicles', VehicleIndex::class)->name('vehicles.index');
     Route::get('/vehicles/create', VehicleForm::class)->name('vehicles.create');
     Route::get('/vehicles/{vehicle}/edit', VehicleForm::class)->name('vehicles.edit');
+
+    // Warehouses (dépôts) — full-page Livewire components.
+    Route::get('/warehouses', \App\Livewire\Warehouses\WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/warehouses/create', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.create');
+    Route::get('/warehouses/{warehouse}/edit', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.edit');
+
+    // Stock transfers between warehouses.
+    Route::get('/stock-transfers', \App\Livewire\StockTransfers\StockTransferIndex::class)->name('stock-transfers.index');
+    Route::get('/stock-transfers/create', \App\Livewire\StockTransfers\StockTransferForm::class)->name('stock-transfers.create');
 });
 
 Route::group(['middleware' => 'auth'], function () {

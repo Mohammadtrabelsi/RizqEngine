@@ -258,6 +258,25 @@
             </li>
             @endcanany
 
+            @canany(['access_warehouses', 'access_stock_transfers'])
+            @php($inWarehousing = request()->routeIs('warehouses*') || request()->routeIs('stock-transfers*'))
+            <li class="app-sidebar-heading">{{ __('warehouses.warehouses') }}</li>
+            <li class="app-sidebar-item {{ $inWarehousing ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inWarehousing ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inWarehousing ? 'true' : 'false' }}">
+                    <span>{{ __('warehouses.warehouses') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inWarehousing ? 'is-open' : '' }}">
+                    @can('access_warehouses')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses*') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    @endcan
+                    @can('access_stock_transfers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-transfers*') ? 'is-active' : '' }}" href="{{ route('stock-transfers.index') }}">{{ __('warehouses.stock_transfers') }}</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endcanany
+
             {{-- INSIGHT --}}
             @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units'])
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
