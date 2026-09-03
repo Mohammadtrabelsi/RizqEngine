@@ -41,6 +41,32 @@ if (! function_exists('default_category_image')) {
     }
 }
 
+if (! function_exists('default_supplier_image')) {
+    function default_supplier_image()
+    {
+        try {
+            $path = settings()->default_supplier_image;
+        } catch (Throwable $e) {
+            $path = null;
+        }
+
+        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_profile_image.png');
+    }
+}
+
+if (! function_exists('default_customer_image')) {
+    function default_customer_image()
+    {
+        try {
+            $path = settings()->default_customer_image;
+        } catch (Throwable $e) {
+            $path = null;
+        }
+
+        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_profile_image.png');
+    }
+}
+
 if (! function_exists('format_currency')) {
     function format_currency($value, $format = true)
     {

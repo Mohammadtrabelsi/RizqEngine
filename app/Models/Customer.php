@@ -61,8 +61,15 @@ class Customer extends Model implements HasMedia
         return $this->client_type === self::TYPE_LEGAL_ENTITY;
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')
+            ->useFallbackUrl(default_customer_image());
+    }
+
     /**
-     * URL of the customer's profile image, or an empty string when none is set.
+     * URL of the customer's profile image, or the configured fallback when
+     * none is set.
      */
     public function getImageUrlAttribute(): string
     {

@@ -39,6 +39,8 @@ class SettingController extends Controller
         $this->settings->update($data, [
             'default_product_image' => $request->file('default_product_image'),
             'default_category_image' => $request->file('default_category_image'),
+            'default_supplier_image' => $request->file('default_supplier_image'),
+            'default_customer_image' => $request->file('default_customer_image'),
         ]);
 
         session()->flash('info', trans('setting.settings-updated'));

@@ -27,6 +27,8 @@ class StoreSettingsRequest extends FormRequest
             'footer_text' => 'nullable|string|max:255',
             'default_product_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'default_category_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'default_supplier_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'default_customer_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
         ];
     }
 
