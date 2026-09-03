@@ -17,6 +17,7 @@
     </div>
 
     <span class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-white px-2.5 py-1 font-mono text-[11px] font-semibold text-ink-3">
-        <span class="h-[5px] w-[5px] rounded-full bg-ok"></span>{{ __('app.version') }} v3.4.0
+        <span class="h-[5px] w-[5px] rounded-full bg-ok"></span>{{ __('app.version') }} v3.6.0
+
     </span>
 </footer>
