@@ -6,10 +6,13 @@ return [
     'dashboard' => 'لوحة التحكم',
     'expenses' => 'المصروفات',
     'features' => 'الميزات',
+    'fleet' => 'الأسطول',
     'group' => [
+        'fleet' => 'الأسطول',
         'imports' => 'استيراد البيانات',
     ],
     'group.$groupKey' => 'المجموعة $groupKey',
+    'group.fleet' => 'الأسطول',
     'group.imports' => 'استيراد البيانات',
     'group.insight' => 'رؤية المجموعة',
     'imports' => 'استيراد CSV',
