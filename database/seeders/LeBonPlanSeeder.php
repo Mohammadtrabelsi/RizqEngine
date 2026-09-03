@@ -63,6 +63,19 @@ class LeBonPlanSeeder extends Seeder
 
         $code = 1;
         foreach ($products as [$name, $cost, $price, $supplier]) {
+            // The source spreadsheet leaves many cheap fittings priced at 0
+            // (their unit price in millimes rounds down to 0 dinar) and carries
+            // no on-hand stock. Every product must have a real cost, a real
+            // selling price and a positive stock, so apply sensible floors:
+            // a minimum 1 DT cost, a selling price that is at least the cost
+            // (with a small margin when the sheet listed them equal), and a
+            // starting quantity above the reorder threshold.
+            $cost = max((int) $cost, 1);
+            $price = max((int) $price, $cost);
+            if ($price <= $cost) {
+                $price = $cost + (int) max(1, ceil($cost * 0.15));
+            }
+
             Product::firstOrCreate(
                 ['product_name' => $name],
                 [
@@ -70,11 +83,11 @@ class LeBonPlanSeeder extends Seeder
                     'supplier_id' => $supplier?->id,
                     'product_code' => 'LBP'.str_pad((string) $code, 5, '0', STR_PAD_LEFT),
                     'product_barcode_symbology' => 'C128',
-                    'product_quantity' => 0,
+                    'product_quantity' => 25,
                     'product_cost' => $cost,
                     'product_price' => $price,
                     'product_unit' => 'PC',
-                    'product_stock_alert' => 1,
+                    'product_stock_alert' => 5,
                     'product_order_tax' => 0,
                     'product_tax_type' => 1,
                 ]
