@@ -12,34 +12,44 @@
 // meant the modal never opened and the "Proceed" button appeared to do nothing.
 function bindPosCheckoutModal() {
     const $ = window.jQuery;
-    const config = document.getElementById('money-mask-config');
 
-    if (!$ || typeof $.fn.maskMoney === 'undefined' || !config) {
+    // jQuery is required to show the Bootstrap modal at all. Everything else
+    // (the money mask, the config element) is a progressive enhancement — the
+    // modal must still open so the cashier can complete the sale even when the
+    // maskMoney plugin failed to load.
+    if (!$) {
         return;
     }
 
-    const base = {
-        prefix: config.dataset.prefix || '',
-        thousands: config.dataset.thousands || '',
-        decimal: config.dataset.decimal || '',
-    };
+    const config = document.getElementById('money-mask-config');
+    const hasMask = typeof $.fn.maskMoney !== 'undefined';
+
+    const base = config
+        ? {
+            prefix: config.dataset.prefix || '',
+            thousands: config.dataset.thousands || '',
+            decimal: config.dataset.decimal || '',
+        }
+        : {};
 
     Livewire.on('showCheckoutModal', function () {
         $('#checkoutModal').modal('show');
 
-        $('#paid_amount').maskMoney(Object.assign({}, base, { allowZero: false }));
-        $('#total_amount').maskMoney(Object.assign({}, base, { allowZero: true }));
+        if (hasMask && config) {
+            $('#paid_amount').maskMoney(Object.assign({}, base, { allowZero: false }));
+            $('#total_amount').maskMoney(Object.assign({}, base, { allowZero: true }));
 
-        $('#paid_amount').maskMoney('mask');
-        $('#total_amount').maskMoney('mask');
+            $('#paid_amount').maskMoney('mask');
+            $('#total_amount').maskMoney('mask');
 
-        const form = document.getElementById('checkout-form');
-        if (form && !form.__posBound) {
-            form.__posBound = true;
-            $(form).submit(function () {
-                $('#paid_amount').val($('#paid_amount').maskMoney('unmasked')[0]);
-                $('#total_amount').val($('#total_amount').maskMoney('unmasked')[0]);
-            });
+            const form = document.getElementById('checkout-form');
+            if (form && !form.__posBound) {
+                form.__posBound = true;
+                $(form).submit(function () {
+                    $('#paid_amount').val($('#paid_amount').maskMoney('unmasked')[0]);
+                    $('#total_amount').val($('#total_amount').maskMoney('unmasked')[0]);
+                });
+            }
         }
     });
 }
