@@ -43,6 +43,14 @@
             </li>
             @endcan
 
+            @can('access_cash_register')
+            <li class="app-sidebar-item {{ request()->routeIs('cash-register.*') ? 'is-active' : '' }}">
+                <a class="app-sidebar-link" href="{{ route('cash-register.index') }}">
+                    <span class="app-sidebar-dot"></span> <span>{{ __('cash_register.cash_register') }}</span>
+                </a>
+            </li>
+            @endcan
+
             {{-- TRANSACTIONS --}}
             <li class="app-sidebar-heading">{{ __('nav.group.transactions') }}</li>
 
@@ -253,6 +261,31 @@
                     @endcan
                     @can('access_vehicles')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('vehicles*') ? 'is-active' : '' }}" href="{{ route('vehicles.index') }}">{{ __('menu.vehicles') }}</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            @canany(['access_warehouses', 'access_stock_transfers', 'access_batches', 'access_serial_numbers'])
+            @php($inWarehousing = request()->routeIs('warehouses*') || request()->routeIs('stock-transfers*') || request()->routeIs('batches*') || request()->routeIs('serial-numbers*'))
+            <li class="app-sidebar-heading">{{ __('warehouses.warehouses') }}</li>
+            <li class="app-sidebar-item {{ $inWarehousing ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inWarehousing ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inWarehousing ? 'true' : 'false' }}">
+                    <span>{{ __('warehouses.warehouses') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inWarehousing ? 'is-open' : '' }}">
+                    @can('access_warehouses')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses*') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    @endcan
+                    @can('access_stock_transfers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-transfers*') ? 'is-active' : '' }}" href="{{ route('stock-transfers.index') }}">{{ __('warehouses.stock_transfers') }}</a></li>
+                    @endcan
+                    @can('access_batches')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('batches*') ? 'is-active' : '' }}" href="{{ route('batches.index') }}">{{ __('batches.batches') }}</a></li>
+                    @endcan
+                    @can('access_serial_numbers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('serial-numbers*') ? 'is-active' : '' }}" href="{{ route('serial-numbers.index') }}">{{ __('batches.serial_numbers') }}</a></li>
                     @endcan
                 </ul>
             </li>

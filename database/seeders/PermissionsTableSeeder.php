@@ -57,6 +57,25 @@ class PermissionsTableSeeder extends Seeder
             'create_vehicles',
             'edit_vehicles',
             'delete_vehicles',
+            // Warehouses (Dépôts) & Stock transfers
+            'access_warehouses',
+            'create_warehouses',
+            'edit_warehouses',
+            'delete_warehouses',
+            'access_stock_transfers',
+            'create_stock_transfers',
+            // Batches & Serial numbers (Traçabilité)
+            'access_batches',
+            'create_batches',
+            'edit_batches',
+            'delete_batches',
+            'access_serial_numbers',
+            // Customer credit (Ventes à crédit)
+            'manage_customer_credit',
+            // Cash register (Clôture de caisse)
+            'access_cash_register',
+            'open_cash_register',
+            'close_cash_register',
             // Quotaions
             'access_quotations',
             'create_quotations',

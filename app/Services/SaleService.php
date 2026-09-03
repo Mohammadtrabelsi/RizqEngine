@@ -27,6 +27,7 @@ class SaleService
     public function __construct(
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
+        private readonly CustomerCreditService $credit,
     ) {}
 
     /**
@@ -247,11 +248,20 @@ class SaleService
             $dueAmount = $data['total_amount'] - $data['paid_amount'];
             $paymentStatus = $this->paymentStatus->resolve($dueAmount, $data['total_amount']);
 
+            $customer = Customer::findOrFail($data['customer_id']);
+
+            // Block the register when the credit portion of this sale would push
+            // the customer past their approved limit; this throws and rolls the
+            // whole sale back before any stock is removed.
+            if ($dueAmount > 0) {
+                $this->credit->charge($customer, (int) round($dueAmount * 100));
+            }
+
             $sale = Sale::create([
                 'date' => now()->format('Y-m-d'),
                 'reference' => 'PSL',
                 'customer_id' => $data['customer_id'],
-                'customer_name' => Customer::findOrFail($data['customer_id'])->customer_name,
+                'customer_name' => $customer->customer_name,
                 'tax_percentage' => $data['tax_percentage'],
                 'discount_percentage' => $data['discount_percentage'],
                 'shipping_amount' => $data['shipping_amount'] * 100,
@@ -492,6 +502,12 @@ class SaleService
                 'due_amount' => $dueAmount * 100,
                 'payment_status' => $paymentStatus,
             ]);
+
+            // Reduce the customer's outstanding credit balance by the payment.
+            $customer = Customer::find($sale->customer_id);
+            if ($customer !== null) {
+                $this->credit->settle($customer, (int) round($data['amount'] * 100));
+            }
 
             return $payment;
         });

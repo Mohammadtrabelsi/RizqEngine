@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'batches' => 'Lots',
+    'batch' => 'Lot',
+    'add_batch' => 'Ajouter un lot',
+    'edit_batch' => 'Modifier le lot',
+    'create_batch' => 'Créer le lot',
+    'update_batch' => 'Mettre à jour le lot',
+    'batch_created' => 'Lot créé.',
+    'batch_updated' => 'Lot mis à jour.',
+    'batch_deleted' => 'Lot supprimé.',
+    'no_batches_found' => 'Aucun lot trouvé.',
+    'batch_number' => 'Numéro de lot',
+    'product' => 'Produit',
+    'warehouse' => 'Dépôt',
+    'quantity' => 'Quantité',
+    'manufactured_date' => 'Fabrication',
+    'expiry_date' => 'Péremption (DLC/DLUO)',
+    'expired' => 'Périmé',
+    'note' => 'Note',
+    'select_product' => 'Sélectionner un produit',
+
+    'serial_numbers' => 'Numéros de série',
+    'serial' => 'Numéro de série',
+    'status' => 'Statut',
+    'all_statuses' => 'Tous les statuts',
+    'change_status' => 'Changer le statut',
+    'register_serial' => 'Enregistrer',
+    'serial_registered' => 'Numéro de série enregistré.',
+    'no_serials_found' => 'Aucun numéro de série trouvé.',
+    'scan_or_type_serial' => 'Scanner ou saisir un numéro de série',
+];

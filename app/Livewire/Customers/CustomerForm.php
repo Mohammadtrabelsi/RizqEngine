@@ -41,6 +41,12 @@ class CustomerForm extends Component
 
     public string $note = '';
 
+    /**
+     * Approved credit limit expressed in the main currency unit (converted to
+     * cents on save to match the stored column).
+     */
+    public float $credit_limit = 0;
+
     public $image;
 
     public $document;
@@ -64,6 +70,7 @@ class CustomerForm extends Component
             $this->country = (string) $customer->country;
             $this->address = (string) $customer->address;
             $this->note = (string) $customer->note;
+            $this->credit_limit = (int) $customer->credit_limit / 100;
         } else {
             abort_if(Gate::denies('create_customers'), 403);
         }
@@ -91,6 +98,7 @@ class CustomerForm extends Component
             'country' => 'required|string|max:255',
             'address' => 'required|string|max:500',
             'note' => 'nullable|string|max:2000',
+            'credit_limit' => 'nullable|numeric|min:0',
             'image' => 'nullable|image|max:2048',
             'document' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,txt,jpg,jpeg,png|max:10240',
         ];
@@ -112,6 +120,15 @@ class CustomerForm extends Component
 
         $document = $data['document'] ?? null;
         unset($data['document']);
+
+        // The credit limit is a privileged field: only users allowed to manage
+        // customer credit may change it; otherwise the stored value is kept.
+        $creditLimit = $data['credit_limit'] ?? 0;
+        unset($data['credit_limit']);
+
+        if (Gate::allows('manage_customer_credit')) {
+            $data['credit_limit'] = (int) round((float) $creditLimit * 100);
+        }
 
         if ($this->customerId) {
             abort_if(Gate::denies('update_customers'), 403);

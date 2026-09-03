@@ -81,6 +81,16 @@
                                 @error('iban') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        @can('manage_customer_credit')
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ __('customers.credit_limit') }}</label>
+                                <input type="number" step="0.01" min="0" class="form-control @error('credit_limit') is-invalid @enderror" wire:model="credit_limit">
+                                <small class="text-muted">{{ __('customers.credit_limit_hint') }}</small>
+                                @error('credit_limit') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        @endcan
                     </div>
                     <div class="form-row">
                         <div class="col-lg-6">

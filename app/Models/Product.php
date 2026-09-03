@@ -84,6 +84,49 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * Warehouses this product is stocked in, with the per-warehouse on-hand
+     * quantity carried on the pivot.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Warehouse, $this>
+     */
+    public function warehouses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Warehouse::class, 'product_warehouse')
+            ->withPivot(['quantity', 'location_id'])
+            ->withTimestamps();
+    }
+
+    /**
+     * Batches (lots) recorded for this product.
+     *
+     * @return HasMany<Batch, $this>
+     */
+    public function batches(): HasMany
+    {
+        return $this->hasMany(Batch::class, 'product_id', 'id');
+    }
+
+    /**
+     * Serial numbers recorded for this product.
+     *
+     * @return HasMany<SerialNumber, $this>
+     */
+    public function serialNumbers(): HasMany
+    {
+        return $this->hasMany(SerialNumber::class, 'product_id', 'id');
+    }
+
+    /**
+     * On-hand quantity held in a specific warehouse (0 when none).
+     */
+    public function quantityInWarehouse(int $warehouseId): int
+    {
+        $pivot = $this->warehouses()->where('warehouses.id', $warehouseId)->first();
+
+        return $pivot ? (int) $pivot->pivot->quantity : 0;
+    }
+
+    /**
      * Sale line items referencing this product.
      *
      * @return HasMany<SaleDetails, $this>
