@@ -38,6 +38,7 @@ return [
     'quantity_returned' => 'Qty returned',
     'quantity_received' => 'Qty received',
     'quantity_lost' => 'Qty consumed/lost',
+    'quantity_outstanding' => 'Outstanding',
 
     'declare_return' => 'Declare return',
     'confirm_return' => 'Confirm return',
@@ -45,7 +46,7 @@ return [
     'origin_reference' => 'Origin exit reference',
     'linked_entries' => 'Linked entry vouchers',
     'exit_already_closed' => 'This exit voucher is already closed.',
-    'return_control_hint' => 'Physical control required: enter the quantity actually received. Any difference is booked as consumption/loss. No automatic restocking.',
+    'return_control_hint' => 'Physical control required: enter the quantity actually received (restocked) and, if needed, the quantity to write off as consumption/loss. Whatever is left stays "in transit" and can be returned later. The voucher is closed automatically once every line is settled.',
 
     'line_status' => 'Status',
     'full_return' => 'Full return',
@@ -54,7 +55,8 @@ return [
 
     'exit-created' => 'Exit voucher created successfully',
     'exit-deleted' => 'Exit voucher deleted successfully',
-    'entry-created' => 'Entry voucher created, exit voucher closed',
+    'entry-created' => 'Entry voucher recorded',
+    'entry-created-closed' => 'Entry voucher recorded, exit voucher closed',
 
     // Consignment / dépôt-vente
     'kind' => 'Exit type',

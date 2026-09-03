@@ -54,6 +54,7 @@
                                     <th class="text-end">{{ __('stockexit.quantity_sold') }}</th>
                                 @else
                                     <th class="text-end">{{ __('stockexit.quantity_lost') }}</th>
+                                    <th class="text-end">{{ __('stockexit.quantity_outstanding') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -68,6 +69,7 @@
                                         <td class="text-end">{{ $detail->sold_quantity }}</td>
                                     @else
                                         <td class="text-end">{{ $detail->lost_quantity }}</td>
+                                        <td class="text-end">{{ $detail->outstanding_quantity }}</td>
                                     @endif
                                 </tr>
                             @endforeach

@@ -94,6 +94,15 @@ class StockExit extends Model
         return $this->kind === self::KIND_CONSIGNMENT;
     }
 
+    /**
+     * Total quantity still expected back across every line (not yet returned,
+     * written off nor sold). Zero means the exit is fully settled.
+     */
+    public function getOutstandingQuantityAttribute(): int
+    {
+        return (int) $this->details->sum->outstanding_quantity;
+    }
+
     public static function boot()
     {
         parent::boot();
