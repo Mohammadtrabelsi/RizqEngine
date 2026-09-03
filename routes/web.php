@@ -217,6 +217,14 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
     // Stock transfers between warehouses.
     Route::get('/stock-transfers', \App\Livewire\StockTransfers\StockTransferIndex::class)->name('stock-transfers.index');
     Route::get('/stock-transfers/create', \App\Livewire\StockTransfers\StockTransferForm::class)->name('stock-transfers.create');
+
+    // Batches (lots) — traceability with DLC/DLUO.
+    Route::get('/batches', \App\Livewire\Batches\BatchIndex::class)->name('batches.index');
+    Route::get('/batches/create', \App\Livewire\Batches\BatchForm::class)->name('batches.create');
+    Route::get('/batches/{batch}/edit', \App\Livewire\Batches\BatchForm::class)->name('batches.edit');
+
+    // Serial numbers — individually tracked units.
+    Route::get('/serial-numbers', \App\Livewire\SerialNumbers\SerialNumberIndex::class)->name('serial-numbers.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {

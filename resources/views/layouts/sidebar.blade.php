@@ -258,8 +258,8 @@
             </li>
             @endcanany
 
-            @canany(['access_warehouses', 'access_stock_transfers'])
-            @php($inWarehousing = request()->routeIs('warehouses*') || request()->routeIs('stock-transfers*'))
+            @canany(['access_warehouses', 'access_stock_transfers', 'access_batches', 'access_serial_numbers'])
+            @php($inWarehousing = request()->routeIs('warehouses*') || request()->routeIs('stock-transfers*') || request()->routeIs('batches*') || request()->routeIs('serial-numbers*'))
             <li class="app-sidebar-heading">{{ __('warehouses.warehouses') }}</li>
             <li class="app-sidebar-item {{ $inWarehousing ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inWarehousing ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inWarehousing ? 'true' : 'false' }}">
@@ -272,6 +272,12 @@
                     @endcan
                     @can('access_stock_transfers')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-transfers*') ? 'is-active' : '' }}" href="{{ route('stock-transfers.index') }}">{{ __('warehouses.stock_transfers') }}</a></li>
+                    @endcan
+                    @can('access_batches')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('batches*') ? 'is-active' : '' }}" href="{{ route('batches.index') }}">{{ __('batches.batches') }}</a></li>
+                    @endcan
+                    @can('access_serial_numbers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('serial-numbers*') ? 'is-active' : '' }}" href="{{ route('serial-numbers.index') }}">{{ __('batches.serial_numbers') }}</a></li>
                     @endcan
                 </ul>
             </li>
