@@ -25,7 +25,10 @@ use Illuminate\Support\Facades\DB;
  */
 class StockExitService
 {
-    public function __construct(private StockService $stockService) {}
+    public function __construct(
+        private StockService $stockService,
+        private SaleService $saleService,
+    ) {}
 
     /**
      * Paginate stock exits (with a count of their detail lines), optionally
@@ -59,7 +62,7 @@ class StockExitService
      */
     public function loadForShow(StockExit $stockExit): StockExit
     {
-        return $stockExit->load(['details.product', 'entries.details.product', 'user', 'driver', 'vehicle']);
+        return $stockExit->load(['details.product', 'entries.details.product', 'entries.sale', 'customer', 'user', 'driver', 'vehicle']);
     }
 
     /**
@@ -67,7 +70,7 @@ class StockExitService
      */
     public function loadForEntry(StockExit $stockExit): StockExit
     {
-        return $stockExit->load('details.product');
+        return $stockExit->load('details.product', 'customer');
     }
 
     /**
@@ -103,8 +106,14 @@ class StockExitService
     public function createExit(array $attributes, array $lines): StockExit
     {
         return DB::transaction(function () use ($attributes, $lines) {
+            $kind = ($attributes['kind'] ?? StockExit::KIND_STANDARD) === StockExit::KIND_CONSIGNMENT
+                ? StockExit::KIND_CONSIGNMENT
+                : StockExit::KIND_STANDARD;
+
             $stockExit = StockExit::create([
                 'date' => $attributes['date'],
+                'kind' => $kind,
+                'customer_id' => $kind === StockExit::KIND_CONSIGNMENT ? ($attributes['customer_id'] ?? null) : null,
                 'reason' => $attributes['reason'] ?? null,
                 'destination' => $attributes['destination'] ?? null,
                 'responsible' => $attributes['responsible'] ?? null,
@@ -140,6 +149,10 @@ class StockExitService
                     'quantity' => $quantity,
                     'returned_quantity' => 0,
                     'lost_quantity' => 0,
+                    'sold_quantity' => 0,
+                    // Snapshot the selling price (cents) so régularisation bills
+                    // the sold portion at the price in force when goods left.
+                    'unit_price' => (int) round($product->product_price * 100),
                 ]);
             }
 
@@ -221,6 +234,124 @@ class StockExitService
                     'returned_quantity' => $returned,
                     'lost_quantity' => $lost,
                 ]);
+            }
+
+            $stockExit->update(['status' => StockExit::STATUS_CLOSED]);
+
+            return $entry->refresh();
+        });
+    }
+
+    /**
+     * Regularise a consignment (dépôt-vente) Bon de Sortie.
+     *
+     * Records the unsold quantity that physically came back (Bon de Retour),
+     * restocks exactly that quantity and treats the rest as sold:
+     *
+     *     Stock Vendu = Q_init - Q_retour
+     *
+     * The sold portion is invoiced to the consignee at the price snapshotted
+     * when the goods left — it is NOT destocked again, since the Bon de Sortie
+     * already removed it from inventory at emission. The originating Bon de
+     * Sortie is then closed.
+     *
+     * @param  array<int, array{detail_id:int, returned:int}>  $received
+     *
+     * @throws StockInconsistencyException when the exit is not a consignment,
+     *                                     is already closed, or a returned
+     *                                     quantity exceeds what went out.
+     */
+    public function createConsignmentReturn(StockExit $stockExit, array $received, ?string $note = null, ?string $date = null): StockEntry
+    {
+        if (! $stockExit->isConsignment()) {
+            throw new StockInconsistencyException(
+                "Bon de Sortie {$stockExit->reference} is not a consignment exit."
+            );
+        }
+
+        if ($stockExit->isClosed()) {
+            throw new StockInconsistencyException(
+                "Bon de Sortie {$stockExit->reference} is already closed."
+            );
+        }
+
+        $returnedByDetail = [];
+        foreach ($received as $row) {
+            $returnedByDetail[(int) $row['detail_id']] = max(0, (int) $row['returned']);
+        }
+
+        $details = $stockExit->details()->with('product')->get();
+
+        // Pre-flight: never accept a return larger than what went out.
+        foreach ($details as $detail) {
+            $returned = $returnedByDetail[$detail->id] ?? 0;
+
+            if ($returned > $detail->quantity) {
+                throw new StockInconsistencyException(
+                    "Incohérence de Stock: returned {$returned} unit(s) for \"{$detail->product->product_name}\" "
+                    ."but only {$detail->quantity} went out on {$stockExit->reference}."
+                );
+            }
+        }
+
+        return DB::transaction(function () use ($stockExit, $details, $returnedByDetail, $note, $date) {
+            $entry = StockEntry::create([
+                'stock_exit_id' => $stockExit->id,
+                'date' => $date ?? now()->toDateString(),
+                'note' => $note,
+                'user_id' => auth()->id(),
+            ]);
+
+            $invoiceLines = [];
+
+            foreach ($details as $detail) {
+                $returned = $returnedByDetail[$detail->id] ?? 0;
+                $sold = $detail->quantity - $returned; // Stock Vendu = Q_init - Q_retour
+
+                if ($returned > 0) {
+                    $this->stockService->stockIn(
+                        $detail->product,
+                        $returned,
+                        note: "Bon de Retour {$entry->reference}",
+                        referenceType: 'StockEntry',
+                        referenceId: $entry->id,
+                    );
+                }
+
+                if ($sold > 0) {
+                    $invoiceLines[] = [
+                        'product' => $detail->product,
+                        'quantity' => $sold,
+                        'unit_price' => (int) ($detail->unit_price ?? round($detail->product->product_price * 100)),
+                    ];
+                }
+
+                StockEntryDetail::create([
+                    'stock_entry_id' => $entry->id,
+                    'product_id' => $detail->product_id,
+                    'quantity_out' => $detail->quantity,
+                    'quantity_returned' => $returned,
+                    'quantity_lost' => $sold, // regularised as sold, not lost
+                ]);
+
+                $detail->update([
+                    'returned_quantity' => $returned,
+                    'sold_quantity' => $sold,
+                ]);
+            }
+
+            // Régularisation: invoice the sold portion to the consignee.
+            if ($invoiceLines !== [] && $stockExit->customer) {
+                $sale = $this->saleService->createInvoiceFromLines(
+                    $stockExit->customer,
+                    $invoiceLines,
+                    [
+                        'date' => $date ?? now()->toDateString(),
+                        'note' => "Régularisation dépôt {$stockExit->reference}",
+                    ],
+                );
+
+                $entry->update(['sale_id' => $sale->id]);
             }
 
             $stockExit->update(['status' => StockExit::STATUS_CLOSED]);
