@@ -129,6 +129,29 @@
                                 </div>
                             </div>
 
+                            <div class="form-row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="default_supplier_image">{{ __('settings.default_supplier_image') }}</label>
+                                        <input type="file" class="form-control-file" name="default_supplier_image" id="default_supplier_image" accept="image/*">
+                                        <small class="form-text text-muted">{{ __('settings.default_image_hint') }}</small>
+                                        <div class="mt-2">
+                                            <img src="{{ default_supplier_image() }}" alt="{{ __('settings.default_supplier_image') }}" class="img-thumbnail" width="80">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="default_customer_image">{{ __('settings.default_customer_image') }}</label>
+                                        <input type="file" class="form-control-file" name="default_customer_image" id="default_customer_image" accept="image/*">
+                                        <small class="form-text text-muted">{{ __('settings.default_image_hint') }}</small>
+                                        <div class="mt-2">
+                                            <img src="{{ default_customer_image() }}" alt="{{ __('settings.default_customer_image') }}" class="img-thumbnail" width="80">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group mb-0">
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-check"></i> Save Changes</button>
                             </div>

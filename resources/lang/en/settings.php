@@ -9,6 +9,8 @@ return [
     'default_currency_position' => 'Default currency position',
     'default_product_image' => 'Default product image',
     'default_category_image' => 'Default category image',
+    'default_supplier_image' => 'Default supplier image',
+    'default_customer_image' => 'Default customer image',
     'default_image_hint' => 'Used when no image is uploaded. Max 2MB.',
     'general_settings' => 'General settings',
     'home' => 'Home',

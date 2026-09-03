@@ -26,8 +26,15 @@ class Supplier extends Model implements HasMedia
 
     protected $guarded = [];
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')
+            ->useFallbackUrl(default_supplier_image());
+    }
+
     /**
-     * URL of the supplier's profile image, or an empty string when none is set.
+     * URL of the supplier's profile image, or the configured fallback when
+     * none is set.
      */
     public function getImageUrlAttribute(): string
     {

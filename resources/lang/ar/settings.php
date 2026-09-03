@@ -9,6 +9,8 @@ return [
     'default_currency_position' => 'موقع العملة الافتراضي',
     'default_product_image' => 'صورة المنتج الافتراضية',
     'default_category_image' => 'صورة الفئة الافتراضية',
+    'default_supplier_image' => 'صورة المورد الافتراضية',
+    'default_customer_image' => 'صورة العميل الافتراضية',
     'default_image_hint' => 'تُستخدم عند عدم رفع صورة. الحد الأقصى 2 ميغابايت.',
     'general_settings' => 'الإعدادات العامة',
     'home' => 'الرئيسية',

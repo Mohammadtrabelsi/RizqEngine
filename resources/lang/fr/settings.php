@@ -9,6 +9,8 @@ return [
     'default_currency_position' => 'Position de la devise par défaut',
     'default_product_image' => 'Image de produit par défaut',
     'default_category_image' => 'Image de catégorie par défaut',
+    'default_supplier_image' => 'Image de fournisseur par défaut',
+    'default_customer_image' => 'Image de client par défaut',
     'default_image_hint' => "Utilisée lorsqu'aucune image n'est téléchargée. Max 2 Mo.",
     'general_settings' => 'Paramètres généraux',
     'home' => 'Accueil',
