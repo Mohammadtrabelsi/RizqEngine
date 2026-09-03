@@ -43,6 +43,14 @@
             </li>
             @endcan
 
+            @can('access_cash_register')
+            <li class="app-sidebar-item {{ request()->routeIs('cash-register.*') ? 'is-active' : '' }}">
+                <a class="app-sidebar-link" href="{{ route('cash-register.index') }}">
+                    <span class="app-sidebar-dot"></span> <span>{{ __('cash_register.cash_register') }}</span>
+                </a>
+            </li>
+            @endcan
+
             {{-- TRANSACTIONS --}}
             <li class="app-sidebar-heading">{{ __('nav.group.transactions') }}</li>
 

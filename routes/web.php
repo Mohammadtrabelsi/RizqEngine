@@ -225,6 +225,9 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
 
     // Serial numbers — individually tracked units.
     Route::get('/serial-numbers', \App\Livewire\SerialNumbers\SerialNumberIndex::class)->name('serial-numbers.index');
+
+    // Cash register (caisse) — open/close sessions and daily Z report.
+    Route::get('/cash-register', \App\Livewire\CashRegister\CashRegisterIndex::class)->name('cash-register.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {

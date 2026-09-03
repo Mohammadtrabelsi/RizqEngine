@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'cash_register' => 'Cash register',
+    'current_session' => 'Current session',
+    'open_session' => 'Open session',
+    'close_session' => 'Close session',
+    'open' => 'Open',
+    'closed' => 'Closed',
+    'opened_at' => 'Opened at',
+    'opening_float' => 'Opening float',
+    'cash_sales' => 'Cash sales',
+    'expected_cash' => 'Expected cash',
+    'counted_amount' => 'Counted amount',
+    'difference' => 'Difference',
+    'status' => 'Status',
+    'cashier' => 'Cashier',
+    'history' => 'Session history',
+    'note' => 'Note',
+    'no_sessions' => 'No sessions yet.',
+    'no_open_session' => 'You have no open session.',
+    'opened' => 'Cash register opened.',
+    'closed_flash' => 'Cash register closed.',
+    'already_open' => 'You already have an open cash-register session.',
+    'already_closed' => 'This cash-register session is already closed.',
+];

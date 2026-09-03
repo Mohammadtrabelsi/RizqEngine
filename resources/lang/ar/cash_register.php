@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'cash_register' => 'الصندوق',
+    'current_session' => 'الجلسة الحالية',
+    'open_session' => 'فتح الصندوق',
+    'close_session' => 'إغلاق الصندوق',
+    'open' => 'مفتوح',
+    'closed' => 'مغلق',
+    'opened_at' => 'فُتح في',
+    'opening_float' => 'رصيد الافتتاح',
+    'cash_sales' => 'المبيعات النقدية',
+    'expected_cash' => 'النقد المتوقع',
+    'counted_amount' => 'المبلغ المحسوب',
+    'difference' => 'الفرق',
+    'status' => 'الحالة',
+    'cashier' => 'أمين الصندوق',
+    'history' => 'سجل الجلسات',
+    'note' => 'ملاحظة',
+    'no_sessions' => 'لا توجد جلسات بعد.',
+    'no_open_session' => 'ليس لديك جلسة مفتوحة.',
+    'opened' => 'تم فتح الصندوق.',
+    'closed_flash' => 'تم إغلاق الصندوق.',
+    'already_open' => 'لديك بالفعل جلسة صندوق مفتوحة.',
+    'already_closed' => 'هذه الجلسة مغلقة بالفعل.',
+];
