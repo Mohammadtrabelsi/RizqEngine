@@ -87,7 +87,7 @@ class ProductImport extends CsvImport
         $code = (string) ($attributes['product_code'] ?? '');
         if ($code !== '') {
             if (in_array($code, $this->usedCodes, true)) {
-                $errors[] = __('product.import_code_exists', ['code' => $code]);
+                $errors[] = (string) __('product.import_code_exists', ['code' => $code]);
             }
             $this->usedCodes[] = $code;
         }
@@ -100,7 +100,7 @@ class ProductImport extends CsvImport
                 : ($this->categoriesByName[strtolower($category)] ?? null);
 
             if ($match === null) {
-                $errors[] = __('product.import_category_unknown', ['value' => $category]);
+                $errors[] = (string) __('product.import_category_unknown', ['value' => $category]);
             } else {
                 $attributes['category_id'] = $match->id;
             }
@@ -114,7 +114,7 @@ class ProductImport extends CsvImport
                 : ($this->suppliersByName[strtolower($supplier)] ?? null);
 
             if ($match === null) {
-                $errors[] = __('product.import_supplier_unknown', ['value' => $supplier]);
+                $errors[] = (string) __('product.import_supplier_unknown', ['value' => $supplier]);
             } else {
                 $attributes['supplier_id'] = $match->id;
             }

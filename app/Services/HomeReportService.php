@@ -103,8 +103,8 @@ class HomeReportService
     {
         return [
             ['label' => __('general.sales-today'), 'value' => format_currency($sales), 'meta' => __('general.completed-sales-today'), 'icon' => 'bi-bag-check'],
-            ['label' => __('general.transactions'), 'value' => $transactions, 'meta' => __('general.orders-today'), 'icon' => 'bi-receipt'],
-            ['label' => __('general.low-stock-items'), 'value' => $lowStock, 'meta' => __('general.needs-reorder'), 'icon' => 'bi-exclamation-triangle'],
+            ['label' => __('general.transactions'), 'value' => (string) $transactions, 'meta' => __('general.orders-today'), 'icon' => 'bi-receipt'],
+            ['label' => __('general.low-stock-items'), 'value' => (string) $lowStock, 'meta' => __('general.needs-reorder'), 'icon' => 'bi-exclamation-triangle'],
             ['label' => __('general.todays-expenses'), 'value' => format_currency($expenses), 'meta' => __('general.logged-today'), 'icon' => 'bi-wallet2'],
         ];
     }

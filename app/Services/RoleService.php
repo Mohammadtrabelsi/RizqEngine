@@ -55,7 +55,7 @@ class RoleService
         $role = Role::create(['name' => $name]);
         $role->givePermissionTo($permissions);
 
-        return $role;
+        return Role::findOrFail($role->getKey());
     }
 
     /**

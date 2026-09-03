@@ -136,7 +136,7 @@ abstract class CsvImport extends Component
 
         $header = fgetcsv($handle);
 
-        if ($header === false || $header === null) {
+        if ($header === false) {
             fclose($handle);
             $this->addError('file', __('import.empty_file'));
 
