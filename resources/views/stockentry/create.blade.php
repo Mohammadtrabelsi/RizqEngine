@@ -18,9 +18,13 @@
             <div class="card-body">
                 <h4 class="mb-1">{{ __('stockexit.bon_dentree') }}</h4>
                 <p class="text-muted">{{ __('stockexit.origin_reference') }}: <strong>{{ $stockExit->reference }}</strong></p>
+                @if($stockExit->isConsignment() && $stockExit->customer)
+                    <p class="text-muted">{{ __('stockexit.consignee') }}: <strong>{{ $stockExit->customer->customer_name }}</strong></p>
+                @endif
 
                 <div class="alert alert-info">
-                    <i class="bi bi-info-circle"></i> {{ __('stockexit.return_control_hint') }}
+                    <i class="bi bi-info-circle"></i>
+                    {{ $stockExit->isConsignment() ? __('stockexit.consignment_return_hint') : __('stockexit.return_control_hint') }}
                 </div>
 
                 <form action="{{ route('stock-entries.store', $stockExit->id) }}" method="POST">

@@ -60,19 +60,32 @@ class StockEntryController extends Controller
         }
 
         try {
-            $this->stockExitService->createEntry(
-                $stockExit,
-                $received,
-                $validated['note'] ?? null,
-                $validated['date'],
-            );
+            if ($stockExit->isConsignment()) {
+                $this->stockExitService->createConsignmentReturn(
+                    $stockExit,
+                    $received,
+                    $validated['note'] ?? null,
+                    $validated['date'],
+                );
+            } else {
+                $this->stockExitService->createEntry(
+                    $stockExit,
+                    $received,
+                    $validated['note'] ?? null,
+                    $validated['date'],
+                );
+            }
         } catch (StockInconsistencyException $e) {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
 
-        $message = $stockExit->fresh()->isClosed()
-            ? trans('stockexit.entry-created-closed')
-            : trans('stockexit.entry-created');
+        if ($stockExit->isConsignment()) {
+            $message = trans('stockexit.consignment-regularised');
+        } else {
+            $message = $stockExit->fresh()->isClosed()
+                ? trans('stockexit.entry-created-closed')
+                : trans('stockexit.entry-created');
+        }
 
         session()->flash('success', $message);
 

@@ -36,6 +36,10 @@
                 <div class="row mb-4">
                     <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.driver') }}</span>{{ $stockExit->driver?->name ?: '—' }}</div>
                     <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.vehicle') }}</span>{{ $stockExit->vehicle?->label ?: '—' }}</div>
+                    <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.kind') }}</span>{{ $stockExit->isConsignment() ? __('stockexit.kind_consignment') : __('stockexit.kind_standard') }}</div>
+                    @if($stockExit->isConsignment())
+                        <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.consignee') }}</span>{{ $stockExit->customer?->customer_name ?: '—' }}</div>
+                    @endif
                 </div>
 
                 <div class="table-responsive">
@@ -46,8 +50,12 @@
                                 <th>{{ __('product.name') }}</th>
                                 <th class="text-end">{{ __('stockexit.quantity_out') }}</th>
                                 <th class="text-end">{{ __('stockexit.quantity_returned') }}</th>
-                                <th class="text-end">{{ __('stockexit.quantity_lost') }}</th>
-                                <th class="text-end">{{ __('stockexit.quantity_outstanding') }}</th>
+                                @if($stockExit->isConsignment())
+                                    <th class="text-end">{{ __('stockexit.quantity_sold') }}</th>
+                                @else
+                                    <th class="text-end">{{ __('stockexit.quantity_lost') }}</th>
+                                    <th class="text-end">{{ __('stockexit.quantity_outstanding') }}</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -57,8 +65,12 @@
                                     <td>{{ translatable_string($detail->product->product_name) }}</td>
                                     <td class="text-end">{{ $detail->quantity }}</td>
                                     <td class="text-end">{{ $detail->returned_quantity }}</td>
-                                    <td class="text-end">{{ $detail->lost_quantity }}</td>
-                                    <td class="text-end">{{ $detail->outstanding_quantity }}</td>
+                                    @if($stockExit->isConsignment())
+                                        <td class="text-end">{{ $detail->sold_quantity }}</td>
+                                    @else
+                                        <td class="text-end">{{ $detail->lost_quantity }}</td>
+                                        <td class="text-end">{{ $detail->outstanding_quantity }}</td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -90,7 +102,14 @@
                         @foreach($stockExit->entries as $entry)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <a href="{{ route('stock-entries.show', $entry->id) }}">{{ $entry->reference }}</a>
-                                <span>{{ \Illuminate\Support\Carbon::parse($entry->date)->format('d M, Y') }}</span>
+                                <span>
+                                    @if($entry->sale)
+                                        <a href="{{ route('sales.show', $entry->sale_id) }}" class="badge bg-info text-dark text-decoration-none me-2">
+                                            <i class="bi bi-receipt"></i> {{ __('stockexit.generated_invoice') }}: {{ $entry->sale->reference }}
+                                        </a>
+                                    @endif
+                                    {{ \Illuminate\Support\Carbon::parse($entry->date)->format('d M, Y') }}
+                                </span>
                             </li>
                         @endforeach
                     </ul>

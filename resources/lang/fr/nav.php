@@ -6,7 +6,9 @@ return [
     'dashboard' => 'Tableau de bord',
     'expenses' => 'Dépenses',
     'features' => 'Fonctionnalités',
+    'fleet' => 'Flotte',
     'group' => [
+        'fleet' => 'Flotte',
         'imports' => 'Import de données',
         'insight' => 'Aperçu',
         'overview' => 'Vue d\'ensemble',
@@ -14,6 +16,7 @@ return [
         'transactions' => 'Transactions',
     ],
     'group.$groupKey' => 'Groupe $groupKey',
+    'group.fleet' => 'Flotte',
     'group.imports' => 'Import de données',
     'group.insight' => 'Aperçu',
     'group.overview' => 'Vue d\'ensemble',

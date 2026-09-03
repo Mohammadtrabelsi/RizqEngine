@@ -6,7 +6,9 @@ return [
     'dashboard' => 'Dashboard',
     'expenses' => 'Expenses',
     'features' => 'Features',
+    'fleet' => 'Fleet',
     'group' => [
+        'fleet' => 'Fleet',
         'imports' => 'Data import',
         'insight' => 'Insight',
         'overview' => 'Overview',
@@ -14,6 +16,7 @@ return [
         'transactions' => 'Transactions',
     ],
     'group.$groupKey' => 'Group.$groupKey',
+    'group.fleet' => 'Fleet',
     'group.imports' => 'Data import',
     'group.insight' => 'Group.insight',
     'group.overview' => 'Group.overview',

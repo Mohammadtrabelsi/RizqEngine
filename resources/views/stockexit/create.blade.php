@@ -53,6 +53,28 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
+                                        <label for="kind">{{ __('stockexit.kind') }} <span class="text-danger">*</span></label>
+                                        <select name="kind" id="kind" class="form-control" onchange="document.getElementById('consignee-group').style.display = this.value === 'consignment' ? 'block' : 'none';">
+                                            <option value="standard" @selected(old('kind', 'standard') === 'standard')>{{ __('stockexit.kind_standard') }}</option>
+                                            <option value="consignment" @selected(old('kind') === 'consignment')>{{ __('stockexit.kind_consignment') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" id="consignee-group" style="display: {{ old('kind') === 'consignment' ? 'block' : 'none' }};">
+                                    <div class="form-group">
+                                        <label for="customer_id">{{ __('stockexit.consignee') }} <span class="text-danger">*</span></label>
+                                        <select name="customer_id" id="customer_id" class="form-control">
+                                            <option value="">{{ __('stockexit.select_consignee') }}</option>
+                                            @foreach($customers as $customer)
+                                                <option value="{{ $customer->id }}" @selected(old('customer_id') == $customer->id)>{{ $customer->customer_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
                                         <label for="destination">{{ __('stockexit.destination') }}</label>
                                         <input type="text" id="destination" class="form-control" name="destination" value="{{ old('destination') }}">
                                     </div>

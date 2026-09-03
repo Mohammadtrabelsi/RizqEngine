@@ -57,4 +57,16 @@ return [
     'exit-deleted' => 'Bon de sortie supprimé avec succès',
     'entry-created' => 'Bon d\'entrée enregistré',
     'entry-created-closed' => 'Bon d\'entrée enregistré, bon de sortie clôturé',
+
+    // Sortie pour dépôt / dépôt-vente (consignment)
+    'kind' => 'Type de sortie',
+    'kind_standard' => 'Sortie standard (prêt / chantier / transfert)',
+    'kind_consignment' => 'Sortie pour dépôt (dépôt-vente / invendus)',
+    'consignee' => 'Dépositaire (client)',
+    'select_consignee' => '— Sélectionner un dépositaire —',
+    'quantity_sold' => 'Qté vendue',
+    'declare_consignment_return' => 'Déclarer le retour des invendus',
+    'consignment_return_hint' => 'Saisissez la quantité d\'invendus réellement retournée. La différence (Qté sortie − Qté retournée) est considérée comme vendue et facturée automatiquement au dépositaire.',
+    'generated_invoice' => 'Facture de régularisation',
+    'consignment-regularised' => 'Retour des invendus enregistré, invendus réintégrés et vente facturée',
 ];

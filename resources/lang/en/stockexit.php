@@ -57,4 +57,16 @@ return [
     'exit-deleted' => 'Exit voucher deleted successfully',
     'entry-created' => 'Entry voucher recorded',
     'entry-created-closed' => 'Entry voucher recorded, exit voucher closed',
+
+    // Consignment / dépôt-vente
+    'kind' => 'Exit type',
+    'kind_standard' => 'Standard exit (loan / job-site / transfer)',
+    'kind_consignment' => 'Consignment exit (dépôt-vente / unsold goods)',
+    'consignee' => 'Consignee (customer)',
+    'select_consignee' => '— Select a consignee —',
+    'quantity_sold' => 'Qty sold',
+    'declare_consignment_return' => 'Declare return of unsold goods',
+    'consignment_return_hint' => 'Enter the quantity of unsold goods actually returned. The difference (Qty out − Qty returned) is treated as sold and invoiced automatically to the consignee.',
+    'generated_invoice' => 'Régularisation invoice',
+    'consignment-regularised' => 'Unsold return recorded, unsold goods restocked and sale invoiced',
 ];
