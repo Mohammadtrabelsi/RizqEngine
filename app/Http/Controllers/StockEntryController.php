@@ -46,6 +46,8 @@ class StockEntryController extends Controller
             'detail_ids.*' => 'required|integer|exists:stock_exit_details,id',
             'returned' => 'required|array|min:1',
             'returned.*' => 'required|integer|min:0',
+            'lost' => 'nullable|array',
+            'lost.*' => 'nullable|integer|min:0',
         ]);
 
         $received = [];
@@ -53,6 +55,7 @@ class StockEntryController extends Controller
             $received[] = [
                 'detail_id' => (int) $detailId,
                 'returned' => (int) $validated['returned'][$key],
+                'lost' => (int) ($validated['lost'][$key] ?? 0),
             ];
         }
 
@@ -67,7 +70,11 @@ class StockEntryController extends Controller
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
 
-        session()->flash('success', trans('stockexit.entry-created'));
+        $message = $stockExit->fresh()->isClosed()
+            ? trans('stockexit.entry-created-closed')
+            : trans('stockexit.entry-created');
+
+        session()->flash('success', $message);
 
         return redirect()->route('stock-exits.show', $stockExit);
     }

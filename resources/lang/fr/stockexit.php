@@ -38,6 +38,7 @@ return [
     'quantity_returned' => 'Qté retournée',
     'quantity_received' => 'Qté réceptionnée',
     'quantity_lost' => 'Qté consommée/perdue',
+    'quantity_outstanding' => 'Reste à retourner',
 
     'declare_return' => 'Déclarer le retour',
     'confirm_return' => 'Confirmer le retour',
@@ -45,7 +46,7 @@ return [
     'origin_reference' => 'Référence BS d\'origine',
     'linked_entries' => 'Bons d\'entrée liés',
     'exit_already_closed' => 'Ce bon de sortie est déjà clôturé.',
-    'return_control_hint' => 'Contrôle physique obligatoire : saisissez la quantité réellement réceptionnée. La différence sera affectée en consommation/perte. Aucune réintégration automatique.',
+    'return_control_hint' => 'Contrôle physique obligatoire : saisissez la quantité réellement réceptionnée (réintégrée au stock) et, si besoin, la quantité consommée/perdue à écarter définitivement. Le reste demeure « en transit » et pourra faire l\'objet d\'un retour ultérieur. Le bon se clôture automatiquement une fois toutes les lignes soldées.',
 
     'line_status' => 'Statut',
     'full_return' => 'Retour total',
@@ -54,5 +55,6 @@ return [
 
     'exit-created' => 'Bon de sortie créé avec succès',
     'exit-deleted' => 'Bon de sortie supprimé avec succès',
-    'entry-created' => 'Bon d\'entrée créé, bon de sortie clôturé',
+    'entry-created' => 'Bon d\'entrée enregistré',
+    'entry-created-closed' => 'Bon d\'entrée enregistré, bon de sortie clôturé',
 ];

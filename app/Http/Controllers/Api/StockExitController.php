@@ -61,6 +61,7 @@ class StockExitController extends Controller
             'received' => 'required|array|min:1',
             'received.*.detail_id' => 'required|integer',
             'received.*.returned' => 'required|integer|min:0',
+            'received.*.lost' => 'nullable|integer|min:0',
             'note' => 'nullable|string',
             'date' => 'nullable|date',
         ]);

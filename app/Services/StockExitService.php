@@ -19,9 +19,12 @@ use Illuminate\Support\Facades\DB;
  * issues a Bon de Sortie in the "in_transit" state.
  *
  * Step 2 — {@see self::createEntry()} takes the physically confirmed return
- * quantities, restocks only what actually came back, books the difference as a
- * loss/consumption and closes the originating Bon de Sortie. It never assumes a
- * full return and refuses any return larger than what went out.
+ * quantities, restocks only what actually came back and — optionally — books
+ * an explicit loss/consumption. It supports several partial returns against the
+ * same Bon de Sortie: each call only moves what is declared, the remainder stays
+ * "in_transit", and the exit is closed automatically once every line is settled
+ * (fully returned and/or written off). It never assumes a full return and
+ * refuses any movement larger than what is still outstanding.
  */
 class StockExitService
 {
@@ -148,13 +151,19 @@ class StockExitService
     }
 
     /**
-     * Create a Bon d'Entrée that closes a Bon de Sortie.
+     * Record a (possibly partial) return against a Bon de Sortie.
      *
-     * @param  array<int, array{detail_id:int, returned:int}>  $received
-     *                                                                    The physically confirmed quantity per exit line.
+     * Only the quantities declared in this call are moved: what comes back is
+     * restocked and what is explicitly written off is booked as loss/consumption.
+     * Whatever is left stays outstanding and can be returned by a later call. The
+     * Bon de Sortie is closed automatically once every line is fully settled.
      *
-     * @throws StockInconsistencyException when a returned quantity exceeds the
-     *                                     quantity originally taken out.
+     * @param  array<int, array{detail_id:int, returned:int, lost?:int}>  $received
+     *                                                                              The physically confirmed return (and optional write-off) per exit line.
+     *
+     * @throws StockInconsistencyException when the exit is already closed, when a
+     *                                     line's returned+lost exceeds what is still
+     *                                     outstanding, or when nothing is declared.
      */
     public function createEntry(StockExit $stockExit, array $received, ?string $note = null, ?string $date = null): StockEntry
     {
@@ -164,28 +173,41 @@ class StockExitService
             );
         }
 
-        // Index the confirmed returns by exit-detail id for validation.
-        $returnedByDetail = [];
+        // Index the declared movement (returned + written-off) by exit-detail id.
+        $movementByDetail = [];
         foreach ($received as $row) {
-            $returnedByDetail[(int) $row['detail_id']] = max(0, (int) $row['returned']);
+            $detailId = (int) $row['detail_id'];
+            $movementByDetail[$detailId] = [
+                'returned' => max(0, (int) $row['returned']),
+                'lost' => max(0, (int) ($row['lost'] ?? 0)),
+            ];
         }
 
         $details = $stockExit->details()->get();
 
         // Pre-flight: block the whole operation on any inconsistency before we
-        // touch the stock — never restock more than what went out.
+        // touch the stock — never settle more than what is still outstanding.
+        $totalMovement = 0;
         foreach ($details as $detail) {
-            $returned = $returnedByDetail[$detail->id] ?? 0;
+            $movement = $movementByDetail[$detail->id] ?? ['returned' => 0, 'lost' => 0];
+            $settled = $movement['returned'] + $movement['lost'];
+            $totalMovement += $settled;
 
-            if ($returned > $detail->quantity) {
+            if ($settled > $detail->outstanding_quantity) {
                 throw new StockInconsistencyException(
-                    "Incohérence de Stock: returned {$returned} unit(s) for \"{$detail->product->product_name}\" "
-                    ."but only {$detail->quantity} went out on {$stockExit->reference}."
+                    "Incohérence de Stock: {$settled} unit(s) declared for \"{$detail->product->product_name}\" "
+                    ."but only {$detail->outstanding_quantity} still outstanding on {$stockExit->reference}."
                 );
             }
         }
 
-        return DB::transaction(function () use ($stockExit, $details, $returnedByDetail, $note, $date) {
+        if ($totalMovement <= 0) {
+            throw new StockInconsistencyException(
+                "Bon de Sortie {$stockExit->reference}: nothing declared to return or write off."
+            );
+        }
+
+        return DB::transaction(function () use ($stockExit, $details, $movementByDetail, $note, $date) {
             $entry = StockEntry::create([
                 'stock_exit_id' => $stockExit->id,
                 'date' => $date ?? now()->toDateString(),
@@ -194,8 +216,14 @@ class StockExitService
             ]);
 
             foreach ($details as $detail) {
-                $returned = $returnedByDetail[$detail->id] ?? 0;
-                $lost = $detail->quantity - $returned; // consumed / lost / damaged
+                $movement = $movementByDetail[$detail->id] ?? ['returned' => 0, 'lost' => 0];
+                $returned = $movement['returned'];
+                $lost = $movement['lost'];
+
+                // Skip lines with no movement in this return.
+                if ($returned === 0 && $lost === 0) {
+                    continue;
+                }
 
                 if ($returned > 0) {
                     $product = Product::findOrFail($detail->product_id);
@@ -217,13 +245,20 @@ class StockExitService
                     'quantity_lost' => $lost,
                 ]);
 
+                // Accumulate across successive partial returns.
                 $detail->update([
-                    'returned_quantity' => $returned,
-                    'lost_quantity' => $lost,
+                    'returned_quantity' => $detail->returned_quantity + $returned,
+                    'lost_quantity' => $detail->lost_quantity + $lost,
                 ]);
             }
 
-            $stockExit->update(['status' => StockExit::STATUS_CLOSED]);
+            // Close only once every line is fully settled (nothing left outstanding).
+            $outstanding = $stockExit->details()->get()
+                ->sum(fn (StockExitDetail $detail) => $detail->outstanding_quantity);
+
+            if ($outstanding === 0) {
+                $stockExit->update(['status' => StockExit::STATUS_CLOSED]);
+            }
 
             return $entry->refresh();
         });

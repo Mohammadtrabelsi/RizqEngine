@@ -41,20 +41,29 @@
                                     <th>{{ __('product.code') }}</th>
                                     <th>{{ __('product.name') }}</th>
                                     <th class="text-end">{{ __('stockexit.quantity_out') }}</th>
+                                    <th class="text-end">{{ __('stockexit.quantity_outstanding') }}</th>
                                     <th class="img-w-180">{{ __('stockexit.quantity_received') }}</th>
+                                    <th class="img-w-180">{{ __('stockexit.quantity_lost') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($stockExit->details as $detail)
+                                    @continue($detail->outstanding_quantity <= 0)
                                     <tr>
                                         <td>{{ $detail->product->product_code }}</td>
                                         <td>{{ translatable_string($detail->product->product_name) }}</td>
                                         <td class="text-end">{{ $detail->quantity }}</td>
+                                        <td class="text-end">{{ $detail->outstanding_quantity }}</td>
                                         <td>
                                             <input type="hidden" name="detail_ids[]" value="{{ $detail->id }}">
                                             <input type="number" name="returned[]" class="form-control"
-                                                   min="0" max="{{ $detail->quantity }}"
-                                                   value="{{ $detail->quantity }}" required>
+                                                   min="0" max="{{ $detail->outstanding_quantity }}"
+                                                   value="{{ $detail->outstanding_quantity }}" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="lost[]" class="form-control"
+                                                   min="0" max="{{ $detail->outstanding_quantity }}"
+                                                   value="0">
                                         </td>
                                     </tr>
                                 @endforeach

@@ -71,6 +71,15 @@ class StockExit extends Model
         return $this->status === self::STATUS_CLOSED;
     }
 
+    /**
+     * Total quantity still expected back across every line (not yet returned
+     * nor written off). Zero means the exit is fully settled.
+     */
+    public function getOutstandingQuantityAttribute(): int
+    {
+        return (int) $this->details->sum->outstanding_quantity;
+    }
+
     public static function boot()
     {
         parent::boot();
