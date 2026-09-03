@@ -1,9 +1,16 @@
 // POS checkout modal money masking (moved out of the inline <script> in
-// sale/pos/index.blade.php). The checkout inputs live inside a modal that
-// Livewire reveals via the "showCheckoutModal" browser event, so the masks are
-// (re)applied each time that fires. Currency settings come from the
-// #money-mask-config element rendered by the money-mask-js include.
-document.addEventListener('DOMContentLoaded', function () {
+// sale/pos/index.blade.php). The checkout inputs live inside a modal that the
+// Checkout Livewire component reveals by dispatching the "showCheckoutModal"
+// event, so the masks are (re)applied each time that fires. Currency settings
+// come from the #money-mask-config element rendered by the money-mask-js
+// include.
+//
+// The Checkout component fires this via Livewire's `$this->dispatch(...)`, which
+// travels on the Livewire event bus — it is NOT a native browser/window event,
+// so it must be caught with `Livewire.on()` rather than
+// `window.addEventListener()`. Listening on window (as this file previously did)
+// meant the modal never opened and the "Proceed" button appeared to do nothing.
+function bindPosCheckoutModal() {
     const $ = window.jQuery;
     const config = document.getElementById('money-mask-config');
 
@@ -17,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         decimal: config.dataset.decimal || '',
     };
 
-    window.addEventListener('showCheckoutModal', function () {
+    Livewire.on('showCheckoutModal', function () {
         $('#checkoutModal').modal('show');
 
         $('#paid_amount').maskMoney(Object.assign({}, base, { allowZero: false }));
@@ -35,4 +42,13 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-});
+}
+
+// Register on livewire:init when Livewire boots after this module, or bind
+// immediately when Livewire is already available (this deferred module may load
+// after livewire:init has already fired).
+if (window.Livewire) {
+    bindPosCheckoutModal();
+} else {
+    document.addEventListener('livewire:init', bindPosCheckoutModal);
+}
