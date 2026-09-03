@@ -89,4 +89,34 @@ class Customer extends Model implements HasMedia
     {
         return CustomerFactory::new();
     }
+
+    /** @var array<string, string> */
+    protected $casts = [
+        'credit_limit' => 'integer',
+        'current_balance' => 'integer',
+    ];
+
+    /**
+     * Remaining credit head-room, in cents (never negative).
+     */
+    public function availableCredit(): int
+    {
+        return max(0, (int) $this->credit_limit - (int) $this->current_balance);
+    }
+
+    /**
+     * Whether this customer is currently over their approved credit limit.
+     */
+    public function isOverCreditLimit(): bool
+    {
+        return (int) $this->credit_limit > 0 && (int) $this->current_balance > (int) $this->credit_limit;
+    }
+
+    /**
+     * Whether credit sales are permitted for this customer.
+     */
+    public function allowsCredit(): bool
+    {
+        return (int) $this->credit_limit > 0;
+    }
 }

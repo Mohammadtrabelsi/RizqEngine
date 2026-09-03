@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CreditLimitExceededException;
 use App\Exceptions\InsufficientStockException;
 use App\Http\Requests\StorePosSaleRequest;
 use App\Services\CategoryService;
@@ -28,7 +29,7 @@ class PosController extends Controller
     {
         try {
             $this->sales->createPosSale($request->all());
-        } catch (InsufficientStockException $e) {
+        } catch (InsufficientStockException|CreditLimitExceededException $e) {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
 
