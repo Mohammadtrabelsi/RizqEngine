@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $quantity
  * @property int $returned_quantity
  * @property int $lost_quantity
+ * @property int $sold_quantity
+ * @property int|null $unit_price price snapshot (cents) billed for the sold qty
  */
 class StockExitDetail extends Model
 {
@@ -24,6 +26,8 @@ class StockExitDetail extends Model
         'quantity' => 'integer',
         'returned_quantity' => 'integer',
         'lost_quantity' => 'integer',
+        'sold_quantity' => 'integer',
+        'unit_price' => 'integer',
     ];
 
     /**
@@ -47,6 +51,6 @@ class StockExitDetail extends Model
      */
     public function getOutstandingQuantityAttribute(): int
     {
-        return $this->quantity - $this->returned_quantity - $this->lost_quantity;
+        return $this->quantity - $this->returned_quantity - $this->lost_quantity - $this->sold_quantity;
     }
 }

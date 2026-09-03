@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property int $id
  * @property string $reference
+ * @property string $kind standard|consignment
+ * @property int|null $customer_id
  * @property string $status in_transit|closed
  */
 class StockExit extends Model
@@ -23,6 +25,12 @@ class StockExit extends Model
     public const STATUS_IN_TRANSIT = 'in_transit';
 
     public const STATUS_CLOSED = 'closed';
+
+    /** Loan / job-site / transfer: goods come back, nothing is sold. */
+    public const KIND_STANDARD = 'standard';
+
+    /** Dépôt-vente: unsold goods come back, the sold portion is invoiced. */
+    public const KIND_CONSIGNMENT = 'consignment';
 
     protected $guarded = [];
 
@@ -51,6 +59,16 @@ class StockExit extends Model
     }
 
     /**
+     * The reseller the goods are consigned to (consignment exits only).
+     *
+     * @return BelongsTo<Customer, $this>
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    /**
      * @return BelongsTo<Driver, $this>
      */
     public function driver(): BelongsTo
@@ -69,6 +87,11 @@ class StockExit extends Model
     public function isClosed(): bool
     {
         return $this->status === self::STATUS_CLOSED;
+    }
+
+    public function isConsignment(): bool
+    {
+        return $this->kind === self::KIND_CONSIGNMENT;
     }
 
     public static function boot()
