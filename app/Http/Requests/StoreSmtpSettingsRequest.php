@@ -21,7 +21,7 @@ class StoreSmtpSettingsRequest extends FormRequest
             'mail_username' => 'nullable|string|max:50',
             'mail_password' => 'nullable|string|max:50',
             'mail_encryption' => 'nullable|string|max:50',
-            'mail_from_address' => 'nullable|string|max:50',
+            'mail_from_address' => 'nullable|email|max:50',
             'mail_from_name' => 'required|string|max:50',
         ];
     }
