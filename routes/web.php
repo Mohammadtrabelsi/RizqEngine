@@ -147,11 +147,17 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    // Mail Settings
-    Route::patch('/settings/smtp', 'SettingController@updateSmtp')->name('settings.smtp.update');
-    // General Settings
+    // Settings landing (redirects to General)
     Route::get('/settings', 'SettingController@index')->name('settings.index');
-    Route::patch('/settings', 'SettingController@update')->name('settings.update');
+    // General Settings
+    Route::get('/settings/general', 'SettingController@general')->name('settings.general');
+    Route::patch('/settings/general', 'SettingController@update')->name('settings.update');
+    // Mail Settings
+    Route::get('/settings/mail', 'SettingController@mail')->name('settings.mail');
+    Route::patch('/settings/smtp', 'SettingController@updateSmtp')->name('settings.smtp.update');
+    // Default Images
+    Route::get('/settings/images', 'SettingController@images')->name('settings.images');
+    Route::patch('/settings/images', 'SettingController@updateImages')->name('settings.images.update');
     Route::group(['namespace' => '\\'], function () {
         // Units (full-page Livewire components)
         Route::get('/units', UnitIndex::class)->name('units.index');
