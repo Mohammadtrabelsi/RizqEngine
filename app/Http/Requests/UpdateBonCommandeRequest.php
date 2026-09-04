@@ -19,8 +19,8 @@ class UpdateBonCommandeRequest extends FormRequest
             'reference' => 'required|string|max:255',
             'tax_percentage' => 'required|integer|min:0|max:100',
             'discount_percentage' => 'required|integer|min:0|max:100',
-            'shipping_amount' => 'required|numeric',
-            'total_amount' => 'required|numeric',
+            'shipping_amount' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
             'status' => 'required|string|max:255',
             'note' => 'nullable|string|max:1000',
         ];

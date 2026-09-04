@@ -4,6 +4,7 @@ namespace App\Livewire\Roles;
 
 use App\Services\RoleService;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -36,7 +37,10 @@ class RoleForm extends Component
     protected function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('roles', 'name')->ignore($this->roleId),
+            ],
             'permissions' => 'required|array',
         ];
     }

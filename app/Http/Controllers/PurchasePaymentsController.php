@@ -38,7 +38,7 @@ class PurchasePaymentsController extends Controller
         $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:0',
             'note' => 'nullable|string|max:1000',
             'purchase_id' => 'required',
             'payment_method' => 'required|string|max:255',
@@ -67,7 +67,7 @@ class PurchasePaymentsController extends Controller
         $data = $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:0',
             'note' => 'nullable|string|max:1000',
             'purchase_id' => 'required',
             'payment_method' => 'required|string|max:255',
