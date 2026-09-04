@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — primary navigation as a horizontal menu bar.
+    RizqEngine — primary navigation as a horizontal menu bar.
     Each top-level section is a direct route link. The section's own
     items are rendered inline in a secondary navbar (menu-secondary)
     instead of hover dropdowns.
@@ -24,10 +24,26 @@
                 </li>
                 @endcan
 
-                @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
-                <li class="app-topnav-item {{ request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') || request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') || request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_sales') ? route('sales.index') : (auth()->user()->can('access_purchases') ? route('purchases.index') : route('adjustments.index')) }}">
-                        <i class="bi bi-arrow-left-right"></i> <span>{{ __('menu.transactions') }}</span>
+                @canany(['access_sales', 'access_sale_returns'])
+                <li class="app-topnav-item {{ request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_sales') ? route('sales.index') : route('sale-returns.index') }}">
+                        <i class="bi bi-receipt"></i> <span>{{ __('menu.sales') }}</span>
+                    </a>
+                </li>
+                @endcanany
+
+                @canany(['access_purchases', 'access_purchase_returns'])
+                <li class="app-topnav-item {{ request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') || request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_purchases') ? route('purchases.index') : route('purchase-returns.index') }}">
+                        <i class="bi bi-bag"></i> <span>{{ __('menu.purchases') }}</span>
+                    </a>
+                </li>
+                @endcanany
+
+                @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits'])
+                <li class="app-topnav-item {{ request()->routeIs('adjustments.*') || request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_stock_exits') ? route('stock-exits.index') : route('adjustments.index') }}">
+                        <i class="bi bi-box-seam"></i> <span>{{ __('menu.stock') }}</span>
                     </a>
                 </li>
                 @endcanany

@@ -1,11 +1,11 @@
-# Handoff: Triangle POS — modern redesign (landing, sign in, dashboard)
+# Handoff: RizqEngine — modern redesign (landing, sign in, dashboard)
 
 ## Overview
-A full visual redesign of the Triangle POS app: public landing page, sign-in screen, and the
+A full visual redesign of the RizqEngine app: public landing page, sign-in screen, and the
 operations dashboard. Target stack: **Laravel 11 + Livewire 3 + Tailwind CSS**.
 
 ## About the design files
-`Triangle POS.dc.html` in this bundle is a **design reference created in HTML** — a prototype
+`RizqEngine.dc.html` in this bundle is a **design reference created in HTML** — a prototype
 showing the intended look and behavior, not production code to paste in. The task is to recreate
 it inside the existing Laravel/Livewire app using its established conventions (layouts, Blade
 components, Livewire components, translation files). The Blade/PHP files in `code/` are a
@@ -64,7 +64,7 @@ offset -28px left / -26px bottom.
 Features: 3×2 grid rendered as a 1px-gap grid on the hairline color (cells canvas, hover white), each cell
 mono "/ 0N" index, 20px Space Grotesk title, 14.5px body.
 CTA band: ink panel radius 22px, 34px heading + lighter indigo button.
-Footer row: © 2026 Triangle POS / "Laravel · Livewire" in mono.
+Footer row: © 2026 RizqEngine / "Laravel · Livewire" in mono.
 
 ### 2. Sign in (`/login`)
 2-col grid 1.1fr/1fr, full viewport height.
@@ -125,7 +125,7 @@ None external. The logo is a CSS triangle inside a rounded ink square — replac
 you have one. Fonts load from Google Fonts (Space Grotesk, Manrope, JetBrains Mono).
 
 ## Files in this bundle
-- `Triangle POS.dc.html` — the HTML design reference (three screens, switcher pill for demo only)
+- `RizqEngine.dc.html` — the HTML design reference (three screens, switcher pill for demo only)
 - `code/tailwind.config.js` — tokens as Tailwind theme extensions
 - `code/resources/views/layouts/app.blade.php` — fonts + shell
 - `code/resources/views/livewire/landing-page.blade.php`

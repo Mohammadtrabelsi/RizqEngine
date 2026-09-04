@@ -14,7 +14,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 /**
  * @property int $id
  * @property string $supplier_name
+ * @property string|null $whatsapp_number
+ * @property string|null $responsible_person
  * @property string|null $tax_identification_number
+ * @property string|null $iban
+ * @property string|null $note
  */
 class Supplier extends Model implements HasMedia
 {
@@ -22,12 +26,28 @@ class Supplier extends Model implements HasMedia
 
     protected $guarded = [];
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')
+            ->useFallbackUrl(default_supplier_image());
+    }
+
     /**
-     * URL of the supplier's profile image, or an empty string when none is set.
+     * URL of the supplier's profile image, or the configured fallback when
+     * none is set.
      */
     public function getImageUrlAttribute(): string
     {
         return $this->getFirstMediaUrl('images');
+    }
+
+    /**
+     * URL of the supplier's uploaded description document, or an empty string
+     * when none is set.
+     */
+    public function getDocumentUrlAttribute(): string
+    {
+        return $this->getFirstMediaUrl('documents');
     }
 
     protected static function newFactory()

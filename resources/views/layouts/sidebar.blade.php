@@ -1,5 +1,5 @@
 {{--
-    Triangle POS — primary navigation as a vertical sidebar.
+    RizqEngine — primary navigation as a vertical sidebar.
     Single-accent ink design, unified with the redesign dashboard shell:
     text items grouped under mono headings, an accent-filled active item, and a
     shift card pinned to the bottom. Sections with more than one destination are
@@ -17,7 +17,7 @@
                 @endif
             @else
                 <x-logo-mark tone="dark" />
-                <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'Triangle POS' }}</span>
+                <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'RizqEngine' }}</span>
             @endif
         </a>
         <button class="app-sidebar-close d-lg-none" type="button"
@@ -39,6 +39,14 @@
             <li class="app-sidebar-item {{ request()->routeIs('app.pos.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('app.pos.index') }}">
                     <span class="app-sidebar-dot"></span> <span>{{ __('nav.point_of_sale') }}</span>
+                </a>
+            </li>
+            @endcan
+
+            @can('access_cash_register')
+            <li class="app-sidebar-item {{ request()->routeIs('cash-register.*') ? 'is-active' : '' }}">
+                <a class="app-sidebar-link" href="{{ route('cash-register.index') }}">
+                    <span class="app-sidebar-dot"></span> <span>{{ __('cash_register.cash_register') }}</span>
                 </a>
             </li>
             @endcan
@@ -67,25 +75,47 @@
             </li>
             @endcan
 
-            @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits', 'access_purchases', 'access_purchase_returns', 'access_sales', 'access_sale_returns'])
-            <li class="app-sidebar-item {{ $inTransactions ? 'is-active' : '' }}">
-                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inTransactions ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inTransactions ? 'true' : 'false' }}">
-                    <span>{{ __('nav.transactions') }}</span>
+            @canany(['access_sales', 'access_sale_returns'])
+            <li class="app-sidebar-item {{ $inSales ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSales ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSales ? 'true' : 'false' }}">
+                    <span>{{ __('nav.sales') }}</span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
-                <ul class="app-sidebar-sublist {{ $inTransactions ? 'is-open' : '' }}">
+                <ul class="app-sidebar-sublist {{ $inSales ? 'is-open' : '' }}">
                     @can('access_sales')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('sales.*') || request()->routeIs('sale-payments*') ? 'is-active' : '' }}" href="{{ route('sales.index') }}">{{ __('menu.all-sales') }}</a></li>
                     @endcan
                     @can('access_sale_returns')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments*') ? 'is-active' : '' }}" href="{{ route('sale-returns.index') }}">{{ __('menu.all-sale-returns') }}</a></li>
                     @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            @canany(['access_purchases', 'access_purchase_returns'])
+            <li class="app-sidebar-item {{ $inPurchases ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inPurchases ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inPurchases ? 'true' : 'false' }}">
+                    <span>{{ __('nav.purchases') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inPurchases ? 'is-open' : '' }}">
                     @can('access_purchases')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') ? 'is-active' : '' }}" href="{{ route('purchases.index') }}">{{ __('menu.all-purchases') }}</a></li>
                     @endcan
                     @can('access_purchase_returns')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments*') ? 'is-active' : '' }}" href="{{ route('purchase-returns.index') }}">{{ __('menu.all-purchase-returns') }}</a></li>
                     @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits'])
+            <li class="app-sidebar-item {{ $inStock ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inStock ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inStock ? 'true' : 'false' }}">
+                    <span>{{ __('nav.stock') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inStock ? 'is-open' : '' }}">
                     @can('access_stock_exits')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-exits.*') || request()->routeIs('stock-entries.*') ? 'is-active' : '' }}" href="{{ route('stock-exits.index') }}">{{ __('menu.all-stock-exits') }}</a></li>
                     @endcan
@@ -194,6 +224,72 @@
                 </ul>
             </li>
             @endcan
+
+            {{-- DATA IMPORT --}}
+            @canany(['create_products', 'create_customers', 'create_suppliers'])
+            <li class="app-sidebar-heading">{{ __('nav.group.imports') }}</li>
+            <li class="app-sidebar-item {{ $inImports ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inImports ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inImports ? 'true' : 'false' }}">
+                    <span>{{ __('nav.imports') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inImports ? 'is-open' : '' }}">
+                    @can('create_products')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('products.import') ? 'is-active' : '' }}" href="{{ route('products.import') }}">{{ __('nav.import_products') }}</a></li>
+                    @endcan
+                    @can('create_customers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('customers.import') ? 'is-active' : '' }}" href="{{ route('customers.import') }}">{{ __('nav.import_customers') }}</a></li>
+                    @endcan
+                    @can('create_suppliers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('suppliers.import') ? 'is-active' : '' }}" href="{{ route('suppliers.import') }}">{{ __('nav.import_suppliers') }}</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            {{-- FLEET --}}
+            @canany(['access_drivers', 'access_vehicles'])
+            <li class="app-sidebar-heading">{{ __('nav.group.fleet') }}</li>
+            <li class="app-sidebar-item {{ $inFleet ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inFleet ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inFleet ? 'true' : 'false' }}">
+                    <span>{{ __('nav.fleet') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inFleet ? 'is-open' : '' }}">
+                    @can('access_drivers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('drivers*') ? 'is-active' : '' }}" href="{{ route('drivers.index') }}">{{ __('menu.drivers') }}</a></li>
+                    @endcan
+                    @can('access_vehicles')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('vehicles*') ? 'is-active' : '' }}" href="{{ route('vehicles.index') }}">{{ __('menu.vehicles') }}</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endcanany
+
+            @canany(['access_warehouses', 'access_stock_transfers', 'access_batches', 'access_serial_numbers'])
+            @php($inWarehousing = request()->routeIs('warehouses*') || request()->routeIs('stock-transfers*') || request()->routeIs('batches*') || request()->routeIs('serial-numbers*'))
+            <li class="app-sidebar-heading">{{ __('warehouses.warehouses') }}</li>
+            <li class="app-sidebar-item {{ $inWarehousing ? 'is-active' : '' }}">
+                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inWarehousing ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inWarehousing ? 'true' : 'false' }}">
+                    <span>{{ __('warehouses.warehouses') }}</span>
+                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
+                </button>
+                <ul class="app-sidebar-sublist {{ $inWarehousing ? 'is-open' : '' }}">
+                    @can('access_warehouses')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses*') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    @endcan
+                    @can('access_stock_transfers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-transfers*') ? 'is-active' : '' }}" href="{{ route('stock-transfers.index') }}">{{ __('warehouses.stock_transfers') }}</a></li>
+                    @endcan
+                    @can('access_batches')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('batches*') ? 'is-active' : '' }}" href="{{ route('batches.index') }}">{{ __('batches.batches') }}</a></li>
+                    @endcan
+                    @can('access_serial_numbers')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('serial-numbers*') ? 'is-active' : '' }}" href="{{ route('serial-numbers.index') }}">{{ __('batches.serial_numbers') }}</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endcanany
 
             {{-- INSIGHT --}}
             @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units'])

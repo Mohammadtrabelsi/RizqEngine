@@ -47,6 +47,35 @@ class PermissionsTableSeeder extends Seeder
             'show_stock_exits',
             'delete_stock_exits',
             'create_stock_entries',
+            // Drivers (Chauffeurs)
+            'access_drivers',
+            'create_drivers',
+            'edit_drivers',
+            'delete_drivers',
+            // Vehicles (Véhicules)
+            'access_vehicles',
+            'create_vehicles',
+            'edit_vehicles',
+            'delete_vehicles',
+            // Warehouses (Dépôts) & Stock transfers
+            'access_warehouses',
+            'create_warehouses',
+            'edit_warehouses',
+            'delete_warehouses',
+            'access_stock_transfers',
+            'create_stock_transfers',
+            // Batches & Serial numbers (Traçabilité)
+            'access_batches',
+            'create_batches',
+            'edit_batches',
+            'delete_batches',
+            'access_serial_numbers',
+            // Customer credit (Ventes à crédit)
+            'manage_customer_credit',
+            // Cash register (Clôture de caisse)
+            'access_cash_register',
+            'open_cash_register',
+            'close_cash_register',
             // Quotaions
             'access_quotations',
             'create_quotations',
@@ -156,7 +185,7 @@ class PermissionsTableSeeder extends Seeder
     }
 
     /**
-     * Seed the three business roles shown in the Triangle POS design system.
+     * Seed the three business roles shown in the RizqEngine design system.
      * These gate the sidebar via the same @can permission checks the app
      * already uses — a user's role determines exactly which nav sections
      * (and screens) they can reach.

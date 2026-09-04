@@ -85,9 +85,7 @@ class UploadService
 
         $tempFile = Upload::where('folder', $folder)->first();
 
-        if ($model->getFirstMedia($collection)) {
-            $model->getFirstMedia($collection)->delete();
-        }
+        $model->clearMediaCollection($collection);
 
         if (! $tempFile) {
             return;

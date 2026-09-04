@@ -3,6 +3,7 @@
 namespace App\Livewire\Pos;
 
 use App\Services\CartPricingService;
+use App\Services\StockService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
@@ -114,7 +115,7 @@ class Checkout extends Component
             ],
         ]);
 
-        $this->check_quantity[$product['id']] = $product['product_quantity'];
+        $this->check_quantity[$product['id']] = max(0, $product['product_quantity'] - StockService::MINIMUM_STOCK);
         $this->quantity[$product['id']] = 1;
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
@@ -140,8 +141,6 @@ class Checkout extends Component
     {
         if ($this->check_quantity[$product_id] < $this->quantity[$product_id]) {
             session()->flash('error', trans('product.requested-quantity-not-available'));
-
-            return;
         }
 
         Cart::instance($this->cart_instance)->update($row_id, $this->quantity[$product_id]);

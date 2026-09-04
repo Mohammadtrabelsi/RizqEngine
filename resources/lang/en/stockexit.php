@@ -10,6 +10,7 @@ return [
     'entry_details' => 'Entry voucher details',
     'no_exits_found' => 'No exit voucher found',
     'no_products_selected' => 'No product selected',
+    'out_of_stock' => 'Out of stock: this product cannot be issued.',
 
     'reference' => 'Reference',
     'auto_generated' => 'Auto generated',
@@ -25,6 +26,11 @@ return [
     'reason_subcontracting' => 'Subcontracting',
     'reason_transfer' => 'Transfer',
 
+    'driver' => 'Driver',
+    'vehicle' => 'Vehicle',
+    'select_driver' => '— Select a driver —',
+    'select_vehicle' => '— Select a vehicle —',
+
     'status_in_transit' => 'In transit / Out',
     'status_closed' => 'Closed',
 
@@ -32,6 +38,7 @@ return [
     'quantity_returned' => 'Qty returned',
     'quantity_received' => 'Qty received',
     'quantity_lost' => 'Qty consumed/lost',
+    'quantity_outstanding' => 'Outstanding',
 
     'declare_return' => 'Declare return',
     'confirm_return' => 'Confirm return',
@@ -39,7 +46,7 @@ return [
     'origin_reference' => 'Origin exit reference',
     'linked_entries' => 'Linked entry vouchers',
     'exit_already_closed' => 'This exit voucher is already closed.',
-    'return_control_hint' => 'Physical control required: enter the quantity actually received. Any difference is booked as consumption/loss. No automatic restocking.',
+    'return_control_hint' => 'Physical control required: enter the quantity actually received (restocked) and, if needed, the quantity to write off as consumption/loss. Whatever is left stays "in transit" and can be returned later. The voucher is closed automatically once every line is settled.',
 
     'line_status' => 'Status',
     'full_return' => 'Full return',
@@ -48,5 +55,18 @@ return [
 
     'exit-created' => 'Exit voucher created successfully',
     'exit-deleted' => 'Exit voucher deleted successfully',
-    'entry-created' => 'Entry voucher created, exit voucher closed',
+    'entry-created' => 'Entry voucher recorded',
+    'entry-created-closed' => 'Entry voucher recorded, exit voucher closed',
+
+    // Consignment / dépôt-vente
+    'kind' => 'Exit type',
+    'kind_standard' => 'Standard exit (loan / job-site / transfer)',
+    'kind_consignment' => 'Consignment exit (dépôt-vente / unsold goods)',
+    'consignee' => 'Consignee (customer)',
+    'select_consignee' => '— Select a consignee —',
+    'quantity_sold' => 'Qty sold',
+    'declare_consignment_return' => 'Declare return of unsold goods',
+    'consignment_return_hint' => 'Enter the quantity of unsold goods actually returned. The difference (Qty out − Qty returned) is treated as sold and invoiced automatically to the consignee.',
+    'generated_invoice' => 'Régularisation invoice',
+    'consignment-regularised' => 'Unsold return recorded, unsold goods restocked and sale invoiced',
 ];

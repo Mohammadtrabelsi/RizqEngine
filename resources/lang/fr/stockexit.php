@@ -10,6 +10,7 @@ return [
     'entry_details' => 'Détails du bon d\'entrée',
     'no_exits_found' => 'Aucun bon de sortie trouvé',
     'no_products_selected' => 'Aucun produit sélectionné',
+    'out_of_stock' => 'Rupture de stock : ce produit ne peut pas sortir.',
 
     'reference' => 'Référence',
     'auto_generated' => 'Générée automatiquement',
@@ -25,6 +26,11 @@ return [
     'reason_subcontracting' => 'Sous-traitance',
     'reason_transfer' => 'Transfert',
 
+    'driver' => 'Chauffeur',
+    'vehicle' => 'Véhicule',
+    'select_driver' => '— Sélectionner un chauffeur —',
+    'select_vehicle' => '— Sélectionner un véhicule —',
+
     'status_in_transit' => 'En transit / Déstocké',
     'status_closed' => 'Clôturé',
 
@@ -32,6 +38,7 @@ return [
     'quantity_returned' => 'Qté retournée',
     'quantity_received' => 'Qté réceptionnée',
     'quantity_lost' => 'Qté consommée/perdue',
+    'quantity_outstanding' => 'Reste à retourner',
 
     'declare_return' => 'Déclarer le retour',
     'confirm_return' => 'Confirmer le retour',
@@ -39,7 +46,7 @@ return [
     'origin_reference' => 'Référence BS d\'origine',
     'linked_entries' => 'Bons d\'entrée liés',
     'exit_already_closed' => 'Ce bon de sortie est déjà clôturé.',
-    'return_control_hint' => 'Contrôle physique obligatoire : saisissez la quantité réellement réceptionnée. La différence sera affectée en consommation/perte. Aucune réintégration automatique.',
+    'return_control_hint' => 'Contrôle physique obligatoire : saisissez la quantité réellement réceptionnée (réintégrée au stock) et, si besoin, la quantité consommée/perdue à écarter définitivement. Le reste demeure « en transit » et pourra faire l\'objet d\'un retour ultérieur. Le bon se clôture automatiquement une fois toutes les lignes soldées.',
 
     'line_status' => 'Statut',
     'full_return' => 'Retour total',
@@ -48,5 +55,18 @@ return [
 
     'exit-created' => 'Bon de sortie créé avec succès',
     'exit-deleted' => 'Bon de sortie supprimé avec succès',
-    'entry-created' => 'Bon d\'entrée créé, bon de sortie clôturé',
+    'entry-created' => 'Bon d\'entrée enregistré',
+    'entry-created-closed' => 'Bon d\'entrée enregistré, bon de sortie clôturé',
+
+    // Sortie pour dépôt / dépôt-vente (consignment)
+    'kind' => 'Type de sortie',
+    'kind_standard' => 'Sortie standard (prêt / chantier / transfert)',
+    'kind_consignment' => 'Sortie pour dépôt (dépôt-vente / invendus)',
+    'consignee' => 'Dépositaire (client)',
+    'select_consignee' => '— Sélectionner un dépositaire —',
+    'quantity_sold' => 'Qté vendue',
+    'declare_consignment_return' => 'Déclarer le retour des invendus',
+    'consignment_return_hint' => 'Saisissez la quantité d\'invendus réellement retournée. La différence (Qté sortie − Qté retournée) est considérée comme vendue et facturée automatiquement au dépositaire.',
+    'generated_invoice' => 'Facture de régularisation',
+    'consignment-regularised' => 'Retour des invendus enregistré, invendus réintégrés et vente facturée',
 ];

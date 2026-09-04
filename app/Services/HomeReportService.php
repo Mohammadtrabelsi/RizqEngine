@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\HomeController;
 use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Owns every query behind the classic home dashboard and its AJAX charts,
- * keeping the reporting SQL out of {@see \App\Http\Controllers\HomeController}.
+ * keeping the reporting SQL out of {@see HomeController}.
  *
  * Monetary columns are stored as integer cents and converted to major units
  * before leaving this service.
@@ -29,7 +30,7 @@ class HomeReportService
      * Assemble the full home-dashboard view payload for the given range.
      *
      * @param  string  $fromDate  Y-m-d
-     * @param  string  $toDate    Y-m-d
+     * @param  string  $toDate  Y-m-d
      * @return array<string, mixed>
      */
     public function dashboardData(string $fromDate, string $toDate): array
@@ -102,8 +103,8 @@ class HomeReportService
     {
         return [
             ['label' => __('general.sales-today'), 'value' => format_currency($sales), 'meta' => __('general.completed-sales-today'), 'icon' => 'bi-bag-check'],
-            ['label' => __('general.transactions'), 'value' => $transactions, 'meta' => __('general.orders-today'), 'icon' => 'bi-receipt'],
-            ['label' => __('general.low-stock-items'), 'value' => $lowStock, 'meta' => __('general.needs-reorder'), 'icon' => 'bi-exclamation-triangle'],
+            ['label' => __('general.transactions'), 'value' => (string) $transactions, 'meta' => __('general.orders-today'), 'icon' => 'bi-receipt'],
+            ['label' => __('general.low-stock-items'), 'value' => (string) $lowStock, 'meta' => __('general.needs-reorder'), 'icon' => 'bi-exclamation-triangle'],
             ['label' => __('general.todays-expenses'), 'value' => format_currency($expenses), 'meta' => __('general.logged-today'), 'icon' => 'bi-wallet2'],
         ];
     }

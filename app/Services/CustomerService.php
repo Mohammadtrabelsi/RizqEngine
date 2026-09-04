@@ -91,19 +91,21 @@ class CustomerService
         return Customer::findOrFail($id);
     }
 
-    public function create(array $data, $image = null): Customer
+    public function create(array $data, $image = null, $document = null): Customer
     {
         $customer = Customer::create($data);
         $this->syncImage($customer, $image);
+        $this->syncDocument($customer, $document);
 
         return $customer;
     }
 
-    public function update(int $id, array $data, $image = null): Customer
+    public function update(int $id, array $data, $image = null, $document = null): Customer
     {
         $customer = Customer::findOrFail($id);
         $customer->update($data);
         $this->syncImage($customer, $image);
+        $this->syncDocument($customer, $document);
 
         return $customer;
     }
@@ -129,5 +131,24 @@ class CustomerService
         $customer->addMedia($image->getRealPath())
             ->usingFileName($image->getClientOriginalName())
             ->toMediaCollection('images');
+    }
+
+    /**
+     * Replace the customer's description document with the freshly uploaded
+     * file, if any.
+     */
+    protected function syncDocument(Customer $customer, $document): void
+    {
+        if (! $document) {
+            return;
+        }
+
+        if ($customer->getFirstMedia('documents')) {
+            $customer->getFirstMedia('documents')->delete();
+        }
+
+        $customer->addMedia($document->getRealPath())
+            ->usingFileName($document->getClientOriginalName())
+            ->toMediaCollection('documents');
     }
 }

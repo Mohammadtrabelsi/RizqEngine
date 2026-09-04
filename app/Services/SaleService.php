@@ -27,6 +27,7 @@ class SaleService
     public function __construct(
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
+        private readonly CustomerCreditService $credit,
     ) {}
 
     /**
@@ -170,6 +171,70 @@ class SaleService
     }
 
     /**
+     * Build an invoice straight from product lines, without the cart and
+     * without deducting stock.
+     *
+     * Used by the consignment (dépôt-vente) régularisation: the goods already
+     * left the inventory when the Bon de Sortie was issued, so the sold portion
+     * must be billed but NOT destocked a second time. Amounts are stored in
+     * cents to match the rest of the sales pipeline.
+     *
+     * @param  array<int, array{product:Product, quantity:int, unit_price:int}>  $lines
+     *                                                                                   unit_price is expressed in cents.
+     * @param  array<string, mixed>  $meta  date, note, payment_method
+     */
+    public function createInvoiceFromLines(Customer $customer, array $lines, array $meta = []): Sale
+    {
+        return DB::transaction(function () use ($customer, $lines, $meta) {
+            $totalCents = 0;
+            foreach ($lines as $line) {
+                $totalCents += (int) $line['unit_price'] * (int) $line['quantity'];
+            }
+
+            $sale = Sale::create([
+                'date' => $meta['date'] ?? now()->toDateString(),
+                'customer_id' => $customer->id,
+                'customer_name' => $customer->customer_name,
+                'tax_percentage' => 0,
+                'discount_percentage' => 0,
+                'shipping_amount' => 0,
+                'paid_amount' => 0,
+                'total_amount' => $totalCents,
+                'due_amount' => $totalCents,
+                'status' => 'Completed',
+                'payment_status' => $this->paymentStatus->resolve($totalCents, $totalCents),
+                'payment_method' => $meta['payment_method'] ?? 'Cash',
+                'note' => $meta['note'] ?? null,
+                'tax_amount' => 0,
+                'discount_amount' => 0,
+            ]);
+
+            foreach ($lines as $line) {
+                $product = $line['product'];
+                $quantity = (int) $line['quantity'];
+                $unitPrice = (int) $line['unit_price'];
+                $subTotal = $unitPrice * $quantity;
+
+                SaleDetails::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $product->id,
+                    'product_name' => $product->product_name,
+                    'product_code' => $product->product_code,
+                    'quantity' => $quantity,
+                    'price' => $unitPrice,
+                    'unit_price' => $unitPrice,
+                    'sub_total' => $subTotal,
+                    'product_discount_amount' => 0,
+                    'product_discount_type' => 'fixed',
+                    'product_tax_amount' => 0,
+                ]);
+            }
+
+            return $sale->refresh();
+        });
+    }
+
+    /**
      * Ring up a point-of-sale sale. The status is always "Completed" and stock
      * is always deducted, mirroring the historic POS behaviour.
      *
@@ -183,11 +248,20 @@ class SaleService
             $dueAmount = $data['total_amount'] - $data['paid_amount'];
             $paymentStatus = $this->paymentStatus->resolve($dueAmount, $data['total_amount']);
 
+            $customer = Customer::findOrFail($data['customer_id']);
+
+            // Block the register when the credit portion of this sale would push
+            // the customer past their approved limit; this throws and rolls the
+            // whole sale back before any stock is removed.
+            if ($dueAmount > 0) {
+                $this->credit->charge($customer, (int) round($dueAmount * 100));
+            }
+
             $sale = Sale::create([
                 'date' => now()->format('Y-m-d'),
                 'reference' => 'PSL',
                 'customer_id' => $data['customer_id'],
-                'customer_name' => Customer::findOrFail($data['customer_id'])->customer_name,
+                'customer_name' => $customer->customer_name,
                 'tax_percentage' => $data['tax_percentage'],
                 'discount_percentage' => $data['discount_percentage'],
                 'shipping_amount' => $data['shipping_amount'] * 100,
@@ -428,6 +502,12 @@ class SaleService
                 'due_amount' => $dueAmount * 100,
                 'payment_status' => $paymentStatus,
             ]);
+
+            // Reduce the customer's outstanding credit balance by the payment.
+            $customer = Customer::find($sale->customer_id);
+            if ($customer !== null) {
+                $this->credit->settle($customer, (int) round($data['amount'] * 100));
+            }
 
             return $payment;
         });

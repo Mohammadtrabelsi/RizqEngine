@@ -15,8 +15,8 @@ class SettingDatabaseSeeder extends Seeder
     public function run()
     {
         Setting::create([
-            'company_name' => 'Triangle POS',
-            'client_name' => 'Triangle POS',
+            'company_name' => 'RizqEngine',
+            'client_name' => 'RizqEngine',
             'company_email' => 'company@test.com',
             'company_phone' => '012345678901',
             'notification_email' => 'notification@test.com',

@@ -5,9 +5,12 @@ use App\Livewire\Auth\Login as RedesignLogin;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
+use App\Livewire\Customers\CustomerImport;
 use App\Livewire\Customers\CustomerIndex;
 use App\Livewire\Customers\CustomerShow;
 use App\Livewire\Dashboard as RedesignDashboard;
+use App\Livewire\Drivers\DriverForm;
+use App\Livewire\Drivers\DriverIndex;
 use App\Livewire\Finance\InvoiceArchive;
 use App\Livewire\Finance\MonthlyBudgetForm;
 use App\Livewire\Finance\MonthlyBudgetIndex;
@@ -15,11 +18,15 @@ use App\Livewire\Finance\MonthlyBudgetShow;
 use App\Livewire\Finance\OutingForm;
 use App\Livewire\Finance\OutingIndex;
 use App\Livewire\LandingPage as RedesignLandingPage;
+use App\Livewire\Products\ProductImport;
 use App\Livewire\Suppliers\SupplierForm;
+use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
 use App\Livewire\Suppliers\SupplierShow;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
+use App\Livewire\Vehicles\VehicleForm;
+use App\Livewire\Vehicles\VehicleIndex;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\PurchaseReturn;
@@ -36,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Public front page — the Triangle POS landing screen.
+// Public front page — the RizqEngine landing screen.
 // Namespace reset (\\) so the class-string action is not prefixed with the
 // controller namespace configured in RouteServiceProvider.
 Route::group(['namespace' => '\\'], function () {
@@ -72,10 +79,10 @@ Route::group(['namespace' => '\\'], function () {
 
 Auth::routes(['register' => false]);
 
-// Route the framework login screen to the Triangle POS sign-in. Registered
+// Route the framework login screen to the RizqEngine sign-in. Registered
 // after Auth::routes so it wins URI matching for GET /login; the POST /login
 // handler and the other auth routes stay intact.
-Route::redirect('/login', '/sign-in')->name('login');
+Route::redirect('/login', '/sign-in')->name('login.redirect');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')
@@ -104,6 +111,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Print Barcode
     Route::get('/products/print-barcode', 'BarcodeController@printBarcode')->name('barcode.print');
     // Product
+    Route::group(['namespace' => '\\'], function () {
+        Route::get('/products/import', ProductImport::class)->name('products.import');
+    });
     Route::resource('products', 'ProductController');
     // Product Category
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
@@ -114,12 +124,14 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'parties', 'namespace' => '\\'], function () {
     // Customers (full-page Livewire components)
     Route::get('customers', CustomerIndex::class)->name('customers.index');
+    Route::get('customers/import', CustomerImport::class)->name('customers.import');
     Route::get('customers/create', CustomerForm::class)->name('customers.create');
     Route::get('customers/{customer}', CustomerShow::class)->name('customers.show');
     Route::get('customers/{customer}/edit', CustomerForm::class)->name('customers.edit');
 
     // Suppliers (full-page Livewire components)
     Route::get('suppliers', SupplierIndex::class)->name('suppliers.index');
+    Route::get('suppliers/import', SupplierImport::class)->name('suppliers.import');
     Route::get('suppliers/create', SupplierForm::class)->name('suppliers.create');
     Route::get('suppliers/{supplier}', SupplierShow::class)->name('suppliers.show');
     Route::get('suppliers/{supplier}/edit', SupplierForm::class)->name('suppliers.edit');
@@ -135,11 +147,17 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    // Mail Settings
-    Route::patch('/settings/smtp', 'SettingController@updateSmtp')->name('settings.smtp.update');
-    // General Settings
+    // Settings landing (redirects to General)
     Route::get('/settings', 'SettingController@index')->name('settings.index');
-    Route::patch('/settings', 'SettingController@update')->name('settings.update');
+    // General Settings
+    Route::get('/settings/general', 'SettingController@general')->name('settings.general');
+    Route::patch('/settings/general', 'SettingController@update')->name('settings.update');
+    // Mail Settings
+    Route::get('/settings/mail', 'SettingController@mail')->name('settings.mail');
+    Route::patch('/settings/smtp', 'SettingController@updateSmtp')->name('settings.smtp.update');
+    // Default Images
+    Route::get('/settings/images', 'SettingController@images')->name('settings.images');
+    Route::patch('/settings/images', 'SettingController@updateImages')->name('settings.images.update');
     Route::group(['namespace' => '\\'], function () {
         // Units (full-page Livewire components)
         Route::get('/units', UnitIndex::class)->name('units.index');
@@ -184,6 +202,38 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stock-exits/{stockExit}/return', 'StockEntryController@create')->name('stock-entries.create');
     Route::post('stock-exits/{stockExit}/return', 'StockEntryController@store')->name('stock-entries.store');
     Route::get('stock-entries/{stockEntry}', 'StockEntryController@show')->name('stock-entries.show');
+});
+
+Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
+    // Drivers (chauffeurs) — full-page Livewire components.
+    Route::get('/drivers', DriverIndex::class)->name('drivers.index');
+    Route::get('/drivers/create', DriverForm::class)->name('drivers.create');
+    Route::get('/drivers/{driver}/edit', DriverForm::class)->name('drivers.edit');
+
+    // Vehicles (véhicules) — full-page Livewire components.
+    Route::get('/vehicles', VehicleIndex::class)->name('vehicles.index');
+    Route::get('/vehicles/create', VehicleForm::class)->name('vehicles.create');
+    Route::get('/vehicles/{vehicle}/edit', VehicleForm::class)->name('vehicles.edit');
+
+    // Warehouses (dépôts) — full-page Livewire components.
+    Route::get('/warehouses', \App\Livewire\Warehouses\WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/warehouses/create', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.create');
+    Route::get('/warehouses/{warehouse}/edit', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.edit');
+
+    // Stock transfers between warehouses.
+    Route::get('/stock-transfers', \App\Livewire\StockTransfers\StockTransferIndex::class)->name('stock-transfers.index');
+    Route::get('/stock-transfers/create', \App\Livewire\StockTransfers\StockTransferForm::class)->name('stock-transfers.create');
+
+    // Batches (lots) — traceability with DLC/DLUO.
+    Route::get('/batches', \App\Livewire\Batches\BatchIndex::class)->name('batches.index');
+    Route::get('/batches/create', \App\Livewire\Batches\BatchForm::class)->name('batches.create');
+    Route::get('/batches/{batch}/edit', \App\Livewire\Batches\BatchForm::class)->name('batches.edit');
+
+    // Serial numbers — individually tracked units.
+    Route::get('/serial-numbers', \App\Livewire\SerialNumbers\SerialNumberIndex::class)->name('serial-numbers.index');
+
+    // Cash register (caisse) — open/close sessions and daily Z report.
+    Route::get('/cash-register', \App\Livewire\CashRegister\CashRegisterIndex::class)->name('cash-register.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {

@@ -39,6 +39,17 @@ class StockEntry extends Model
     }
 
     /**
+     * The invoice generated when a consignment exit is regularised (nullable
+     * for standard returns and for consignment returns with nothing sold).
+     *
+     * @return BelongsTo<Sale, $this>
+     */
+    public function sale(): BelongsTo
+    {
+        return $this->belongsTo(Sale::class, 'sale_id', 'id');
+    }
+
+    /**
      * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo

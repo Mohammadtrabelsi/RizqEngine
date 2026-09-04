@@ -28,15 +28,15 @@
                 <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"></polygon>
                 <polygon points="27.5,47.5 72.5,47.5 50,90" fill="#4f46e5" stroke="#4f46e5" stroke-width="7" stroke-linejoin="round"></polygon>
             </svg>
-            <span class="login-brand__name text-slate-900 font-weight-bold">Triangle POS</span>
+            <span class="login-brand__name text-slate-900 font-weight-bold">RizqEngine</span>
         </div>
 
         <div class="login-brand__copy">
-            <h1 class="login-brand__title text-slate-900 font-weight-bold">{{ __('login.welcome') }}</h1>
+            <h1 class="login-brand__title text-white font-weight-bold">{{ __('login.welcome') }}</h1>
             <p class="login-brand__text text-slate-600 mb-0">{{ __('login.description') }}</p>
         </div>
 
-        <div class="login-brand__footer text-slate-500 small">© {{ date('Y') }} Triangle POS</div>
+        <div class="login-brand__footer text-slate-500 small">© {{ date('Y') }} RizqEngine</div>
     </div>
 
     {{-- Form panel --}}

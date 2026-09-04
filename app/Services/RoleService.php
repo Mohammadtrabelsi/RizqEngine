@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -56,7 +55,7 @@ class RoleService
         $role = Role::create(['name' => $name]);
         $role->givePermissionTo($permissions);
 
-        return $role;
+        return Role::findOrFail($role->getKey());
     }
 
     /**

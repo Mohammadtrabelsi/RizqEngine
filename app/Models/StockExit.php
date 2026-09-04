@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property int $id
  * @property string $reference
+ * @property string $kind standard|consignment
+ * @property int|null $customer_id
  * @property string $status in_transit|closed
  */
 class StockExit extends Model
@@ -23,6 +25,12 @@ class StockExit extends Model
     public const STATUS_IN_TRANSIT = 'in_transit';
 
     public const STATUS_CLOSED = 'closed';
+
+    /** Loan / job-site / transfer: goods come back, nothing is sold. */
+    public const KIND_STANDARD = 'standard';
+
+    /** Dépôt-vente: unsold goods come back, the sold portion is invoiced. */
+    public const KIND_CONSIGNMENT = 'consignment';
 
     protected $guarded = [];
 
@@ -50,9 +58,49 @@ class StockExit extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /**
+     * The reseller the goods are consigned to (consignment exits only).
+     *
+     * @return BelongsTo<Customer, $this>
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo<Driver, $this>
+     */
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(Driver::class, 'driver_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo<Vehicle, $this>
+     */
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
+    }
+
     public function isClosed(): bool
     {
         return $this->status === self::STATUS_CLOSED;
+    }
+
+    public function isConsignment(): bool
+    {
+        return $this->kind === self::KIND_CONSIGNMENT;
+    }
+
+    /**
+     * Total quantity still expected back across every line (not yet returned,
+     * written off nor sold). Zero means the exit is fully settled.
+     */
+    public function getOutstandingQuantityAttribute(): int
+    {
+        return (int) $this->details->sum->outstanding_quantity;
     }
 
     public static function boot()

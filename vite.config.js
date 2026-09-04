@@ -22,7 +22,16 @@ export default defineConfig(({ mode }) => {
         ],
         server: {
             cors: {
-                origin: [env.APP_URL],
+                // Allow the configured app URL (when set) plus common local
+                // dev origins: Herd/Valet ".test" domains, localhost, and the
+                // IPv4/IPv6 loopback addresses Vite may serve assets from.
+                origin: [
+                    env.APP_URL,
+                    /^https?:\/\/(?:.+\.)?test(?::\d+)?$/,
+                    /^https?:\/\/(?:.+\.)?localhost(?::\d+)?$/,
+                    /^https?:\/\/127\.0\.0\.1(?::\d+)?$/,
+                    /^https?:\/\/\[::1\](?::\d+)?$/,
+                ].filter(Boolean),
             },
         },
     };

@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'batches' => 'Batches',
+    'batch' => 'Batch',
+    'add_batch' => 'Add batch',
+    'edit_batch' => 'Edit batch',
+    'create_batch' => 'Create batch',
+    'update_batch' => 'Update batch',
+    'batch_created' => 'Batch created.',
+    'batch_updated' => 'Batch updated.',
+    'batch_deleted' => 'Batch deleted.',
+    'no_batches_found' => 'No batches found.',
+    'batch_number' => 'Batch number',
+    'product' => 'Product',
+    'warehouse' => 'Warehouse',
+    'quantity' => 'Quantity',
+    'manufactured_date' => 'Manufactured',
+    'expiry_date' => 'Expiry (DLC/DLUO)',
+    'expired' => 'Expired',
+    'note' => 'Note',
+    'select_product' => 'Select a product',
+
+    'serial_numbers' => 'Serial numbers',
+    'serial' => 'Serial',
+    'status' => 'Status',
+    'all_statuses' => 'All statuses',
+    'change_status' => 'Change status',
+    'register_serial' => 'Register',
+    'serial_registered' => 'Serial number registered.',
+    'no_serials_found' => 'No serial numbers found.',
+    'scan_or_type_serial' => 'Scan or type a serial number',
+];

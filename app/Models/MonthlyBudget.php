@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\TracksUserActions;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -38,7 +39,7 @@ class MonthlyBudget extends Model
      * Outings are matched to the budget by calendar month rather than a foreign
      * key: a single outing table is filtered by year/month on demand.
      *
-     * @return \Illuminate\Database\Eloquent\Builder<Outing>
+     * @return Builder<Outing>
      */
     public function outingsQuery()
     {

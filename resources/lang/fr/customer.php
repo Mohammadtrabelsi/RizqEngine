@@ -1,9 +1,11 @@
 <?php
 
 return [
+    '' => '[TODO] ',
     'add_customer' => 'Ajouter un client',
     'address' => 'Adresse',
     'city' => 'Ville',
+    'client_type' => 'Type de client',
     'country' => 'Pays',
     'create' => 'Créer',
     'customer_details' => 'Détails du client',
@@ -11,9 +13,18 @@ return [
     'customer_name' => 'Nom du client',
     'customer_phone' => 'Téléphone du client',
     'customers' => 'Clients',
+    'document' => 'Document descriptif',
+    'document_hint' => 'PDF, Word, Excel, texte ou image jusqu\'à 10 Mo.',
     'edit' => 'Modifier',
+    'iban' => 'IBAN',
+    'legal_entity' => 'Personne morale',
+    'legal_entity_tax_required' => 'Un numéro d\'identification fiscale (matricule fiscal) est obligatoire pour les personnes morales.',
     'no_customers_found' => 'Aucun client trouvé',
+    'note' => 'Note',
+    'physical_person' => 'Personne physique',
     'profile_image' => 'Image du profile',
-    'tax_identification_number' => "Numéro d'identification fiscale (NIF)",
+    'responsible_person' => 'Personne responsable',
+    'tax_identification_number' => 'Numéro d\'identification fiscale (NIF)',
     'update' => 'Mettre à jour',
+    'whatsapp_number' => 'Numéro WhatsApp',
 ];

@@ -1,9 +1,11 @@
 <?php
 
 return [
+    '' => '',
     'add_customer' => 'Add customer',
     'address' => 'Address',
     'city' => 'City',
+    'client_type' => 'Client type',
     'country' => 'Country',
     'create' => 'Create',
     'customer_details' => 'Customer details',
@@ -11,9 +13,18 @@ return [
     'customer_name' => 'Customer name',
     'customer_phone' => 'Customer phone',
     'customers' => 'Customers',
+    'document' => 'Description document',
+    'document_hint' => 'PDF, Word, Excel, text or image up to 10 MB.',
     'edit' => 'Edit',
+    'iban' => 'IBAN',
+    'legal_entity' => 'Legal entity',
+    'legal_entity_tax_required' => 'A tax identification number (matricule fiscal) is required for legal entities.',
     'no_customers_found' => 'No customers found',
+    'note' => 'Note',
+    'physical_person' => 'Physical person',
     'profile_image' => 'Profile image',
+    'responsible_person' => 'Responsible person',
     'tax_identification_number' => 'Tax identification number (TIN)',
     'update' => 'Update',
+    'whatsapp_number' => 'WhatsApp number',
 ];

@@ -49,6 +49,7 @@ return [
     'sales-report' => 'تقرير المبيعات',
     'sales-return-report' => 'تقرير مرتجعات المبيعات',
     'settings' => 'الإعدادات',
+    'stock' => 'المخزون',
     'stock-adjustments' => 'تسويات المخزون',
     'stock-exits' => 'إذن صرف وإرجاع',
     'create-stock-exit' => 'إنشاء إذن صرف',
@@ -58,5 +59,7 @@ return [
     'transactions' => 'المعاملات',
     'system-settings' => 'إعدادات النظام',
     'units' => 'الوحدات',
+    'drivers' => 'السائقون',
+    'vehicles' => 'المركبات',
     'user-management' => 'إدارة المستخدمين',
 ];

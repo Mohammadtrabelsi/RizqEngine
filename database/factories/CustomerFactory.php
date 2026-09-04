@@ -23,12 +23,17 @@ class CustomerFactory extends Factory
     {
         return [
             'customer_name' => $this->faker->name(),
+            'client_type' => $this->faker->randomElement(Customer::clientTypes()),
             'customer_email' => $this->faker->safeEmail(),
             'customer_phone' => $this->faker->phoneNumber(),
+            'whatsapp_number' => $this->faker->phoneNumber(),
+            'responsible_person' => $this->faker->name(),
             'tax_identification_number' => $this->faker->numerify('TIN-#########'),
+            'iban' => $this->faker->iban(),
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
             'address' => $this->faker->streetAddress(),
+            'note' => $this->faker->sentence(),
         ];
     }
 }

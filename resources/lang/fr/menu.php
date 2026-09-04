@@ -49,6 +49,7 @@ return [
     'sales-report' => 'Rapport des ventes',
     'sales-return-report' => 'Rapport des retours de ventes',
     'settings' => 'Paramètres',
+    'stock' => 'Stock',
     'stock-adjustments' => 'Ajustements de stock',
     'stock-exits' => 'Sortie-Retour',
     'create-stock-exit' => 'Créer un bon de sortie',
@@ -58,5 +59,7 @@ return [
     'transactions' => 'Transactions',
     'system-settings' => 'Paramètres du système',
     'units' => 'Unités',
+    'drivers' => 'Chauffeurs',
+    'vehicles' => 'Véhicules',
     'user-management' => 'Gestion des utilisateurs',
 ];

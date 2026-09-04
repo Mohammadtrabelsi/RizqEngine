@@ -53,10 +53,10 @@ class SalesReportService
             ->first();
 
         return [
-            'count' => (int) $totals->count,
-            'total_amount' => $totals->total_amount / 100,
-            'paid_amount' => $totals->paid_amount / 100,
-            'due_amount' => $totals->due_amount / 100,
+            'count' => (int) $totals->getAttribute('count'),
+            'total_amount' => $totals->getAttribute('total_amount') / 100,
+            'paid_amount' => $totals->getAttribute('paid_amount') / 100,
+            'due_amount' => $totals->getAttribute('due_amount') / 100,
         ];
     }
 }

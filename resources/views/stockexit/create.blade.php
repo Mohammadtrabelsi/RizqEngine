@@ -53,6 +53,28 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
+                                        <label for="kind">{{ __('stockexit.kind') }} <span class="text-danger">*</span></label>
+                                        <select name="kind" id="kind" class="form-control" onchange="document.getElementById('consignee-group').style.display = this.value === 'consignment' ? 'block' : 'none';">
+                                            <option value="standard" @selected(old('kind', 'standard') === 'standard')>{{ __('stockexit.kind_standard') }}</option>
+                                            <option value="consignment" @selected(old('kind') === 'consignment')>{{ __('stockexit.kind_consignment') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" id="consignee-group" style="display: {{ old('kind') === 'consignment' ? 'block' : 'none' }};">
+                                    <div class="form-group">
+                                        <label for="customer_id">{{ __('stockexit.consignee') }} <span class="text-danger">*</span></label>
+                                        <select name="customer_id" id="customer_id" class="form-control">
+                                            <option value="">{{ __('stockexit.select_consignee') }}</option>
+                                            @foreach($customers as $customer)
+                                                <option value="{{ $customer->id }}" @selected(old('customer_id') == $customer->id)>{{ $customer->customer_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
                                         <label for="destination">{{ __('stockexit.destination') }}</label>
                                         <input type="text" id="destination" class="form-control" name="destination" value="{{ old('destination') }}">
                                     </div>
@@ -61,6 +83,36 @@
                                     <div class="form-group">
                                         <label for="responsible">{{ __('stockexit.responsible') }}</label>
                                         <input type="text" id="responsible" class="form-control" name="responsible" value="{{ old('responsible') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="driver_id">{{ __('stockexit.driver') }}</label>
+                                        <select name="driver_id" id="driver_id" class="form-control">
+                                            <option value="">{{ __('stockexit.select_driver') }}</option>
+                                            @foreach($drivers as $driver)
+                                                <option value="{{ $driver->id }}" @selected(old('driver_id') == $driver->id)>{{ $driver->name }}{{ $driver->phone ? ' — '.$driver->phone : '' }}</option>
+                                            @endforeach
+                                        </select>
+                                        @can('create_drivers')
+                                            <small class="form-text"><a href="{{ route('drivers.create') }}" target="_blank">{{ __('drivers.add_driver') }}</a></small>
+                                        @endcan
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="vehicle_id">{{ __('stockexit.vehicle') }}</label>
+                                        <select name="vehicle_id" id="vehicle_id" class="form-control">
+                                            <option value="">{{ __('stockexit.select_vehicle') }}</option>
+                                            @foreach($vehicles as $vehicle)
+                                                <option value="{{ $vehicle->id }}" @selected(old('vehicle_id') == $vehicle->id)>{{ $vehicle->label }}</option>
+                                            @endforeach
+                                        </select>
+                                        @can('create_vehicles')
+                                            <small class="form-text"><a href="{{ route('vehicles.create') }}" target="_blank">{{ __('vehicles.add_vehicle') }}</a></small>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

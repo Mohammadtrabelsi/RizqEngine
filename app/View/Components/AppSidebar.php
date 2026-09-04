@@ -36,6 +36,11 @@ class AppSidebar extends Component
                 ['key' => 'suppliers', 'label' => __('nav.suppliers'), 'route' => 'suppliers.index'],
                 ['key' => 'staff', 'label' => __('nav.staff_roles'), 'route' => 'users.index'],
             ],
+            'imports' => [
+                ['key' => 'import-products', 'label' => __('nav.import_products'), 'route' => 'products.import'],
+                ['key' => 'import-customers', 'label' => __('nav.import_customers'), 'route' => 'customers.import'],
+                ['key' => 'import-suppliers', 'label' => __('nav.import_suppliers'), 'route' => 'suppliers.import'],
+            ],
             'insight' => [
                 ['key' => 'reports', 'label' => __('nav.reports'), 'route' => 'sales-report.index'],
                 ['key' => 'settings', 'label' => __('nav.settings'), 'route' => 'settings.index'],

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Livewire\Dashboard;
 use App\Models\Commande;
 use App\Models\Expense;
 use App\Models\Product;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Schema;
 
 /**
  * Owns every query that feeds the admin dashboard, keeping Eloquent and the
- * raw reporting SQL out of the {@see \App\Livewire\Dashboard} component.
+ * raw reporting SQL out of the {@see Dashboard} component.
  *
  * Monetary columns are stored as integer cents; this service converts them to
  * major units so the component only deals with display-ready values.

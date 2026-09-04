@@ -20,15 +20,15 @@
 
     <div class="login-brand login-brand-copy">
         <a href="{{ route('welcome') }}" class="auth-brand-link">
-            <x-logo :size="26" label="Triangle POS" />
+            <x-logo :size="26" label="RizqEngine" />
         </a>
 
         <div class="auth-card">
-            <div class="login-brand-lead">{{ __('login.welcome') }}</div>
+            <div class="login-brand-lead text-white">{{ __('login.welcome') }}</div>
             <div class="auth-subtitle">{{ __('login.description') }}</div>
         </div>
 
-        <div class="auth-fineprint text-muted">© {{ date('Y') }} Triangle POS</div>
+        <div class="auth-fineprint text-muted">© {{ date('Y') }} RizqEngine</div>
     </div>
 
     <div class="login-form-wrap">

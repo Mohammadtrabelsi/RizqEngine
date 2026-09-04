@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'products' => 'Import products',
+    'customers' => 'Import customers',
+    'suppliers' => 'Import suppliers',
+    'back' => 'Back',
+    'intro' => 'Upload a CSV file to bulk-create records. The first row must contain the column names. Rows are validated before anything is saved, and only valid rows are imported.',
+    'expected_columns' => 'Expected columns',
+    'csv_file' => 'CSV file',
+    'preview' => 'Preview',
+    'loading' => 'Loading',
+    'valid_rows' => 'Valid rows',
+    'invalid_rows' => 'Rows with errors',
+    'import_selected' => 'Import :count valid row(s)',
+    'confirm' => 'Import :count valid row(s)? Rows with errors are skipped.',
+    'no_rows' => 'The file contained no data rows.',
+    'status' => 'Status',
+    'ok' => 'Valid',
+    'success' => ':count record(s) imported successfully.',
+    'nothing_valid' => 'There are no valid rows to import.',
+    'read_failed' => 'The uploaded file could not be read.',
+    'empty_file' => 'The uploaded file is empty.',
+    'missing_columns' => 'The file is missing required columns: :columns.',
+];

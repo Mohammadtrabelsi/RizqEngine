@@ -8,6 +8,7 @@ use App\Models\Outing;
 use App\Services\Finance\InvoiceArchiveService;
 use App\Services\Finance\OutingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class FinancialAssistantTest extends TestCase
@@ -85,8 +86,8 @@ class FinancialAssistantTest extends TestCase
         Outing::create(['reference' => 'BS-2026-00001', 'date' => '2026-08-01', 'food' => 1]);
         Outing::create(['reference' => 'BS-2026-00002', 'date' => '2026-08-02', 'food' => 1]);
 
-        $this->assertSame('BS-2026-00003', $service->nextReference(\Illuminate\Support\Carbon::parse('2026-08-03')));
-        $this->assertSame('BS-2027-00001', $service->nextReference(\Illuminate\Support\Carbon::parse('2027-01-01')));
+        $this->assertSame('BS-2026-00003', $service->nextReference(Carbon::parse('2026-08-03')));
+        $this->assertSame('BS-2027-00001', $service->nextReference(Carbon::parse('2027-01-01')));
     }
 
     public function test_invoice_archive_filters_by_type_and_period(): void

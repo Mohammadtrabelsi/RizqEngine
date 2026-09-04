@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'cash_register' => 'Caisse',
+    'current_session' => 'Session en cours',
+    'open_session' => 'Ouvrir la caisse',
+    'close_session' => 'Clôturer la caisse',
+    'open' => 'Ouverte',
+    'closed' => 'Clôturée',
+    'opened_at' => 'Ouverte le',
+    'opening_float' => 'Fond de caisse',
+    'cash_sales' => 'Ventes en espèces',
+    'expected_cash' => 'Espèces attendues',
+    'counted_amount' => 'Montant compté',
+    'difference' => 'Écart',
+    'status' => 'Statut',
+    'cashier' => 'Caissier',
+    'history' => 'Historique des sessions',
+    'note' => 'Note',
+    'no_sessions' => 'Aucune session pour le moment.',
+    'no_open_session' => "Vous n'avez aucune session ouverte.",
+    'opened' => 'Caisse ouverte.',
+    'closed_flash' => 'Caisse clôturée.',
+    'already_open' => 'Vous avez déjà une session de caisse ouverte.',
+    'already_closed' => 'Cette session de caisse est déjà clôturée.',
+];

@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'batches' => 'الدفعات',
+    'batch' => 'دفعة',
+    'add_batch' => 'إضافة دفعة',
+    'edit_batch' => 'تعديل الدفعة',
+    'create_batch' => 'إنشاء الدفعة',
+    'update_batch' => 'تحديث الدفعة',
+    'batch_created' => 'تم إنشاء الدفعة.',
+    'batch_updated' => 'تم تحديث الدفعة.',
+    'batch_deleted' => 'تم حذف الدفعة.',
+    'no_batches_found' => 'لا توجد دفعات.',
+    'batch_number' => 'رقم الدفعة',
+    'product' => 'المنتج',
+    'warehouse' => 'المخزن',
+    'quantity' => 'الكمية',
+    'manufactured_date' => 'تاريخ الإنتاج',
+    'expiry_date' => 'انتهاء الصلاحية',
+    'expired' => 'منتهي الصلاحية',
+    'note' => 'ملاحظة',
+    'select_product' => 'اختر منتجاً',
+
+    'serial_numbers' => 'الأرقام التسلسلية',
+    'serial' => 'الرقم التسلسلي',
+    'status' => 'الحالة',
+    'all_statuses' => 'كل الحالات',
+    'change_status' => 'تغيير الحالة',
+    'register_serial' => 'تسجيل',
+    'serial_registered' => 'تم تسجيل الرقم التسلسلي.',
+    'no_serials_found' => 'لا توجد أرقام تسلسلية.',
+    'scan_or_type_serial' => 'امسح أو أدخل رقماً تسلسلياً',
+];

@@ -45,7 +45,7 @@ class ExpenseForm extends Component
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'category_id' => 'required',
-            'amount' => 'required|numeric|max:2147483647',
+            'amount' => 'required|numeric|min:0|max:2147483647',
             'details' => 'nullable|string|max:1000',
         ];
     }

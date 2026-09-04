@@ -3,7 +3,7 @@
     <header class="sticky top-0 z-40 flex items-center justify-between gap-8 border-b border-hairline bg-canvas/85 px-6 py-[18px] backdrop-blur-md lg:px-12">
         <a href="{{ route('redesign.landing') }}" class="flex items-center gap-3">
             <x-logo-mark />
-            <span class="font-display text-lg font-bold tracking-[-0.01em]">Triangle POS</span>
+            <span class="font-display text-lg font-bold tracking-[-0.01em]">RizqEngine</span>
         </a>
 
         <nav class="hidden items-center gap-[30px] text-sm font-medium text-ink-3 md:flex">
@@ -118,7 +118,7 @@
     <section class="mx-auto max-w-[1440px] px-6 pb-24 lg:px-12">
         <div class="flex flex-wrap items-center justify-between gap-12 rounded-panel bg-ink p-8 text-white lg:p-12">
             <div>
-                <h2 class="font-display text-[26px] font-bold tracking-[-0.03em] lg:text-[34px]">{{ __('landing.cta_title') }}</h2>
+                <h2 class="font-display text-white text-[26px] font-bold tracking-[-0.03em] lg:text-[34px]">{{ __('landing.cta_title') }}</h2>
                 <p class="mt-3 text-base text-white/70">{{ __('landing.cta_lead') }}</p>
             </div>
             <a href="{{ route('redesign.login') }}" class="rounded-field bg-accent px-7 py-4 text-[15px] font-semibold text-white transition-colors hover:brightness-110">
@@ -127,7 +127,7 @@
         </div>
 
         <div class="mt-8 flex justify-between text-[13px] text-muted">
-            <span>© {{ now()->year }} Triangle POS</span>
+            <span>© {{ now()->year }} RizqEngine</span>
             <span class="font-mono">Laravel · Livewire</span>
         </div>
     </section>

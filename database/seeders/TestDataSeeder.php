@@ -2,15 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Customer;
-use App\Models\Product;
-use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
 /**
- * Seeds a representative set of dummy records (categories, products,
+ * Seeds a representative set of realistic records (categories, products,
  * customers and suppliers) that tests and manual QA can rely on.
+ *
+ * The concrete data lives in PeopleDatabaseSeeder (customers and suppliers)
+ * and ProductDatabaseSeeder (categories and products); this seeder simply
+ * delegates to them so there is a single source of truth. Both underlying
+ * seeders are idempotent, so running this repeatedly will not create
+ * duplicate records.
  *
  * Run it on its own with:
  *     php artisan db:seed --class=Database\\Seeders\\TestDataSeeder
@@ -24,14 +26,8 @@ class TestDataSeeder extends Seeder
      */
     public function run()
     {
-        // A handful of categories, each with a few products.
-        Category::factory()
-            ->count(5)
-            ->has(Product::factory()->count(4), 'products')
-            ->create();
-
-        // People to buy from and sell to.
-        Customer::factory()->count(15)->create();
-        Supplier::factory()->count(6)->create();
+        // Suppliers must exist before products so they can be linked.
+        $this->call(PeopleDatabaseSeeder::class);
+        $this->call(ProductDatabaseSeeder::class);
     }
 }

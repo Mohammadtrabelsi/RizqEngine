@@ -81,7 +81,7 @@ class InvoiceArchiveService
      * Compile every stored file matching the filter into a ZIP archive on the
      * local disk and return its absolute path.
      *
-     * @return string|null  the archive path, or null when nothing was archived
+     * @return string|null the archive path, or null when nothing was archived
      */
     public function buildZip(?string $start, ?string $end, string $type = self::TYPE_ALL): ?string
     {

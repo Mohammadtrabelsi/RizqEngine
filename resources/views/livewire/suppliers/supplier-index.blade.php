@@ -6,6 +6,11 @@
             <a href="{{ route('suppliers.create') }}" class="btn btn-primary">
                 {{ __('supplier.create_supplier') }} <i class="bi bi-plus"></i>
             </a>
+            @can('create_suppliers')
+            <a href="{{ route('suppliers.import') }}" class="btn btn-outline-primary">
+                {{ __('nav.import_suppliers') }} <i class="bi bi-upload"></i>
+            </a>
+            @endcan
         </div>
         <div class="col-12 col-md-6 mb-3">
             <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">

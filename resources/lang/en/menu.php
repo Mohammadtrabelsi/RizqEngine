@@ -49,6 +49,7 @@ return [
     'sales-report' => 'Sales Report',
     'sales-return-report' => 'Sales Return Report',
     'settings' => 'Settings',
+    'stock' => 'Stock',
     'stock-adjustments' => 'Stock Adjustments',
     'stock-exits' => 'Stock Exit-Return',
     'create-stock-exit' => 'Create Exit Voucher',
@@ -58,5 +59,7 @@ return [
     'transactions' => 'Transactions',
     'system-settings' => 'System Settings',
     'units' => 'Units',
+    'drivers' => 'Drivers',
+    'vehicles' => 'Vehicles',
     'user-management' => 'User Management',
 ];

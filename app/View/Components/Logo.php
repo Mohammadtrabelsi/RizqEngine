@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 /**
- * Triangle POS logo mark (triangle outline subdivided into four, centre one
+ * RizqEngine logo mark (triangle outline subdivided into four, centre one
  * filled with the accent colour) with an optional wordmark. All defaults and
  * the scaled height live here so the template carries no @php.
  */

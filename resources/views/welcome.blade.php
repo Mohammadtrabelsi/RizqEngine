@@ -7,7 +7,7 @@
 
     <title>{{ config('app.name') }} &mdash; Modern Point of Sale &amp; Inventory</title>
     <meta name="description"
-          content="Triangle POS is a complete Point of Sale and inventory management system: products & barcodes, stock, purchases, sales, returns, expenses, people, reports and role-based user management.">
+          content="RizqEngine is a complete Point of Sale and inventory management system: products & barcodes, stock, purchases, sales, returns, expenses, people, reports and role-based user management.">
 
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
@@ -27,7 +27,7 @@
         <div class="lp-wrap lp-nav__inner">
             <a class="lp-brand font-weight-bold text-slate-900" href="{{ route('welcome') }}">
                 <x-logo :size="22" :sw="8" stroke="#0f172a" accent="#4f46e5" />
-                Triangle POS
+                RizqEngine
             </a>
             <div class="lp-nav__links">
                 <a href="#features">Features</a>
@@ -43,7 +43,7 @@
     <header class="lp-wrap lp-hero">
         <div class="lp-hero__copy">
             <span class="lp-kicker text-indigo-600 font-weight-bold">Point of Sale &amp; Inventory Platform</span>
-            <h1 class="lp-title text-slate-900">Run your store with <span class="lp-accent-text">Triangle POS</span></h1>
+            <h1 class="lp-title text-slate-900">Run your store with <span class="lp-accent-text">RizqEngine</span></h1>
             <p class="lp-lead text-slate-600">A complete, production-ready POS and inventory platform. Manage products, stock, purchases, sales, returns, expenses and staff — with real-time reporting and fine-grained access control.</p>
             <div class="lp-hero__actions">
                 <a href="{{ route('login') }}" class="btn btn-primary btn-lg shadow-sm">{{ __('general.get-started') }}</a>
@@ -54,7 +54,7 @@
             <div class="lp-shot bg-white border rounded-lg shadow-sm">
                 <div class="d-flex flex-column align-items-center gap-2 p-4 text-center">
                     <x-logo :size="48" :sw="6" stroke="#0f172a" accent="#4f46e5" />
-                    <span class="fw-semibold text-indigo-600 fs-5 mt-2">Triangle POS Operations Control</span>
+                    <span class="fw-semibold text-indigo-600 fs-5 mt-2">RizqEngine Operations Control</span>
                     <span class="text-slate-500 small">Real-Time Till & Inventory Engine</span>
                 </div>
             </div>
@@ -129,7 +129,7 @@
     {{-- Footer --}}
     <footer class="lp-footer bg-white border-top border-slate-200">
         <div class="lp-wrap lp-footer__inner">
-            <span class="text-slate-500 small">© {{ date('Y') }} Triangle POS</span>
+            <span class="text-slate-500 small">© {{ date('Y') }} RizqEngine</span>
             <div class="lp-footer__links">
                 <a href="#" class="text-slate-600 small">{{ __('general.privacy') }}</a>
                 <a href="#" class="text-slate-600 small ms-3">{{ __('general.terms') }}</a>
