@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreImageSettingsRequest;
 use App\Http\Requests\StoreSettingsRequest;
 use App\Http\Requests\StoreSmtpSettingsRequest;
 use App\Services\SettingService;
@@ -14,13 +15,24 @@ class SettingController extends Controller
 {
     public function __construct(private readonly SettingService $settings) {}
 
+    /**
+     * Landing route: keep the historical settings.index entry point working by
+     * sending it to the General settings tab.
+     */
     public function index()
+    {
+        abort_if(Gate::denies('access_settings'), 403);
+
+        return redirect()->route('settings.general');
+    }
+
+    public function general()
     {
         abort_if(Gate::denies('access_settings'), 403);
 
         $settings = $this->settings->current();
 
-        return view('setting.index', compact('settings'));
+        return view('setting.general', compact('settings'));
     }
 
     public function update(StoreSettingsRequest $request)
@@ -37,6 +49,26 @@ class SettingController extends Controller
         ];
 
         $this->settings->update($data, [
+            'client_logo' => $request->file('client_logo'),
+        ]);
+
+        session()->flash('info', trans('setting.settings-updated'));
+
+        return redirect()->route('settings.general');
+    }
+
+    public function images()
+    {
+        abort_if(Gate::denies('access_settings'), 403);
+
+        $settings = $this->settings->current();
+
+        return view('setting.images', compact('settings'));
+    }
+
+    public function updateImages(StoreImageSettingsRequest $request)
+    {
+        $this->settings->update([], [
             'default_product_image' => $request->file('default_product_image'),
             'default_category_image' => $request->file('default_category_image'),
             'default_supplier_image' => $request->file('default_supplier_image'),
@@ -45,7 +77,16 @@ class SettingController extends Controller
 
         session()->flash('info', trans('setting.settings-updated'));
 
-        return redirect()->route('settings.index');
+        return redirect()->route('settings.images');
+    }
+
+    public function mail()
+    {
+        abort_if(Gate::denies('access_settings'), 403);
+
+        $settings = $this->settings->current();
+
+        return view('setting.mail', compact('settings'));
     }
 
     public function updateSmtp(StoreSmtpSettingsRequest $request)
@@ -81,6 +122,6 @@ class SettingController extends Controller
             session()->flash('error', trans('setting.smtp-settings-update-failed'));
         }
 
-        return redirect()->route('settings.index');
+        return redirect()->route('settings.mail');
     }
 }
