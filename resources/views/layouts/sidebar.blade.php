@@ -302,6 +302,7 @@
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inReports ? 'is-open' : '' }}">
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('periodic-summary-report.index') ? 'is-active' : '' }}" href="{{ route('periodic-summary-report.index') }}">{{ __('menu.periodic-summary-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('profit-loss-report.index') ? 'is-active' : '' }}" href="{{ route('profit-loss-report.index') }}">{{ __('menu.profit-loss-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('payments-report.index') ? 'is-active' : '' }}" href="{{ route('payments-report.index') }}">{{ __('menu.payments-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('sales-report.index') ? 'is-active' : '' }}" href="{{ route('sales-report.index') }}">{{ __('menu.sales-report') }}</a></li>

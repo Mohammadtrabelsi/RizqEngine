@@ -36,6 +36,7 @@ return [
     'print-barcode' => 'Imprimer les codes-barres',
     'product-movement-report' => 'Rapport de mouvement des produits',
     'products' => 'Produits',
+    'periodic-summary-report' => 'Bilan périodique',
     'profit-loss-report' => 'Rapport de pertes et profits',
     'purchase-returns' => 'Retours d\'achats',
     'purchases' => 'Achats',
