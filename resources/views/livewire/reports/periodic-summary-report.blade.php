@@ -1,5 +1,5 @@
 <div>
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
@@ -51,7 +51,7 @@
     </div>
 
     {{-- Summary cards --}}
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-12 col-lg-3 col-md-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-3 d-flex align-items-center">
