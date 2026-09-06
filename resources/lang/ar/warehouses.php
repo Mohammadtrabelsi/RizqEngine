@@ -39,4 +39,14 @@ return [
     'add_line' => 'إضافة سطر',
     'select_warehouse' => 'اختر مخزناً',
     'select_product' => 'اختر منتجاً',
+
+    // لوحة حالة المخازن
+    'stock_state' => 'حالة المخازن',
+    'all_warehouses' => 'كل المخازن',
+    'units_on_hand' => 'الوحدات المتوفرة',
+    'no_stock' => 'لا يوجد مخزون لعرضه.',
+    'customer' => 'العميل',
+    'outstanding_exits' => 'أذون الخروج المعلقة',
+    'outstanding_qty' => 'الكمية المعلقة',
+    'no_outstanding_exits' => 'لا توجد أذون خروج معلقة.',
 ];

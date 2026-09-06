@@ -53,6 +53,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="warehouse_id">{{ __('warehouses.warehouse') }}</label>
+                                        <select class="form-control" name="warehouse_id" id="warehouse_id">
+                                            @foreach(\App\Models\Warehouse::active()->orderByDesc('is_default')->get() as $warehouse)
+                                                <option value="{{ $warehouse->id }}" {{ $purchase->warehouse_id == $warehouse->id ? 'selected' : '' }}>{{ $warehouse->name }}{{ $warehouse->is_default ? ' ('.__('warehouses.default').')' : '' }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <livewire:product-cart :cartInstance="'purchase'" :data="$purchase"/>

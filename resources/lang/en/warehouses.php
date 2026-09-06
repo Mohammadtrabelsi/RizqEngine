@@ -39,4 +39,14 @@ return [
     'add_line' => 'Add line',
     'select_warehouse' => 'Select a warehouse',
     'select_product' => 'Select a product',
+
+    // Warehouse stock dashboard
+    'stock_state' => 'Stock state',
+    'all_warehouses' => 'All warehouses',
+    'units_on_hand' => 'Units on hand',
+    'no_stock' => 'No stock to display.',
+    'customer' => 'Customer',
+    'outstanding_exits' => 'Outstanding stock exits',
+    'outstanding_qty' => 'Outstanding qty',
+    'no_outstanding_exits' => 'No outstanding stock exits.',
 ];

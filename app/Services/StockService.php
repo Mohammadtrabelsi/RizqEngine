@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\InsufficientStockException;
 use App\Models\Product;
+use App\Models\Warehouse;
 use App\Observers\ProductObserver;
 use Illuminate\Support\Facades\DB;
 
@@ -24,18 +25,28 @@ class StockService
      */
     public const MINIMUM_STOCK = 10;
 
+    public function __construct(private readonly WarehouseStockService $warehouseStock) {}
+
     /**
      * Add stock to a product and record an "in" movement.
+     *
+     * When a $warehouseId is given the received quantity lands in that
+     * warehouse; otherwise it is credited to the default warehouse. The
+     * per-warehouse pivot is updated best-effort — the global quantity remains
+     * the authoritative total.
      */
-    public function stockIn(Product $product, int $quantity, ?string $note = null, ?string $referenceType = 'Manual', ?int $referenceId = null): Product
+    public function stockIn(Product $product, int $quantity, ?string $note = null, ?string $referenceType = 'Manual', ?int $referenceId = null, ?int $warehouseId = null): Product
     {
         $this->guardPositive($quantity);
 
-        return DB::transaction(function () use ($product, $quantity, $note, $referenceType, $referenceId) {
+        return DB::transaction(function () use ($product, $quantity, $note, $referenceType, $referenceId, $warehouseId) {
             $product = Product::lockForUpdate()->findOrFail($product->id);
 
             StockMovementContext::set('in', $referenceType, $referenceId, $note);
             $product->update(['product_quantity' => $product->product_quantity + $quantity]);
+
+            $warehouse = $warehouseId !== null ? Warehouse::find($warehouseId) : null;
+            $this->warehouseStock->receive($product, $quantity, $warehouse);
 
             return $product;
         });
@@ -46,11 +57,11 @@ class StockService
      *
      * @throws InsufficientStockException when the product does not hold enough stock.
      */
-    public function stockOut(Product $product, int $quantity, ?string $note = null, ?string $referenceType = 'Manual', ?int $referenceId = null): Product
+    public function stockOut(Product $product, int $quantity, ?string $note = null, ?string $referenceType = 'Manual', ?int $referenceId = null, ?int $warehouseId = null): Product
     {
         $this->guardPositive($quantity);
 
-        return DB::transaction(function () use ($product, $quantity, $note, $referenceType, $referenceId) {
+        return DB::transaction(function () use ($product, $quantity, $note, $referenceType, $referenceId, $warehouseId) {
             $product = Product::lockForUpdate()->findOrFail($product->id);
 
             if ($product->product_quantity - $quantity < self::MINIMUM_STOCK) {
@@ -64,6 +75,15 @@ class StockService
 
             StockMovementContext::set('out', $referenceType, $referenceId, $note);
             $product->update(['product_quantity' => $product->product_quantity - $quantity]);
+
+            if ($warehouseId !== null && ($warehouse = Warehouse::find($warehouseId)) !== null) {
+                // Draw from a specific warehouse (e.g. reversing a purchase),
+                // best-effort so a legacy pivot shortfall never blocks the move.
+                $this->warehouseStock->release($product, $quantity, $warehouse);
+            } else {
+                // Auto-allocate: default warehouse first, then overflow.
+                $this->warehouseStock->release($product, $quantity);
+            }
 
             return $product;
         });
