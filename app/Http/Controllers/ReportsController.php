@@ -14,6 +14,13 @@ class ReportsController extends Controller
         return view('reports.profit-loss.index');
     }
 
+    public function periodicSummaryReport()
+    {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports.periodic-summary.index');
+    }
+
     public function paymentsReport()
     {
         abort_if(Gate::denies('access_reports'), 403);

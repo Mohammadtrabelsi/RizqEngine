@@ -36,6 +36,7 @@ return [
     'print-barcode' => 'طباعة الباركود',
     'product-movement-report' => 'تقرير حركة المنتجات',
     'products' => 'المنتجات',
+    'periodic-summary-report' => 'الملخص الدوري',
     'profit-loss-report' => 'تقرير الأرباح والخسائر',
     'purchase-returns' => 'مرتجعات المشتريات',
     'purchases' => 'المشتريات',

@@ -416,6 +416,9 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    // Periodic Summary Report (bilan par jour / semaine / mois)
+    Route::get('/periodic-summary-report', 'ReportsController@periodicSummaryReport')
+        ->name('periodic-summary-report.index');
     // Profit Loss Report
     Route::get('/profit-loss-report', 'ReportsController@profitLossReport')
         ->name('profit-loss-report.index');

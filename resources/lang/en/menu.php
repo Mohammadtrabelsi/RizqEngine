@@ -36,6 +36,7 @@ return [
     'print-barcode' => 'Print Barcode',
     'product-movement-report' => 'Product Movement Report',
     'products' => 'Products',
+    'periodic-summary-report' => 'Periodic Summary',
     'profit-loss-report' => 'Profit Loss Report',
     'purchase-returns' => 'Purchase Returns',
     'purchases' => 'Purchases',

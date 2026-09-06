@@ -106,6 +106,7 @@
             @endif
 
             @if ($inReports)
+                <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('periodic-summary-report.index') ? 'is-active' : '' }}" href="{{ route('periodic-summary-report.index') }}"><i class="bi bi-calendar3"></i> <span>{{ __('menu.periodic-summary-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('profit-loss-report.index') ? 'is-active' : '' }}" href="{{ route('profit-loss-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.profit-loss-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('payments-report.index') ? 'is-active' : '' }}" href="{{ route('payments-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.payments-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sales-report.index') ? 'is-active' : '' }}" href="{{ route('sales-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.sales-report') }}</span></a></li>
