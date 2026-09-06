@@ -120,6 +120,7 @@ class PurchaseService
                 'date' => $data['date'],
                 'supplier_id' => $data['supplier_id'],
                 'supplier_name' => Supplier::findOrFail($data['supplier_id'])->supplier_name,
+                'warehouse_id' => $data['warehouse_id'] ?? null,
                 'tax_percentage' => $data['tax_percentage'],
                 'discount_percentage' => $data['discount_percentage'],
                 'shipping_amount' => $data['shipping_amount'] * 100,
@@ -144,6 +145,7 @@ class PurchaseService
                         null,
                         'Purchase',
                         $purchase->id,
+                        $purchase->warehouse_id,
                     );
                 }
             }
@@ -183,6 +185,7 @@ class PurchaseService
                         null,
                         'Purchase',
                         $purchase->id,
+                        $purchase->warehouse_id,
                     );
                 }
                 $purchase_detail->delete();
@@ -193,6 +196,7 @@ class PurchaseService
                 'reference' => $data['reference'],
                 'supplier_id' => $data['supplier_id'],
                 'supplier_name' => Supplier::findOrFail($data['supplier_id'])->supplier_name,
+                'warehouse_id' => $data['warehouse_id'] ?? null,
                 'tax_percentage' => $data['tax_percentage'],
                 'discount_percentage' => $data['discount_percentage'],
                 'shipping_amount' => $data['shipping_amount'] * 100,
@@ -217,6 +221,7 @@ class PurchaseService
                         null,
                         'Purchase',
                         $purchase->id,
+                        $purchase->warehouse_id,
                     );
                 }
             }

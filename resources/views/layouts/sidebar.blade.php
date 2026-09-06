@@ -276,7 +276,8 @@
                 </button>
                 <ul class="app-sidebar-sublist {{ $inWarehousing ? 'is-open' : '' }}">
                     @can('access_warehouses')
-                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses*') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses.index') || request()->routeIs('warehouses.create') || request()->routeIs('warehouses.edit') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses.stock') ? 'is-active' : '' }}" href="{{ route('warehouses.stock') }}">{{ __('warehouses.stock_state') }}</a></li>
                     @endcan
                     @can('access_stock_transfers')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-transfers*') ? 'is-active' : '' }}" href="{{ route('stock-transfers.index') }}">{{ __('warehouses.stock_transfers') }}</a></li>

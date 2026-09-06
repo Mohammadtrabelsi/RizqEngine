@@ -39,4 +39,14 @@ return [
     'add_line' => 'Ajouter une ligne',
     'select_warehouse' => 'Sélectionner un dépôt',
     'select_product' => 'Sélectionner un produit',
+
+    // État des dépôts (dashboard)
+    'stock_state' => 'État des dépôts',
+    'all_warehouses' => 'Tous les dépôts',
+    'units_on_hand' => 'Unités en stock',
+    'no_stock' => 'Aucun stock à afficher.',
+    'customer' => 'Client',
+    'outstanding_exits' => 'Bons de sortie en cours',
+    'outstanding_qty' => 'Qté en attente',
+    'no_outstanding_exits' => 'Aucun bon de sortie en cours.',
 ];

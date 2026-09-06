@@ -48,6 +48,9 @@
                                 <h5 class="mb-2 border-bottom pb-2">{{ __('purchase.invoice_info') }}</h5>
                                 <div>{{ __('purchase.invoice_number') }}: <strong>INV/{{ $purchase->reference }}</strong></div>
                                 <div>{{ __('purchase.date') }}: {{ \Carbon\Carbon::parse($purchase->date)->format('d M, Y') }}</div>
+                                @if($purchase->warehouse)
+                                    <div>{{ __('warehouses.warehouse') }}: <strong>{{ $purchase->warehouse->name }}</strong></div>
+                                @endif
                                 <div>
                                     {{ __('purchase.status') }}: <strong>{{ $purchase->status }}</strong>
                                 </div>

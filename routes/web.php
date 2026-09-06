@@ -217,6 +217,7 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
 
     // Warehouses (dépôts) — full-page Livewire components.
     Route::get('/warehouses', \App\Livewire\Warehouses\WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/warehouses/stock', \App\Livewire\Warehouses\WarehouseStockDashboard::class)->name('warehouses.stock');
     Route::get('/warehouses/create', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.create');
     Route::get('/warehouses/{warehouse}/edit', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.edit');
 
