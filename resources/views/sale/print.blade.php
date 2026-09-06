@@ -14,6 +14,11 @@
             font-size: 13px;
         }
         .page { padding: 45px 55px; }
+        .header { width: 100%; margin-bottom: 8px; }
+        .header td { vertical-align: middle; }
+        .header .brand { text-align: right; }
+        .header .brand img { max-height: 90px; max-width: 240px; }
+        .header .brand .company { font-weight: bold; font-size: 18px; }
         .invoice-title {
             font-size: 72px;
             font-weight: bold;
@@ -78,8 +83,40 @@
     </style>
 </head>
 <body>
+@php
+    $logoData = null;
+    $candidates = [];
+    if (settings()->client_logo) {
+        $candidates[] = storage_path('app/public/'.settings()->client_logo);
+    }
+    if (settings()->site_logo) {
+        $candidates[] = storage_path('app/public/'.settings()->site_logo);
+    }
+    $candidates[] = public_path('images/logo-dark.png');
+    foreach ($candidates as $logoPath) {
+        if ($logoPath && is_file($logoPath)) {
+            $ext = strtolower(pathinfo($logoPath, PATHINFO_EXTENSION));
+            $mime = $ext === 'svg' ? 'image/svg+xml' : ($ext === 'jpg' || $ext === 'jpeg' ? 'image/jpeg' : 'image/png');
+            $logoData = 'data:'.$mime.';base64,'.base64_encode(file_get_contents($logoPath));
+            break;
+        }
+    }
+@endphp
 <div class="page">
-    <div class="invoice-title">FACTURE</div>
+    <table class="header">
+        <tr>
+            <td>
+                <div class="invoice-title">FACTURE</div>
+            </td>
+            <td class="brand">
+                @if($logoData)
+                    <img src="{{ $logoData }}" alt="Logo">
+                @else
+                    <div class="company">{{ strtoupper(settings()->company_name) }}</div>
+                @endif
+            </td>
+        </tr>
+    </table>
     <div class="meta-pills">
         <span class="pill">Facture n°{{ $sale->reference }}</span>
         <span class="pill">{{ \Carbon\Carbon::parse($sale->date)->format('d/m/y') }}</span>
