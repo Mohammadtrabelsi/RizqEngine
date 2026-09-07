@@ -121,13 +121,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="product_order_tax">{{ __('product.order_tax') }} (%)</label>
-                                        <input type="number" class="form-control" name="product_order_tax" id="product_order_tax" value="{{ $product->product_order_tax }}" min="0" max="100">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_tax_type">{{ __('product.tax_type') }}</label>
                                         <select class="form-control" name="product_tax_type" id="product_tax_type">
@@ -137,7 +131,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_unit">{{ __('product.unit') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This short text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
                                         <select class="form-control" name="product_unit" id="product_unit" required>
@@ -153,7 +147,10 @@
                             <div class="form-row" id="product_db_taxes_wrapper" style="display:none;">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>{{ __('taxes.select_taxes') }}</label>
+                                        <label>{{ __('taxes.select_taxes') }} <span id="product-tax-total" class="text-muted"></span></label>
+                                        @if($product->product_order_tax && empty($selectedTaxIds))
+                                            <p class="text-muted small mb-2">{{ __('product.legacy_tax_rate_hint', ['rate' => $product->product_order_tax]) }}</p>
+                                        @endif
                                         @forelse($productTaxes as $tax)
                                             <div class="form-check">
                                                 <input class="form-check-input product-tax-checkbox" type="checkbox" name="product_taxes[]" value="{{ $tax->id }}" data-type="{{ $tax->type }}" data-rate="{{ $tax->rate }}" id="product-tax-{{ $tax->id }}" {{ in_array($tax->id, $selectedTaxIds) ? 'checked' : '' }}>

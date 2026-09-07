@@ -68,6 +68,7 @@ return [
     'not_expired' => 'Non expiré',
     'note' => 'Note',
     'order_tax' => 'Taxe (%)',
+    'legacy_tax_rate_hint' => 'Taux actuellement enregistré : :rate% (non lié à une taxe ci-dessous — sélectionnez-en une pour le conserver).',
     'orders' => 'Commandes',
     'party' => 'Tiers',
     'percentage' => 'Pourcentage',

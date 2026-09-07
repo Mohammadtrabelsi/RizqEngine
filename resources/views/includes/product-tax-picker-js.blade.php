@@ -2,38 +2,41 @@
     document.addEventListener('DOMContentLoaded', function () {
         var taxTypeSelect = document.getElementById('product_tax_type');
         var dbTaxesWrapper = document.getElementById('product_db_taxes_wrapper');
-        var manualInput = document.getElementById('product_order_tax');
+        var totalDisplay = document.getElementById('product-tax-total');
         var checkboxes = dbTaxesWrapper ? dbTaxesWrapper.querySelectorAll('.product-tax-checkbox') : [];
 
-        if (!taxTypeSelect || !dbTaxesWrapper || !manualInput) {
+        if (!taxTypeSelect || !dbTaxesWrapper) {
             return;
         }
 
-        function recalcFromCheckboxes() {
+        function updateTotalDisplay() {
+            if (!totalDisplay) {
+                return;
+            }
+
             var sum = 0;
             checkboxes.forEach(function (checkbox) {
                 if (checkbox.checked && checkbox.dataset.type === 'percentage') {
                     sum += parseFloat(checkbox.dataset.rate) || 0;
                 }
             });
-            manualInput.value = sum;
+
+            totalDisplay.textContent = sum > 0 ? '(' + sum + '%)' : '';
         }
 
         function toggle() {
-            var isExclusive = taxTypeSelect.value === '1';
-            dbTaxesWrapper.style.display = isExclusive ? '' : 'none';
+            var hasTaxType = taxTypeSelect.value !== '';
+            dbTaxesWrapper.style.display = hasTaxType ? '' : 'none';
 
             checkboxes.forEach(function (checkbox) {
-                checkbox.disabled = !isExclusive;
+                checkbox.disabled = !hasTaxType;
             });
 
-            if (isExclusive && Array.prototype.some.call(checkboxes, function (checkbox) { return checkbox.checked; })) {
-                recalcFromCheckboxes();
-            }
+            updateTotalDisplay();
         }
 
         checkboxes.forEach(function (checkbox) {
-            checkbox.addEventListener('change', recalcFromCheckboxes);
+            checkbox.addEventListener('change', updateTotalDisplay);
         });
 
         taxTypeSelect.addEventListener('change', toggle);

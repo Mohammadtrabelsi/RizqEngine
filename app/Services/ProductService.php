@@ -79,11 +79,12 @@ class ProductService
     /**
      * Pull the submitted "product_taxes" tax IDs out of the attribute set
      * (it isn't a products column) so they can be synced to the product's
-     * taxes pivot separately. When any are selected, product_order_tax is
-     * recomputed server-side from their percentage-type rates so a tampered
-     * client value can't override it; with none selected the submitted
-     * product_order_tax (manual entry, e.g. on products created before this
-     * feature existed) is left untouched.
+     * taxes pivot separately. The create/edit forms no longer have a manual
+     * tax-rate field: whenever a tax type (exclusive/inclusive) is chosen,
+     * product_order_tax is always (re)computed from the selected
+     * percentage-type taxes' rates, including down to 0 when none are
+     * checked. With no tax type chosen the taxes picker isn't shown, so
+     * nothing here is touched.
      *
      * @param  array<string, mixed>  &$attributes
      * @return array<int, int>
@@ -93,7 +94,7 @@ class ProductService
         $taxIds = array_map('intval', $attributes['product_taxes'] ?? []);
         unset($attributes['product_taxes']);
 
-        if (! empty($taxIds)) {
+        if (in_array((string) ($attributes['product_tax_type'] ?? ''), ['1', '2'], true)) {
             $attributes['product_order_tax'] = (int) Tax::whereIn('id', $taxIds)
                 ->where('type', Tax::TYPE_PERCENTAGE)
                 ->sum('rate');
