@@ -54,6 +54,10 @@ return [
     'fully_consumed' => 'Consommé/Perdu',
 
     'exit-created' => 'Bon de sortie créé avec succès',
+    'created-from-commande' => 'Bon de sortie :reference généré à partir de la commande.',
+    'commande-already-converted' => 'La commande :reference a déjà généré un bon de sortie.',
+    'commande-no-lines' => 'La commande :reference ne contient aucune ligne à sortir.',
+    'reason_consignment_from_commande' => 'Dépôt-vente commande :reference',
     'exit-deleted' => 'Bon de sortie supprimé avec succès',
     'entry-created' => 'Bon d\'entrée enregistré',
     'entry-created-closed' => 'Bon d\'entrée enregistré, bon de sortie clôturé',

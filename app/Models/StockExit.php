@@ -69,6 +69,17 @@ class StockExit extends Model
     }
 
     /**
+     * The Commande this exit was generated from (nullable — exits can also be
+     * created standalone, without an originating order).
+     *
+     * @return BelongsTo<Commande, $this>
+     */
+    public function commande(): BelongsTo
+    {
+        return $this->belongsTo(Commande::class, 'commande_id', 'id');
+    }
+
+    /**
      * @return BelongsTo<Driver, $this>
      */
     public function driver(): BelongsTo

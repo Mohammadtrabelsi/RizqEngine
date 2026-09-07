@@ -12,6 +12,7 @@ return [
     'created-from-bon-commande' => 'Commande :reference créée à partir du bon de commande.',
     'created-from-devis' => 'Commande :reference créée à partir du devis.',
     'create-bon-livraison' => 'Créer le bon de livraison',
+    'create-stock-exit' => 'Générer un bon de sortie',
     'devis-already-bon-commande' => 'Le devis :reference a déjà été transformé en bon de commande.',
     'devis-already-converted' => 'Le devis :reference a déjà été transformé en commande.',
     'transform-to-commande' => 'Transformer en commande',

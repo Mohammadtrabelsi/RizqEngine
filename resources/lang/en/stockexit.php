@@ -54,6 +54,10 @@ return [
     'fully_consumed' => 'Consumed/Lost',
 
     'exit-created' => 'Exit voucher created successfully',
+    'created-from-commande' => 'Exit voucher :reference generated from the order.',
+    'commande-already-converted' => 'Order :reference has already generated an exit voucher.',
+    'commande-no-lines' => 'Order :reference has no line to move out.',
+    'reason_consignment_from_commande' => 'Consignment order :reference',
     'exit-deleted' => 'Exit voucher deleted successfully',
     'entry-created' => 'Entry voucher recorded',
     'entry-created-closed' => 'Entry voucher recorded, exit voucher closed',

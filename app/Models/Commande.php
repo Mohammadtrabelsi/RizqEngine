@@ -100,6 +100,21 @@ class Commande extends Model
         return $this->hasOne(Sale::class, 'commande_id', 'id');
     }
 
+    /**
+     * The Bons de Sortie (consignment exits) generated from this Commande.
+     *
+     * @return HasMany<StockExit, $this>
+     */
+    public function stockExits(): HasMany
+    {
+        return $this->hasMany(StockExit::class, 'commande_id', 'id');
+    }
+
+    public function hasStockExit(): bool
+    {
+        return $this->stockExits()->exists();
+    }
+
     public function isInvoiced(): bool
     {
         return $this->status === self::STATUS_INVOICED || $this->sale()->exists();

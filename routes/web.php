@@ -410,6 +410,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/commandes/{commande}/convert-to-bon-livraison', 'Convert\CommandeToBonLivraisonController')
         ->name('commandes.convert-bon-livraison');
 
+    // Commande → Bon de Sortie (consignment / dépôt-vente)
+    Route::post('/commandes/{commande}/convert-to-stock-exit', 'Convert\CommandeToStockExitController')
+        ->name('commandes.convert-stock-exit');
+
     // Bon de Livraison
     Route::resource('bon-livraisons', 'BonLivraisonController')
         ->parameters(['bon-livraisons' => 'bonLivraison'])

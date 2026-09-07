@@ -43,6 +43,14 @@
                             </form>
                         @endcan
                     @endif
+                    @if(! $commande->hasStockExit())
+                        @can('convert_commandes_to_stock_exit')
+                            <form class="d-inline" action="{{ route('commandes.convert-stock-exit', $commande->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs bg-amber-500 !text-white border-amber-500 hover:bg-amber-600 hover:border-amber-600"><i class="bi bi-box-arrow-up"></i> {{ __('commande.create-stock-exit') }}</button>
+                            </form>
+                        @endcan
+                    @endif
                     @if(! $commande->isInvoiced())
                         @can('convert_commandes')
                             <form class="d-inline" action="{{ route('commandes.convert', $commande->id) }}" method="POST">
