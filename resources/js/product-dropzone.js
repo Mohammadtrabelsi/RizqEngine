@@ -2,7 +2,19 @@
 // create/edit views). Endpoints come from the #product-dropzone-config data-*
 // attributes; the CSRF token from the page <meta>; and any already-attached
 // images from the config element's data-existing JSON (edit screen only).
-document.addEventListener('DOMContentLoaded', function () {
+
+// Disable Dropzone's auto-discovery as soon as this module runs. The
+// #document-dropzone element carries the `dropzone` class, so Dropzone would
+// otherwise auto-attach to it on DOMContentLoaded with no configured URL
+// ("No URL provided"), then collide with our manual instance below
+// ("Dropzone already attached"). This assignment must happen before the
+// DOMContentLoaded auto-discovery fires; a @vite-emitted deferred module runs
+// in time for that.
+if (typeof Dropzone !== 'undefined') {
+    Dropzone.autoDiscover = false;
+}
+
+function initProductDropzone() {
     if (typeof Dropzone === 'undefined') {
         return;
     }
@@ -14,7 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    Dropzone.autoDiscover = false;
+    // Guard against a second instantiation on the same element.
+    if (element.dropzone) {
+        return;
+    }
 
     const $ = window.jQuery;
     const token = document.querySelector('meta[name="csrf-token"]');
@@ -63,4 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
     });
-});
+}
+
+// As a deferred module this typically runs before DOMContentLoaded, but if the
+// document is already parsed (script loaded late) initialise immediately.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProductDropzone);
+} else {
+    initProductDropzone();
+}
