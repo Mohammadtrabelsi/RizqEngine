@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\Reports\HighStockReport;
 use App\Livewire\Reports\InventoryValuationReport;
 use App\Livewire\Reports\LowStockReport;
 use App\Models\Category;
@@ -81,6 +82,7 @@ class InventoryReportsTest extends TestCase
 
         $this->actingAs($user)->get(route('inventory-valuation-report.index'))->assertForbidden();
         $this->actingAs($user)->get(route('low-stock-report.index'))->assertForbidden();
+        $this->actingAs($user)->get(route('high-stock-report.index'))->assertForbidden();
         $this->actingAs($user)->get(route('stock-movement-report.index'))->assertForbidden();
         $this->actingAs($user)->get(route('product-movement-report.index'))->assertForbidden();
 
@@ -88,6 +90,7 @@ class InventoryReportsTest extends TestCase
 
         $this->actingAs($user)->get(route('inventory-valuation-report.index'))->assertOk();
         $this->actingAs($user)->get(route('low-stock-report.index'))->assertOk();
+        $this->actingAs($user)->get(route('high-stock-report.index'))->assertOk();
         $this->actingAs($user)->get(route('stock-movement-report.index'))->assertOk();
         $this->actingAs($user)->get(route('product-movement-report.index'))->assertOk();
     }
@@ -104,6 +107,21 @@ class InventoryReportsTest extends TestCase
         $component->assertSee($low->product_name);
         $component->assertViewHas('lowStockCount', 2);
         $component->assertViewHas('outOfStockCount', 1);
+    }
+
+    /** @test */
+    public function the_high_stock_report_lists_products_above_their_high_stock_level()
+    {
+        $healthy = $this->makeProduct(['product_name' => 'Healthy Widget', 'product_quantity' => 50, 'product_stock_alert' => 5, 'product_stock_alert_max' => 100]);
+        $overstocked = $this->makeProduct(['product_name' => 'Overstocked Widget', 'product_quantity' => 150, 'product_stock_alert' => 5, 'product_stock_alert_max' => 100]);
+        $noThreshold = $this->makeProduct(['product_name' => 'Unmonitored Widget', 'product_quantity' => 500, 'product_stock_alert' => 5, 'product_stock_alert_max' => null]);
+
+        $component = Livewire::test(HighStockReport::class);
+
+        $component->assertSee($overstocked->product_name);
+        $component->assertDontSee($healthy->product_name);
+        $component->assertDontSee($noThreshold->product_name);
+        $component->assertViewHas('highStockCount', 1);
     }
 
     /** @test */

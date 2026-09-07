@@ -104,6 +104,8 @@ return [
     'status' => 'Status',
     'stock' => 'Stock',
     'stock_alert' => 'Alert Quantity',
+    'stock_alert_max' => 'High Stock Alert',
+    'stock_alert_max_help' => 'Optional. Flag this product as overstocked when quantity exceeds this value.',
     'stock_worth' => 'Stock worth',
     'submit' => 'Submit',
     'subtotal' => 'Subtotal',

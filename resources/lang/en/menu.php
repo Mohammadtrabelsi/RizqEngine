@@ -31,6 +31,7 @@ return [
     'home' => 'Home',
     'inventory-valuation-report' => 'Inventory Valuation Report',
     'low-stock-report' => 'Low Stock Report',
+    'high-stock-report' => 'High Stock Report',
     'parties' => 'Parties',
     'payments-report' => 'Payments Report',
     'print-barcode' => 'Print Barcode',

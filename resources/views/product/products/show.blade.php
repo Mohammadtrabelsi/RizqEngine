@@ -104,16 +104,22 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <div class="p-3 bg-light rounded">
                                     <small class="text-muted d-block mb-1">{{ __('product.current_quantity') }}</small>
                                     <h4 class="mb-0">{{ $product->product_quantity }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <div class="p-3 bg-light rounded">
                                     <small class="text-muted d-block mb-1">{{ __('product.alert_threshold') }}</small>
                                     <h4 class="mb-0">{{ $product->product_stock_alert }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-1">{{ __('product.stock_alert_max') }}</small>
+                                    <h4 class="mb-0">{{ $product->product_stock_alert_max ?? '—' }} @if($product->product_stock_alert_max)<small class="text-muted">{{ $product->product_unit }}</small>@endif</h4>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">

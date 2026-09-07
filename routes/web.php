@@ -444,6 +444,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Low Stock Report
     Route::get('/low-stock-report', 'ReportsController@lowStockReport')
         ->name('low-stock-report.index');
+    // High Stock Report
+    Route::get('/high-stock-report', 'ReportsController@highStockReport')
+        ->name('high-stock-report.index');
     // Stock Movement Report
     Route::get('/stock-movement-report', 'ReportsController@stockMovementReport')
         ->name('stock-movement-report.index');

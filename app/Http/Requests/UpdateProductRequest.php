@@ -23,6 +23,7 @@ class UpdateProductRequest extends FormRequest
             'product_cost' => ['required', 'numeric', 'max:2147483647'],
             'product_price' => ['required', 'numeric', 'max:2147483647'],
             'product_stock_alert' => ['required', 'integer', 'min:10'],
+            'product_stock_alert_max' => ['nullable', 'integer', 'gt:product_stock_alert'],
             'product_order_tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'product_tax_type' => ['nullable', 'integer'],
             'product_note' => ['nullable', 'string', 'max:1000'],

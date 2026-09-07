@@ -30,6 +30,7 @@ use Spatie\Translatable\HasTranslations;
  * @property float $product_price
  * @property string $product_unit
  * @property int $product_stock_alert
+ * @property int|null $product_stock_alert_max
  * @property int $product_order_tax
  * @property int $product_tax_type
  * @property string|null $product_note
@@ -193,7 +194,8 @@ class Product extends Model implements HasMedia
     {
         return StockStatus::fromQuantity(
             (int) $this->product_quantity,
-            (int) $this->product_stock_alert
+            (int) $this->product_stock_alert,
+            $this->product_stock_alert_max !== null ? (int) $this->product_stock_alert_max : null
         );
     }
 
@@ -209,7 +211,13 @@ class Product extends Model implements HasMedia
             StockStatus::OutOfStock => $query->where('product_quantity', '<=', 0),
             StockStatus::LowStock => $query->where('product_quantity', '>', 0)
                 ->whereColumn('product_quantity', '<=', 'product_stock_alert'),
-            StockStatus::InStock => $query->whereColumn('product_quantity', '>', 'product_stock_alert'),
+            StockStatus::HighStock => $query->whereNotNull('product_stock_alert_max')
+                ->whereColumn('product_quantity', '>', 'product_stock_alert_max'),
+            StockStatus::InStock => $query->whereColumn('product_quantity', '>', 'product_stock_alert')
+                ->where(function (Builder $query) {
+                    $query->whereNull('product_stock_alert_max')
+                        ->orWhereColumn('product_quantity', '<=', 'product_stock_alert_max');
+                }),
         };
     }
 

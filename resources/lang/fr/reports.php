@@ -9,6 +9,7 @@ return [
     'filter_report' => 'Filtrer le rapport',
     'inventory_valuation' => 'Évaluation des stocks',
     'low_stock' => 'Stock faible',
+    'high_stock' => 'Surstock',
     'other' => 'Autre',
     'payment_method' => 'Moyen de paiement',
     'payments' => 'Paiements',

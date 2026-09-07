@@ -9,6 +9,7 @@ return [
     'filter_report' => 'Filter report',
     'inventory_valuation' => 'Inventory valuation',
     'low_stock' => 'Low stock',
+    'high_stock' => 'High stock',
     'other' => 'Other',
     'payment_method' => 'Payment method',
     'payments' => 'Payments',

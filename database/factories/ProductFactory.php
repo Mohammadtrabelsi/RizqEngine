@@ -36,6 +36,7 @@ class ProductFactory extends Factory
             'product_price' => $cost + $this->faker->numberBetween(1, 200),
             'product_unit' => 'PC',
             'product_stock_alert' => $this->faker->numberBetween(1, 10),
+            'product_stock_alert_max' => null,
             'product_order_tax' => $this->faker->numberBetween(0, 20),
             'product_tax_type' => $this->faker->numberBetween(1, 2),
             'product_note' => $this->faker->sentence(),
@@ -50,6 +51,18 @@ class ProductFactory extends Factory
     {
         return $this->state(fn () => [
             'expiry_date' => now()->subDays($this->faker->numberBetween(1, 60))->toDateString(),
+        ]);
+    }
+
+    /**
+     * State: the product's quantity exceeds its high-stock alert threshold.
+     */
+    public function highStock(): self
+    {
+        return $this->state(fn () => [
+            'product_stock_alert' => 10,
+            'product_stock_alert_max' => 50,
+            'product_quantity' => $this->faker->numberBetween(51, 200),
         ]);
     }
 }

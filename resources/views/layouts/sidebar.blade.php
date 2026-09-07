@@ -312,6 +312,7 @@
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('purchases-return-report.index') ? 'is-active' : '' }}" href="{{ route('purchases-return-report.index') }}">{{ __('menu.purchases-return-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('inventory-valuation-report.index') ? 'is-active' : '' }}" href="{{ route('inventory-valuation-report.index') }}">{{ __('menu.inventory-valuation-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('low-stock-report.index') ? 'is-active' : '' }}" href="{{ route('low-stock-report.index') }}">{{ __('menu.low-stock-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('high-stock-report.index') ? 'is-active' : '' }}" href="{{ route('high-stock-report.index') }}">{{ __('menu.high-stock-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}">{{ __('menu.stock-movement-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}">{{ __('menu.product-movement-report') }}</a></li>
                 </ul>

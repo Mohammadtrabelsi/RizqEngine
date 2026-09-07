@@ -9,6 +9,7 @@ return [
     'filter_report' => 'تصفية التقرير',
     'inventory_valuation' => 'تقييم المخزون',
     'low_stock' => 'انخفاض المخزون',
+    'high_stock' => 'فائض المخزون',
     'other' => 'آخر',
     'payment_method' => 'طريقة الدفع',
     'payments' => 'الدفعات',

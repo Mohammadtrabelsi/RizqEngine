@@ -31,6 +31,7 @@ return [
     'home' => 'Accueil',
     'inventory-valuation-report' => 'Rapport d\'évaluation des stocks',
     'low-stock-report' => 'Rapport de stock faible',
+    'high-stock-report' => 'Rapport de surstock',
     'parties' => 'Parties',
     'payments-report' => 'Rapport des paiements',
     'print-barcode' => 'Imprimer les codes-barres',

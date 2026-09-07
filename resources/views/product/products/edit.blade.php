@@ -111,6 +111,16 @@
                             </div>
 
                             <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_stock_alert_max">{{ __('product.stock_alert_max') }}</label>
+                                        <input type="number" class="form-control" name="product_stock_alert_max" value="{{ $product->product_stock_alert_max }}" min="1">
+                                        <small class="form-text text-muted">{{ __('product.stock_alert_max_help') }}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_order_tax">{{ __('product.order_tax') }} (%)</label>

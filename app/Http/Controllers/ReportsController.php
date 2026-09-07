@@ -70,6 +70,13 @@ class ReportsController extends Controller
         return view('reports.low-stock.index');
     }
 
+    public function highStockReport()
+    {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports.high-stock.index');
+    }
+
     public function stockMovementReport()
     {
         abort_if(Gate::denies('access_reports'), 403);

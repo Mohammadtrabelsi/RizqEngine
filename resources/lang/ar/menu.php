@@ -31,6 +31,7 @@ return [
     'home' => 'الرئيسية',
     'inventory-valuation-report' => 'تقرير تقييم المخزون',
     'low-stock-report' => 'تقرير المخزون المنخفض',
+    'high-stock-report' => 'تقرير فائض المخزون',
     'parties' => 'الأطراف',
     'payments-report' => 'تقرير المدفوعات',
     'print-barcode' => 'طباعة الباركود',

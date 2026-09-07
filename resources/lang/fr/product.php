@@ -104,6 +104,8 @@ return [
     'status' => 'Statut',
     'stock' => 'Stock',
     'stock_alert' => 'Quantité d\'alerte',
+    'stock_alert_max' => 'Alerte de surstock',
+    'stock_alert_max_help' => 'Optionnel. Signale ce produit comme en surstock lorsque la quantité dépasse cette valeur.',
     'stock_worth' => 'Valeur du stock',
     'submit' => 'Soumettre',
     'subtotal' => 'Sous-total',
