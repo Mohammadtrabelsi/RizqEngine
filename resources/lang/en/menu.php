@@ -8,6 +8,7 @@ return [
     'all-purchase-returns' => 'All Purchase Returns',
     'all-purchases' => 'All Purchases',
     'all-bon-commandes' => 'All Purchase Orders',
+    'all-bon-livraisons' => 'All Delivery Notes',
     'all-commandes' => 'All Orders',
     'all-quotations' => 'All Quotations',
     'orders' => 'Orders',

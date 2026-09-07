@@ -51,6 +51,15 @@ class SaleController extends Controller
     {
         abort_if(Gate::denies('show_sales'), 403);
 
+        // Eager-load the document-chain relations so the Devis workflow
+        // breadcrumb renders without lazy-loading (strict mode is on off-prod).
+        $sale->load([
+            'commande.quotation',
+            'commande.bonCommande.quotation',
+            'bonLivraison.commande.quotation',
+            'bonLivraison.commande.bonCommande.quotation',
+        ]);
+
         $customer = $this->sales->customerFor($sale);
 
         return view('sale.show', compact('sale', 'customer'));

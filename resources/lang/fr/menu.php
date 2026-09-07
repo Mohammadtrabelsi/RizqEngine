@@ -8,6 +8,7 @@ return [
     'all-purchase-returns' => 'Tous les retours d\'achats',
     'all-purchases' => 'Tous les achats',
     'all-bon-commandes' => 'Tous les bons de commande',
+    'all-bon-livraisons' => 'Tous les bons de livraison',
     'all-commandes' => 'Toutes les commandes',
     'all-quotations' => 'Tous les devis',
     'orders' => 'Commandes',

@@ -14,7 +14,11 @@
     <div class="container-fluid">
         @include('utils.alerts')
 
-        <x-document-chain current="commande" :quotation="optional($commande->bonCommande)->quotation" :bon-commande="$commande->bonCommande" :commande="$commande" :sale="$commande->sale" />
+        @if($commande->bonLivraison)
+            <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :commande="$commande" :bon-livraison="$commande->bonLivraison" :sale="optional($commande->bonLivraison)->sale ?? $commande->sale" />
+        @else
+            <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :bon-commande="$commande->bonCommande" :commande="$commande" :sale="$commande->sale" />
+        @endif
 
         <div class="card">
             <div class="card-header d-flex flex-wrap align-items-center">
@@ -28,6 +32,14 @@
                             <form class="d-inline" action="{{ route('commandes.confirm', $commande->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-check2-circle"></i> {{ __('commande.confirm') }}</button>
+                            </form>
+                        @endcan
+                    @endif
+                    @if(! $commande->hasBonLivraison())
+                        @can('convert_commandes_to_bon_livraison')
+                            <form class="d-inline" action="{{ route('commandes.convert-bon-livraison', $commande->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-truck"></i> {{ __('commande.create-bon-livraison') }}</button>
                             </form>
                         @endcan
                     @endif

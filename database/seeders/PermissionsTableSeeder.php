@@ -99,6 +99,14 @@ class PermissionsTableSeeder extends Seeder
             'delete_commandes',
             'confirm_commandes',
             'convert_commandes',
+            // Devis → Commande → Bon de Livraison → Facture path
+            'convert_quotations_to_commande',
+            'convert_commandes_to_bon_livraison',
+            'access_bon_livraisons',
+            'show_bon_livraisons',
+            'delete_bon_livraisons',
+            'deliver_bon_livraisons',
+            'convert_bon_livraisons',
             // Expenses
             'access_expenses',
             'create_expenses',

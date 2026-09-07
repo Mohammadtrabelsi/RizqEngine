@@ -49,6 +49,16 @@ class Sale extends Model
         return $this->belongsTo(Commande::class, 'commande_id', 'id');
     }
 
+    /**
+     * The Bon de Livraison this Facture (Sale) was generated from (if any).
+     *
+     * @return BelongsTo<BonLivraison, $this>
+     */
+    public function bonLivraison(): BelongsTo
+    {
+        return $this->belongsTo(BonLivraison::class, 'bon_livraison_id', 'id');
+    }
+
     public static function boot()
     {
         parent::boot();

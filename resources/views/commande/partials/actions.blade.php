@@ -16,6 +16,14 @@
                 </button>
             @endcan
         @endif
+        @if(! $data->hasBonLivraison())
+            @can('convert_commandes_to_bon_livraison')
+                <button class="dropdown-item" data-submit-form="bl-cmd-{{ $data->id }}">
+                    <i class="line-1 bi bi-truck mr-2 text-info"></i> {{ __('commande.create-bon-livraison') }}
+                    <form id="bl-cmd-{{ $data->id }}" class="d-none" action="{{ route('commandes.convert-bon-livraison', $data->id) }}" method="POST">@csrf</form>
+                </button>
+            @endcan
+        @endif
         @if(! $data->isInvoiced())
             @can('convert_commandes')
                 <button class="dropdown-item" data-submit-form="facture-cmd-{{ $data->id }}">

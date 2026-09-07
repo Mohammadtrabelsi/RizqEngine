@@ -84,6 +84,9 @@
                 @can('access_commandes')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}"><i class="bi bi-bag-check"></i> <span>{{ __('menu.all-commandes') }}</span></a></li>
                 @endcan
+                @can('access_bon_livraisons')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}" href="{{ route('bon-livraisons.index') }}"><i class="bi bi-truck"></i> <span>{{ __('menu.all-bon-livraisons') }}</span></a></li>
+                @endcan
             @endif
 
             @if ($inExpenses)

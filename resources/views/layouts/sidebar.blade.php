@@ -141,7 +141,7 @@
             </li>
             @endcan
 
-            @canany(['access_bon_commandes', 'access_commandes'])
+            @canany(['access_bon_commandes', 'access_commandes', 'access_bon_livraisons'])
             <li class="app-sidebar-item {{ $inOrders ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inOrders ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inOrders ? 'true' : 'false' }}">
                     <span>{{ __('nav.orders') }}</span>
@@ -153,6 +153,9 @@
                     @endcan
                     @can('access_commandes')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}">{{ __('menu.all-commandes') }}</a></li>
+                    @endcan
+                    @can('access_bon_livraisons')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}" href="{{ route('bon-livraisons.index') }}">{{ __('menu.all-bon-livraisons') }}</a></li>
                     @endcan
                 </ul>
             </li>

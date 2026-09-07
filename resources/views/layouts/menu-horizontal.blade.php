@@ -56,9 +56,9 @@
                 </li>
                 @endcan
 
-                @canany(['access_bon_commandes', 'access_commandes'])
-                <li class="app-topnav-item {{ request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_bon_commandes') ? route('bon-commandes.index') : route('commandes.index') }}">
+                @canany(['access_bon_commandes', 'access_commandes', 'access_bon_livraisons'])
+                <li class="app-topnav-item {{ request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*') || request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_bon_commandes') ? route('bon-commandes.index') : (auth()->user()->can('access_commandes') ? route('commandes.index') : route('bon-livraisons.index')) }}">
                         <i class="bi bi-clipboard-check"></i> <span>{{ __('menu.orders') }}</span>
                     </a>
                 </li>
