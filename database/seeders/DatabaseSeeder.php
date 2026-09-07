@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TaxDatabaseSeeder::class);
         $this->call(SettingDatabaseSeeder::class);
         $this->call(PeopleDatabaseSeeder::class);
+        $this->call(UnitDatabaseSeeder::class);
         $this->call(ProductDatabaseSeeder::class);
         $this->call(LeBonPlanSeeder::class);
         $this->call(SaleDatabaseSeeder::class);
