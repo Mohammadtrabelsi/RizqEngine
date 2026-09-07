@@ -9,9 +9,21 @@
                     <i class="line-1 bi bi-arrow-right-circle mr-2 text-success"></i> {{ __('boncommande.transform-to-bon-commande') }}
                     <form id="convert-qt-{{ $data->id }}" class="d-none" action="{{ route('quotations.convert', $data->id) }}" method="POST">@csrf</form>
                 </button>
-            @else
+            @elseif($data->bonCommande)
                 <a href="{{ route('bon-commandes.show', $data->bonCommande->id) }}" class="dropdown-item">
                     <i class="line-1 bi bi-box-arrow-up-right mr-2 text-info"></i> {{ __('boncommande.view-bon-commande') }}
+                </a>
+            @endif
+        @endcan
+        @can('convert_quotations_to_commande')
+            @if(! $data->isConverted())
+                <button class="dropdown-item" data-submit-form="convert-qt-cmd-{{ $data->id }}">
+                    <i class="line-1 bi bi-arrow-right-circle mr-2 text-success"></i> {{ __('commande.transform-to-commande') }}
+                    <form id="convert-qt-cmd-{{ $data->id }}" class="d-none" action="{{ route('quotations.convert-commande', $data->id) }}" method="POST">@csrf</form>
+                </button>
+            @elseif($data->commande)
+                <a href="{{ route('commandes.show', $data->commande->id) }}" class="dropdown-item">
+                    <i class="line-1 bi bi-box-arrow-up-right mr-2 text-info"></i> {{ __('commande.view-commande') }}
                 </a>
             @endif
         @endcan

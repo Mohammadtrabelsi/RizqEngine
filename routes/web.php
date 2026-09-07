@@ -395,6 +395,24 @@ Route::group(['middleware' => 'auth'], function () {
     // Commande → Facture (Sale)
     Route::post('/commandes/{commande}/generate-facture', 'Convert\CommandeToFactureController')
         ->name('commandes.convert');
+
+    // Devis → Commande (direct, shorter path)
+    Route::post('/quotations/{quotation}/convert-to-commande', 'Convert\QuotationToCommandeController')
+        ->name('quotations.convert-commande');
+
+    // Commande → Bon de Livraison
+    Route::post('/commandes/{commande}/convert-to-bon-livraison', 'Convert\CommandeToBonLivraisonController')
+        ->name('commandes.convert-bon-livraison');
+
+    // Bon de Livraison
+    Route::resource('bon-livraisons', 'BonLivraisonController')
+        ->parameters(['bon-livraisons' => 'bonLivraison'])
+        ->only(['index', 'show', 'destroy']);
+    Route::post('/bon-livraisons/{bonLivraison}/deliver', 'BonLivraisonController@deliver')->name('bon-livraisons.deliver');
+
+    // Bon de Livraison → Facture (Sale)
+    Route::post('/bon-livraisons/{bonLivraison}/generate-facture', 'Convert\BonLivraisonToFactureController')
+        ->name('bon-livraisons.convert');
 });
 
 Route::group(['middleware' => 'auth'], function () {

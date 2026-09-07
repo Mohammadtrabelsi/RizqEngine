@@ -48,9 +48,23 @@ class Quotation extends Model
         return $this->hasOne(BonCommande::class, 'quotation_id', 'id');
     }
 
+    /**
+     * The Commande this Devis was converted into directly (shorter path), if any.
+     *
+     * @return HasOne<Commande, $this>
+     */
+    public function commande(): HasOne
+    {
+        return $this->hasOne(Commande::class, 'quotation_id', 'id');
+    }
+
+    /**
+     * True when this Devis has been transformed down either path
+     * (Devis → Bon de Commande, or Devis → Commande directly).
+     */
     public function isConverted(): bool
     {
-        return $this->bonCommande()->exists();
+        return $this->bonCommande()->exists() || $this->commande()->exists();
     }
 
     public static function boot()

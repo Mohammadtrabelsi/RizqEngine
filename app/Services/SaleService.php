@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\ConversionException;
 use App\Exceptions\InsufficientStockException;
+use App\Models\BonLivraison;
 use App\Models\Commande;
 use App\Models\Customer;
 use App\Models\Product;
@@ -470,6 +471,121 @@ class SaleService
             }
 
             $commande->update(['status' => Commande::STATUS_INVOICED]);
+
+            return $sale->refresh();
+        });
+    }
+
+    /**
+     * Generate a Facture (Sale) from a Bon de Livraison — the optional last step
+     * of the Devis → Commande → Bon de Livraison → Facture path.
+     *
+     * Like {@see self::createFactureFromCommande()} this reuses the existing
+     * Sale/invoice implementation and copies the raw integer-cent columns
+     * verbatim. When the delivery note originates from a Commande the resulting
+     * Sale is linked to both the Bon de Livraison and that Commande, so the
+     * unique commande_id / bon_livraison_id indexes together guarantee the order
+     * is invoiced at most once regardless of which path is used, and the source
+     * Commande is marked invoiced.
+     *
+     * The Facture is created as a "Pending" sale by default, so it does not move
+     * stock on generation; it can then be completed through the normal Sale flow.
+     *
+     * @param  array<string, mixed>  $overrides
+     *
+     * @throws ConversionException when the Bon de Livraison has already been
+     *                             invoiced.
+     * @throws InsufficientStockException when generating with a stock-moving
+     *                                    status and a product lacks stock.
+     */
+    public function createFactureFromBonLivraison(BonLivraison $bonLivraison, array $overrides = []): Sale
+    {
+        return DB::transaction(function () use ($bonLivraison, $overrides) {
+            // Serialize concurrent invoicing of the same Bon de Livraison.
+            $bonLivraison = BonLivraison::lockForUpdate()->findOrFail($bonLivraison->id);
+
+            if ($bonLivraison->sale()->exists()) {
+                throw new ConversionException(
+                    trans('bonlivraison.already-invoiced', ['reference' => $bonLivraison->reference])
+                );
+            }
+
+            // Guard the shared Commande against a second Facture via either path.
+            if ($bonLivraison->commande_id !== null
+                && Sale::where('commande_id', $bonLivraison->commande_id)->exists()) {
+                throw new ConversionException(
+                    trans('bonlivraison.already-invoiced', ['reference' => $bonLivraison->reference])
+                );
+            }
+
+            $status = $overrides['status'] ?? 'Pending';
+            $paidAmount = (float) ($overrides['paid_amount'] ?? 0);
+            $totalAmount = $bonLivraison->total_amount; // accessor => real units
+            $dueAmount = $totalAmount - $paidAmount;
+            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $totalAmount);
+
+            $sale = new Sale;
+            $sale->commande_id = $bonLivraison->commande_id;
+            $sale->bon_livraison_id = $bonLivraison->id;
+            $sale->date = $overrides['date'] ?? now()->format('Y-m-d');
+            $sale->customer_id = $bonLivraison->customer_id;
+            $sale->customer_name = $bonLivraison->customer_name;
+            $sale->tax_percentage = $bonLivraison->getRawOriginal('tax_percentage');
+            $sale->discount_percentage = $bonLivraison->getRawOriginal('discount_percentage');
+            $sale->tax_amount = $bonLivraison->getRawOriginal('tax_amount');
+            $sale->discount_amount = $bonLivraison->getRawOriginal('discount_amount');
+            $sale->shipping_amount = $bonLivraison->getRawOriginal('shipping_amount');
+            $sale->total_amount = $bonLivraison->getRawOriginal('total_amount');
+            $sale->paid_amount = $paidAmount * 100;
+            $sale->due_amount = $dueAmount * 100;
+            $sale->status = $status;
+            $sale->payment_status = $paymentStatus;
+            $sale->payment_method = $overrides['payment_method'] ?? 'Cash';
+            $sale->note = $overrides['note'] ?? $bonLivraison->getRawOriginal('note');
+            $sale->save();
+
+            foreach ($bonLivraison->bonLivraisonDetails as $detail) {
+                SaleDetails::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $detail->getRawOriginal('product_id'),
+                    'product_name' => $detail->getRawOriginal('product_name'),
+                    'product_code' => $detail->getRawOriginal('product_code'),
+                    'quantity' => $detail->getRawOriginal('quantity'),
+                    'price' => $detail->getRawOriginal('price'),
+                    'unit_price' => $detail->getRawOriginal('unit_price'),
+                    'sub_total' => $detail->getRawOriginal('sub_total'),
+                    'product_discount_amount' => $detail->getRawOriginal('product_discount_amount'),
+                    'product_discount_type' => $detail->getRawOriginal('product_discount_type'),
+                    'product_tax_amount' => $detail->getRawOriginal('product_tax_amount'),
+                ]);
+
+                if ($status === 'Shipped' || $status === 'Completed') {
+                    $this->stock->stockOut(
+                        Product::findOrFail($detail->product_id),
+                        (int) $detail->quantity,
+                        null,
+                        'Sale',
+                        $sale->id,
+                    );
+                }
+            }
+
+            if ($paidAmount > 0) {
+                SalePayment::create([
+                    'date' => $sale->date,
+                    'reference' => 'INV/'.$sale->reference,
+                    'amount' => $sale->paid_amount,
+                    'sale_id' => $sale->id,
+                    'payment_method' => $sale->payment_method,
+                ]);
+            }
+
+            $bonLivraison->update(['status' => BonLivraison::STATUS_INVOICED]);
+
+            if ($bonLivraison->commande_id !== null) {
+                Commande::where('id', $bonLivraison->commande_id)
+                    ->update(['status' => Commande::STATUS_INVOICED]);
+            }
 
             return $sale->refresh();
         });

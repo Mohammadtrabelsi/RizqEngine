@@ -13,22 +13,26 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
- * Commande: the confirmed customer order created by transforming a Bon de
- * Commande. It is the last step before invoicing (Facture / Sale).
+ * Bon de Livraison (BL): the delivery note created by transforming a Commande.
+ * It records the physical delivery of the ordered goods and may, in turn, be
+ * invoiced (Facture / Sale) — the last, optional step of the shorter
+ * Devis → Commande → Bon de Livraison → Facture path. It shares the monetary
+ * structure of a Commande so the whole line/tax/discount/total set is carried
+ * over unchanged.
  *
  * @property int $id
  * @property string $reference
- * @property int|null $bon_commande_id
+ * @property int|null $commande_id
  * @property int $customer_id
- * @property string $status pending|confirmed|invoiced
+ * @property string $status pending|delivered|invoiced
  */
-class Commande extends Model
+class BonLivraison extends Model
 {
     use GeneratesDocumentReference, HasFactory, RecordsActivity, TracksUserActions;
 
     public const STATUS_PENDING = 'pending';
 
-    public const STATUS_CONFIRMED = 'confirmed';
+    public const STATUS_DELIVERED = 'delivered';
 
     public const STATUS_INVOICED = 'invoiced';
 
@@ -36,15 +40,15 @@ class Commande extends Model
 
     public function referencePrefix(): string
     {
-        return 'CMD';
+        return 'BL';
     }
 
     /**
-     * @return HasMany<CommandeDetails, $this>
+     * @return HasMany<BonLivraisonDetails, $this>
      */
-    public function commandeDetails(): HasMany
+    public function bonLivraisonDetails(): HasMany
     {
-        return $this->hasMany(CommandeDetails::class, 'commande_id', 'id');
+        return $this->hasMany(BonLivraisonDetails::class, 'bon_livraison_id', 'id');
     }
 
     /**
@@ -56,48 +60,23 @@ class Commande extends Model
     }
 
     /**
-     * The Bon de Commande this Commande was created from.
+     * The Commande this Bon de Livraison was created from.
      *
-     * @return BelongsTo<BonCommande, $this>
+     * @return BelongsTo<Commande, $this>
      */
-    public function bonCommande(): BelongsTo
+    public function commande(): BelongsTo
     {
-        return $this->belongsTo(BonCommande::class, 'bon_commande_id', 'id');
+        return $this->belongsTo(Commande::class, 'commande_id', 'id');
     }
 
     /**
-     * The Devis this Commande was created directly from (shorter path), if any.
-     *
-     * @return BelongsTo<Quotation, $this>
-     */
-    public function quotation(): BelongsTo
-    {
-        return $this->belongsTo(Quotation::class, 'quotation_id', 'id');
-    }
-
-    /**
-     * The Bon de Livraison (delivery note) generated from this Commande (if any).
-     *
-     * @return HasOne<BonLivraison, $this>
-     */
-    public function bonLivraison(): HasOne
-    {
-        return $this->hasOne(BonLivraison::class, 'commande_id', 'id');
-    }
-
-    public function hasBonLivraison(): bool
-    {
-        return $this->bonLivraison()->exists();
-    }
-
-    /**
-     * The Facture (Sale) generated from this Commande (if any).
+     * The Facture (Sale) generated from this Bon de Livraison (if any).
      *
      * @return HasOne<Sale, $this>
      */
     public function sale(): HasOne
     {
-        return $this->hasOne(Sale::class, 'commande_id', 'id');
+        return $this->hasOne(Sale::class, 'bon_livraison_id', 'id');
     }
 
     public function isInvoiced(): bool
@@ -105,9 +84,9 @@ class Commande extends Model
         return $this->status === self::STATUS_INVOICED || $this->sale()->exists();
     }
 
-    public function isConfirmed(): bool
+    public function isDelivered(): bool
     {
-        return $this->status === self::STATUS_CONFIRMED;
+        return $this->status === self::STATUS_DELIVERED || $this->status === self::STATUS_INVOICED;
     }
 
     public function getDateAttribute($value)
@@ -136,13 +115,13 @@ class Commande extends Model
     }
 
     /**
-     * Bootstrap badge class representing this commande's status.
+     * Bootstrap badge class representing this bon de livraison's status.
      */
     public function statusBadgeClass(): string
     {
         return [
             self::STATUS_PENDING => 'badge-info',
-            self::STATUS_CONFIRMED => 'badge-primary',
+            self::STATUS_DELIVERED => 'badge-primary',
             self::STATUS_INVOICED => 'badge-success',
         ][$this->status] ?? 'badge-secondary';
     }
