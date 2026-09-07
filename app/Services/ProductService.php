@@ -81,10 +81,10 @@ class ProductService
      * (it isn't a products column) so they can be synced to the product's
      * taxes pivot separately. The create/edit forms no longer have a manual
      * tax-rate field: whenever a tax type (exclusive/inclusive) is chosen,
-     * product_order_tax is always (re)computed from the selected
-     * percentage-type taxes' rates, including down to 0 when none are
-     * checked. With no tax type chosen the taxes picker isn't shown, so
-     * nothing here is touched.
+     * product_order_tax is always (re)computed by compounding the selected
+     * percentage-type taxes one after another (19% then 7% is 27%, not 26%),
+     * including down to 0 when none are checked. With no tax type chosen the
+     * taxes picker isn't shown, so nothing here is touched.
      *
      * @param  array<string, mixed>  &$attributes
      * @return array<int, int>
@@ -95,9 +95,7 @@ class ProductService
         unset($attributes['product_taxes']);
 
         if (in_array((string) ($attributes['product_tax_type'] ?? ''), ['1', '2'], true)) {
-            $attributes['product_order_tax'] = (int) Tax::whereIn('id', $taxIds)
-                ->where('type', Tax::TYPE_PERCENTAGE)
-                ->sum('rate');
+            $attributes['product_order_tax'] = (int) round(Tax::compoundPercentageRate($taxIds));
         }
 
         return $taxIds;

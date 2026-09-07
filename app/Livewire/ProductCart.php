@@ -120,18 +120,17 @@ class ProductCart extends Component
     /**
      * Derive the single global tax percentage the cart works with from the
      * chosen tax mode and the selected taxes. In "Taxe incluse" mode no tax is
-     * added; in "Hors taxes" mode the selected percentage taxes' rates are
-     * summed. Fixed-amount taxes are recorded on the document but, since the
-     * cart only tracks one percentage figure today, are not yet folded into it.
+     * added; in "Hors taxes" mode the selected percentage taxes are compounded
+     * one after another (19% then 7% is 27.33%, not 26%), not summed.
+     * Fixed-amount taxes are recorded on the document but, since the cart
+     * only tracks one percentage figure today, are not yet folded into it.
      */
     public function recalculateGlobalTax(): void
     {
         if ($this->tax_mode === 'included' || empty($this->selected_taxes)) {
             $this->global_tax = 0;
         } else {
-            $this->global_tax = (float) Tax::whereIn('id', $this->selected_taxes)
-                ->where('type', Tax::TYPE_PERCENTAGE)
-                ->sum('rate');
+            $this->global_tax = Tax::compoundPercentageRate($this->selected_taxes);
         }
 
         $this->updatedGlobalTax();
@@ -182,7 +181,7 @@ class ProductCart extends Component
 
     public function updatedGlobalTax()
     {
-        Cart::instance($this->cart_instance)->setGlobalTax((int) $this->global_tax);
+        Cart::instance($this->cart_instance)->setGlobalTax((float) $this->global_tax);
     }
 
     public function updatedGlobalDiscount()

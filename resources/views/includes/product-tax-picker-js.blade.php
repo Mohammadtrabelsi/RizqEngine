@@ -14,14 +14,19 @@
                 return;
             }
 
-            var sum = 0;
+            // Taxes compound one after another (19% then 7% is 27.33%, not
+            // 26%) rather than summing, matching the server-side calculation.
+            var multiplier = 1;
+            var any = false;
             checkboxes.forEach(function (checkbox) {
                 if (checkbox.checked && checkbox.dataset.type === 'percentage') {
-                    sum += parseFloat(checkbox.dataset.rate) || 0;
+                    multiplier *= 1 + (parseFloat(checkbox.dataset.rate) || 0) / 100;
+                    any = true;
                 }
             });
 
-            totalDisplay.textContent = sum > 0 ? '(' + sum + '%)' : '';
+            var combined = Math.round((multiplier - 1) * 10000) / 100;
+            totalDisplay.textContent = any ? '(' + combined + '%)' : '';
         }
 
         function toggle() {
