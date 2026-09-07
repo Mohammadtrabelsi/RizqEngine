@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ResolvesProductPricing;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
 class StoreProductRequest extends FormRequest
 {
+    use ResolvesProductPricing;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,7 +17,7 @@ class StoreProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return $this->pricingRules() + [
             'product_name' => ['required', 'string', 'max:255'],
             'product_code' => ['required', 'numeric', 'max:2147483647', 'unique:products,product_code'],
             'product_barcode_symbology' => ['required', 'string', 'max:255'],

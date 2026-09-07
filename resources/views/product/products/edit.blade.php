@@ -80,11 +80,36 @@
                                 </div>
                             </div>
 
+                            @php($pricingMode = old('pricing_mode', 'price'))
+                            @php($computedMargin = $product->product_cost > 0 ? round((($product->product_price / $product->product_cost) - 1) * 100, 2) : null)
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="mb-4">
+                                        <label class="d-block">{{ __('product.pricing_mode') }}</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="pricing_mode" id="pricing_mode_price" value="price" {{ $pricingMode === 'margin' ? '' : 'checked' }}>
+                                            <label class="form-check-label" for="pricing_mode_price">{{ __('product.pricing_mode_price') }}</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="pricing_mode" id="pricing_mode_margin" value="margin" {{ $pricingMode === 'margin' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="pricing_mode_margin">{{ __('product.pricing_mode_margin') }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_cost">{{ __('product.cost') }} <span class="text-danger">*</span></label>
                                         <input id="product_cost" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" min="0" name="product_cost" data-money-mask data-money-prefill required value="{{ $product->product_cost }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="product_margin_wrapper" style="display:none;">
+                                    <div class="mb-4">
+                                        <label for="product_margin">{{ __('product.margin') }}</label>
+                                        <input id="product_margin" type="number" step="0.01" min="0" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_margin" value="{{ old('product_margin', $computedMargin) }}">
+                                        <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('product.margin_help') }}</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -211,5 +236,6 @@
     @include('includes.product-dropzone-js')
     @include('includes.money-mask-js')
     @include('includes.product-tax-picker-js')
+    @include('includes.product-pricing-mode-js')
 @endpush
 
