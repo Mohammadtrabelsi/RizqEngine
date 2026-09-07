@@ -12,14 +12,23 @@ class TaxForm extends Component
 
     public string $name = '';
 
+    public string $type = Tax::TYPE_PERCENTAGE;
+
     public $rate = 0;
+
+    public string $apply_to = Tax::APPLY_TO_ORDER;
+
+    public $order = 0;
 
     public function mount(?Tax $tax = null): void
     {
         if ($tax && $tax->exists) {
             $this->taxId = $tax->id;
             $this->name = (string) $tax->name;
+            $this->type = $tax->type;
             $this->rate = $tax->rate;
+            $this->apply_to = $tax->apply_to;
+            $this->order = $tax->order;
         }
     }
 
@@ -27,7 +36,12 @@ class TaxForm extends Component
     {
         return [
             'name' => 'required|string|max:255',
-            'rate' => 'required|numeric|min:0|max:100',
+            'type' => 'required|in:'.Tax::TYPE_PERCENTAGE.','.Tax::TYPE_FIXED,
+            'rate' => $this->type === Tax::TYPE_PERCENTAGE
+                ? 'required|numeric|min:0|max:100'
+                : 'required|numeric|min:0',
+            'apply_to' => 'required|in:'.Tax::APPLY_TO_PRODUCT.','.Tax::APPLY_TO_ORDER,
+            'order' => 'required|integer|min:0',
         ];
     }
 

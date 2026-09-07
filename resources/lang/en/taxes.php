@@ -17,4 +17,13 @@ return [
     'tax_excluded' => 'Excluding tax',
     'select_taxes' => 'Select taxes',
     'no_taxes_defined' => 'No taxes defined yet.',
+    'type' => 'Type',
+    'type_percentage' => 'Percentage',
+    'type_fixed' => 'Fixed amount',
+    'amount' => 'Amount',
+    'apply_to' => 'Applies to',
+    'apply_to_product' => 'Product',
+    'apply_to_order' => 'Order / purchase',
+    'order' => 'Order',
+    'order_help' => 'Taxes are applied/listed in ascending order.',
 ];

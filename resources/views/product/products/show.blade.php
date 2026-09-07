@@ -171,6 +171,16 @@
                                 </div>
                             </div>
                         </div>
+                        @if($product->taxes->isNotEmpty())
+                            <div class="pt-2 border-top">
+                                <label class="text-muted small d-block mb-2">{{ __('taxes.select_taxes') }}</label>
+                                @foreach($product->taxes as $tax)
+                                    <span class="badge bg-secondary me-1">
+                                        {{ $tax->name }} ({{ $tax->type === 'fixed' ? format_currency($tax->rate) : rtrim(rtrim(number_format($tax->rate, 2), '0'), '.').'%' }})
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
 

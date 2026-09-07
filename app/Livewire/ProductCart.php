@@ -96,7 +96,10 @@ class ProductCart extends Component
         return view('livewire.product-cart', [
             'cart_items' => $cart_items,
             'total_with_shipping' => (float) Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
-            'available_taxes' => Tax::orderBy('name')->get(),
+            'available_taxes' => Tax::where('apply_to', Tax::APPLY_TO_ORDER)
+                ->orderBy('order')
+                ->orderBy('name')
+                ->get(),
         ]);
     }
 
@@ -117,14 +120,18 @@ class ProductCart extends Component
     /**
      * Derive the single global tax percentage the cart works with from the
      * chosen tax mode and the selected taxes. In "Taxe incluse" mode no tax is
-     * added; in "Hors taxes" mode the selected taxes' rates are summed.
+     * added; in "Hors taxes" mode the selected percentage taxes' rates are
+     * summed. Fixed-amount taxes are recorded on the document but, since the
+     * cart only tracks one percentage figure today, are not yet folded into it.
      */
     public function recalculateGlobalTax(): void
     {
         if ($this->tax_mode === 'included' || empty($this->selected_taxes)) {
             $this->global_tax = 0;
         } else {
-            $this->global_tax = (float) Tax::whereIn('id', $this->selected_taxes)->sum('rate');
+            $this->global_tax = (float) Tax::whereIn('id', $this->selected_taxes)
+                ->where('type', Tax::TYPE_PERCENTAGE)
+                ->sum('rate');
         }
 
         $this->updatedGlobalTax();

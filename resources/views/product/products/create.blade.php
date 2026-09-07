@@ -130,7 +130,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_order_tax">{{ __('product.order_tax') }} (%)</label>
-                                        <input type="number" class="form-control" name="product_order_tax" value="{{ old('product_order_tax') }}" min="1">
+                                        <input type="number" class="form-control" name="product_order_tax" id="product_order_tax" value="{{ old('product_order_tax') }}" min="1">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -152,6 +152,27 @@
                                                 <option value="{{ $unit->short_name }}">{{ $unit->name . ' | ' . $unit->short_name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row" id="product_db_taxes_wrapper" style="display:none;">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ __('taxes.select_taxes') }}</label>
+                                        @forelse($productTaxes as $tax)
+                                            <div class="form-check">
+                                                <input class="form-check-input product-tax-checkbox" type="checkbox" name="product_taxes[]" value="{{ $tax->id }}" data-type="{{ $tax->type }}" data-rate="{{ $tax->rate }}" id="product-tax-{{ $tax->id }}">
+                                                <label class="form-check-label" for="product-tax-{{ $tax->id }}">
+                                                    {{ $tax->name }} ({{ $tax->type === 'fixed' ? format_currency($tax->rate) : rtrim(rtrim(number_format($tax->rate, 2), '0'), '.').'%' }})
+                                                </label>
+                                            </div>
+                                        @empty
+                                            <p class="text-muted mb-0">
+                                                {{ __('taxes.no_taxes_defined') }}
+                                                <a href="{{ route('taxes.create') }}" target="_blank">{{ __('taxes.add_tax') }}</a>
+                                            </p>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>
@@ -201,5 +222,6 @@
 @push('page_scripts')
     @include('includes.product-dropzone-js')
     @include('includes.money-mask-js')
+    @include('includes.product-tax-picker-js')
 @endpush
 

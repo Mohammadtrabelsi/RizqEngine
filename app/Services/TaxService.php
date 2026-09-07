@@ -17,8 +17,23 @@ class TaxService
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'like', '%'.$search.'%');
             })
-            ->orderByDesc('id')
+            ->orderBy('order')
+            ->orderBy('name')
             ->paginate($perPage);
+    }
+
+    /**
+     * Taxes selectable for the given scope ("product" or "order"), in the
+     * order they should be applied/listed.
+     *
+     * @return \Illuminate\Support\Collection<int, Tax>
+     */
+    public function forScope(string $applyTo): \Illuminate\Support\Collection
+    {
+        return Tax::where('apply_to', $applyTo)
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get();
     }
 
     public function create(array $data): Tax

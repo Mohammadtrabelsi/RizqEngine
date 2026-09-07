@@ -16,9 +16,37 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="rate">{{ __('taxes.rate') }} (%) <span class="text-danger">*</span></label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control @error('rate') is-invalid @enderror" wire:model="rate">
+                                        <label for="type">{{ __('taxes.type') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control @error('type') is-invalid @enderror" wire:model="type">
+                                            <option value="percentage">{{ __('taxes.type_percentage') }}</option>
+                                            <option value="fixed">{{ __('taxes.type_fixed') }}</option>
+                                        </select>
+                                        @error('type') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="rate">{{ $type === 'fixed' ? __('taxes.amount') : __('taxes.rate').' (%)' }} <span class="text-danger">*</span></label>
+                                        <input type="number" step="0.01" min="0" @if($type !== 'fixed') max="100" @endif class="form-control @error('rate') is-invalid @enderror" wire:model="rate">
                                         @error('rate') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="apply_to">{{ __('taxes.apply_to') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control @error('apply_to') is-invalid @enderror" wire:model="apply_to">
+                                            <option value="order">{{ __('taxes.apply_to_order') }}</option>
+                                            <option value="product">{{ __('taxes.apply_to_product') }}</option>
+                                        </select>
+                                        @error('apply_to') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="order">{{ __('taxes.order') }} <span class="text-danger">*</span></label>
+                                        <input type="number" step="1" min="0" class="form-control @error('order') is-invalid @enderror" wire:model="order">
+                                        <small class="form-text text-muted">{{ __('taxes.order_help') }}</small>
+                                        @error('order') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\Tax;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Routing\Controller;
@@ -27,8 +28,9 @@ class ProductController extends Controller
         abort_if(Gate::denies('create_products'), 403);
 
         $category_code = $categories->nextCode();
+        $productTaxes = Tax::where('apply_to', Tax::APPLY_TO_PRODUCT)->orderBy('order')->orderBy('name')->get();
 
-        return view('product.products.create', compact('category_code'));
+        return view('product.products.create', compact('category_code', 'productTaxes'));
     }
 
     public function store(StoreProductRequest $request)
@@ -54,7 +56,10 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('edit_products'), 403);
 
-        return view('product.products.edit', compact('product'));
+        $productTaxes = Tax::where('apply_to', Tax::APPLY_TO_PRODUCT)->orderBy('order')->orderBy('name')->get();
+        $selectedTaxIds = $product->taxes()->pluck('taxes.id')->all();
+
+        return view('product.products.edit', compact('product', 'productTaxes', 'selectedTaxIds'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)

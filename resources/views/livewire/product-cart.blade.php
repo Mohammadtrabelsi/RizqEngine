@@ -129,7 +129,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" wire:model.live="selected_taxes" value="{{ $tax->id }}" id="tax-{{ $tax->id }}">
                                 <label class="form-check-label" for="tax-{{ $tax->id }}">
-                                    {{ $tax->name }} ({{ rtrim(rtrim(number_format($tax->rate, 2), '0'), '.') }}%)
+                                    {{ $tax->name }} ({{ $tax->type === 'fixed' ? format_currency($tax->rate) : rtrim(rtrim(number_format($tax->rate, 2), '0'), '.').'%' }})
                                 </label>
                             </div>
                         @empty

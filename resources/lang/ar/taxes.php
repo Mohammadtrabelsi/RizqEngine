@@ -17,4 +17,13 @@ return [
     'tax_excluded' => 'بدون ضريبة',
     'select_taxes' => 'اختر الضرائب',
     'no_taxes_defined' => 'لم يتم تعريف أي ضريبة بعد.',
+    'type' => 'النوع',
+    'type_percentage' => 'نسبة مئوية',
+    'type_fixed' => 'مبلغ ثابت',
+    'amount' => 'المبلغ',
+    'apply_to' => 'تطبق على',
+    'apply_to_product' => 'المنتج',
+    'apply_to_order' => 'الطلب / الشراء',
+    'order' => 'الترتيب',
+    'order_help' => 'يتم تطبيق/عرض الضرائب بترتيب تصاعدي.',
 ];

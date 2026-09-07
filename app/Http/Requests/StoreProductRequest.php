@@ -26,6 +26,8 @@ class StoreProductRequest extends FormRequest
             'product_stock_alert_max' => ['nullable', 'integer', 'gt:product_stock_alert'],
             'product_order_tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'product_tax_type' => ['nullable', 'integer'],
+            'product_taxes' => ['nullable', 'array'],
+            'product_taxes.*' => ['integer', 'exists:taxes,id'],
             'product_note' => ['nullable', 'string', 'max:1000'],
             'expiry_date' => ['nullable', 'date'],
             'category_id' => ['required', 'integer'],

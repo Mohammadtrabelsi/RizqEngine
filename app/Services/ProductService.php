@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Product;
 use App\Models\PurchaseReturn;
 use App\Models\SaleReturn;
+use App\Models\Tax;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +23,10 @@ class ProductService
      */
     public function create(array $attributes, array $documents = []): Product
     {
+        $taxIds = $this->extractTaxIds($attributes);
+
         $product = Product::create($attributes);
+        $product->taxes()->sync($taxIds);
 
         foreach ($documents as $file) {
             $product->addMedia(Storage::path('temp/dropzone/'.$file))->toMediaCollection('images');
@@ -41,7 +45,10 @@ class ProductService
      */
     public function update(Product $product, array $attributes, ?array $documents = null): Product
     {
+        $taxIds = $this->extractTaxIds($attributes);
+
         $product->update($attributes);
+        $product->taxes()->sync($taxIds);
 
         if ($documents === null) {
             return $product;
@@ -67,6 +74,32 @@ class ProductService
     public function delete(Product $product): void
     {
         $product->delete();
+    }
+
+    /**
+     * Pull the submitted "product_taxes" tax IDs out of the attribute set
+     * (it isn't a products column) so they can be synced to the product's
+     * taxes pivot separately. When any are selected, product_order_tax is
+     * recomputed server-side from their percentage-type rates so a tampered
+     * client value can't override it; with none selected the submitted
+     * product_order_tax (manual entry, e.g. on products created before this
+     * feature existed) is left untouched.
+     *
+     * @param  array<string, mixed>  &$attributes
+     * @return array<int, int>
+     */
+    private function extractTaxIds(array &$attributes): array
+    {
+        $taxIds = array_map('intval', $attributes['product_taxes'] ?? []);
+        unset($attributes['product_taxes']);
+
+        if (! empty($taxIds)) {
+            $attributes['product_order_tax'] = (int) Tax::whereIn('id', $taxIds)
+                ->where('type', Tax::TYPE_PERCENTAGE)
+                ->sum('rate');
+        }
+
+        return $taxIds;
     }
 
     /**

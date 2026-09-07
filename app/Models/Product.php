@@ -98,6 +98,19 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * Taxes (master data) selected for this product when its tax type is
+     * "exclusive" (see product_tax_type). Percentage-type taxes here are
+     * summed into product_order_tax; fixed-amount taxes are recorded but not
+     * yet folded into computed prices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tax, $this>
+     */
+    public function taxes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Tax::class, 'product_taxes')->withTimestamps();
+    }
+
+    /**
      * Batches (lots) recorded for this product.
      *
      * @return HasMany<Batch, $this>
