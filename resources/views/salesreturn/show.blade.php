@@ -14,19 +14,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header d-flex flex-wrap align-items-center">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex flex-wrap align-items-center">
                         <div>
                             Reference: <strong>{{ $sale_return->reference }}</strong>
                         </div>
-                        <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('sale-returns.pdf', $sale_return->id) }}">
+                        <a target="_blank" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400 mfs-auto mfe-1 d-print-none" href="{{ route('sale-returns.pdf', $sale_return->id) }}">
                             <i class="bi bi-printer"></i> {{ __('sales.print') }}
                         </a>
-                        <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sale-returns.pdf', $sale_return->id) }}">
+                        <a target="_blank" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs bg-cyan-500 !text-white border-cyan-500 hover:bg-cyan-600 mfe-1 d-print-none" href="{{ route('sale-returns.pdf', $sale_return->id) }}">
                             <i class="bi bi-save"></i> {{ __('sales.save') }}
                         </a>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-5">
                         <div class="row mb-4">
                             <div class="col-sm-4 mb-3 mb-md-0">
                                 <h5 class="mb-2 border-bottom pb-2">{{ __('sales.company_info') }}:</h5>
@@ -61,12 +61,12 @@
                         <div class="row">
                             @foreach($sale_return->saleReturnDetails as $item)
                                 <div class="col-xl-4 col-lg-6 mb-4">
-                                    <div class="card border h-100">
-                                        <div class="card-header">
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border h-100">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ $item->product_name }}
-                                            <span class="badge badge-success">{{ $item->product_code }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $item->product_code }}</span>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-5">
                                             <ul class="list-group list-group-flush mb-0">
                                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.net_unit_price') }}</span><span>{{ format_currency($item->unit_price) }}</span></li>
                                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.quantity') }}</span><span>{{ $item->quantity }}</span></li>

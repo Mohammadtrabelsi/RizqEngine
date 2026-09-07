@@ -15,11 +15,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-5">
-                <div class="card">
-                    <div class="card-header">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0">{{ __('activitylog.activity_details') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-5">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.description') }}</span><span>{{ ucfirst($activity->description) }}</span></li>
                             <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.event') }}</span><span>{{ ucfirst($activity->event ?? 'n/a') }}</span></li>
@@ -43,20 +43,20 @@
             </div>
 
             <div class="col-lg-7">
-                <div class="card">
-                    <div class="card-header">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0">{{ __('activitylog.attribute_changes') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-5">
                         @if(count($changeSet['keys']))
                             <div class="row">
                                 @foreach($changeSet['keys'] as $key)
                                     <div class="col-md-6 mb-3">
-                                        <div class="card border h-100">
-                                            <div class="card-header py-2">
+                                        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border h-100">
+                                            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl py-2">
                                                 <strong>{{ \Illuminate\Support\Str::headline($key) }}</strong>
                                             </div>
-                                            <div class="card-body py-2">
+                                            <div class="flex-auto p-5 py-2">
                                                 <div class="mb-1">
                                                     <small class="text-muted d-block">{{ __('activitylog.old_value') }}</small>
                                                     <span class="text-danger">{{ is_array($changeSet['old'][$key] ?? null) ? json_encode($changeSet['old'][$key]) : ($changeSet['old'][$key] ?? '—') }}</span>
@@ -80,7 +80,7 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <a href="{{ route('activity-logs.index') }}" class="btn btn-secondary">
+                <a href="{{ route('activity-logs.index') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400">
                     <i class="bi bi-arrow-left"></i> {{ __('activitylog.back_to_activity_logs') }}
                 </a>
             </div>

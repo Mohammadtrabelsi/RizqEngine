@@ -4,40 +4,40 @@
         <form wire:submit="save">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                        <div class="flex-auto p-5">
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="registration">{{ __('vehicles.registration') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('registration') is-invalid @enderror" wire:model="registration">
-                                        @error('registration') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('registration') !border-red-500 @enderror" wire:model="registration">
+                                        @error('registration') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="brand">{{ __('vehicles.brand') }}</label>
-                                        <input type="text" class="form-control @error('brand') is-invalid @enderror" wire:model="brand">
-                                        @error('brand') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('brand') !border-red-500 @enderror" wire:model="brand">
+                                        @error('brand') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="model">{{ __('vehicles.model') }}</label>
-                                        <input type="text" class="form-control @error('model') is-invalid @enderror" wire:model="model">
-                                        @error('model') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('model') !border-red-500 @enderror" wire:model="model">
+                                        @error('model') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="note">{{ __('vehicles.note') }}</label>
-                                        <textarea class="form-control @error('note') is-invalid @enderror" rows="3" wire:model="note"></textarea>
-                                        @error('note') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <textarea class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('note') !border-red-500 @enderror" rows="3" wire:model="note"></textarea>
+                                        @error('note') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">
+                                    <div class="mb-4">
+                                        <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
                                             {{ $vehicleId ? __('vehicles.update_vehicle') : __('vehicles.create_vehicle') }} <i class="bi bi-check"></i>
                                         </button>
                                     </div>

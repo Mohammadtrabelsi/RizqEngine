@@ -13,15 +13,15 @@
 @section('content')
     <div class="container-fluid">
         @include('utils.alerts')
-        <div class="card">
-            <div class="card-body">
+        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+            <div class="flex-auto p-5">
                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                     <h4 class="mb-0">{{ __('stockexit.bon_de_sortie') }} — {{ $stockExit->reference }}</h4>
                     <div>
                         @if($stockExit->status === \App\Models\StockExit::STATUS_CLOSED)
-                            <span class="badge bg-success p-2">{{ __('stockexit.status_closed') }}</span>
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success p-2">{{ __('stockexit.status_closed') }}</span>
                         @else
-                            <span class="badge bg-warning text-dark p-2">{{ __('stockexit.status_in_transit') }}</span>
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark p-2">{{ __('stockexit.status_in_transit') }}</span>
                         @endif
                     </div>
                 </div>
@@ -42,8 +42,8 @@
                     @endif
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered">
+                <div class="block w-full overflow-x-auto">
+                    <table class="w-full mb-4 text-slate-900 border-collapse table-bordered">
                         <thead>
                             <tr>
                                 <th>{{ __('product.code') }}</th>
@@ -84,19 +84,19 @@
                 <div class="mt-3">
                     @can('create_stock_entries')
                         @if($stockExit->status !== \App\Models\StockExit::STATUS_CLOSED)
-                            <a href="{{ route('stock-entries.create', $stockExit->id) }}" class="btn btn-success">
+                            <a href="{{ route('stock-entries.create', $stockExit->id) }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-emerald-500 !text-white border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600">
                                 <i class="bi bi-box-arrow-in-down"></i> {{ __('stockexit.declare_return') }}
                             </a>
                         @endif
                     @endcan
-                    <a href="{{ route('stock-exits.index') }}" class="btn btn-secondary">{{ __('app.back') }}</a>
+                    <a href="{{ route('stock-exits.index') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400">{{ __('app.back') }}</a>
                 </div>
             </div>
         </div>
 
         @if($stockExit->entries->isNotEmpty())
-            <div class="card mt-4">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mt-4">
+                <div class="flex-auto p-5">
                     <h5 class="mb-3">{{ __('stockexit.linked_entries') }}</h5>
                     <ul class="list-group">
                         @foreach($stockExit->entries as $entry)
@@ -104,7 +104,7 @@
                                 <a href="{{ route('stock-entries.show', $entry->id) }}">{{ $entry->reference }}</a>
                                 <span>
                                     @if($entry->sale)
-                                        <a href="{{ route('sales.show', $entry->sale_id) }}" class="badge bg-info text-dark text-decoration-none me-2">
+                                        <a href="{{ route('sales.show', $entry->sale_id) }}" class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info text-dark text-decoration-none me-2">
                                             <i class="bi bi-receipt"></i> {{ __('stockexit.generated_invoice') }}: {{ $entry->sale->reference }}
                                         </a>
                                     @endif
