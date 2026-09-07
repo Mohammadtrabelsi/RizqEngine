@@ -61,6 +61,7 @@ return [
     'suppliers' => 'Fournisseurs',
     'transactions' => 'Transactions',
     'system-settings' => 'Paramètres du système',
+    'taxes' => 'Taxes',
     'units' => 'Unités',
     'drivers' => 'Chauffeurs',
     'vehicles' => 'Véhicules',

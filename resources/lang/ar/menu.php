@@ -60,6 +60,7 @@ return [
     'suppliers' => 'الموردون',
     'transactions' => 'المعاملات',
     'system-settings' => 'إعدادات النظام',
+    'taxes' => 'الضرائب',
     'units' => 'الوحدات',
     'drivers' => 'السائقون',
     'vehicles' => 'المركبات',

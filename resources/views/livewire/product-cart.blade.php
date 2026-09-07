@@ -112,10 +112,40 @@
 
     <div class="form-row">
         <div class="col-lg-4">
-            <div class="form-group">
-                <label for="tax_percentage">{{ __('general.tax') }} (%)</label>
-                <input wire:model.blur="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
-            </div>
+            @if($cart_instance === 'purchase')
+                <div class="form-group">
+                    <label for="tax_mode">{{ __('taxes.tax_mode') }}</label>
+                    <select wire:model.live="tax_mode" id="tax_mode" class="form-control">
+                        <option value="included">{{ __('taxes.tax_included') }}</option>
+                        <option value="excluded">{{ __('taxes.tax_excluded') }}</option>
+                    </select>
+                    <input type="hidden" name="tax_percentage" value="{{ (float) $global_tax }}">
+                </div>
+
+                @if($tax_mode === 'excluded')
+                    <div class="form-group">
+                        <label>{{ __('taxes.select_taxes') }}</label>
+                        @forelse($available_taxes as $tax)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" wire:model.live="selected_taxes" value="{{ $tax->id }}" id="tax-{{ $tax->id }}">
+                                <label class="form-check-label" for="tax-{{ $tax->id }}">
+                                    {{ $tax->name }} ({{ rtrim(rtrim(number_format($tax->rate, 2), '0'), '.') }}%)
+                                </label>
+                            </div>
+                        @empty
+                            <p class="text-muted mb-0">
+                                {{ __('taxes.no_taxes_defined') }}
+                                <a href="{{ route('taxes.create') }}" target="_blank">{{ __('taxes.add_tax') }}</a>
+                            </p>
+                        @endforelse
+                    </div>
+                @endif
+            @else
+                <div class="form-group">
+                    <label for="tax_percentage">{{ __('general.tax') }} (%)</label>
+                    <input wire:model.blur="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
+                </div>
+            @endif
         </div>
         <div class="col-lg-4">
             <div class="form-group">

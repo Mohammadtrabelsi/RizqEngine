@@ -23,6 +23,8 @@ use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
 use App\Livewire\Suppliers\SupplierShow;
+use App\Livewire\Taxes\TaxForm;
+use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Livewire\Vehicles\VehicleForm;
@@ -163,6 +165,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/units', UnitIndex::class)->name('units.index');
         Route::get('/units/create', UnitForm::class)->name('units.create');
         Route::get('/units/{unit}/edit', UnitForm::class)->name('units.edit');
+        // Taxes (full-page Livewire components)
+        Route::get('/taxes', TaxIndex::class)->name('taxes.index');
+        Route::get('/taxes/create', TaxForm::class)->name('taxes.create');
+        Route::get('/taxes/{tax}/edit', TaxForm::class)->name('taxes.edit');
     });
 });
 
