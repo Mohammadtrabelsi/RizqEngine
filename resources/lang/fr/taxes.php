@@ -23,7 +23,9 @@ return [
     'amount' => 'Montant',
     'apply_to' => 'S\'applique à',
     'apply_to_product' => 'Produit',
-    'apply_to_order' => 'Commande / achat',
+    'apply_to_purchase' => 'Commandes d\'achat (fournisseur)',
+    'apply_to_sale' => 'Commandes de vente (client)',
+    'apply_to_order' => 'Toutes les commandes (achat & vente)',
     'order' => 'Ordre',
     'order_help' => 'Les taxes sont appliquées/listées par ordre croissant.',
 ];

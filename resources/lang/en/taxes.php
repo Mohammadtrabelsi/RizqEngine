@@ -23,7 +23,9 @@ return [
     'amount' => 'Amount',
     'apply_to' => 'Applies to',
     'apply_to_product' => 'Product',
-    'apply_to_order' => 'Order / purchase',
+    'apply_to_purchase' => 'Purchase orders (supplier)',
+    'apply_to_sale' => 'Sales orders (customer)',
+    'apply_to_order' => 'All orders (purchase & sale)',
     'order' => 'Order',
     'order_help' => 'Taxes are applied/listed in ascending order.',
 ];

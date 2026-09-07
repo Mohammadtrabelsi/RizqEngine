@@ -23,7 +23,9 @@ return [
     'amount' => 'المبلغ',
     'apply_to' => 'تطبق على',
     'apply_to_product' => 'المنتج',
-    'apply_to_order' => 'الطلب / الشراء',
+    'apply_to_purchase' => 'طلبات الشراء (المورد)',
+    'apply_to_sale' => 'طلبات البيع (العميل)',
+    'apply_to_order' => 'جميع الطلبات (شراء وبيع)',
     'order' => 'الترتيب',
     'order_help' => 'يتم تطبيق/عرض الضرائب بترتيب تصاعدي.',
 ];

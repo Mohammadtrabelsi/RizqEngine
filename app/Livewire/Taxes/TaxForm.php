@@ -40,7 +40,12 @@ class TaxForm extends Component
             'rate' => $this->type === Tax::TYPE_PERCENTAGE
                 ? 'required|numeric|min:0|max:100'
                 : 'required|numeric|min:0',
-            'apply_to' => 'required|in:'.Tax::APPLY_TO_PRODUCT.','.Tax::APPLY_TO_ORDER,
+            'apply_to' => 'required|in:'.implode(',', [
+                Tax::APPLY_TO_PRODUCT,
+                Tax::APPLY_TO_PURCHASE,
+                Tax::APPLY_TO_SALE,
+                Tax::APPLY_TO_ORDER,
+            ]),
             'order' => 'required|integer|min:0',
         ];
     }

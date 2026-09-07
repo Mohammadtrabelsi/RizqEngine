@@ -24,7 +24,7 @@
                                     <span>{{ $tax->type === 'fixed' ? __('taxes.amount') : __('taxes.rate') }}</span>
                                     <span>{{ $tax->type === 'fixed' ? format_currency($tax->rate) : rtrim(rtrim(number_format($tax->rate, 2), '0'), '.').'%' }}</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('taxes.apply_to') }}</span><span>{{ $tax->apply_to === 'product' ? __('taxes.apply_to_product') : __('taxes.apply_to_order') }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('taxes.apply_to') }}</span><span>{{ __('taxes.apply_to_'.$tax->apply_to) }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('taxes.order') }}</span><span>{{ $tax->order }}</span></li>
                             </ul>
                             <div class="btn-group">

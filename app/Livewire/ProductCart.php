@@ -96,7 +96,7 @@ class ProductCart extends Component
         return view('livewire.product-cart', [
             'cart_items' => $cart_items,
             'total_with_shipping' => (float) Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
-            'available_taxes' => Tax::where('apply_to', Tax::APPLY_TO_ORDER)
+            'available_taxes' => Tax::forCartInstance($this->cart_instance)
                 ->orderBy('order')
                 ->orderBy('name')
                 ->get(),
