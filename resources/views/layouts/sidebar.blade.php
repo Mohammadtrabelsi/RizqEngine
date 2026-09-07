@@ -296,7 +296,7 @@
             @endcanany
 
             {{-- INSIGHT --}}
-            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units'])
+            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units', 'access_taxes'])
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
             @endcanany
             @can('access_reports')
@@ -322,7 +322,7 @@
             </li>
             @endcan
 
-            @canany(['access_currencies', 'access_settings', 'access_units'])
+            @canany(['access_currencies', 'access_settings', 'access_units', 'access_taxes'])
             <li class="app-sidebar-item {{ $inSettings ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSettings ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSettings ? 'true' : 'false' }}">
                     <span>{{ __('nav.settings') }}</span>
@@ -334,6 +334,9 @@
                     @endcan
                     @can('access_units')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('units*') ? 'is-active' : '' }}" href="{{ route('units.index') }}">{{ __('menu.units') }}</a></li>
+                    @endcan
+                    @can('access_taxes')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('taxes*') ? 'is-active' : '' }}" href="{{ route('taxes.index') }}">{{ __('menu.taxes') }}</a></li>
                     @endcan
                     @can('access_currencies')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('currencies*') ? 'is-active' : '' }}" href="{{ route('currencies.index') }}">{{ __('menu.currencies') }}</a></li>

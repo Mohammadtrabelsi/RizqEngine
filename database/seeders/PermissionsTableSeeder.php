@@ -171,6 +171,11 @@ class PermissionsTableSeeder extends Seeder
             'access_settings',
             // Units
             'access_units',
+            // Taxes
+            'access_taxes',
+            'create_taxes',
+            'edit_taxes',
+            'delete_taxes',
             // Activity Logs
             'access_activity_logs',
             'delete_activity_logs',
@@ -210,6 +215,7 @@ class PermissionsTableSeeder extends Seeder
             'access_settings',
             'access_currencies', 'create_currencies', 'edit_currencies', 'delete_currencies',
             'access_units',
+            'access_taxes', 'create_taxes', 'edit_taxes', 'delete_taxes',
         ];
 
         // Owner: everything.
