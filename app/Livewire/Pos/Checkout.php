@@ -35,6 +35,8 @@ class Checkout extends Component
 
     public $total_amount;
 
+    public $show_checkout = false;
+
     public function mount($cartInstance, $customers)
     {
         $this->cart_instance = $cartInstance;
@@ -47,6 +49,7 @@ class Checkout extends Component
         $this->discount_type = [];
         $this->item_discount = [];
         $this->total_amount = 0;
+        $this->show_checkout = false;
     }
 
     public function hydrate()
@@ -67,10 +70,23 @@ class Checkout extends Component
     public function proceed()
     {
         if ($this->customer_id != null) {
-            $this->dispatch('showCheckoutModal');
+            $this->show_checkout = true;
+            $this->dispatch('showCheckoutForm');
         } else {
+            $this->show_checkout = false;
             session()->flash('error', trans('sale.select-customer'));
         }
+    }
+
+    public function hideCheckout()
+    {
+        $this->show_checkout = false;
+    }
+
+    public function updatedCustomerId()
+    {
+        // Re-selecting the customer clears a previously shown error state.
+        $this->show_checkout = false;
     }
 
     public function calculateTotal()
