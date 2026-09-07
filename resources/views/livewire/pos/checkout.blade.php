@@ -13,6 +13,17 @@
                     </div>
                 @endif
 
+                @if (session()->has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert-body">
+                            <span class="text-danger">{{ session('error') }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="form-group">
                     <label for="customer_id">{{ __('sale.customer') }} <span class="text-danger">*</span></label>
                     <div class="input-group">
@@ -21,13 +32,16 @@
                                 <i class="bi bi-person-plus"></i>
                             </a>
                         </div>
-                        <select wire:model.live="customer_id" id="customer_id" class="form-control">
+                        <select wire:model.live="customer_id" id="customer_id" class="form-control @if (session()->has('error')) is-invalid @endif">
                             <option value="" selected>{{ __('sale.select-customer') }}</option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @if (session()->has('error'))
+                        <small class="text-danger d-block mt-1">{{ session('error') }}</small>
+                    @endif
                 </div>
 
                 <div class="card mb-3">
@@ -128,8 +142,10 @@
         </div>
     </div>
 
-    {{--Checkout Modal--}}
-    @include('livewire.pos.includes.checkout-modal')
+    {{--Checkout (inline component, replaces the previous modal)--}}
+    @if ($show_checkout)
+        @include('livewire.pos.includes.checkout-form')
+    @endif
 
 </div>
 
