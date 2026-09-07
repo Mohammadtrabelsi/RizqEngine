@@ -1,23 +1,23 @@
 <div>
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5">
                     <form wire:submit="generateReport">
                         <div class="form-row">
                             <div class="col-lg-6">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('reports.start_date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="start_date" type="date" class="form-control" name="start_date">
+                                    <input wire:model="start_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('reports.end_date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="end_date" type="date" class="form-control" name="end_date">
+                                    <input wire:model="end_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
@@ -26,9 +26,9 @@
                         </div>
                         <div class="form-row">
                             <div class="col-lg-6">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('reports.payments') }}</label>
-                                    <select wire:model.live="payments" class="form-control" name="payments">
+                                    <select wire:model.live="payments" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="payments">
                                         <option value="">{{ __('reports.select_payments') }}</option>
                                         <option value="sale">Sales</option>
                                         <option value="sale_return">Sale Returns</option>
@@ -41,9 +41,9 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('reports.payment_method') }}</label>
-                                    <select wire:model="payment_method" class="form-control" name="payment_method">
+                                    <select wire:model="payment_method" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="payment_method">
                                         <option value="">{{ __('reports.select_payment_method') }}</option>
                                         <option value="Cash">{{ __('reports.cash') }}</option>
                                         <option value="Credit Card">{{ __('reports.credit_card') }}</option>
@@ -54,8 +54,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
+                        <div class="mb-4 mb-0">
+                            <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
                                 {{ __('reports.filter_report') }}
@@ -70,8 +70,8 @@
     @if($information->isNotEmpty())
         <div class="row mb-2">
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex align-items-center">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                    <div class="flex-auto p-5 d-flex align-items-center">
                         <div class="icon-tile-48 rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center me-3">
                             <i class="bi bi-collection fs-4"></i>
                         </div>
@@ -83,8 +83,8 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex align-items-center">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                    <div class="flex-auto p-5 d-flex align-items-center">
                         <div class="icon-tile-48 rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center me-3">
                             <i class="bi bi-cash-stack fs-4"></i>
                         </div>
@@ -99,8 +99,8 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                    <div class="flex-auto p-5">
                         <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
                             <div class="spinner-border text-primary" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -154,9 +154,9 @@
     @else
         <div class="row">
             <div class="col-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="alert alert-warning mb-0">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                    <div class="flex-auto p-5">
+                        <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-amber-50 text-amber-700 border-amber-200 mb-0">
                             {{ __('report.no-data-available') }}
                         </div>
                     </div>

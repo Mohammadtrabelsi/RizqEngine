@@ -4,7 +4,7 @@
         {{-- Filters --}}
         <div class="row mb-3">
             <div class="col-12 col-md-4 mb-2">
-                <select wire:model.live="warehouseId" class="form-control">
+                <select wire:model.live="warehouseId" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
                     <option value="0">{{ __('warehouses.all_warehouses') }}</option>
                     @foreach($warehouses as $warehouse)
                         <option value="{{ $warehouse->id }}">{{ $warehouse->name }}{{ $warehouse->is_default ? ' ('.__('warehouses.default').')' : '' }}</option>
@@ -12,11 +12,11 @@
                 </select>
             </div>
             <div class="col-12 col-md-5 mb-2">
-                <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
+                <input type="text" wire:model.live.debounce.300ms="search" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('app.search') }}">
             </div>
             <div class="col-12 col-md-3 mb-2 text-md-end">
                 @can('access_stock_exits')
-                    <a href="{{ route('stock-exits.index') }}" class="btn btn-outline-primary">
+                    <a href="{{ route('stock-exits.index') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white">
                         <i class="bi bi-box-arrow-up"></i> {{ __('stockexit.stock_exits') }}
                     </a>
                 @endcan
@@ -27,12 +27,12 @@
         <div class="row">
             @foreach($warehouses as $warehouse)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-3" wire:key="wtotal-{{ $warehouse->id }}">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
+                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                        <div class="flex-auto p-5">
                             <h6 class="text-muted mb-1 d-flex justify-content-between align-items-center">
                                 <span>{{ $warehouse->name }}</span>
                                 @if($warehouse->is_default)
-                                    <span class="badge bg-primary">{{ __('warehouses.default') }}</span>
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-primary">{{ __('warehouses.default') }}</span>
                                 @endif
                             </h6>
                             <div class="h3 mb-0">{{ number_format((int) ($totalsByWarehouse[$warehouse->id] ?? 0)) }}</div>
@@ -44,9 +44,9 @@
         </div>
 
         {{-- Detailed stock table --}}
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white"><strong>{{ __('warehouses.stock_state') }}</strong></div>
-            <div class="card-body p-0">
+        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.stock_state') }}</strong></div>
+            <div class="flex-auto p-5 p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0 align-middle">
                         <thead>
@@ -64,7 +64,7 @@
                                     <td>{{ $row->product_name }}</td>
                                     <td>{{ $row->product_code }}</td>
                                     <td class="text-end">
-                                        <span class="badge bg-{{ $row->quantity <= $row->product_stock_alert ? 'warning' : 'success' }}">
+                                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $row->quantity <= $row->product_stock_alert ? 'warning' : 'success' }}">
                                             {{ number_format((int) $row->quantity) }}
                                         </span>
                                     </td>
@@ -79,9 +79,9 @@
         </div>
 
         {{-- Outstanding Bons de Sortie --}}
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white"><strong>{{ __('warehouses.outstanding_exits') }}</strong></div>
-            <div class="card-body p-0">
+        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.outstanding_exits') }}</strong></div>
+            <div class="flex-auto p-5 p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0 align-middle">
                         <thead>
@@ -102,7 +102,7 @@
                                     <td class="text-end">{{ number_format((int) $exit->outstanding_quantity) }}</td>
                                     <td class="text-end">
                                         @can('access_stock_exits')
-                                            <a href="{{ route('stock-exits.show', $exit) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('stock-exits.show', $exit) }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs !text-slate-600 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400"><i class="bi bi-eye"></i></a>
                                         @endcan
                                     </td>
                                 </tr>

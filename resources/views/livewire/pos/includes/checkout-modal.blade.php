@@ -13,7 +13,7 @@
                 @csrf
                 <div class="modal-body">
                     @if (session()->has('checkout_message'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-emerald-50 text-emerald-700 border-emerald-200 pr-12 fade show" role="alert">
                             <div class="alert-body">
                                 <span>{{ session('checkout_message') }}</span>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -30,21 +30,21 @@
                             <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="total_amount">{{ __('sale.total-amount') }} <span class="text-danger">*</span></label>
-                                        <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
+                                        <input id="total_amount" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="total_amount" value="{{ $total_amount }}" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="paid_amount">{{ __('sale.received-amount') }} <span class="text-danger">*</span></label>
-                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
+                                        <input id="paid_amount" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="paid_amount" value="{{ $total_amount }}" required>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="payment_method">{{ __('sale.payment-method') }} <span class="text-danger">*</span></label>
-                                <select class="form-control" name="payment_method" id="payment_method" required>
+                                <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="payment_method" id="payment_method" required>
                                     <option value="Cash">{{ __('sale.cash') }}</option>
                                     <option value="Credit Card">{{ __('sale.credit-card') }}</option>
                                     <option value="Bank Transfer">{{ __('sale.bank-transfer') }}</option>
@@ -52,9 +52,9 @@
                                     <option value="Other">{{ __('sale.other') }}</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="note">{{ __('sale.note') }}</label>
-                                <textarea name="note" id="note" rows="5" class="form-control"></textarea>
+                                <textarea name="note" id="note" rows="5" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-5">
@@ -62,7 +62,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span class="fw-bold">{{ __('sale.total-products') }}</span>
-                                        <span class="badge badge-success">{{ Cart::instance($cart_instance)->count() }}</span>
+                                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ Cart::instance($cart_instance)->count() }}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span class="fw-bold">{{ __('sale.order-tax') }} ({{ $global_tax }}%)</span><span>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</span>
@@ -87,8 +87,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('product.close') }}</button>
-                    <button type="submit" class="btn btn-primary">{{ __('product.submit') }}</button>
+                    <button type="button" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400" data-dismiss="modal">{{ __('product.close') }}</button>
+                    <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">{{ __('product.submit') }}</button>
                 </div>
             </form>
         </div>

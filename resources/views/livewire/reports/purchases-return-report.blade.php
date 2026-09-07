@@ -1,32 +1,32 @@
 <div>
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5">
                     <form wire:submit="generateReport">
                         <div class="form-row">
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="start_date" type="date" class="form-control" name="start_date">
+                                    <input wire:model="start_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="end_date" type="date" class="form-control" name="end_date">
+                                    <input wire:model="end_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.supplier') }}</label>
-                                    <select wire:model="supplier_id" class="form-control" name="supplier_id">
+                                    <select wire:model="supplier_id" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="supplier_id">
                                         <option value="">{{ __('report.select-supplier') }}</option>
                                         @foreach($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
@@ -37,9 +37,9 @@
                         </div>
                         <div class="form-row">
                             <div class="col-lg-6">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.status') }}</label>
-                                    <select wire:model="purchase_return_status" class="form-control" name="purchase_return_status">
+                                    <select wire:model="purchase_return_status" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="purchase_return_status">
                                         <option value="">{{ __('report.select-status') }}</option>
                                         <option value="Pending">{{ __('report.pending') }}</option>
                                         <option value="Shipped">{{ __('report.shipped') }}</option>
@@ -48,9 +48,9 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.payment-status') }}</label>
-                                    <select wire:model="payment_status" class="form-control" name="payment_status">
+                                    <select wire:model="payment_status" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="payment_status">
                                         <option value="">{{ __('report.select-payment-status') }}</option>
                                         <option value="Paid">{{ __('report.paid') }}</option>
                                         <option value="Unpaid">{{ __('report.unpaid') }}</option>
@@ -59,8 +59,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
+                        <div class="mb-4 mb-0">
+                            <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
                                 Filter Report
@@ -76,8 +76,8 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5">
                     <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
                         <div class="spinner-border text-primary" role="status">
                             <span class="sr-only">{{ __('report.loading') }}</span>
@@ -108,20 +108,20 @@
                                         <td class="text-end @if($purchase_return->due_amount > 0) text-danger fw-bold @else text-muted @endif">{{ format_currency($purchase_return->due_amount) }}</td>
                                         <td class="text-center">
                                             @if ($purchase_return->status == 'Pending')
-                                                <span class="badge badge-info">{{ $purchase_return->status }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-cyan-100 text-cyan-700">{{ $purchase_return->status }}</span>
                                             @elseif ($purchase_return->status == 'Shipped')
-                                                <span class="badge badge-primary">{{ $purchase_return->status }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-indigo-100 text-indigo-700">{{ $purchase_return->status }}</span>
                                             @else
-                                                <span class="badge badge-success">{{ $purchase_return->status }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $purchase_return->status }}</span>
                                             @endif
                                         </td>
                                         <td class="text-center">
                                             @if ($purchase_return->payment_status == 'Partial')
-                                                <span class="badge badge-warning">{{ $purchase_return->payment_status }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-amber-100 text-amber-700">{{ $purchase_return->payment_status }}</span>
                                             @elseif ($purchase_return->payment_status == 'Paid')
-                                                <span class="badge badge-success">{{ $purchase_return->payment_status }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $purchase_return->payment_status }}</span>
                                             @else
-                                                <span class="badge badge-danger">{{ $purchase_return->payment_status }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-red-100 text-red-700">{{ $purchase_return->payment_status }}</span>
                                             @endif
                                         </td>
                                     </tr>

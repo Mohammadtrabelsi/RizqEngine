@@ -23,7 +23,7 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <div class="alert alert-info">
+                <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-indigo-50 text-indigo-700 border-indigo-200">
                     <strong>{{ __('product.note') }}: {{ __('product.product_code_must_be_number') }}</strong>
                 </div>
             </div>

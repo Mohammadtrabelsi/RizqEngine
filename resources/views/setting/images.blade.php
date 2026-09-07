@@ -15,30 +15,30 @@
             <div class="col-lg-12">
                 @include('utils.alerts')
                 @include('setting._tabs')
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-primary text-white">
                         <h5 class="mb-0">{{ __('settings.default_product_image') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-5">
                         <form action="{{ route('settings.images.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('patch')
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="default_product_image">{{ __('settings.default_product_image') }}</label>
-                                        <input type="file" class="form-control-file" name="default_product_image" id="default_product_image" accept="image/*">
-                                        <small class="form-text text-muted">{{ __('settings.default_image_hint') }}</small>
+                                        <input type="file" class="block w-full" name="default_product_image" id="default_product_image" accept="image/*">
+                                        <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('settings.default_image_hint') }}</small>
                                         <div class="mt-2">
                                             <img src="{{ default_product_image() }}" alt="{{ __('settings.default_product_image') }}" class="img-thumbnail" width="80">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="default_category_image">{{ __('settings.default_category_image') }}</label>
-                                        <input type="file" class="form-control-file" name="default_category_image" id="default_category_image" accept="image/*">
-                                        <small class="form-text text-muted">{{ __('settings.default_image_hint') }}</small>
+                                        <input type="file" class="block w-full" name="default_category_image" id="default_category_image" accept="image/*">
+                                        <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('settings.default_image_hint') }}</small>
                                         <div class="mt-2">
                                             <img src="{{ default_category_image() }}" alt="{{ __('settings.default_category_image') }}" class="img-thumbnail" width="80">
                                         </div>
@@ -48,20 +48,20 @@
 
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="default_supplier_image">{{ __('settings.default_supplier_image') }}</label>
-                                        <input type="file" class="form-control-file" name="default_supplier_image" id="default_supplier_image" accept="image/*">
-                                        <small class="form-text text-muted">{{ __('settings.default_image_hint') }}</small>
+                                        <input type="file" class="block w-full" name="default_supplier_image" id="default_supplier_image" accept="image/*">
+                                        <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('settings.default_image_hint') }}</small>
                                         <div class="mt-2">
                                             <img src="{{ default_supplier_image() }}" alt="{{ __('settings.default_supplier_image') }}" class="img-thumbnail" width="80">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="default_customer_image">{{ __('settings.default_customer_image') }}</label>
-                                        <input type="file" class="form-control-file" name="default_customer_image" id="default_customer_image" accept="image/*">
-                                        <small class="form-text text-muted">{{ __('settings.default_image_hint') }}</small>
+                                        <input type="file" class="block w-full" name="default_customer_image" id="default_customer_image" accept="image/*">
+                                        <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('settings.default_image_hint') }}</small>
                                         <div class="mt-2">
                                             <img src="{{ default_customer_image() }}" alt="{{ __('settings.default_customer_image') }}" class="img-thumbnail" width="80">
                                         </div>
@@ -69,8 +69,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-check"></i> Save Changes</button>
+                            <div class="mb-4 mb-0">
+                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700"><i class="bi bi-check"></i> Save Changes</button>
                             </div>
                         </form>
                     </div>

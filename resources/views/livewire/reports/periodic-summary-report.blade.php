@@ -1,32 +1,32 @@
 <div>
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5">
                     <form wire:submit="generateReport">
                         <div class="form-row">
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="start_date" type="date" class="form-control" name="start_date">
+                                    <input wire:model="start_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="start_date">
                                     @error('start_date')
                                         <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="end_date" type="date" class="form-control" name="end_date">
+                                    <input wire:model="end_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="end_date">
                                     @error('end_date')
                                         <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="mb-4">
                                     <label>{{ __('report.group-by') }} <span class="text-danger">*</span></label>
-                                    <select wire:model="grouping" class="form-control" name="grouping">
+                                    <select wire:model="grouping" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="grouping">
                                         <option value="day">{{ __('report.daily') }}</option>
                                         <option value="week">{{ __('report.weekly') }}</option>
                                         <option value="month">{{ __('report.monthly') }}</option>
@@ -37,8 +37,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
+                        <div class="mb-4 mb-0">
+                            <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
                                 {{ __('report.generate-report') }}
@@ -53,8 +53,8 @@
     {{-- Summary cards --}}
     <div class="row mb-4">
         <div class="col-12 col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5 p-3 d-flex align-items-center">
                     <div class="bg-success p-3 mfe-3 rounded">
                         <i class="bi bi-receipt font-2xl"></i>
                     </div>
@@ -66,8 +66,8 @@
             </div>
         </div>
         <div class="col-12 col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5 p-3 d-flex align-items-center">
                     <div class="bg-warning p-3 mfe-3 rounded">
                         <i class="bi bi-bag font-2xl"></i>
                     </div>
@@ -79,8 +79,8 @@
             </div>
         </div>
         <div class="col-12 col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5 p-3 d-flex align-items-center">
                     <div class="bg-info p-3 mfe-3 rounded">
                         <i class="bi bi-box-arrow-up-right font-2xl"></i>
                     </div>
@@ -92,8 +92,8 @@
             </div>
         </div>
         <div class="col-12 col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5 p-3 d-flex align-items-center">
                     <div class="bg-danger p-3 mfe-3 rounded">
                         <i class="bi bi-wallet2 font-2xl"></i>
                     </div>
@@ -109,8 +109,8 @@
     {{-- Detailed table --}}
     <div class="row">
         <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="flex-auto p-5">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>

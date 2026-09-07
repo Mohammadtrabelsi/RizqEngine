@@ -20,8 +20,8 @@
             <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :bon-commande="$commande->bonCommande" :commande="$commande" :sale="$commande->sale" />
         @endif
 
-        <div class="card">
-            <div class="card-header d-flex flex-wrap align-items-center">
+        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex flex-wrap align-items-center">
                 <div>
                     {{ __('commande.reference') }}: <strong>{{ $commande->reference }}</strong>
                     @include('commande.partials.status', ['data' => $commande])
@@ -31,7 +31,7 @@
                         @can('confirm_commandes')
                             <form class="d-inline" action="{{ route('commandes.confirm', $commande->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-check2-circle"></i> {{ __('commande.confirm') }}</button>
+                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700"><i class="bi bi-check2-circle"></i> {{ __('commande.confirm') }}</button>
                             </form>
                         @endcan
                     @endif
@@ -39,7 +39,7 @@
                         @can('convert_commandes_to_bon_livraison')
                             <form class="d-inline" action="{{ route('commandes.convert-bon-livraison', $commande->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-truck"></i> {{ __('commande.create-bon-livraison') }}</button>
+                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs bg-cyan-500 !text-white border-cyan-500 hover:bg-cyan-600"><i class="bi bi-truck"></i> {{ __('commande.create-bon-livraison') }}</button>
                             </form>
                         @endcan
                     @endif
@@ -47,13 +47,13 @@
                         @can('convert_commandes')
                             <form class="d-inline" action="{{ route('commandes.convert', $commande->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-receipt"></i> {{ __('commande.generate-facture') }}</button>
+                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs bg-emerald-500 !text-white border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600"><i class="bi bi-receipt"></i> {{ __('commande.generate-facture') }}</button>
                             </form>
                         @endcan
                     @endif
                 </div>
             </div>
-            <div class="card-body">
+            <div class="flex-auto p-5">
                 <div class="row mb-4">
                     <div class="col-sm-4 mb-3 mb-md-0">
                         <h5 class="mb-2 border-bottom pb-2">{{ __('commande.company_info') }}</h5>
@@ -80,12 +80,12 @@
                 <div class="row">
                     @foreach($commande->commandeDetails as $item)
                         <div class="col-xl-4 col-lg-6 mb-4">
-                            <div class="card border h-100">
-                                <div class="card-header">
+                            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border h-100">
+                                <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                     {{ $item->product_name }}
-                                    <span class="badge badge-success">{{ $item->product_code }}</span>
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $item->product_code }}</span>
                                 </div>
-                                <div class="card-body">
+                                <div class="flex-auto p-5">
                                     <ul class="list-group list-group-flush mb-0">
                                         <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('commande.net_unit_price') }}</span><span>{{ format_currency($item->unit_price) }}</span></li>
                                         <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('commande.quantity') }}</span><span>{{ $item->quantity }}</span></li>

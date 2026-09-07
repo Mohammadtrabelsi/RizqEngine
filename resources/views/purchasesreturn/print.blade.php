@@ -18,8 +18,8 @@
                     <span>Reference::</span> <strong>{{ $purchase_return->reference }}</strong>
                 </h4>
             </div>
-            <div class="card">
-                <div class="card-body">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                <div class="flex-auto p-5">
                     <div class="row mb-4">
                         <div class="col-xs-4 mb-3 mb-md-0">
                             <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Company Info:</h4>
@@ -54,10 +54,10 @@
                     <div class="row" style="margin-top: 30px;">
                         @foreach($purchase_return->purchaseReturnDetails as $item)
                             <div class="col-xs-6" style="margin-bottom: 20px;">
-                                <div class="card">
-                                    <div class="card-body">
+                                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                                    <div class="flex-auto p-5">
                                         <div><strong>{{ $item->product_name }}</strong>
-                                            <span class="badge badge-success">{{ $item->product_code }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $item->product_code }}</span>
                                         </div>
                                         <ul class="list-group" style="margin-top: 10px;">
                                             <li class="list-group-item">Net Unit Price <span class="pull-right">{{ format_currency($item->unit_price) }}</span></li>
