@@ -47,8 +47,8 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.stock_state') }}</strong></div>
             <div class="flex-auto p-5 p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0 align-middle">
+                <div class="block w-full overflow-x-auto">
+                    <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 mb-0 align-middle">
                         <thead>
                             <tr>
                                 <th>{{ __('warehouses.warehouse') }}</th>
@@ -82,8 +82,8 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.outstanding_exits') }}</strong></div>
             <div class="flex-auto p-5 p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0 align-middle">
+                <div class="block w-full overflow-x-auto">
+                    <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 mb-0 align-middle">
                         <thead>
                             <tr>
                                 <th>{{ __('stockexit.reference') }}</th>

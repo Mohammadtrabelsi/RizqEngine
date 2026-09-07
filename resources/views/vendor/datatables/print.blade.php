@@ -12,7 +12,7 @@
         </style>
     </head>
     <body>
-        <table class="table table-bordered table-condensed table-striped">
+        <table class="w-full mb-4 text-slate-900 border-collapse table-bordered table-condensed table-striped">
             @foreach($data as $row)
                 @if ($loop->first)
                     <tr>

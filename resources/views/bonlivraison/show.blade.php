@@ -70,8 +70,8 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered">
+                <div class="block w-full overflow-x-auto">
+                    <table class="w-full mb-4 text-slate-900 border-collapse table-bordered">
                         <thead>
                             <tr>
                                 <th>{{ __('bonlivraison.product') }}</th>

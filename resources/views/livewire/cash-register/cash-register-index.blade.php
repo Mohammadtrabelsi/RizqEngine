@@ -59,9 +59,9 @@
 
             <div class="col-lg-7 mb-4">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                    <div class="flex-auto p-5 table-responsive">
+                    <div class="flex-auto p-5 block w-full overflow-x-auto">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ __('cash_register.history') }}</h5>
-                        <table class="table table-hover align-middle">
+                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
                             <thead>
                                 <tr>
                                     <th>{{ __('cash_register.cashier') }}</th>

@@ -197,8 +197,8 @@
                                 {{ __('product.no_orders') }}
                             </div>
                         @else
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                            <div class="block w-full overflow-x-auto">
+                                <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
                                             <th>{{ __('product.date') }}</th>
@@ -251,8 +251,8 @@
                                 {{ __('product.no_transactions') }}
                             </div>
                         @else
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                            <div class="block w-full overflow-x-auto">
+                                <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
                                             <th>{{ __('product.date') }}</th>

@@ -73,8 +73,8 @@
                     @if (count($rows) === 0)
                         <p class="text-muted mb-0">{{ __('import.no_rows') }}</p>
                     @else
-                        <div class="table-responsive">
-                            <table class="table table-sm table-bordered align-middle">
+                        <div class="block w-full overflow-x-auto">
+                            <table class="w-full mb-4 text-slate-900 border-collapse table-sm table-bordered align-middle">
                                 <thead>
                                     <tr>
                                         <th>#</th>

@@ -43,7 +43,7 @@
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-3">
                 <div class="flex-auto p-5">
                     @error('lines') <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-red-50 text-red-700 border-red-200">{{ $message }}</div> @enderror
-                    <table class="table align-middle">
+                    <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                         <thead>
                             <tr>
                                 <th style="width:65%">{{ __('warehouses.product') }}</th>

@@ -112,7 +112,7 @@
 
     <div class="form-row">
         <div class="col-lg-4">
-            @if($cart_instance === 'purchase')
+            @if(in_array($cart_instance, ['purchase', 'quotation'], true))
                 <div class="mb-4">
                     <label for="tax_mode">{{ __('taxes.tax_mode') }}</label>
                     <select wire:model.live="tax_mode" id="tax_mode" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">

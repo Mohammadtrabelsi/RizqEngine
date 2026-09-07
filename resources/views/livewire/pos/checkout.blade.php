@@ -13,6 +13,17 @@
                     </div>
                 @endif
 
+                @if (session()->has('error'))
+                    <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-red-50 text-red-700 border-red-200 pr-12 fade show" role="alert">
+                        <div class="inline">
+                            <span class="text-danger">{{ session('error') }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="mb-4">
                     <label for="customer_id">{{ __('sale.customer') }} <span class="text-danger">*</span></label>
                     <div class="input-group">
@@ -21,13 +32,16 @@
                                 <i class="bi bi-person-plus"></i>
                             </a>
                         </div>
-                        <select wire:model.live="customer_id" id="customer_id" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
+                        <select wire:model.live="customer_id" id="customer_id" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @if (session()->has('error')) !border-red-500 @endif">
                             <option value="" selected>{{ __('sale.select-customer') }}</option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @if (session()->has('error'))
+                        <small class="text-danger d-block mt-1">{{ session('error') }}</small>
+                    @endif
                 </div>
 
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-3">
@@ -77,7 +91,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="block w-full overflow-x-auto">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between">
                                 <span class="fw-bold">Order Tax ({{ $global_tax }}%)</span><span>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</span>
@@ -128,8 +142,10 @@
         </div>
     </div>
 
-    {{--Checkout Modal--}}
-    @include('livewire.pos.includes.checkout-modal')
+    {{--Checkout (inline component, replaces the previous modal)--}}
+    @if ($show_checkout)
+        @include('livewire.pos.includes.checkout-form')
+    @endif
 
 </div>
 

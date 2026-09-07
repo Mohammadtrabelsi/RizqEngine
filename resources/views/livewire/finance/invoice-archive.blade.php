@@ -34,8 +34,8 @@
                 <span class="fw-semibold">{{ __('finance.invoice_archive') }}</span>
                 <span>{{ __('finance.total') }}: <strong>{{ number_format($total, 2) }}</strong></span>
             </div>
-            <div class="flex-auto p-5 table-responsive">
-                <table class="table align-middle">
+            <div class="flex-auto p-5 block w-full overflow-x-auto">
+                <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                     <thead><tr>
                         <th>{{ __('finance.type') }}</th>
                         <th>{{ __('finance.reference') }}</th>
