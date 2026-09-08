@@ -110,6 +110,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/documentation', 'DocumentationController@index')
         ->name('documentation.index');
+
+    Route::get('/documentation/{section}', 'DocumentationController@show')
+        ->name('documentation.show');
 });
 
 /*
