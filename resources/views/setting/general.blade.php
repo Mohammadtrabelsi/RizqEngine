@@ -60,11 +60,20 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="mb-4">
-                                        <label class="d-block">Current Logo</label>
+                                        <label class="d-block">Preview (client &rarr; app)</label>
+                                        <div class="flex items-center gap-4">
+                                            @if($settings->client_logo)
+                                                <img src="{{ \Illuminate\Support\Facades\Storage::url($settings->client_logo) }}" alt="Client Logo" class="logo-preview" style="height:40px;width:auto;object-fit:contain;">
+                                            @else
+                                                <span class="text-muted">No client logo</span>
+                                            @endif
+                                            <x-logo :size="32" label="RizqEngine" />
+                                        </div>
                                         @if($settings->client_logo)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($settings->client_logo) }}" alt="Client Logo" class="logo-preview">
-                                        @else
-                                            <span class="text-muted">No logo uploaded</span>
+                                            <label class="d-inline-flex align-items-center gap-2 mt-2 text-xs text-slate-600">
+                                                <input type="checkbox" name="remove_client_logo" value="1">
+                                                <span>Remove client logo</span>
+                                            </label>
                                         @endif
                                     </div>
                                 </div>
