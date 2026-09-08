@@ -28,7 +28,7 @@
     <div class="flex min-h-screen flex-col bg-canvas-2 lg:ms-[264px]">
         @include('layouts.header', ['title' => trim($__env->yieldContent('title')) ?: null, 'subtitle' => null])
 
-        <main class="flex-1 bg-gray-200">
+        <main class="flex-1">
             <div class="container-fluid pt-3">
                 @include('utils.flash')
             </div>

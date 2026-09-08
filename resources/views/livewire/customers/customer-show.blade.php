@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+            <div class="card">
                 <div class="flex-auto p-2">
                     @if ($customer->getFirstMediaUrl('images'))
                         <div class="text-center mb-4">

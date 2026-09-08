@@ -20,23 +20,23 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="mb-4">
-                        <button class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">{{ __('purchase.update_payment') }} <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('purchase.update_payment') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="card">
                         <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="mb-4">
                                         <label for="reference">{{ __('purchase.reference') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="reference" required readonly value="{{ $purchasePayment->reference }}">
+                                        <input type="text" class="form-control" name="reference" required readonly value="{{ $purchasePayment->reference }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-4">
                                         <label for="date">{{ __('purchase.date') }} <span class="text-danger">*</span></label>
-                                        <input type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="date" required value="{{ $purchasePayment->getAttributes()['date'] }}">
+                                        <input type="date" class="form-control" name="date" required value="{{ $purchasePayment->getAttributes()['date'] }}">
                                     </div>
                                 </div>
                             </div>
@@ -45,16 +45,16 @@
                                 <div class="col-lg-4">
                                     <div class="mb-4">
                                         <label for="due_amount">{{ __('purchase.due_amount') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="due_amount" required value="{{ format_currency($purchase->due_amount) }}" readonly>
+                                        <input type="text" class="form-control" name="due_amount" required value="{{ format_currency($purchase->due_amount) }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="mb-4">
                                         <label for="amount">{{ __('purchase.amount') }} <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input id="amount" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="amount" data-money-mask data-money-prefill required value="{{ old('amount') ?? $purchasePayment->amount }}">
+                                            <input id="amount" type="text" class="form-control" name="amount" data-money-mask data-money-prefill required value="{{ old('amount') ?? $purchasePayment->amount }}">
                                             <div class="input-group-append">
-                                                <button id="getTotalAmount" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700" type="button" data-money-fill="#amount" data-money-value="{{ $purchase->due_amount }}">
+                                                <button id="getTotalAmount" class="btn btn-primary" type="button" data-money-fill="#amount" data-money-value="{{ $purchase->due_amount }}">
                                                     <i class="bi bi-check-square"></i>
                                                 </button>
                                             </div>
@@ -65,7 +65,7 @@
                                     <div class="from-group">
                                         <div class="mb-4">
                                             <label for="payment_method">{{ __('purchase.payment_method') }} <span class="text-danger">*</span></label>
-                                            <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="payment_method" id="payment_method" required>
+                                            <select class="form-control" name="payment_method" id="payment_method" required>
                                                 <option {{ $purchasePayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('purchase.cash') }}</option>
                                                 <option {{ $purchasePayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('purchase.credit_card') }}</option>
                                                 <option {{ $purchasePayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('purchase.bank_transfer') }}</option>
@@ -79,7 +79,7 @@
 
                             <div class="mb-4">
                                 <label for="note">{{ __('purchase.note') }}</label>
-                                <textarea class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" rows="4" name="note">{{ old('note') ?? $purchasePayment->note }}</textarea>
+                                <textarea class="form-control" rows="4" name="note">{{ old('note') ?? $purchasePayment->note }}</textarea>
                             </div>
 
                             <input type="hidden" value="{{ $purchase->id }}" name="purchase_id">

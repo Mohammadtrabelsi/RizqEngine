@@ -2,14 +2,14 @@
 <form wire:submit="save">
                     
                     <div class="mb-4">
-                        <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">{{ $roleId ? __('roles.update_role') : __('roles.create_role') }} <i class="bi bi-check"></i>
+                        <button type="submit" class="btn btn-primary">{{ $roleId ? __('roles.update_role') : __('roles.create_role') }} <i class="bi bi-check"></i>
                         </button>
                     </div>
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="card">
                         <div class="flex-auto p-2">
                             <div class="mb-4">
                                 <label for="name">{{ __('roles.role_name') }} <span class="text-danger">*</span></label>
-                                <input class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('name') !border-red-500 @enderror" type="text" wire:model="name">
+                                <input class="form-control @error('name') !border-red-500 @enderror" type="text" wire:model="name">
                                 @error('name') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                             </div>
 
@@ -30,7 +30,7 @@
                             <div class="row">
                                 <!-- Dashboard Permissions -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.dashboard') }}
                                         </div>
@@ -83,7 +83,7 @@
 
                                 <!-- User Management Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.user_management') }}
                                         </div>
@@ -112,7 +112,7 @@
 
                                 <!-- Products Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.products') }}
                                         </div>
@@ -181,7 +181,7 @@
 
                                 <!-- Adjustments Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.adjustments') }}
                                         </div>
@@ -234,7 +234,7 @@
 
                                 <!-- Quotations Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.quotations') }}
                                         </div>
@@ -303,7 +303,7 @@
 
                                 <!-- Expenses Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.expenses') }}
                                         </div>
@@ -356,7 +356,7 @@
 
                                 <!-- Customers Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.customers') }}
                                         </div>
@@ -409,7 +409,7 @@
 
                                 <!-- Suppliers Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.suppliers') }}
                                         </div>
@@ -462,7 +462,7 @@
 
                                 <!-- Sales Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.sales') }}
                                         </div>
@@ -531,7 +531,7 @@
 
                                 <!-- Sale Returns Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.sale_returns') }}
                                         </div>
@@ -592,7 +592,7 @@
 
                                 <!-- Purchases Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             Purchases
                                         </div>
@@ -653,7 +653,7 @@
 
                                 <!-- Purchases Returns Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.purchase_returns') }}
                                         </div>
@@ -714,7 +714,7 @@
 
                                 <!-- Currencies Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.currencies') }}    
                                         </div>
@@ -759,7 +759,7 @@
 
                                 <!-- Reports -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.reports') }}
                                         </div>
@@ -780,7 +780,7 @@
 
                                 <!-- Settings -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.settings') }}
                                         </div>
@@ -801,7 +801,7 @@
 
                                 <!-- Activity Logs -->
                                 <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow">
+                                    <div class="card h-100 border-0 shadow">
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.activity_logs') }}
                                         </div>

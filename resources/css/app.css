@@ -215,6 +215,62 @@ h4, .h4 { font-size: 19px; }
 }
 
 /* =========================================================================
+ * DESIGN SYSTEM — unified UI primitives
+ * Single source of truth for buttons, cards, form fields and titles, authored
+ * with native Tailwind utilities (@apply) on the redesign brand tokens
+ * (accent / ink / hairline / canvas + the radius-* scale). Every content
+ * screen composes these instead of repeating long utility strings, so
+ * padding, radii, shadows, weights and interactive states stay consistent.
+ * ---------------------------------------------------------------------- */
+@layer components {
+    /* ---- Buttons ------------------------------------------------------- */
+    .btn {
+        @apply inline-flex items-center justify-center gap-1.5 rounded-ctl border
+               border-transparent px-4 py-2 text-sm font-semibold leading-tight
+               text-ink no-underline cursor-pointer select-none
+               transition-all duration-200 ease-in-out
+               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent
+               disabled:opacity-45 disabled:cursor-default disabled:pointer-events-none;
+    }
+    .btn:active { @apply translate-y-px; }
+
+    .btn-primary        { @apply border-accent bg-accent text-white shadow-sm hover:border-accent-hover hover:bg-accent-hover hover:shadow-md; }
+    .btn-outline        { @apply border-accent bg-transparent text-accent hover:bg-accent hover:text-white; }
+    .btn-secondary      { @apply border-hairline bg-white text-ink-3 hover:border-accent-soft hover:bg-canvas hover:text-ink; }
+    .btn-ghost          { @apply border-transparent bg-transparent text-accent hover:bg-accent-light; }
+    .btn-success        { @apply border-success bg-success text-white shadow-sm hover:brightness-95 hover:shadow-md; }
+    .btn-info           { @apply border-info bg-info text-white shadow-sm hover:brightness-95 hover:shadow-md; }
+    .btn-warning        { @apply border-warning bg-warning text-white shadow-sm hover:brightness-95 hover:shadow-md; }
+    .btn-danger         { @apply border-danger bg-danger text-white shadow-sm hover:brightness-95 hover:shadow-md; }
+    .btn-outline-danger { @apply border-danger bg-transparent text-danger hover:bg-danger hover:text-white; }
+
+    .btn-sm    { @apply gap-1 rounded-lg px-3 py-1.5 text-xs; }
+    .btn-lg    { @apply px-5 py-2.5 text-base; }
+    .btn-icon  { @apply aspect-square p-2; }
+    .btn-group { @apply inline-flex flex-wrap items-center gap-1.5; }
+
+    /* ---- Cards -------------------------------------------------------- */
+    .card       { @apply relative flex min-w-0 flex-col break-words rounded-card border border-hairline bg-white text-ink shadow-sm; }
+    .card-body  { @apply p-5; }
+    .card-title { @apply mb-3 font-display text-lg font-bold tracking-tight text-ink; }
+
+    /* ---- Form fields -------------------------------------------------- */
+    .form-label { @apply mb-1.5 inline-block text-sm font-medium text-ink-2; }
+    .form-control,
+    .form-select {
+        @apply block w-full rounded-field border border-hairline bg-white px-3 py-2
+               text-sm leading-normal text-ink transition-colors
+               placeholder:text-muted
+               focus:border-accent focus:outline-none
+               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent
+               disabled:opacity-45;
+    }
+    .form-select { @apply pr-9; }
+    .form-control-sm { @apply px-2.5 py-1.5 text-xs rounded-lg; }
+    .form-control-color { @apply h-10 w-14 cursor-pointer p-1; }
+}
+
+/* =========================================================================
  * UTILITIES — Bootstrap-compatible layout / spacing / helpers
  * ====================================================================== */
 @layer utilities {
@@ -1876,11 +1932,13 @@ hr { display: none; }
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: rgba(255, 255, 255, 0.4);
-    padding: 0.5rem 0.5rem 0.25rem;
-    margin-top: 0;
+    padding: 0.4rem 0.5rem 0.3rem;
+    margin-top: 0.85rem;
 }
+/* No leading gap before the very first group heading. */
+.app-sidebar-list > .app-sidebar-heading:first-child { margin-top: 0.15rem; }
 
-.app-sidebar-item { margin-bottom: 1px; }
+.app-sidebar-item { margin-bottom: 2px; }
 .app-sidebar-link {
     display: flex;
     align-items: center;
@@ -1926,14 +1984,19 @@ hr { display: none; }
     background: var(--color-ink-2);
     color: #ffffff;
     text-decoration: none;
+    transform: translateX(2px);
 }
+[dir="rtl"] .app-sidebar-link:hover { transform: translateX(-2px); }
+.app-sidebar-link:active { transform: translateX(1px) scale(0.99); }
 .app-sidebar-link:hover i { color: rgba(255, 255, 255, 0.85); }
 
 .app-sidebar-item.is-active > .app-sidebar-link {
     background: var(--color-accent);
     color: #ffffff;
     font-weight: 600;
+    box-shadow: 0 6px 16px rgba(79, 57, 224, 0.35);
 }
+.app-sidebar-item.is-active > .app-sidebar-link:hover { transform: none; }
 .app-sidebar-item.is-active > .app-sidebar-link i {
     background: transparent;
     color: #ffffff;
@@ -1965,36 +2028,56 @@ hr { display: none; }
 }
 .app-sidebar-toggle.is-open .app-sidebar-caret { transform: rotate(180deg); }
 
-/* Nested sub-navigation inside a collapsible section. Hidden until the
-   section is opened (`.is-open` toggled by the app.js submenu handler). */
+/* Nested sub-navigation inside a collapsible section. Collapsed with a
+   buttery grid/opacity transition (no display:none jump) — `.is-open` is
+   toggled by the app.js submenu handler. A hairline rail on the inline-start
+   edge ties the children back to their parent. */
 .app-sidebar-sublist {
     list-style: none;
-    margin: 1px 0 2px;
+    margin: 0;
     padding: 0;
-    margin-inline-start: 0.9rem;
-    display: none;
+    margin-inline-start: 1.15rem;
+    padding-inline-start: 0.55rem;
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.1);
+    /* Collapsed by default; animate height + fade + a slight lift for a
+       buttery reveal without a display:none jump. */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-4px);
+    transition: max-height 0.3s ease-in-out, opacity 0.2s ease-in-out,
+        transform 0.3s ease-in-out, margin 0.3s ease-in-out;
 }
-.app-sidebar-sublist.is-open { display: block; }
+.app-sidebar-sublist.is-open {
+    max-height: 34rem;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
 .app-sidebar-sublink {
     display: block;
-    padding: 0.35rem 0.6rem;
+    padding: 0.4rem 0.6rem;
     border-radius: 7px;
     font-size: 0.83rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     line-height: 1.2;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 .app-sidebar-sublink:hover {
     background: var(--color-ink-2);
     color: #ffffff;
     text-decoration: none;
+    transform: translateX(2px);
 }
+[dir="rtl"] .app-sidebar-sublink:hover { transform: translateX(-2px); }
 .app-sidebar-sublink.is-active {
     background: var(--color-accent);
     color: #ffffff;
     font-weight: 600;
+    box-shadow: 0 4px 12px rgba(79, 57, 224, 0.35);
 }
 
 /* Shift card pinned to the bottom of the sidebar (matches the dashboard). */

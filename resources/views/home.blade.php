@@ -14,22 +14,22 @@
         {{-- Date range filter --}}
         <div class="row mb-4">
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm">
+                <div class="card bg-white border rounded-lg shadow-sm">
                     <div class="flex-auto p-2 p-3 p-md-4">
                         <form method="GET" action="{{ route('home') }}" class="row g-3 align-items-end">
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <label for="from_date" class="inline-block mb-1.5 text-sm font-medium text-slate-900 text-slate-600 small mb-1">{{ __('general.from-date') }}</label>
-                                <input type="date" id="from_date" name="from_date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 input bg-white border-slate-300"
+                                <label for="from_date" class="form-label text-slate-600 small mb-1">{{ __('general.from-date') }}</label>
+                                <input type="date" id="from_date" name="from_date" class="form-control input bg-white border-slate-300"
                                        value="{{ $from_date }}" max="{{ $to_date }}">
                             </div>
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <label for="to_date" class="inline-block mb-1.5 text-sm font-medium text-slate-900 text-slate-600 small mb-1">{{ __('general.to-date') }}</label>
-                                <input type="date" id="to_date" name="to_date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 input bg-white border-slate-300"
+                                <label for="to_date" class="form-label text-slate-600 small mb-1">{{ __('general.to-date') }}</label>
+                                <input type="date" id="to_date" name="to_date" class="form-control input bg-white border-slate-300"
                                        value="{{ $to_date }}" min="{{ $from_date }}">
                             </div>
                             <div class="col-sm-12 col-md-4 col-lg-6 d-flex gap-2">
-                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700 shadow-sm">{{ __('general.apply-filter') }}</button>
-                                <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400">{{ __('general.reset') }}</a>
+                                <button type="submit" class="btn btn-primary shadow-sm">{{ __('general.apply-filter') }}</button>
+                                <a href="{{ route('home') }}" class="btn btn-secondary">{{ __('general.reset') }}</a>
                             </div>
                         </form>
                     </div>
@@ -42,7 +42,7 @@
         <div class="row g-4 mb-4">
             @foreach($kpis as $kpi)
                 <div class="col-sm-6 col-xl-3">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 bg-white border rounded-lg shadow-sm p-3">
+                    <div class="card h-100 bg-white border rounded-lg shadow-sm p-3">
                         <div class="flex-auto p-2 p-0 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
@@ -66,7 +66,7 @@
         <div class="row g-4 mb-4">
             @foreach($summary as $item)
                 <div class="col-sm-6 col-xl">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 bg-white border rounded-lg shadow-sm p-3">
+                    <div class="card h-100 bg-white border rounded-lg shadow-sm p-3">
                         <div class="flex-auto p-2 p-0 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
@@ -87,8 +87,8 @@
             {{-- Weekly sales bar chart --}}
             @can('show_weekly_sales_purchases')
             <div class="col-lg-7">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm h-100 p-4">
-                    <div class="mb-3 text-lg font-semibold text-slate-900 font-weight-bold text-slate-900 h5 mb-4">{{ __('general.sales-this-week') }}</div>
+                <div class="card bg-white border rounded-lg shadow-sm h-100 p-4">
+                    <div class="card-title font-weight-bold text-slate-900 h5 mb-4">{{ __('general.sales-this-week') }}</div>
                     <div class="n-bars mt-auto">
                         @foreach($week_bars as $bar)
                             <div class="n-bar-col flex-1 d-flex flex-column align-items-center gap-2">
@@ -104,7 +104,7 @@
 
             @can('show_month_overview')
             <div class="col-lg-5">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm h-100 p-4">
+                <div class="card bg-white border rounded-lg shadow-sm h-100 p-4">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-transparent border-0 p-0 mb-3 font-weight-bold text-slate-900 h5">
                         {{ __('general.overview') }} this period
                     </div>
@@ -121,10 +121,10 @@
         {{-- Recent transactions --}}
         <div class="row g-4">
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm p-4">
+                <div class="card bg-white border rounded-lg shadow-sm p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <div>
-                            <div class="mb-3 text-lg font-semibold text-slate-900 font-weight-bold text-slate-900 h5 mb-1">Recent transactions</div>
+                            <div class="card-title font-weight-bold text-slate-900 h5 mb-1">Recent transactions</div>
                             <div class="card-meta text-slate-500 small">Latest sales, invoices and payment status at a glance.</div>
                         </div>
                         <span class="tag tag-neutral bg-slate-100 text-slate-700 border-slate-200">{{ $recent_sales->count() }} {{ __('general.recent') }}</span>
@@ -133,7 +133,7 @@
                     <div class="row g-4">
                         @forelse($recent_sales as $sale)
                             <div class="col-xl-4 col-lg-6">
-                                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm h-100 p-3">
+                                <div class="card bg-white border rounded-lg shadow-sm h-100 p-3">
                                     <div class="flex-auto p-2 p-0">
                                         <div class="d-flex justify-content-between align-items-start mb-3">
                                             <a href="{{ route('sales.show', $sale->id) }}" class="font-weight-bold text-indigo-600 text-decoration-none">

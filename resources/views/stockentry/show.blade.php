@@ -13,7 +13,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+        <div class="card">
             <div class="flex-auto p-2">
                 <h4 class="mb-1">{{ __('stockexit.bon_dentree') }} — {{ $stockEntry->reference }}</h4>
                 <ul class="list-group list-group-horizontal mb-4 flex-wrap">
@@ -60,7 +60,7 @@
                     <p class="mt-3"><span class="fw-bold">{{ __('stockexit.note') }}:</span> {{ $stockEntry->note }}</p>
                 @endif
 
-                <a href="{{ route('stock-exits.show', $stockEntry->stock_exit_id) }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400 mt-2">{{ __('app.back') }}</a>
+                <a href="{{ route('stock-exits.show', $stockEntry->stock_exit_id) }}" class="btn btn-secondary mt-2">{{ __('app.back') }}</a>
             </div>
         </div>
     </div>

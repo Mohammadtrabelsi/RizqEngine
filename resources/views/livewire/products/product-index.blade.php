@@ -18,24 +18,24 @@
         </div>
     @endif
 
-    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
+    <div class="card border-0 shadow-sm mb-4">
         <div class="flex-auto p-2">
-            <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted mb-3">
+            <h6 class="card-title text-muted mb-3">
                 <i class="bi bi-lightning"></i> {{ __('app.actions') }}
             </h6>
             <div class="row align-items-center">
                 <div class="col-12 col-md-4 mb-3">
-                    <a href="{{ route('products.create') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
+                    <a href="{{ route('products.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
                     </a>
                     @can('create_products')
-                    <a href="{{ route('products.import') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white">
+                    <a href="{{ route('products.import') }}" class="btn btn-outline">
                         <i class="bi bi-upload"></i> {{ __('nav.import_products') }}
                     </a>
                     @endcan
                 </div>
                 <div class="col-12 col-md-8 mb-3">
-                    <input type="text" wire:model.live.debounce.300ms="search" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('app.search') }} products...">
+                    <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     {{ trans_choice('product.expired-in-stock-notice', $this->expiredInStockCount, ['count' => $this->expiredInStockCount]) }}
                 </span>
                 <button type="button"
-                        class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-amber-500 !text-white border-amber-500 hover:bg-amber-600 !px-3 !py-1.5 !text-xs"
+                        class="btn btn-warning btn-sm"
                         wire:click="markExpiredOutOfStock"
                         wire:confirm="{{ __('app.are_you_sure') }}">
                     <i class="bi bi-box-seam"></i> {{ __('product.mark_expired_out_of_stock') }}
@@ -60,15 +60,15 @@
     @endcan
 
     {{-- Filters container --}}
-    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
+    <div class="card border-0 shadow-sm mb-4">
         <div class="flex-auto p-2">
-            <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted mb-3">
+            <h6 class="card-title text-muted mb-3">
                 <i class="bi bi-funnel"></i> {{ __('app.filters') }}
             </h6>
             <div class="d-flex flex-wrap align-items-end gap-3">
                 <div class="flex-fill" style="min-width: 160px;">
-                    <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.category') }}</label>
-                    <select wire:model.live="categoryId" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by category">
+                    <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
+                    <select wire:model.live="categoryId" class="form-select" aria-label="Filter by category">
                         <option value="">{{ __('app.all') }}</option>
                         @foreach($this->categories as $category)
                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -76,8 +76,8 @@
                     </select>
                 </div>
                 <div class="flex-fill" style="min-width: 160px;">
-                    <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.supplier') }}</label>
-                    <select wire:model.live="supplierId" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by supplier">
+                    <label class="form-label small text-muted mb-1">{{ __('product.supplier') }}</label>
+                    <select wire:model.live="supplierId" class="form-select" aria-label="Filter by supplier">
                         <option value="">{{ __('app.all') }}</option>
                         @foreach($this->suppliers as $supplier)
                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
@@ -85,31 +85,31 @@
                     </select>
                 </div>
                 <div class="flex-fill" style="min-width: 140px;">
-                    <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.stock') }}</label>
-                    <select wire:model.live="stockStatus" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by stock status">
+                    <label class="form-label small text-muted mb-1">{{ __('product.stock') }}</label>
+                    <select wire:model.live="stockStatus" class="form-select" aria-label="Filter by stock status">
                         @foreach($this->stockStatusOptions as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="flex-fill" style="min-width: 140px;">
-                    <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.expiry') }}</label>
-                    <select wire:model.live="expiry" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by expiry">
+                    <label class="form-label small text-muted mb-1">{{ __('product.expiry') }}</label>
+                    <select wire:model.live="expiry" class="form-select" aria-label="Filter by expiry">
                         @foreach($this->expiryOptions as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div style="min-width: 100px; max-width: 130px;">
-                    <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.min_price') }}</label>
-                    <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="0">
+                    <label class="form-label small text-muted mb-1">{{ __('product.min_price') }}</label>
+                    <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="form-control" placeholder="0">
                 </div>
                 <div style="min-width: 100px; max-width: 130px;">
-                    <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.max_price') }}</label>
-                    <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="∞">
+                    <label class="form-label small text-muted mb-1">{{ __('product.max_price') }}</label>
+                    <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="form-control" placeholder="∞">
                 </div>
                 <div class="flex-shrink-0">
-                    <button type="button" wire:click="resetFilters" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-slate-600 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400 !px-3 !py-1.5 !text-xs">
+                    <button type="button" wire:click="resetFilters" class="btn btn-secondary btn-sm">
                         <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
                     </button>
                 </div>
@@ -121,7 +121,7 @@
     <div class="row">
         @forelse($products as $product)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="product-{{ $product->id }}">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 border-0 shadow-sm card-lift">
+                <div class="card h-100 border-0 shadow-sm card-lift">
                     <!-- Image Section -->
                     <div class="position-relative overflow-hidden media-thumb media-thumb--lg">
                         <img src="{{ $product->getFirstMediaUrl('images', 'thumb') }}"
@@ -141,7 +141,7 @@
 
                     <div class="flex-auto p-2 d-flex flex-column">
                         <!-- Product Name & Code -->
-                        <h5 class="mb-3 text-lg font-semibold text-slate-900 mb-1 text-truncate" title="{{ $product->product_name }}">{{ $product->product_name }}</h5>
+                        <h5 class="card-title mb-1 text-truncate" title="{{ $product->product_name }}">{{ $product->product_name }}</h5>
                         <p class="text-muted mb-2">
                             <small><i class="bi bi-upc-scan"></i> {{ $product->product_code }}</small>
                         </p>
@@ -210,17 +210,17 @@
                         <!-- Action Buttons -->
                         <div class="btn-group w-100 mt-auto" role="group">
                             @can('edit_products')
-                                <a href="{{ route('products.edit', $product->id) }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white !px-3 !py-1.5 !text-xs" title="Edit">
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline btn-sm" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             @endcan
                             @can('show_products')
-                                <a href="{{ route('products.show', $product->id) }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white !px-3 !py-1.5 !text-xs" title="View Details">
+                                <a href="{{ route('products.show', $product->id) }}" class="btn btn-outline btn-sm" title="View Details">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             @endcan
                             @can('delete_products')
-                                <button type="button" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-red-500 border-red-500 hover:bg-red-500 hover:!text-white !px-3 !py-1.5 !text-xs" wire:click="delete({{ $product->id }})" wire:confirm="{{ __('app.are_you_sure') }}" title="Delete">
+                                <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $product->id }})" wire:confirm="{{ __('app.are_you_sure') }}" title="Delete">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             @endcan
@@ -230,7 +230,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="card border-0 shadow-sm">
                     <div class="flex-auto p-2 text-center py-5">
                         <i class="bi bi-inbox empty-state-icon"></i>
                         <h6 class="mt-3 mb-0 text-lg font-semibold text-slate-900">{{ __('product.no_products_found') }}</h6>

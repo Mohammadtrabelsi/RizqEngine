@@ -32,7 +32,7 @@
                     @endif
                     <div class="mb-4">
                         <label>Discount Type <span class="text-danger">*</span></label>
-                        <select wire:model.live="discount_type.{{ $cart_item->id }}" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" required>
+                        <select wire:model.live="discount_type.{{ $cart_item->id }}" class="form-control" required>
                             <option value="fixed">{{ __('product.fixed') }}</option>
                             <option value="percentage">{{ __('product.percentage') }}</option>
                         </select>
@@ -40,16 +40,16 @@
                     <div class="mb-4">
                         @if($discount_type[$cart_item->id] == 'percentage')
                             <label>Discount(%) <span class="text-danger">*</span></label>
-                            <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">
+                            <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">
                         @elseif($discount_type[$cart_item->id] == 'fixed')
                             <label>Discount <span class="text-danger">*</span></label>
-                            <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" value="{{ $item_discount[$cart_item->id] }}">
+                            <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}">
                         @endif
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400" data-dismiss="modal">{{ __('product.close') }}</button>
-                    <button wire:click="setProductDiscount('{{ $cart_item->rowId }}', {{ $cart_item->id }})" type="button" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">{{ __('product.save-changes') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('product.close') }}</button>
+                    <button wire:click="setProductDiscount('{{ $cart_item->rowId }}', {{ $cart_item->id }})" type="button" class="btn btn-primary">{{ __('product.save-changes') }}</button>
                 </div>
             </div>
         </div>
