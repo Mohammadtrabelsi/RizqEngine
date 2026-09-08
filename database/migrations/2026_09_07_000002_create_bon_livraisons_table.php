@@ -16,6 +16,8 @@ return new class extends Migration
     {
         Schema::create('bon_livraisons', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('created_by')->nullable()->index();
+            $table->unsignedBigInteger('updated_by')->nullable()->index();
             $table->date('date');
             $table->string('reference')->nullable();
             // Traceability: the originating Commande. Unique => a Commande yields
