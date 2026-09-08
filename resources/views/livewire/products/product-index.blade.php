@@ -58,8 +58,8 @@
             <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted mb-3">
                 <i class="bi bi-funnel"></i> {{ __('app.filters') }}
             </h6>
-            <div class="row align-items-end">
-                <div class="col-12 col-md-3 mb-3">
+            <div class="d-flex flex-wrap align-items-end gap-3">
+                <div class="flex-fill" style="min-width: 160px;">
                     <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.category') }}</label>
                     <select wire:model.live="categoryId" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by category">
                         <option value="">{{ __('app.all') }}</option>
@@ -68,7 +68,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-3 mb-3">
+                <div class="flex-fill" style="min-width: 160px;">
                     <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.supplier') }}</label>
                     <select wire:model.live="supplierId" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by supplier">
                         <option value="">{{ __('app.all') }}</option>
@@ -77,7 +77,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-3 mb-3">
+                <div class="flex-fill" style="min-width: 140px;">
                     <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.stock') }}</label>
                     <select wire:model.live="stockStatus" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by stock status">
                         @foreach($this->stockStatusOptions as $value => $label)
@@ -85,7 +85,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-3 mb-3">
+                <div class="flex-fill" style="min-width: 140px;">
                     <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.expiry') }}</label>
                     <select wire:model.live="expiry" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-9 text-sm leading-normal text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" aria-label="Filter by expiry">
                         @foreach($this->expiryOptions as $value => $label)
@@ -93,15 +93,15 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-6 col-md-3 mb-3">
+                <div style="min-width: 100px; max-width: 130px;">
                     <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.min_price') }}</label>
                     <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="0">
                 </div>
-                <div class="col-6 col-md-3 mb-3">
+                <div style="min-width: 100px; max-width: 130px;">
                     <label class="inline-block mb-1.5 text-sm font-medium text-slate-900 small text-muted mb-1">{{ __('product.max_price') }}</label>
                     <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="∞">
                 </div>
-                <div class="col-12 col-md-6 mb-3 d-flex align-items-end">
+                <div class="flex-shrink-0">
                     <button type="button" wire:click="resetFilters" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-slate-600 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400 !px-3 !py-1.5 !text-xs">
                         <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
                     </button>

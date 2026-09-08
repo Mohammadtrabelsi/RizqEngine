@@ -2,11 +2,9 @@
     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-0 border-0 shadow-sm">
         <div class="flex-auto p-2">
             <div class="mb-4 mb-2">
-                <div class="input-group">
-                    <div class="input-group-text">
-                        <i class="bi bi-search text-primary"></i>
-                    </div>
-                    <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('general.search-product') }}">
+                <div class="position-relative">
+                    <i class="bi bi-search text-primary position-absolute top-50 translate-middle-y" style="left: 0.75rem;"></i>
+                    <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" style="padding-left: 2.25rem;" placeholder="{{ __('general.search-product') }}">
                 </div>
             </div>
 
