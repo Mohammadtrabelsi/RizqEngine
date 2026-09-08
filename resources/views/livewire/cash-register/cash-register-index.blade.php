@@ -2,7 +2,7 @@
 <div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-5 mb-4">
+            <div class="col-12 mb-4">
                 @if($current)
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
                         <div class="flex-auto p-5">
@@ -57,7 +57,7 @@
                 @endif
             </div>
 
-            <div class="col-lg-7 mb-4">
+            <div class="col-12 mb-4">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
                     <div class="flex-auto p-5 block w-full overflow-x-auto">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ __('cash_register.history') }}</h5>
