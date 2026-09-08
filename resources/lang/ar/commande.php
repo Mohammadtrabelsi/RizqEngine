@@ -1,5 +1,3 @@
-<?php
-
 return [
     'already-converted' => 'تم بالفعل تحويل أمر الشراء :reference إلى طلب.',
     'already-invoiced' => 'تم بالفعل فوترة الطلب :reference.',
@@ -9,6 +7,8 @@ return [
     'company_info' => 'معلومات الشركة',
     'confirm' => 'تأكيد',
     'confirmed' => 'تم تأكيد الطلب.',
+    'create-bon-livraison' => 'إنشاء مذكرة تسليم',
+    'create-stock-exit' => 'إنشاء إذن إخراج مخزني',
     'created-from-bon-commande' => 'تم إنشاء الطلب :reference من أمر الشراء.',
     'customer' => 'العميل',
     'customer_info' => 'معلومات العميل',
@@ -16,6 +16,8 @@ return [
     'delete' => 'حذف',
     'deleted' => 'تم حذف الطلب.',
     'details' => 'التفاصيل',
+    'devis-already-bon-commande' => 'تم بالفعل تحويل عرض السعر :reference إلى أمر شراء.',
+    'devis-already-converted' => 'تم بالفعل تحويل عرض السعر :reference إلى طلب.',
     'discount' => 'الخصم',
     'email' => 'البريد الإلكتروني',
     'facture' => 'فاتورة',
@@ -41,4 +43,6 @@ return [
     'sub_total' => 'المجموع الفرعي',
     'tax' => 'الضريبة',
     'total' => 'الإجمالي',
+    'transform-to-commande' => 'تحويل إلى طلب',
+    'view-commande' => 'عرض الطلب',
 ];
