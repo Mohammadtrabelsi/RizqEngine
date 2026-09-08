@@ -17,32 +17,40 @@
         @forelse($stockExits as $stockExit)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="stock-exit-{{ $stockExit->id }}">
                 <div class="card h-100">
+                    <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 rounded-t-xl d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">{{ $stockExit->reference }}</span>
+                        @if($stockExit->status === \App\Models\StockExit::STATUS_CLOSED)
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('stockexit.status_closed') }}</span>
+                        @else
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark">{{ __('stockexit.status_in_transit') }}</span>
+                        @endif
+                    </div>
                     <div class="flex-auto p-2">
-                        <h5 class="card-title d-flex justify-content-between align-items-start">
-                            <span>{{ $stockExit->reference }}</span>
-                            @if($stockExit->status === \App\Models\StockExit::STATUS_CLOSED)
-                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('stockexit.status_closed') }}</span>
-                            @else
-                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark">{{ __('stockexit.status_in_transit') }}</span>
-                            @endif
-                        </h5>
-                        <ul class="list-group list-group-flush mb-3">
+                        <ul class="list-group list-group-flush mb-0">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.date') }}</span><span>{{ \Illuminate\Support\Carbon::parse($stockExit->date)->format('d M, Y') }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.reason') }}</span><span>{{ $stockExit->reason ?: '—' }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.responsible') }}</span><span>{{ $stockExit->responsible ?: '—' }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.products') }}</span><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info">{{ $stockExit->details_count }}</span></li>
                         </ul>
-                        <div class="btn-group">
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200">
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
                             @can('show_stock_exits')
-                                <a href="{{ route('stock-exits.show', $stockExit->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('stock-exits.show', $stockExit->id) }}" class="btn btn-sm btn-secondary">
+                                    <i class="bi bi-eye me-1 text-info"></i> {{ __('app.details') }}
+                                </a>
                             @endcan
                             @can('create_stock_entries')
                                 @if($stockExit->status !== \App\Models\StockExit::STATUS_CLOSED)
-                                    <a href="{{ route('stock-entries.create', $stockExit->id) }}" class="btn btn-success btn-sm" title="{{ __('stockexit.declare_return') }}"><i class="bi bi-box-arrow-in-down"></i></a>
+                                    <a href="{{ route('stock-entries.create', $stockExit->id) }}" class="btn btn-sm btn-secondary">
+                                        <i class="bi bi-box-arrow-in-down me-1 text-success"></i> {{ __('stockexit.declare_return') }}
+                                    </a>
                                 @endif
                             @endcan
                             @can('delete_stock_exits')
-                                <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $stockExit->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" wire:click="delete({{ $stockExit->id }})" wire:confirm="{{ __('app.are_you_sure') }}">
+                                    <i class="bi bi-trash me-1"></i> {{ __('app.delete') }}
+                                </button>
                             @endcan
                         </div>
                     </div>

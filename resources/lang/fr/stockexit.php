@@ -56,5 +56,6 @@ return [
     'status_closed' => 'Statut fermé',
     'status_in_transit' => 'Statut en transit',
     'stock_exits' => 'Sorties de stock',
+    'total' => 'Total',
     'vehicle' => 'Véhicule',
 ];

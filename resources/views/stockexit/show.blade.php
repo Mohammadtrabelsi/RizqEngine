@@ -74,6 +74,19 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr class="fw-bold border-t-2 border-slate-300">
+                                <td colspan="2" class="text-end">{{ __('stockexit.total') }}</td>
+                                <td class="text-end">{{ $stockExit->details->sum('quantity') }}</td>
+                                <td class="text-end">{{ $stockExit->details->sum('returned_quantity') }}</td>
+                                @if($stockExit->isConsignment())
+                                    <td class="text-end">{{ $stockExit->details->sum('sold_quantity') }}</td>
+                                @else
+                                    <td class="text-end">{{ $stockExit->details->sum('lost_quantity') }}</td>
+                                    <td class="text-end">{{ $stockExit->details->sum('outstanding_quantity') }}</td>
+                                @endif
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
 
