@@ -1,3 +1,5 @@
+<?php
+
 return [
     'add_exit' => 'إضافة إذن خروج',
     'auto_generated' => 'تم إنشاؤه تلقائياً',

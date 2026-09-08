@@ -1,3 +1,5 @@
+<?php
+
 return [
     'already-converted' => 'تم بالفعل تحويل أمر الشراء :reference إلى طلب.',
     'already-invoiced' => 'تم بالفعل فوترة الطلب :reference.',

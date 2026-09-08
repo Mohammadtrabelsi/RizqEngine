@@ -1,3 +1,5 @@
+<?php
+
 return [
     'add_tax' => 'Ajouter une taxe',
     'amount' => 'Montant',

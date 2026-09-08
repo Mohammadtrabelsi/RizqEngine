@@ -1,3 +1,5 @@
+<?php
+
 return [
     'add_exit' => 'Ajouter une sortie',
     'auto_generated' => 'Généré automatiquement',

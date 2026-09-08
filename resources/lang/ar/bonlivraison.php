@@ -1,3 +1,5 @@
+<?php
+
 return [
     'already-converted' => 'تم بالفعل إصدار إيصال تسليم للطلب :reference.',
     'already-invoiced' => 'تم بالفعل فوترة إيصال التسليم :reference.',
