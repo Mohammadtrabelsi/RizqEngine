@@ -8,6 +8,8 @@ return [
     'activity_logs' => 'سجلات النشاط',
     'attribute_changes' => 'تغييرات السمات',
     'back_to_activity_logs' => 'العودة إلى سجلات النشاط',
+    'clear_all_logs' => 'مسح جميع السجلات',
+    'clear_all_logs_confirm' => 'هل أنت متأكد أنك تريد حذف جميع سجلات النشاط نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.',
     'date_time' => 'التاريخ والوقت',
     'description' => 'الوصف',
     'event' => 'الحدث',
