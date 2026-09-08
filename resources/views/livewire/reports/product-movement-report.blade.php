@@ -50,7 +50,7 @@
                 <div class="flex-auto p-2">
                     <h5 class="mb-3">{{ $direction === 'slow' ? __('report.slow-moving-products') : __('report.fast-moving-products') }}</h5>
                     <div class="block w-full overflow-x-auto">
-                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
+                        <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col" class="text-center">{{ __('report.ranking') }}</th>
@@ -63,11 +63,11 @@
                             <tbody>
                                 @forelse($products as $index => $product)
                                     <tr>
-                                        <td class="text-center fw-bold">{{ $index + 1 }}</td>
-                                        <td>{{ $product->product_name }}</td>
-                                        <td class="text-muted">{{ $product->product_code }}</td>
-                                        <td class="text-end">{{ $product->units_sold }}</td>
-                                        <td class="text-end">{{ $product->product_quantity }}</td>
+                                        <td class="text-center fw-bold" data-label="{{ __('report.ranking') }}">{{ $index + 1 }}</td>
+                                        <td data-label="{{ __('report.product') }}">{{ $product->product_name }}</td>
+                                        <td class="text-muted" data-label="{{ __('report.reference') }}">{{ $product->product_code }}</td>
+                                        <td class="text-end" data-label="{{ __('report.units-sold') }}">{{ $product->units_sold }}</td>
+                                        <td class="text-end" data-label="{{ __('report.current-stock') }}">{{ $product->product_quantity }}</td>
                                     </tr>
                                 @empty
                                     <tr>

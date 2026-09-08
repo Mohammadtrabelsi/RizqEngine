@@ -20,7 +20,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
                     <div class="block w-full overflow-x-auto">
-                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
+                        <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col">{{ __('report.product') }}</th>
@@ -34,12 +34,12 @@
                             <tbody>
                                 @forelse($products as $product)
                                     <tr>
-                                        <td class="fw-bold">{{ $product->product_name }}</td>
-                                        <td class="text-muted">{{ $product->product_code }}</td>
-                                        <td>{{ optional($product->category)->category_name }}</td>
-                                        <td class="text-end text-info fw-bold">{{ $product->product_quantity }}</td>
-                                        <td class="text-end">{{ $product->product_stock_alert_max }}</td>
-                                        <td class="text-center">
+                                        <td class="fw-bold" data-label="{{ __('report.product') }}">{{ $product->product_name }}</td>
+                                        <td class="text-muted" data-label="{{ __('report.reference') }}">{{ $product->product_code }}</td>
+                                        <td data-label="{{ __('report.category') }}">{{ optional($product->category)->category_name }}</td>
+                                        <td class="text-end text-info fw-bold" data-label="{{ __('report.in-stock') }}">{{ $product->product_quantity }}</td>
+                                        <td class="text-end" data-label="{{ __('report.high-stock-level') }}">{{ $product->product_stock_alert_max }}</td>
+                                        <td class="text-center" data-label="{{ __('report.status') }}">
                                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-cyan-100 text-cyan-700">{{ __('report.high-stock') }}</span>
                                         </td>
                                     </tr>

@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="block w-full overflow-x-auto">
-                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
+                        <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col">{{ __('report.reference') }}</th>
@@ -88,13 +88,13 @@
                             <tbody>
                                 @forelse($sale_returns as $sale_return)
                                     <tr>
-                                        <td class="fw-bold">{{ $sale_return->reference }}</td>
-                                        <td><i class="bi bi-person text-muted"></i> {{ $sale_return->customer_name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($sale_return->date)->format('d M, Y') }}</td>
-                                        <td class="text-end">{{ format_currency($sale_return->total_amount) }}</td>
-                                        <td class="text-end text-success">{{ format_currency($sale_return->paid_amount) }}</td>
-                                        <td class="text-end @if($sale_return->due_amount > 0) text-danger fw-bold @else text-muted @endif">{{ format_currency($sale_return->due_amount) }}</td>
-                                        <td class="text-center">
+                                        <td class="fw-bold" data-label="{{ __('report.reference') }}">{{ $sale_return->reference }}</td>
+                                        <td data-label="{{ __('report.customer') }}"><i class="bi bi-person text-muted"></i> {{ $sale_return->customer_name }}</td>
+                                        <td data-label="{{ __('report.date') }}">{{ \Carbon\Carbon::parse($sale_return->date)->format('d M, Y') }}</td>
+                                        <td class="text-end" data-label="{{ __('report.total') }}">{{ format_currency($sale_return->total_amount) }}</td>
+                                        <td class="text-end text-success" data-label="{{ __('report.paid') }}">{{ format_currency($sale_return->paid_amount) }}</td>
+                                        <td class="text-end @if($sale_return->due_amount > 0) text-danger fw-bold @else text-muted @endif" data-label="{{ __('report.due') }}">{{ format_currency($sale_return->due_amount) }}</td>
+                                        <td class="text-center" data-label="{{ __('report.status') }}">
                                             @if ($sale_return->status == 'Pending')
                                                 <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-cyan-100 text-cyan-700">{{ $sale_return->status }}</span>
                                             @elseif ($sale_return->status == 'Shipped')
@@ -103,7 +103,7 @@
                                                 <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $sale_return->status }}</span>
                                             @endif
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-center" data-label="{{ __('report.payment-status') }}">
                                             @if ($sale_return->payment_status == 'Partial')
                                                 <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-amber-100 text-amber-700">{{ $sale_return->payment_status }}</span>
                                             @elseif ($sale_return->payment_status == 'Paid')
