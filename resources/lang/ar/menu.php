@@ -1,3 +1,5 @@
+<?php
+
 return [
     'activity-logs' => 'سجلات النشاط',
     'all-adjustments' => 'جميع التسويات',

@@ -1,3 +1,5 @@
+<?php
+
 return [
     'already-converted' => 'الطلب :reference أدى بالفعل إلى إنشاء مذكرة تسليم.',
     'already-invoiced' => 'تمت فوترة مذكرة التسليم :reference بالفعل.',

@@ -1,3 +1,5 @@
+<?php
+
 return [
     'add_exit' => 'إذن صرف جديد',
     'auto_generated' => 'يُنشأ تلقائياً',

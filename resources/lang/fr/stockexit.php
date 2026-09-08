@@ -1,3 +1,5 @@
+<?php
+
 return [
     'add_exit' => 'Nouveau bon de sortie',
     'auto_generated' => 'Générée automatiquement',
