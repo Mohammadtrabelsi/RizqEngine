@@ -46,7 +46,7 @@ class StockTransferService
             throw new \InvalidArgumentException('The source and destination warehouses must be different.');
         }
 
-        $lines = array_values(array_filter($lines, fn ($line) => (int) ($line['quantity'] ?? 0) > 0));
+        $lines = array_values(array_filter($lines, fn ($line) => (int) $line['quantity'] > 0));
 
         if ($lines === []) {
             throw new \InvalidArgumentException('A transfer must contain at least one line with a positive quantity.');

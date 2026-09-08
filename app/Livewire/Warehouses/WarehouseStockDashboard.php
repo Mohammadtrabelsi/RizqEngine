@@ -49,7 +49,7 @@ class WarehouseStockDashboard extends Component
      * On-hand rows joined across the product_warehouse pivot, filtered by the
      * selected warehouse and product search.
      *
-     * @return Collection<int, object>
+     * @return Collection<int, \stdClass>
      */
     protected function stockRows(): Collection
     {

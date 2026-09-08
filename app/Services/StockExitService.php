@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ConversionException;
+use App\Exceptions\InsufficientStockException;
 use App\Exceptions\StockInconsistencyException;
 use App\Models\Commande;
 use App\Models\Product;
@@ -107,6 +108,8 @@ class StockExitService
      *
      * @param  array<string, mixed>  $attributes  date, reason, destination, responsible, driver_id, vehicle_id, note
      * @param  array<int, array{product_id:int, quantity:int}>  $lines
+     *
+     * @throws InsufficientStockException when a line lacks sufficient stock.
      */
     public function createExit(array $attributes, array $lines): StockExit
     {
@@ -176,6 +179,7 @@ class StockExitService
      *
      * @throws ConversionException when the Commande has already produced an exit
      *                             or carries no orderable line.
+     * @throws InsufficientStockException when a line lacks sufficient stock.
      */
     public function createFromCommande(Commande $commande): StockExit
     {
