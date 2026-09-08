@@ -145,6 +145,12 @@
                 @can('access_currencies')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('currencies*') ? 'is-active' : '' }}" href="{{ route('currencies.index') }}"><i class="bi bi-cash-stack"></i> <span>{{ __('menu.currencies') }}</span></a></li>
                 @endcan
+                @can('access_taxes')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('taxes*') ? 'is-active' : '' }}" href="{{ route('taxes.index') }}"><i class="bi bi-percent"></i> <span>{{ __('menu.taxes') }}</span></a></li>
+                @endcan
+                @can('access_withholding_taxes')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('withholding-taxes*') ? 'is-active' : '' }}" href="{{ route('withholding-taxes.index') }}"><i class="bi bi-percent"></i> <span>{{ __('menu.withholding_taxes') }}</span></a></li>
+                @endcan
                 @can('access_settings')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('settings*') ? 'is-active' : '' }}" href="{{ route('settings.index') }}"><i class="bi bi-sliders"></i> <span>{{ __('menu.system-settings') }}</span></a></li>
                 @endcan

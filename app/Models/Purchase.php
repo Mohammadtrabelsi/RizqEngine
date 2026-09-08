@@ -50,6 +50,36 @@ class Purchase extends Model
         return $this->hasMany(PurchasePayment::class, 'purchase_id', 'id');
     }
 
+    /**
+     * The withholding-tax (retenue à la source) snapshots applied to this
+     * purchase.
+     *
+     * @return HasMany<PurchaseWithholdingTax, $this>
+     */
+    public function withholdingTaxes(): HasMany
+    {
+        return $this->hasMany(PurchaseWithholdingTax::class, 'purchase_id', 'id');
+    }
+
+    /**
+     * The supplier this purchase was invoiced by.
+     *
+     * @return BelongsTo<Supplier, $this>
+     */
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
+
+    /**
+     * The net amount actually payable to the supplier: TTC minus the total
+     * withholding retained.
+     */
+    public function getNetPayableAttribute(): float
+    {
+        return round($this->total_amount - $this->withholding_amount, 3);
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -88,6 +118,15 @@ class Purchase extends Model
     public function getTaxAmountAttribute($value)
     {
         return $value / 100;
+    }
+
+    /**
+     * Total withholding (retenue à la source) retained. Persisted in millimes
+     * (× 1000) to keep the Tunisian dinar's three-decimal precision.
+     */
+    public function getWithholdingAmountAttribute($value)
+    {
+        return ((int) $value) / 1000;
     }
 
     public function getDiscountAmountAttribute($value)

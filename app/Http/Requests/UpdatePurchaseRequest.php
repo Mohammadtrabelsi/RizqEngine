@@ -26,6 +26,8 @@ class UpdatePurchaseRequest extends FormRequest
             'status' => 'required|string|max:255',
             'payment_method' => 'required|string|max:255',
             'note' => 'nullable|string|max:1000',
+            'withholding_tax_ids' => 'nullable|array',
+            'withholding_tax_ids.*' => 'integer|exists:withholding_taxes,id',
         ];
     }
 

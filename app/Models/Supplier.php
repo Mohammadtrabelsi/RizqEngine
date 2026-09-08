@@ -19,10 +19,17 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string|null $tax_identification_number
  * @property string|null $iban
  * @property string|null $note
+ * @property bool $subject_to_withholding
+ * @property string|null $legal_form
+ * @property string|null $fiscal_category
  */
 class Supplier extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, RecordsActivity, TracksUserActions;
+
+    protected $casts = [
+        'subject_to_withholding' => 'boolean',
+    ];
 
     protected $guarded = [];
 

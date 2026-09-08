@@ -114,6 +114,12 @@
                                         <input type="text" class="form-control" name="company_address" value="{{ $settings->company_address }}">
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-4">
+                                        <label for="company_tax_id">{{ __('withholding.tax_id') }}</label>
+                                        <input type="text" class="form-control" name="company_tax_id" value="{{ $settings->company_tax_id }}">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-4 mb-0">

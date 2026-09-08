@@ -6,6 +6,8 @@ use App\Models\Tax;
 use App\Services\CartPricingService;
 use App\Services\ProductCatalogService;
 use App\Services\StockService;
+use App\Services\WithholdingTaxCalculator;
+use App\Services\WithholdingTaxService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
@@ -28,6 +30,12 @@ class ProductCart extends Component
 
     /** @var array<int, int> IDs of the taxes selected in "Hors taxes" mode. */
     public array $selected_taxes = [];
+
+    /**
+     * @var array<int, int> IDs of the withholding taxes (retenues à la source)
+     *                      applied to this document.
+     */
+    public array $selected_withholding_taxes = [];
 
     public $shipping;
 
@@ -62,6 +70,15 @@ class ProductCart extends Component
             $this->updatedGlobalTax();
             $this->updatedGlobalDiscount();
 
+            // Restore the withholding taxes previously applied to the document.
+            if (method_exists($data, 'withholdingTaxes')) {
+                $this->selected_withholding_taxes = $data->withholdingTaxes()
+                    ->whereNotNull('withholding_tax_id')
+                    ->pluck('withholding_tax_id')
+                    ->map(fn ($id) => (int) $id)
+                    ->all();
+            }
+
             $cart_items = Cart::instance($this->cart_instance)->content();
 
             foreach ($cart_items as $cart_item) {
@@ -80,6 +97,7 @@ class ProductCart extends Component
             $this->global_tax = 0;
             $this->tax_mode = 'included';
             $this->selected_taxes = [];
+            $this->selected_withholding_taxes = [];
             $this->shipping = 0.00;
             $this->check_quantity = [];
             $this->quantity = [];
@@ -93,14 +111,36 @@ class ProductCart extends Component
     {
         $cart_items = Cart::instance($this->cart_instance)->content();
 
+        $ttc = (float) Cart::instance($this->cart_instance)->total() + (float) $this->shipping;
+        $tva = (float) Cart::instance($this->cart_instance)->tax();
+
+        $side = in_array($this->cart_instance, Tax::SALE_CART_INSTANCES, true) ? 'sale' : 'purchase';
+
+        $available_withholding_taxes = app(WithholdingTaxService::class)->selectableFor($side);
+
+        $withholding = app(WithholdingTaxCalculator::class)->calculate(
+            $available_withholding_taxes->whereIn('id', $this->selected_withholding_taxes),
+            $ttc - $tva,
+            $tva,
+            $ttc,
+        );
+
         return view('livewire.product-cart', [
             'cart_items' => $cart_items,
-            'total_with_shipping' => (float) Cart::instance($this->cart_instance)->total() + (float) $this->shipping,
+            'total_with_shipping' => $ttc,
             'available_taxes' => Tax::forCartInstance($this->cart_instance)
                 ->orderBy('order')
                 ->orderBy('name')
                 ->get(),
+            'available_withholding_taxes' => $available_withholding_taxes,
+            'withholding' => $withholding,
         ]);
+    }
+
+    public function updatedSelectedWithholdingTaxes(): void
+    {
+        // Reactive recompute happens in render(); this hook keeps Livewire
+        // aware of the change so the net-payable preview refreshes live.
     }
 
     public function updatedTaxMode(): void

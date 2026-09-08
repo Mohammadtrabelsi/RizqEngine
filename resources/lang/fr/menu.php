@@ -62,6 +62,7 @@ return [
     'transactions' => 'Transactions',
     'system-settings' => 'Paramètres du système',
     'taxes' => 'Taxes',
+    'withholding_taxes' => 'Retenues à la source',
     'units' => 'Unités',
     'drivers' => 'Chauffeurs',
     'vehicles' => 'Véhicules',

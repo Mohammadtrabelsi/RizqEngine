@@ -23,6 +23,7 @@ class StoreSettingsRequest extends FormRequest
             'company_phone' => 'required|string|max:255',
             'notification_email' => 'required|email|max:255',
             'company_address' => 'required|string|max:500',
+            'company_tax_id' => 'nullable|string|max:255',
             'default_currency_id' => 'required|numeric',
             'default_currency_position' => 'required|string|max:255',
             'footer_text' => 'nullable|string|max:255',

@@ -60,6 +60,26 @@
                                 @error('tax_identification_number') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="mb-4">
+                                <label>{{ __('withholding.legal_form') }}</label>
+                                <input type="text" class="form-control @error('legal_form') !border-red-500 @enderror" wire:model="legal_form">
+                                @error('legal_form') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-4">
+                                <label>{{ __('withholding.fiscal_category') }}</label>
+                                <input type="text" class="form-control @error('fiscal_category') !border-red-500 @enderror" wire:model="fiscal_category">
+                                @error('fiscal_category') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-check mb-4 mt-4">
+                                <input class="form-check-input" type="checkbox" wire:model="subject_to_withholding" id="subject_to_withholding">
+                                <label class="form-check-label" for="subject_to_withholding">{{ __('withholding.subject_to_withholding') }}</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-6">
