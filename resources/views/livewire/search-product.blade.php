@@ -1,12 +1,10 @@
 <div class="position-relative">
     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-0 border-0 shadow-sm">
-        <div class="flex-auto p-5">
+        <div class="flex-auto p-2">
             <div class="mb-4 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="bi bi-search text-primary"></i>
-                        </div>
+                    <div class="input-group-text">
+                        <i class="bi bi-search text-primary"></i>
                     </div>
                     <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('general.search-product') }}">
                 </div>
@@ -34,7 +32,7 @@
     </div>
 
     <div wire:loading class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 position-absolute mt-1 border-0 search-product-results">
-        <div class="flex-auto p-5 shadow">
+        <div class="flex-auto p-2 shadow">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
                     <span class="sr-only">{{ __('general.loading') }}...</span>
@@ -47,7 +45,7 @@
         <div wire:click="resetQuery" class="position-fixed w-100 h-100 search-product-backdrop"></div>
         @if($search_results->isNotEmpty())
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 position-absolute mt-1 search-product-results-front">
-                <div class="flex-auto p-5 shadow p-2">
+                <div class="flex-auto p-2 shadow p-2">
                     <ul class="list-group list-group-flush">
                         @foreach($search_results as $result)
                             <li class="list-group-item list-group-item-action px-2">
@@ -90,7 +88,7 @@
             </div>
         @else
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 position-absolute mt-1 border-0 search-product-results">
-                <div class="flex-auto p-5 shadow">
+                <div class="flex-auto p-2 shadow">
                     <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-amber-50 text-amber-700 border-amber-200 mb-0">
                         {{ __('general.no-product-found') }}
                     </div>

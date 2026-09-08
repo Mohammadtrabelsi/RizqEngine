@@ -15,7 +15,7 @@
     <div class="container-fluid">
         @include('utils.alerts')
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <h4 class="mb-1">{{ __('stockexit.bon_dentree') }}</h4>
                 <p class="text-muted">{{ __('stockexit.origin_reference') }}: <strong>{{ $stockExit->reference }}</strong></p>
                 @if($stockExit->isConsignment() && $stockExit->customer)

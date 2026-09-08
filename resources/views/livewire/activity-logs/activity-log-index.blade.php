@@ -21,7 +21,7 @@
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline {{ $this->eventBadge($activity->event) }}">{{ $activity->event ?? 'n/a' }}</span>
                         <small class="text-muted">{{ $activity->created_at->format('d M, Y H:i') }}</small>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <p class="mb-2">{{ $activity->description }}</p>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>Module</span><span>{{ $activity->log_name }}</span></li>
@@ -48,7 +48,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('activitylog.no_activity_logs') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('activitylog.no_activity_logs') }}</div></div>
             </div>
         @endforelse
     </div>

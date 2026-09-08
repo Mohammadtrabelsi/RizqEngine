@@ -10,7 +10,7 @@
         </div>
     @endif
     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-        <div class="flex-auto p-5">
+        <div class="flex-auto p-2">
             @if(!empty($product))
                 <ul class="list-group list-group-flush mb-0">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -55,7 +55,7 @@
             </button>
         </div>
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <div class="row justify-content-center">
                     @foreach($barcodes as $barcode)
                         <div class="col-lg-3 col-md-4 col-sm-6 barcode-label">

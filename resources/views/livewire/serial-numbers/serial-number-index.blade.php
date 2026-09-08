@@ -2,7 +2,7 @@
 <div>
     <div class="container-fluid">
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-3">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <form wire:submit="register" class="form-row align-items-end">
                     <div class="col-lg-5">
                         <div class="mb-4 mb-0">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-            <div class="flex-auto p-5 block w-full overflow-x-auto">
+            <div class="flex-auto p-2 block w-full overflow-x-auto">
                 <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
                     <thead>
                         <tr>

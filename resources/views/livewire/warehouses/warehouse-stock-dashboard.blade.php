@@ -27,8 +27,8 @@
         <div class="row">
             @foreach($warehouses as $warehouse)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-3" wire:key="wtotal-{{ $warehouse->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
-                        <div class="flex-auto p-5">
+                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                        <div class="flex-auto p-2">
                             <h6 class="text-muted mb-1 d-flex justify-content-between align-items-center">
                                 <span>{{ $warehouse->name }}</span>
                                 @if($warehouse->is_default)
@@ -46,7 +46,7 @@
         {{-- Detailed stock table --}}
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.stock_state') }}</strong></div>
-            <div class="flex-auto p-5 p-0">
+            <div class="flex-auto p-2 p-0">
                 <div class="block w-full overflow-x-auto">
                     <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 mb-0 align-middle">
                         <thead>
@@ -81,7 +81,7 @@
         {{-- Outstanding Bons de Sortie --}}
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.outstanding_exits') }}</strong></div>
-            <div class="flex-auto p-5 p-0">
+            <div class="flex-auto p-2 p-0">
                 <div class="block w-full overflow-x-auto">
                     <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 mb-0 align-middle">
                         <thead>

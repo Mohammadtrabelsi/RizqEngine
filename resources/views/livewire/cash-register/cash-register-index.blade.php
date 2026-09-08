@@ -5,7 +5,7 @@
             <div class="col-12 mb-4">
                 @if($current)
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <h5 class="mb-3 text-lg font-semibold text-slate-900 d-flex justify-content-between align-items-center">
                                 {{ __('cash_register.current_session') }}
                                 <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('cash_register.open') }}</span>
@@ -34,7 +34,7 @@
                     </div>
                 @else
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ __('cash_register.open_session') }}</h5>
                             @can('open_cash_register')
                             <form wire:submit="open">
@@ -59,7 +59,7 @@
 
             <div class="col-12 mb-4">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                    <div class="flex-auto p-5 block w-full overflow-x-auto">
+                    <div class="flex-auto p-2 block w-full overflow-x-auto">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ __('cash_register.history') }}</h5>
                         <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
                             <thead>

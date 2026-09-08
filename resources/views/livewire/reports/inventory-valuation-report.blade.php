@@ -2,7 +2,7 @@
     <div class="row mb-4">
         <div class="col-12 col-lg-3">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                <div class="flex-auto p-5 p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-primary p-3 mfe-3 rounded">
                         <i class="bi bi-box-seam font-2xl"></i>
                     </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                <div class="flex-auto p-5 p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-info p-3 mfe-3 rounded">
                         <i class="bi bi-cash-stack font-2xl"></i>
                     </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                <div class="flex-auto p-5 p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-success p-3 mfe-3 rounded">
                         <i class="bi bi-tags font-2xl"></i>
                     </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                <div class="flex-auto p-5 p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-warning p-3 mfe-3 rounded">
                         <i class="bi bi-graph-up-arrow font-2xl"></i>
                     </div>
@@ -57,7 +57,7 @@
     <div class="row">
         <div class="col-12">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     <div class="form-row mb-3">
                         <div class="col-lg-4">
                             <input wire:model.live="search" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('report.search-by-name-or-code') }}">

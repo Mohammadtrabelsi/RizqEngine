@@ -14,7 +14,7 @@
     <div class="container-fluid">
         @include('utils.alerts')
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                     <h4 class="mb-0">{{ __('stockexit.bon_de_sortie') }} — {{ $stockExit->reference }}</h4>
                     <div>
@@ -96,7 +96,7 @@
 
         @if($stockExit->entries->isNotEmpty())
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mt-4">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     <h5 class="mb-3">{{ __('stockexit.linked_entries') }}</h5>
                     <ul class="list-group">
                         @foreach($stockExit->entries as $entry)

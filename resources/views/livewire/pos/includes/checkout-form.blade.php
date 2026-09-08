@@ -9,7 +9,7 @@
     </div>
     <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
         @csrf
-        <div class="flex-auto p-5">
+        <div class="flex-auto p-2">
             @if (session()->has('checkout_message'))
                 <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-emerald-50 text-emerald-700 border-emerald-200 pr-12 fade show" role="alert">
                     <div class="alert-body">

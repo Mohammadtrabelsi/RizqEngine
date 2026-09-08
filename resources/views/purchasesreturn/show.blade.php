@@ -26,7 +26,7 @@
                             <i class="bi bi-save"></i> {{ __('purchase-returns.save') }}
                         </a>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <div class="row mb-4">
                             <div class="col-sm-4 mb-3 mb-md-0">
                                 <h5 class="mb-2 border-bottom pb-2">{{ __('purchase-returns.company_info') }}:</h5>
@@ -66,7 +66,7 @@
                                             {{ $item->product_name }}
                                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $item->product_code }}</span>
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <ul class="list-group list-group-flush mb-0">
                                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('purchase-returns.net_unit_price') }}</span><span>{{ format_currency($item->unit_price) }}</span></li>
                                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('purchase-returns.quantity') }}</span><span>{{ $item->quantity }}</span></li>

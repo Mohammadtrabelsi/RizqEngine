@@ -19,8 +19,8 @@
         <div class="row">
             @forelse($warehouses as $warehouse)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="warehouse-{{ $warehouse->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
-                        <div class="flex-auto p-5">
+                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                        <div class="flex-auto p-2">
                             <h5 class="mb-3 text-lg font-semibold text-slate-900 d-flex justify-content-between align-items-center">
                                 {{ $warehouse->name }}
                                 @if($warehouse->is_default)
@@ -48,7 +48,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('warehouses.no_warehouses_found') }}</div></div>
+                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('warehouses.no_warehouses_found') }}</div></div>
                 </div>
             @endforelse
         </div>

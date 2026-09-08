@@ -42,7 +42,7 @@
     {{-- Form panel --}}
     <div class="login-form-wrap bg-slate-50">
         <div class="login-form-card relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-md">
-            <div class="flex-auto p-5 p-4 p-md-5">
+            <div class="flex-auto p-2 p-4 p-md-5">
                 <div class="login-lang d-flex justify-content-end mb-4">
                     @include('includes.language-switcher')
                 </div>

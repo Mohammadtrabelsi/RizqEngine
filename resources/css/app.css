@@ -562,7 +562,6 @@ h4, .h4 { font-size: 19px; }
     /* Input groups */
     .input-group { position: relative; display: flex; flex-wrap: wrap; align-items: stretch; width: 100%; }
     .input-group > .form-control { position: relative; flex: 1 1 auto; width: 1%; min-width: 0; }
-    .input-group-prepend { display: flex; margin-right: -1px; }
     .input-group-append { display: flex; margin-left: -1px; }
     .input-group-text {
         display: flex;
@@ -572,8 +571,9 @@ h4, .h4 { font-size: 19px; }
         color: var(--text);
         background-color: var(--surface-2);
         border: 1px solid var(--border);
+        margin-right: -1px;
     }
-    .input-group > .input-group-prepend > .input-group-text { border-top-left-radius: var(--radius-sm); border-bottom-left-radius: var(--radius-sm); }
+    .input-group > .input-group-text:first-child { border-top-left-radius: var(--radius-sm); border-bottom-left-radius: var(--radius-sm); }
     .input-group > .input-group-append > .input-group-text,
     .input-group > .input-group-append > .btn { border-top-right-radius: var(--radius-sm); border-bottom-right-radius: var(--radius-sm); }
 
@@ -583,7 +583,7 @@ h4, .h4 { font-size: 19px; }
         position: relative;
         display: block;
         padding: 0.75rem 1.25rem;
-        background-color: var(--surface);
+        background-color: transparent;
         border: 1px solid var(--border);
         color: var(--text);
     }
@@ -1821,9 +1821,8 @@ hr { display: none; }
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    height: 64px;
+    height: 56px;
     padding: 0 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     background: var(--color-ink);
 }
 .app-sidebar-brand-link {
@@ -1862,7 +1861,7 @@ hr { display: none; }
 .app-sidebar-nav {
     flex: 1;
     overflow-y: auto;
-    padding: 0.75rem 0.75rem 1.25rem;
+    padding: 0.4rem 0.6rem 1rem;
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 transparent;
 }
@@ -1872,23 +1871,23 @@ hr { display: none; }
 
 .app-sidebar-heading {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.64rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.45);
-    padding: 0.9rem 0.75rem 0.4rem;
-    margin-top: 0.25rem;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 0.5rem 0.5rem 0.25rem;
+    margin-top: 0;
 }
 
-.app-sidebar-item { margin-bottom: 2px; }
+.app-sidebar-item { margin-bottom: 1px; }
 .app-sidebar-link {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 10px;
-    font-size: 0.9rem;
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
@@ -1897,13 +1896,13 @@ hr { display: none; }
     transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
 }
 .app-sidebar-link i {
-    font-size: 1.15rem;
-    width: 34px;
-    height: 34px;
+    font-size: 1.02rem;
+    width: 26px;
+    height: 26px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 9px;
+    border-radius: 7px;
     flex: 0 0 auto;
     transition: background 0.15s ease, color 0.15s ease;
 }
@@ -1914,15 +1913,14 @@ hr { display: none; }
     background: transparent;
 }
 
-/* Small leading dot on overview items, mirroring the dashboard sidebar. */
-.app-sidebar-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.3);
-    flex: 0 0 auto;
+/* Icon + label group inside a toggle button, kept together as one flex item
+   so `justify-content: space-between` only separates it from the caret. */
+.app-sidebar-link-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
 }
-.app-sidebar-item.is-active > .app-sidebar-link .app-sidebar-dot { background: #ffffff; }
 
 .app-sidebar-link:hover {
     background: var(--color-ink-2);
@@ -1971,18 +1969,17 @@ hr { display: none; }
    section is opened (`.is-open` toggled by the app.js submenu handler). */
 .app-sidebar-sublist {
     list-style: none;
-    margin: 2px 0 4px;
-    padding: 0 0 0 0.4rem;
-    border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
-    margin-inline-start: 0.7rem;
+    margin: 1px 0 2px;
+    padding: 0;
+    margin-inline-start: 0.9rem;
     display: none;
 }
 .app-sidebar-sublist.is-open { display: block; }
 .app-sidebar-sublink {
     display: block;
-    padding: 0.45rem 0.8rem;
-    border-radius: 8px;
-    font-size: 0.84rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 7px;
+    font-size: 0.83rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
@@ -2319,7 +2316,6 @@ hr { display: none; }
    navigation, dropdowns, pagination, Bootstrap list-groups, breadcrumbs and
    select2 result lists — are left untouched. */
 ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) {
-    border: 1px solid var(--color-hairline, #e7e7ee);
     border-radius: var(--radius-field, 12px);
     padding: 1rem 1rem 1rem 2rem;
     margin-bottom: 1.25rem;
@@ -2330,6 +2326,3 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
     line-height: 1.55;
 }
 
-ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) > li + li {
-    border-top: 1px solid var(--color-hairline, #e7e7ee);
-}

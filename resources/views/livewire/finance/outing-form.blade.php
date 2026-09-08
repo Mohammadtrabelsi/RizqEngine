@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-9">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <form wire:submit="save">
                             <div class="row">
                                 <div class="col-md-4 mb-3">

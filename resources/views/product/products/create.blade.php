@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="mb-4">
@@ -214,7 +214,7 @@
 
                 <div class="col-lg-12">
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <div class="mb-4">
                                 <label for="image">{{ __('product.images') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">

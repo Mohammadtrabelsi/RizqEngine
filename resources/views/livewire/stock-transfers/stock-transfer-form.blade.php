@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <form wire:submit="save">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-3">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     <div class="form-row">
                         <div class="col-lg-4">
                             <div class="mb-4">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-3">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     @error('lines') <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-red-50 text-red-700 border-red-200">{{ $message }}</div> @enderror
                     <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                         <thead>
@@ -81,7 +81,7 @@
             </div>
 
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-3">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     <div class="mb-4">
                         <label>{{ __('warehouses.note') }}</label>
                         <textarea class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" rows="2" wire:model="note"></textarea>

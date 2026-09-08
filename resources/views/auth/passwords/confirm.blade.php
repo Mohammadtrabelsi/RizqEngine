@@ -7,7 +7,7 @@
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">{{ __('password.confirmation') }}</div>
 
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         {{ __('password.confirm-message') }}
 
                         <form method="POST" action="{{ route('password.confirm') }}">

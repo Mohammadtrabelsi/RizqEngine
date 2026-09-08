@@ -29,7 +29,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-primary text-white">
                         <h5 class="mb-0">{{ __('settings.mail_settings') }}</h5>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <form action="{{ route('settings.smtp.update') }}" method="POST">
                             @csrf
                             @method('patch')

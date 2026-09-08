@@ -46,7 +46,7 @@
                     @endif
                 </div>
             </div>
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <div class="row mb-4">
                     <div class="col-sm-4 mb-3 mb-md-0">
                         <h5 class="mb-2 border-bottom pb-2">{{ __('bonlivraison.company_info') }}</h5>

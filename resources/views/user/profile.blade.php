@@ -23,7 +23,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <form action="{{ route('profile.update') }}" method="POST">
                             @csrf
                             @method('patch')
@@ -57,7 +57,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <form action="{{ route('profile.update.password') }}" method="POST">
                             @csrf
                             @method('patch')

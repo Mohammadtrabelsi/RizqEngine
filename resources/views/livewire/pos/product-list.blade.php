@@ -1,6 +1,6 @@
 <div>
     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mt-3">
-        <div class="flex-auto p-5">
+        <div class="flex-auto p-2">
             <livewire:pos.filter :categories="$categories"/>
             <div class="d-flex justify-content-center mb-3">{{ $products->links('pagination::bootstrap-5') }}</div>
             <div class="row position-relative">
@@ -30,7 +30,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="flex-auto p-5">
+                            <div class="flex-auto p-2">
                                 <div class="mb-2">
                                     <h6 class="mb-3 text-lg font-semibold text-slate-900 mb-1 text-truncate" title="{{ $product->product_name }}">{{ $product->product_name }}</h6>
                                     <div class="d-flex gap-1 flex-wrap">

@@ -19,7 +19,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-primary text-white">
                         <h5 class="mb-0">{{ __('settings.general_settings') }}</h5>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('patch')

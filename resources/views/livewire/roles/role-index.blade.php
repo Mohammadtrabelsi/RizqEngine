@@ -19,7 +19,7 @@
                         <span class="fw-bold">{{ $role->name }}</span>
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">#{{ $role->id }}</span>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <p class="fw-bold mb-2">{{ __('roles.permissions') }}</p>
                         <div class="mb-3">
                             @include('user.roles.partials.permissions', ['data' => $role])
@@ -33,7 +33,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('roles.no_roles_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('roles.no_roles_found') }}</div></div>
             </div>
         @endforelse
     </div>

@@ -16,7 +16,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm bg-gradient">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <h2 class="mb-2">
@@ -43,7 +43,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-info-circle"></i> {{ __('product.product_details') }}</h5>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom mb-2">
@@ -74,7 +74,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-cash-coin"></i> {{ __('product.pricing_and_cost') }}</h5>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="p-3 bg-light rounded">
@@ -102,7 +102,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-box2"></i> Stock Information</h5>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <div class="p-3 bg-light rounded">
@@ -148,7 +148,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-calculator"></i> {{ __('product.tax_information') }}</h5>
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
@@ -190,7 +190,7 @@
                         <h5 class="mb-0"><i class="bi bi-receipt"></i> {{ __('product.orders') }}</h5>
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ $orders->count() }}</span>
                     </div>
-                    <div class="flex-auto p-5 p-0">
+                    <div class="flex-auto p-2 p-0">
                         @if($orders->isEmpty())
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
@@ -244,7 +244,7 @@
                         <h5 class="mb-0"><i class="bi bi-clock-history"></i> {{ __('product.transaction_history') }}</h5>
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ $transactions->count() }}</span>
                     </div>
-                    <div class="flex-auto p-5 p-0">
+                    <div class="flex-auto p-2 p-0">
                         @if($transactions->isEmpty())
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
@@ -302,7 +302,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-image"></i> {{ __('product.product_image') }}</h5>
                     </div>
-                    <div class="flex-auto p-5 text-center">
+                    <div class="flex-auto p-2 text-center">
                         @forelse($product->getMedia('images') as $media)
                             <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-contain-300 img-fluid rounded mb-2">
                         @empty
@@ -316,7 +316,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-qr-code"></i> {{ __('product.barcode') }}</h5>
                     </div>
-                    <div class="flex-auto p-5 text-center">
+                    <div class="flex-auto p-2 text-center">
                         <div class="mb-3">
                             {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
                         </div>

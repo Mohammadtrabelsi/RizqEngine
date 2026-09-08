@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     @if ($supplier->getFirstMediaUrl('images'))
                         <div class="text-center mb-4">
                             <img src="{{ $supplier->getFirstMediaUrl('images') }}" class="img-max-180 img-fluid img-thumbnail rounded-circle" alt="Supplier Image">

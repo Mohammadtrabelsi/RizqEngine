@@ -15,7 +15,7 @@
         @forelse($users as $user)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="user-{{ $user->id }}">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100">
-                    <div class="flex-auto p-5 text-center">
+                    <div class="flex-auto p-2 text-center">
                         <img src="{{ $user->getFirstMediaUrl('avatars') }}" class="avatar-80 img-thumbnail rounded-circle mb-3" alt="{{ $user->name }}">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900 mb-1">{{ $user->name }}</h5>
                         <p class="text-muted mb-2"><small>{{ $user->email }}</small></p>
@@ -38,7 +38,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('users.no_users_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('users.no_users_found') }}</div></div>
             </div>
         @endforelse
     </div>

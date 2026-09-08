@@ -15,7 +15,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm">
-                    <div class="flex-auto p-5 p-3 p-md-4">
+                    <div class="flex-auto p-2 p-3 p-md-4">
                         <form method="GET" action="{{ route('home') }}" class="row g-3 align-items-end">
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <label for="from_date" class="inline-block mb-1.5 text-sm font-medium text-slate-900 text-slate-600 small mb-1">{{ __('general.from-date') }}</label>
@@ -43,7 +43,7 @@
             @foreach($kpis as $kpi)
                 <div class="col-sm-6 col-xl-3">
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 bg-white border rounded-lg shadow-sm p-3">
-                        <div class="flex-auto p-5 p-0 d-flex flex-column justify-content-between">
+                        <div class="flex-auto p-2 p-0 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
                                     <div class="card-kicker dash-kicker text-uppercase font-weight-bold">{{ $kpi['label'] }}</div>
@@ -67,7 +67,7 @@
             @foreach($summary as $item)
                 <div class="col-sm-6 col-xl">
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100 bg-white border rounded-lg shadow-sm p-3">
-                        <div class="flex-auto p-5 p-0 d-flex flex-column justify-content-between">
+                        <div class="flex-auto p-2 p-0 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
                                     <div class="card-kicker dash-kicker dash-kicker--sm text-uppercase font-weight-bold">{{ $item['label'] }}</div>
@@ -108,7 +108,7 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-transparent border-0 p-0 mb-3 font-weight-bold text-slate-900 h5">
                         {{ __('general.overview') }} this period
                     </div>
-                    <div class="flex-auto p-5 p-0 d-flex justify-content-center align-items-center">
+                    <div class="flex-auto p-2 p-0 d-flex justify-content-center align-items-center">
                         <div class="chart-container chart-container-sm">
                             <canvas id="currentMonthChart"></canvas>
                         </div>
@@ -134,7 +134,7 @@
                         @forelse($recent_sales as $sale)
                             <div class="col-xl-4 col-lg-6">
                                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-sm h-100 p-3">
-                                    <div class="flex-auto p-5 p-0">
+                                    <div class="flex-auto p-2 p-0">
                                         <div class="d-flex justify-content-between align-items-start mb-3">
                                             <a href="{{ route('sales.show', $sale->id) }}" class="font-weight-bold text-indigo-600 text-decoration-none">
                                                 {{ $sale->reference }}

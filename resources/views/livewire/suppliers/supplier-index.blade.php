@@ -19,7 +19,7 @@
 
     {{-- Filters container --}}
     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
-        <div class="flex-auto p-5">
+        <div class="flex-auto p-2">
             <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted mb-3">
                 <i class="bi bi-funnel"></i> {{ __('app.filters') }}
             </h6>
@@ -73,7 +73,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ $supplier->supplier_name }}</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item px-0"><i class="bi bi-envelope"></i> {{ $supplier->supplier_email }}</li>
@@ -98,7 +98,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('supplier.no_suppliers_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('supplier.no_suppliers_found') }}</div></div>
             </div>
         @endforelse
     </div>

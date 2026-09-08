@@ -21,7 +21,7 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form id="bon-commande-form" action="{{ route('bon-commandes.update', $bonCommande) }}" method="POST">
                             @csrf

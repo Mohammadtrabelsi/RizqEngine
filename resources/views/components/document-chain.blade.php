@@ -1,5 +1,5 @@
 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4">
-    <div class="flex-auto p-5">
+    <div class="flex-auto p-2">
         <h6 class="mb-3">{{ __('boncommande.document_chain') }}</h6>
         <div class="d-flex flex-wrap align-items-center">
             @foreach($steps as $index => $step)

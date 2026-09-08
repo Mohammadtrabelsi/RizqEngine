@@ -3,7 +3,7 @@
     <div class="container-fluid">
         {{-- Filters --}}
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-3">
                         <label class="inline-block mb-1.5 text-sm font-medium text-slate-900">{{ __('finance.start_date') }}</label>
@@ -34,7 +34,7 @@
                 <span class="fw-semibold">{{ __('finance.invoice_archive') }}</span>
                 <span>{{ __('finance.total') }}: <strong>{{ number_format($total, 2) }}</strong></span>
             </div>
-            <div class="flex-auto p-5 block w-full overflow-x-auto">
+            <div class="flex-auto p-2 block w-full overflow-x-auto">
                 <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                     <thead><tr>
                         <th>{{ __('finance.type') }}</th>

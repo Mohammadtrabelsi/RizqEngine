@@ -9,7 +9,7 @@
         @forelse($payments as $payment)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="sp-{{ $payment->id }}">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ $payment->reference }}</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.date') }}</span><span>{{ $payment->date }}</span></li>
@@ -27,7 +27,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('sales.no_payments_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('sales.no_payments_found') }}</div></div>
             </div>
         @endforelse
     </div>

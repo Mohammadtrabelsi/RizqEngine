@@ -22,7 +22,7 @@
                         </div>
                         @include('quotation.partials.actions', ['data' => $quotation])
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <h6 class="mb-3"><i class="bi bi-person"></i> {{ $quotation->customer_name }}</h6>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.date') }}</span><span>{{ $quotation->date }}</span></li>
@@ -33,7 +33,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('quotations.no_quotations_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('quotations.no_quotations_found') }}</div></div>
             </div>
         @endforelse
     </div>

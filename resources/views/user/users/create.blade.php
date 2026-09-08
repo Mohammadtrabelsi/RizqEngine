@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="mb-4">
@@ -83,7 +83,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <div class="mb-4">
                                 <label for="image">{{ __('users.profile_image') }} <span class="text-danger">*</span></label>
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">

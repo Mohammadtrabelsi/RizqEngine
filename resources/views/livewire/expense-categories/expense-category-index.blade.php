@@ -16,7 +16,7 @@
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="expense-category-{{ $category->id }}">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900">{{ $category->category_name }}</h5>
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info mb-2">{{ $category->expenses_count }} expenses</span>
                         <p class="text-muted">{{ $category->category_description }}</p>
@@ -29,7 +29,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('expense-category.no_categories_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('expense-category.no_categories_found') }}</div></div>
             </div>
         @endforelse
     </div>

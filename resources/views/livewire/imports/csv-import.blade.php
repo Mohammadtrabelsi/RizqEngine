@@ -26,7 +26,7 @@
         @endif
 
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-3">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <p class="text-muted">{{ __('import.intro') }}</p>
                 <p class="mb-2"><strong>{{ __('import.expected_columns') }}:</strong></p>
                 <code class="d-block mb-3">{{ implode(', ', $this->expectedColumns()) }}</code>
@@ -56,7 +56,7 @@
 
         @if ($parsed)
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                         <div>
                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('import.valid_rows') }}: {{ $this->validCount }}</span>

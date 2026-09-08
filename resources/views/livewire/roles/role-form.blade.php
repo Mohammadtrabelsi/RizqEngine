@@ -6,7 +6,7 @@
                         </button>
                     </div>
                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                        <div class="flex-auto p-5">
+                        <div class="flex-auto p-2">
                             <div class="mb-4">
                                 <label for="name">{{ __('roles.role_name') }} <span class="text-danger">*</span></label>
                                 <input class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('name') !border-red-500 @enderror" type="text" wire:model="name">
@@ -34,7 +34,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.dashboard') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -87,7 +87,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.user_management') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -116,7 +116,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.products') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -185,7 +185,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.adjustments') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -238,7 +238,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.quotations') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -307,7 +307,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.expenses') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -360,7 +360,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.customers') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -413,7 +413,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.suppliers') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -466,7 +466,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.sales') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -535,7 +535,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.sale_returns') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -596,7 +596,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             Purchases
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -657,7 +657,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.purchase_returns') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -718,7 +718,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.currencies') }}    
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -763,7 +763,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.reports') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -784,7 +784,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.settings') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -805,7 +805,7 @@
                                         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.activity_logs') }}
                                         </div>
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">

@@ -19,7 +19,7 @@
                         <span class="fw-bold">{{ $purchase->reference }}</span>
                         @include('purchase.partials.status', ['data' => $purchase])
                     </div>
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <h6 class="mb-3"><i class="bi bi-truck"></i> {{ $purchase->supplier_name }}</h6>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('purchase.total') }}</span><span>{{ format_currency($purchase->total_amount) }}</span></li>
@@ -35,7 +35,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('purchase.no_purchases_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('purchase.no_purchases_found') }}</div></div>
             </div>
         @endforelse
     </div>

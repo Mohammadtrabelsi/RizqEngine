@@ -26,7 +26,7 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
-                            <div class="flex-auto p-5">
+                            <div class="flex-auto p-2">
                                 <p class="mb-2"><span class="fw-bold">{{ __('product.code') }}:</span> {{ $product['product_code'] ?? $product['product']['product_code'] }}</p>
                                 <p class="mb-3">
                                     <span class="fw-bold">{{ __('product.stock') }}:</span>
@@ -59,7 +59,7 @@
                 @endforeach
             @else
                 <div class="col-12">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-danger">{{ __('product.no-products-found') }}</div></div>
+                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-danger">{{ __('product.no-products-found') }}</div></div>
                 </div>
             @endif
         </div>

@@ -16,7 +16,7 @@
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="category-{{ $category->id }}">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 h-100">
-                    <div class="flex-auto p-5 text-center">
+                    <div class="flex-auto p-2 text-center">
                         <img src="{{ $category->image_url }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
                         <h5 class="mb-3 text-lg font-semibold text-slate-900 mb-1">
                             @if ($category->color)
@@ -49,7 +49,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('product.no_categories_found') }}</div></div>
+                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('product.no_categories_found') }}</div></div>
             </div>
         @endforelse
     </div>

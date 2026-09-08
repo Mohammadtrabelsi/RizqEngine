@@ -14,7 +14,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <h4 class="mb-1">{{ __('stockexit.bon_dentree') }} — {{ $stockEntry->reference }}</h4>
                 <ul class="list-group list-group-horizontal mb-4 flex-wrap">
                     <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('stockexit.origin_reference') }}</span>{{ $stockEntry->stockExit->reference }}</li>

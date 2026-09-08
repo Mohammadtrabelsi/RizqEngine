@@ -12,8 +12,8 @@
         <div class="row">
             @forelse($budgets as $budget)
                 <div class="col-xl-4 col-lg-6 mb-4" wire:key="budget-{{ $budget->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
-                        <div class="flex-auto p-5">
+                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                        <div class="flex-auto p-2">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h5 class="mb-3 text-lg font-semibold text-slate-900 mb-0">{{ $budget->label() }}</h5>
                                 @php($remaining = $budget->remainingBalance())
@@ -37,7 +37,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-5 text-center text-muted">{{ __('finance.no_budgets_found') }}</div></div>
+                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900"><div class="flex-auto p-2 text-center text-muted">{{ __('finance.no_budgets_found') }}</div></div>
                 </div>
             @endforelse
         </div>

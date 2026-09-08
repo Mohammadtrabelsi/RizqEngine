@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-                    <div class="flex-auto p-5">
+                    <div class="flex-auto p-2">
                         <ul class="list-group list-group-horizontal mb-4">
                             <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('adjustment.date') }}</span>{{ $adjustment->date }}</li>
                             <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('adjustment.reference') }}</span>{{ $adjustment->reference }}</li>
@@ -29,7 +29,7 @@
                             @foreach($adjustment->adjustedProducts as $adjustedProduct)
                                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
                                     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border h-100">
-                                        <div class="flex-auto p-5">
+                                        <div class="flex-auto p-2">
                                             <h6 class="mb-1">{{ $adjustedProduct->product->product_name }}</h6>
                                             <p class="text-muted small mb-2">{{ $adjustedProduct->product->product_code }}</p>
                                             <ul class="list-group list-group-flush mb-0">

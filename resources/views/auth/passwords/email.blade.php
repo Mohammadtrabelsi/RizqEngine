@@ -33,7 +33,7 @@
 
     <div class="login-form-wrap">
         <div class="login-form-card relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
-            <div class="flex-auto p-5">
+            <div class="flex-auto p-2">
                 <form class="login-form" method="post" action="{{ url('/password/email') }}">
                     @csrf
 

@@ -20,7 +20,7 @@
                 <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                     <h5 class="mb-0">{{ __('general.products') }}</h5>
                 </div>
-                <div class="flex-auto p-5">
+                <div class="flex-auto p-2">
                     <div class="row">
                         @if($cart_items->isNotEmpty())
                             @foreach($cart_items as $cart_item)
@@ -36,7 +36,7 @@
                                         <i class="bi bi-x-circle font-2xl text-danger"></i>
                                     </a>
                                 </div>
-                                <div class="flex-auto p-5">
+                                <div class="flex-auto p-2">
                                     <ul class="list-group list-group-flush mb-0">
                                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             <span>{{ __('general.net-unit-price') }}</span>
