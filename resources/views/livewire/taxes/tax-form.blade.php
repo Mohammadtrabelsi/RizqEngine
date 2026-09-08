@@ -35,8 +35,10 @@
                                     <div class="mb-4">
                                         <label for="apply_to">{{ __('taxes.apply_to') }} <span class="text-danger">*</span></label>
                                         <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('apply_to') !border-red-500 @enderror" wire:model="apply_to">
-                                            <option value="order">{{ __('taxes.apply_to_order') }}</option>
                                             <option value="product">{{ __('taxes.apply_to_product') }}</option>
+                                            <option value="purchase">{{ __('taxes.apply_to_purchase') }}</option>
+                                            <option value="sale">{{ __('taxes.apply_to_sale') }}</option>
+                                            <option value="order">{{ __('taxes.apply_to_order') }}</option>
                                         </select>
                                         @error('apply_to') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
