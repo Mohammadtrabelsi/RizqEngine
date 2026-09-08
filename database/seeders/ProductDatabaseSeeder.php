@@ -47,8 +47,16 @@ class ProductDatabaseSeeder extends Seeder
                 continue;
             }
 
+            // The human-readable reference (e.g. "BEV-0001") is kept separate
+            // from the product code. The product code must always be numeric so
+            // it can be turned into a scannable barcode, so derive a numeric
+            // code from the reference and record the reference in the note.
+            $reference = $product['product_code'];
+            $numericCode = $this->numericCode($reference);
+            $note = trim('Réf. '.$reference.' — '.$product['product_note']);
+
             Product::firstOrCreate(
-                ['product_code' => $product['product_code']],
+                ['product_code' => $numericCode],
                 [
                     'category_id' => $category->id,
                     'supplier_id' => $suppliers[$product['supplier_name']] ?? null,
@@ -61,13 +69,36 @@ class ProductDatabaseSeeder extends Seeder
                     'product_stock_alert' => $product['product_stock_alert'],
                     'product_order_tax' => $product['product_order_tax'],
                     'product_tax_type' => 1,
-                    'product_note' => $product['product_note'],
+                    'product_note' => $note,
                     'expiry_date' => $product['expiry_date'],
                 ]
             );
         }
 
         Model::reguard();
+    }
+
+    /**
+     * Turn a human-readable reference such as "BEV-0001" into a stable, unique,
+     * purely numeric product code (e.g. "110001") that can be encoded as a
+     * barcode. The mapping is deterministic so re-seeding stays idempotent.
+     */
+    private function numericCode(string $reference): string
+    {
+        $prefixes = [
+            'BEV' => 11,
+            'DAI' => 12,
+            'BAK' => 13,
+            'PRD' => 14,
+            'PAN' => 15,
+            'HOM' => 16,
+        ];
+
+        $letters = strtoupper(preg_replace('/[^A-Za-z]/', '', $reference));
+        $digits = (int) preg_replace('/\D/', '', $reference);
+        $prefix = $prefixes[$letters] ?? 10;
+
+        return sprintf('%d%04d', $prefix, $digits);
     }
 
     /**

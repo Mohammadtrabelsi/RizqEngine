@@ -81,7 +81,10 @@ class LeBonPlanSeeder extends Seeder
                 [
                     'category_id' => $category->id,
                     'supplier_id' => $supplier?->id,
-                    'product_code' => 'LBP'.str_pad((string) $code, 5, '0', STR_PAD_LEFT),
+                    // Product code must be purely numeric so it can be encoded
+                    // as a scannable barcode. The "LBP" reference prefix is kept
+                    // out of the code (19 = Le Bon Plan range).
+                    'product_code' => sprintf('19%05d', $code),
                     'product_barcode_symbology' => 'C128',
                     'product_quantity' => 25,
                     'product_cost' => $cost,
