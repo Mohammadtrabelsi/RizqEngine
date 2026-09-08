@@ -12,6 +12,7 @@ return [
     'created-from-bon-commande' => 'Order :reference created from the purchase order.',
     'created-from-devis' => 'Order :reference created from the quotation.',
     'create-bon-livraison' => 'Create delivery note',
+    'create-stock-exit' => 'Generate exit voucher',
     'devis-already-bon-commande' => 'Quotation :reference has already been converted to a purchase order.',
     'devis-already-converted' => 'Quotation :reference has already been converted to an order.',
     'transform-to-commande' => 'Transform into order',

@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\ConversionException;
 use App\Exceptions\StockInconsistencyException;
+use App\Models\Commande;
 use App\Models\Product;
 use App\Models\StockEntry;
 use App\Models\StockEntryDetail;
@@ -117,6 +119,7 @@ class StockExitService
                 'date' => $attributes['date'],
                 'kind' => $kind,
                 'customer_id' => $kind === StockExit::KIND_CONSIGNMENT ? ($attributes['customer_id'] ?? null) : null,
+                'commande_id' => $attributes['commande_id'] ?? null,
                 'reason' => $attributes['reason'] ?? null,
                 'destination' => $attributes['destination'] ?? null,
                 'responsible' => $attributes['responsible'] ?? null,
@@ -160,6 +163,60 @@ class StockExitService
             }
 
             return $stockExit->refresh();
+        });
+    }
+
+    /**
+     * Generate a consignment Bon de Sortie (dépôt-vente) from a Commande.
+     *
+     * The order's lines are handed out to its customer as a consignment exit:
+     * the goods leave inventory now and the sold portion is invoiced later, when
+     * the matching Bon d'Entrée regularises the exit and updates warehouse stock.
+     * Availability and the negative-stock guard are enforced by {@see createExit}.
+     *
+     * @throws ConversionException when the Commande has already produced an exit
+     *                             or carries no orderable line.
+     */
+    public function createFromCommande(Commande $commande): StockExit
+    {
+        return DB::transaction(function () use ($commande) {
+            // Serialize concurrent conversions of the same Commande.
+            $commande = Commande::lockForUpdate()->findOrFail($commande->id);
+
+            if ($commande->stockExits()->exists()) {
+                throw new ConversionException(
+                    trans('stockexit.commande-already-converted', ['reference' => $commande->reference])
+                );
+            }
+
+            $lines = [];
+            foreach ($commande->commandeDetails as $detail) {
+                $quantity = (int) $detail->quantity;
+
+                if ($quantity <= 0) {
+                    continue;
+                }
+
+                $lines[] = [
+                    'product_id' => (int) $detail->product_id,
+                    'quantity' => $quantity,
+                ];
+            }
+
+            if ($lines === []) {
+                throw new ConversionException(
+                    trans('stockexit.commande-no-lines', ['reference' => $commande->reference])
+                );
+            }
+
+            return $this->createExit([
+                'date' => now()->toDateString(),
+                'kind' => StockExit::KIND_CONSIGNMENT,
+                'customer_id' => $commande->customer_id,
+                'commande_id' => $commande->id,
+                'reason' => trans('stockexit.reason_consignment_from_commande', ['reference' => $commande->reference]),
+                'note' => $commande->note,
+            ], $lines);
         });
     }
 

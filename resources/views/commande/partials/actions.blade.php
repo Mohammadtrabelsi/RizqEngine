@@ -24,6 +24,14 @@
                 </button>
             @endcan
         @endif
+        @if(! $data->hasStockExit())
+            @can('convert_commandes_to_stock_exit')
+                <button class="dropdown-item" data-submit-form="bs-cmd-{{ $data->id }}">
+                    <i class="line-1 bi bi-box-arrow-up mr-2 text-warning"></i> {{ __('commande.create-stock-exit') }}
+                    <form id="bs-cmd-{{ $data->id }}" class="d-none" action="{{ route('commandes.convert-stock-exit', $data->id) }}" method="POST">@csrf</form>
+                </button>
+            @endcan
+        @endif
         @if(! $data->isInvoiced())
             @can('convert_commandes')
                 <button class="dropdown-item" data-submit-form="facture-cmd-{{ $data->id }}">
