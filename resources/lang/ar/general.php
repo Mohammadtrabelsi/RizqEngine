@@ -53,6 +53,7 @@ return [
     'sales-this-week' => 'مبيعات هذا الأسبوع',
     'sales-today' => 'مبيعات اليوم',
     'search-product' => 'البحث عن منتج',
+    'search-results' => 'نتائج البحث',
     'see-features' => 'عرض المميزات',
     'shipping' => 'الشحن',
     'status' => 'الحالة',

@@ -1,6 +1,9 @@
 <div class="position-relative">
     <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-0 border-0 shadow-sm">
         <div class="flex-auto p-2">
+            <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted">
+                <i class="bi bi-search"></i> {{ __('general.search-product') }}
+            </h6>
             <div class="mb-4 mb-2">
                 <div class="position-relative">
                     <i class="bi bi-search text-primary position-absolute top-50 translate-middle-y" style="left: 0.75rem;"></i>
@@ -31,9 +34,10 @@
 
     <div wire:loading class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 position-absolute mt-1 border-0 search-product-results">
         <div class="flex-auto p-2 shadow">
+            <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted text-center">{{ __('general.loading') }}</h6>
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">{{ __('general.loading') }}...</span>
+                    <span class="sr-only">{{ __('general.loading') }}</span>
                 </div>
             </div>
         </div>
@@ -44,6 +48,7 @@
         @if($search_results->isNotEmpty())
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 position-absolute mt-1 search-product-results-front">
                 <div class="flex-auto p-2 shadow p-2">
+                    <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted">{{ __('general.search-results') }}</h6>
                     <ul class="list-group list-group-flush">
                         @foreach($search_results as $result)
                             <li class="list-group-item list-group-item-action px-2">
@@ -87,6 +92,7 @@
         @else
             <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 position-absolute mt-1 border-0 search-product-results">
                 <div class="flex-auto p-2 shadow">
+                    <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted">{{ __('general.search-results') }}</h6>
                     <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-amber-50 text-amber-700 border-amber-200 mb-0">
                         {{ __('general.no-product-found') }}
                     </div>

@@ -2,6 +2,7 @@
 
 return [
     'account' => 'Compte',
+    'actions' => 'Actions',
     'alerts' => 'Alertes',
     'all' => 'Tous',
     'all-clear' => 'tout est bon',

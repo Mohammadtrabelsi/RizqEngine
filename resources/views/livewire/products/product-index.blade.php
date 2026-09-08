@@ -18,19 +18,26 @@
         </div>
     @endif
 
-    <div class="row align-items-center">
-        <div class="col-12 col-md-4 mb-3">
-            <a href="{{ route('products.create') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
-                <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
-            </a>
-            @can('create_products')
-            <a href="{{ route('products.import') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white">
-                <i class="bi bi-upload"></i> {{ __('nav.import_products') }}
-            </a>
-            @endcan
-        </div>
-        <div class="col-12 col-md-8 mb-3">
-            <input type="text" wire:model.live.debounce.300ms="search" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('app.search') }} products...">
+    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
+        <div class="flex-auto p-2">
+            <h6 class="mb-3 text-lg font-semibold text-slate-900 text-muted mb-3">
+                <i class="bi bi-lightning"></i> {{ __('app.actions') }}
+            </h6>
+            <div class="row align-items-center">
+                <div class="col-12 col-md-4 mb-3">
+                    <a href="{{ route('products.create') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
+                        <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
+                    </a>
+                    @can('create_products')
+                    <a href="{{ route('products.import') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white">
+                        <i class="bi bi-upload"></i> {{ __('nav.import_products') }}
+                    </a>
+                    @endcan
+                </div>
+                <div class="col-12 col-md-8 mb-3">
+                    <input type="text" wire:model.live.debounce.300ms="search" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('app.search') }} products...">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -226,7 +233,7 @@
                 <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
                     <div class="flex-auto p-2 text-center py-5">
                         <i class="bi bi-inbox empty-state-icon"></i>
-                        <p class="text-muted mt-3 mb-0">{{ __('product.no_products_found') }}</p>
+                        <h6 class="mt-3 mb-0 text-lg font-semibold text-slate-900">{{ __('product.no_products_found') }}</h6>
                     </div>
                 </div>
             </div>
