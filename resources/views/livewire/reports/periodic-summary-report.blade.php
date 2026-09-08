@@ -106,7 +106,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
                     <div class="block w-full overflow-x-auto">
-                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50">
+                        <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50">
                             <thead>
                                 <tr>
                                     <th>{{ __('report.period') }}</th>
@@ -120,12 +120,12 @@
                             <tbody>
                                 @forelse ($rows as $row)
                                     <tr>
-                                        <td>{{ $row['label'] }}</td>
-                                        <td class="text-right">{{ format_currency($row['sales']) }}</td>
-                                        <td class="text-right">{{ format_currency($row['purchases']) }}</td>
-                                        <td class="text-right">{{ format_currency($row['outings']) }}</td>
-                                        <td class="text-right">{{ format_currency($row['expenses']) }}</td>
-                                        <td class="text-right font-weight-bold {{ $row['balance'] >= 0 ? 'text-success' : 'text-danger' }}">
+                                        <td data-label="{{ __('report.period') }}">{{ $row['label'] }}</td>
+                                        <td class="text-right" data-label="{{ __('report.sales') }}">{{ format_currency($row['sales']) }}</td>
+                                        <td class="text-right" data-label="{{ __('report.purchases') }}">{{ format_currency($row['purchases']) }}</td>
+                                        <td class="text-right" data-label="{{ __('report.outings') }}">{{ format_currency($row['outings']) }}</td>
+                                        <td class="text-right" data-label="{{ __('report.expenses') }}">{{ format_currency($row['expenses']) }}</td>
+                                        <td class="text-right font-weight-bold {{ $row['balance'] >= 0 ? 'text-success' : 'text-danger' }}" data-label="{{ __('report.balance') }}">
                                             {{ format_currency($row['balance']) }}
                                         </td>
                                     </tr>
@@ -138,12 +138,12 @@
                             @if (! empty($rows))
                                 <tfoot>
                                     <tr class="font-weight-bold">
-                                        <td>{{ __('report.total') }}</td>
-                                        <td class="text-right">{{ format_currency($totals['sales']) }}</td>
-                                        <td class="text-right">{{ format_currency($totals['purchases']) }}</td>
-                                        <td class="text-right">{{ format_currency($totals['outings']) }}</td>
-                                        <td class="text-right">{{ format_currency($totals['expenses']) }}</td>
-                                        <td class="text-right {{ $totals['balance'] >= 0 ? 'text-success' : 'text-danger' }}">
+                                        <td data-label="{{ __('report.total') }}">{{ __('report.total') }}</td>
+                                        <td class="text-right" data-label="{{ __('report.sales') }}">{{ format_currency($totals['sales']) }}</td>
+                                        <td class="text-right" data-label="{{ __('report.purchases') }}">{{ format_currency($totals['purchases']) }}</td>
+                                        <td class="text-right" data-label="{{ __('report.outings') }}">{{ format_currency($totals['outings']) }}</td>
+                                        <td class="text-right" data-label="{{ __('report.expenses') }}">{{ format_currency($totals['expenses']) }}</td>
+                                        <td class="text-right {{ $totals['balance'] >= 0 ? 'text-success' : 'text-danger' }}" data-label="{{ __('report.balance') }}">
                                             {{ format_currency($totals['balance']) }}
                                         </td>
                                     </tr>

@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="block w-full overflow-x-auto">
-                            <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
+                            <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                                 <thead>
                                     <tr class="text-muted small text-uppercase">
                                         <th scope="col">{{ __('report.reference') }}</th>
@@ -110,9 +110,9 @@
                                 <tbody>
                                     @forelse($information as $data)
                                         <tr>
-                                            <td class="fw-bold">{{ $data->reference }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
-                                            <td>
+                                            <td class="fw-bold" data-label="{{ __('report.reference') }}">{{ $data->reference }}</td>
+                                            <td data-label="{{ __('report.date') }}">{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
+                                            <td data-label="{{ ucwords(str_replace('_', ' ', $payments)) }}">
                                                 @if($payments == 'sale')
                                                     {{ $data->sale->reference }}
                                                 @elseif($payments == 'purchase')
@@ -123,8 +123,8 @@
                                                     {{ $data->purchaseReturn->reference }}
                                                 @endif
                                             </td>
-                                            <td>{{ $data->payment_method }}</td>
-                                            <td class="text-end">{{ format_currency($data->amount) }}</td>
+                                            <td data-label="{{ __('reports.payment_method') }}">{{ $data->payment_method }}</td>
+                                            <td class="text-end" data-label="{{ __('report.total') }}">{{ format_currency($data->amount) }}</td>
                                         </tr>
                                     @empty
                                         <tr>
