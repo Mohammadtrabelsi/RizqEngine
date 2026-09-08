@@ -2313,3 +2313,24 @@ hr { display: none; }
 .pos-card { transition: all 0.3s ease; }
 
 .pos-stock-badge { left: 10px; top: 10px; }
+
+/* Content lists → roomier, on a crisp white surface, in step with the
+   design system (tokens above). Scoped to plain <ul>s: component lists that
+   carry their own look — navigation, dropdowns, pagination, Bootstrap
+   list-groups, breadcrumbs and select2 result lists — are left untouched. */
+ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) {
+    background: var(--color-light, #ffffff);
+    border: 1px solid var(--color-hairline, #e7e7ee);
+    border-radius: var(--radius-field, 12px);
+    padding: 1rem 1rem 1rem 2rem;
+    margin-bottom: 1.25rem;
+}
+
+ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) > li {
+    padding: 0.35rem 0;
+    line-height: 1.55;
+}
+
+ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) > li + li {
+    border-top: 1px solid var(--color-hairline, #e7e7ee);
+}
