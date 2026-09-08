@@ -17,24 +17,24 @@
         @forelse($stockExits as $stockExit)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="stock-exit-{{ $stockExit->id }}">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <h5 class="card-title d-flex justify-content-between align-items-start">
                             <span>{{ $stockExit->reference }}</span>
                             @if($stockExit->status === \App\Models\StockExit::STATUS_CLOSED)
-                                <span class="badge bg-success">{{ __('stockexit.status_closed') }}</span>
+                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('stockexit.status_closed') }}</span>
                             @else
-                                <span class="badge bg-warning text-dark">{{ __('stockexit.status_in_transit') }}</span>
+                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark">{{ __('stockexit.status_in_transit') }}</span>
                             @endif
                         </h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.date') }}</span><span>{{ \Illuminate\Support\Carbon::parse($stockExit->date)->format('d M, Y') }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.reason') }}</span><span>{{ $stockExit->reason ?: '—' }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.responsible') }}</span><span>{{ $stockExit->responsible ?: '—' }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.products') }}</span><span class="badge bg-info">{{ $stockExit->details_count }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('stockexit.products') }}</span><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info">{{ $stockExit->details_count }}</span></li>
                         </ul>
                         <div class="btn-group">
                             @can('show_stock_exits')
-                                <a href="{{ route('stock-exits.show', $stockExit->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('stock-exits.show', $stockExit->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
                             @endcan
                             @can('create_stock_entries')
                                 @if($stockExit->status !== \App\Models\StockExit::STATUS_CLOSED)
@@ -50,7 +50,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="card"><div class="card-body text-center text-muted">{{ __('stockexit.no_exits_found') }}</div></div>
+                <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('stockexit.no_exits_found') }}</div></div>
             </div>
         @endforelse
     </div>

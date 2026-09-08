@@ -1,10 +1,10 @@
 @can('edit_products')
-<a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-primary btn-sm">
+<a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline btn-sm">
     <i class="bi bi-pencil"></i>
 </a>
 @endcan
 @can('show_products')
-<a href="{{ route('products.show', $data->id) }}" class="btn btn-outline-primary btn-sm">
+<a href="{{ route('products.show', $data->id) }}" class="btn btn-outline btn-sm">
     <i class="bi bi-eye"></i>
 </a>
 @endcan

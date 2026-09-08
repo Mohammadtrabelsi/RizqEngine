@@ -1,7 +1,7 @@
 <div>
     <div>
         @if (session()->has('message'))
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-amber-50 text-amber-700 border-amber-200 pr-12 fade show" role="alert">
                 <div class="alert-body">
                     <span>{{ session('message') }}</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -17,26 +17,26 @@
                 </div>
             </div>
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                     <h5 class="mb-0">{{ __('general.products') }}</h5>
                 </div>
-                <div class="card-body">
+                <div class="flex-auto p-2">
                     <div class="row">
                         @if($cart_items->isNotEmpty())
                             @foreach($cart_items as $cart_item)
                                 <div class="col-xl-4 col-lg-6 mb-4">
                                     <div class="card h-100">
-                                <div class="card-header d-flex justify-content-between align-items-start">
+                                <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-start">
                                     <div>
                                         {{ $cart_item->name }} <br>
-                                        <span class="badge badge-success">{{ $cart_item->options->code }}</span>
+                                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $cart_item->options->code }}</span>
                                         @include('livewire.includes.product-cart-modal')
                                     </div>
                                     <a href="#" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
                                         <i class="bi bi-x-circle font-2xl text-danger"></i>
                                     </a>
                                 </div>
-                                <div class="card-body">
+                                <div class="flex-auto p-2">
                                     <ul class="list-group list-group-flush mb-0">
                                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             <span>{{ __('general.net-unit-price') }}</span>
@@ -49,7 +49,7 @@
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             <span>{{ __('general.stock') }}</span>
-                                            <span class="badge badge-info">{{ $cart_item->options->stock . ' ' . $cart_item->options->unit }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-cyan-100 text-cyan-700">{{ $cart_item->options->stock . ' ' . $cart_item->options->unit }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             <span>{{ __('general.quantity') }}</span>
@@ -112,19 +112,49 @@
 
     <div class="form-row">
         <div class="col-lg-4">
-            <div class="form-group">
-                <label for="tax_percentage">{{ __('general.tax') }} (%)</label>
-                <input wire:model.blur="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
-            </div>
+            @if(in_array($cart_instance, ['purchase', 'quotation'], true))
+                <div class="mb-4">
+                    <label for="tax_mode">{{ __('taxes.tax_mode') }}</label>
+                    <select wire:model.live="tax_mode" id="tax_mode" class="form-control">
+                        <option value="included">{{ __('taxes.tax_included') }}</option>
+                        <option value="excluded">{{ __('taxes.tax_excluded') }}</option>
+                    </select>
+                    <input type="hidden" name="tax_percentage" value="{{ (float) $global_tax }}">
+                </div>
+
+                @if($tax_mode === 'excluded')
+                    <div class="mb-4">
+                        <label>{{ __('taxes.select_taxes') }}</label>
+                        @forelse($available_taxes as $tax)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" wire:model.live="selected_taxes" value="{{ $tax->id }}" id="tax-{{ $tax->id }}">
+                                <label class="form-check-label" for="tax-{{ $tax->id }}">
+                                    {{ $tax->name }} ({{ $tax->type === 'fixed' ? format_currency($tax->rate) : rtrim(rtrim(number_format($tax->rate, 2), '0'), '.').'%' }})
+                                </label>
+                            </div>
+                        @empty
+                            <p class="text-muted mb-0">
+                                {{ __('taxes.no_taxes_defined') }}
+                                <a href="{{ route('taxes.create') }}" target="_blank">{{ __('taxes.add_tax') }}</a>
+                            </p>
+                        @endforelse
+                    </div>
+                @endif
+            @else
+                <div class="mb-4">
+                    <label for="tax_percentage">{{ __('general.tax') }} (%)</label>
+                    <input wire:model.blur="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
+                </div>
+            @endif
         </div>
         <div class="col-lg-4">
-            <div class="form-group">
+            <div class="mb-4">
                 <label for="discount_percentage">{{ __('general.discount') }} (%)</label>
                 <input wire:model.blur="global_discount" type="number" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="form-group">
+            <div class="mb-4">
                 <label for="shipping_amount">{{ __('general.shipping') }}</label>
                 <input wire:model.blur="shipping" type="number" class="form-control" name="shipping_amount" min="0" value="0" required step="0.01">
             </div>

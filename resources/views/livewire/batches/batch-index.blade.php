@@ -15,8 +15,8 @@
         </div>
 
         <div class="card border-0 shadow-sm">
-            <div class="card-body table-responsive">
-                <table class="table table-hover align-middle">
+            <div class="flex-auto p-2 block w-full overflow-x-auto">
+                <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
                     <thead>
                         <tr>
                             <th>{{ __('batches.batch_number') }}</th>
@@ -37,7 +37,7 @@
                                 <td>
                                     {{ $batch->expiry_date?->format('Y-m-d') ?: '—' }}
                                     @if($batch->is_expired)
-                                        <span class="badge bg-danger">{{ __('batches.expired') }}</span>
+                                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-danger">{{ __('batches.expired') }}</span>
                                     @endif
                                 </td>
                                 <td class="text-end">

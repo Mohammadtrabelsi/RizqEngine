@@ -21,21 +21,21 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form id="sale-form" action="{{ route('sales.update', $sale) }}" method="POST">
                             @csrf
                             @method('patch')
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="reference">{{ __('sales.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required value="{{ $sale->reference }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="customer_id">{{ __('sales.customer') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="customer_id" id="customer_id" required>
                                                 @foreach(\App\Models\Customer::all() as $customer)
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="date">{{ __('sales.date') }} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ $sale->date }}">
                                         </div>
@@ -59,7 +59,7 @@
 
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="status">{{ __('sales.status') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="status" id="status" required>
                                             <option {{ $sale->status == 'Pending' ? 'selected' : '' }} value="Pending">{{ __('sales.pending') }}</option>
@@ -70,21 +70,21 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="payment_method">{{ __('sales.payment_method') }} <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="payment_method" required value="{{ $sale->payment_method }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="paid_amount">{{ __('sales.amount_received') }} <span class="text-danger">*</span></label>
                                         <input id="paid_amount" type="text" class="form-control" name="paid_amount" data-money-mask data-money-allow-zero data-money-prefill required value="{{ $sale->paid_amount }}" readonly>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="note">{{ __('sales.note') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control">{{ $sale->note }}</textarea>
                             </div>

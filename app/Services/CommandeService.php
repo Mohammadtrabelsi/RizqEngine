@@ -7,6 +7,7 @@ use App\Models\BonCommande;
 use App\Models\Commande;
 use App\Models\CommandeDetails;
 use App\Models\Customer;
+use App\Models\Quotation;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +27,7 @@ class CommandeService
     public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
     {
         return Commande::query()
+            ->with('bonCommande')
             ->when($search, function ($query) use ($search) {
                 $term = '%'.$search.'%';
                 $query->where('reference', 'like', $term)
@@ -43,7 +45,7 @@ class CommandeService
      */
     public function showData(Commande $commande): array
     {
-        $commande->load(['commandeDetails.product', 'bonCommande.quotation', 'sale']);
+        $commande->load(['commandeDetails.product', 'bonCommande.quotation', 'quotation', 'sale', 'bonLivraison.sale']);
 
         return [$commande, Customer::findOrFail($commande->customer_id)];
     }
@@ -133,6 +135,58 @@ class CommandeService
             // Mark the source BC as converted so it cannot be converted again
             // or cancelled after the fact.
             $bonCommande->update(['status' => BonCommande::STATUS_CONVERTED]);
+
+            return $commande->refresh();
+        });
+    }
+
+    /**
+     * Transform a Devis directly into a Commande (the shorter
+     * Devis → Commande → Bon de Livraison → Facture path).
+     *
+     * @throws ConversionException when the Devis has already been converted
+     *                             down either path.
+     */
+    public function createFromQuotation(Quotation $quotation): Commande
+    {
+        return DB::transaction(function () use ($quotation) {
+            // Serialize concurrent conversions of the same Devis.
+            $quotation = Quotation::lockForUpdate()->findOrFail($quotation->id);
+
+            if ($quotation->bonCommande()->exists()) {
+                throw new ConversionException(
+                    trans('commande.devis-already-bon-commande', ['reference' => $quotation->reference])
+                );
+            }
+
+            if ($quotation->commande()->exists()) {
+                throw new ConversionException(
+                    trans('commande.devis-already-converted', ['reference' => $quotation->reference])
+                );
+            }
+
+            $commande = new Commande;
+            $commande->date = now()->format('Y-m-d');
+            $commande->quotation_id = $quotation->id;
+            $commande->customer_id = $quotation->customer_id;
+            $commande->customer_name = $quotation->customer_name;
+            $commande->status = Commande::STATUS_PENDING;
+
+            foreach (self::HEADER_COLUMNS as $column) {
+                $commande->{$column} = $quotation->getRawOriginal($column);
+            }
+
+            $commande->save();
+
+            foreach ($quotation->quotationDetails as $detail) {
+                $line = ['commande_id' => $commande->id];
+
+                foreach (self::LINE_COLUMNS as $column) {
+                    $line[$column] = $detail->getRawOriginal($column);
+                }
+
+                CommandeDetails::create($line);
+            }
 
             return $commande->refresh();
         });

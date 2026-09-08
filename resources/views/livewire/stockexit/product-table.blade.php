@@ -10,18 +10,18 @@
                 @foreach($products as $key => $product)
                     <div class="col-lg-4 col-md-6 mb-4" wire:key="exit-line-{{ $key }}">
                         <div class="card h-100">
-                            <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
                                 <span class="fw-bold">#{{ $key + 1 }} {{ translatable_string($product['product_name']) }}</span>
                                 <button type="button" class="btn btn-danger btn-sm" wire:click="removeProduct({{ $key }})">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
-                            <div class="card-body">
+                            <div class="flex-auto p-2">
                                 <p class="mb-2"><span class="fw-bold">{{ __('product.code') }}:</span> {{ $product['product_code'] }}</p>
                                 @php($stock = (int) ($product['product_quantity'] ?? 0))
                                 <p class="mb-3">
                                     <span class="fw-bold">{{ __('product.stock') }}:</span>
-                                    <span class="badge {{ $stock > 0 ? 'badge-info' : 'badge-danger bg-danger' }}">
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline {{ $stock > 0 ? 'badge-info' : 'badge-danger bg-danger' }}">
                                         {{ $stock }} {{ $product['product_unit'] ?? '' }}
                                     </span>
                                 </p>
@@ -39,7 +39,7 @@
                 @endforeach
             @else
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-danger">{{ __('stockexit.no_products_selected') }}</div></div>
+                    <div class="card"><div class="flex-auto p-2 text-center text-danger">{{ __('stockexit.no_products_selected') }}</div></div>
                 </div>
             @endif
         </div>

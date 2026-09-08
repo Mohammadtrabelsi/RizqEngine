@@ -3,7 +3,7 @@
     <div class="container-fluid">
         {{-- Filters --}}
         <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-3">
                         <label class="form-label">{{ __('finance.start_date') }}</label>
@@ -23,19 +23,19 @@
                     </div>
                     <div class="col-md-3 d-flex gap-2">
                         <button wire:click="downloadZip" class="btn btn-primary"><i class="bi bi-file-earmark-zip"></i> {{ __('finance.download_zip') }}</button>
-                        <button wire:click="downloadCsv" class="btn btn-outline-primary"><i class="bi bi-filetype-csv"></i> {{ __('finance.export_csv') }}</button>
+                        <button wire:click="downloadCsv" class="btn btn-outline"><i class="bi bi-filetype-csv"></i> {{ __('finance.export_csv') }}</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="card border-0 shadow-sm">
-            <div class="card-header bg-transparent d-flex justify-content-between">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-transparent d-flex justify-content-between">
                 <span class="fw-semibold">{{ __('finance.invoice_archive') }}</span>
                 <span>{{ __('finance.total') }}: <strong>{{ number_format($total, 2) }}</strong></span>
             </div>
-            <div class="card-body table-responsive">
-                <table class="table align-middle">
+            <div class="flex-auto p-2 block w-full overflow-x-auto">
+                <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                     <thead><tr>
                         <th>{{ __('finance.type') }}</th>
                         <th>{{ __('finance.reference') }}</th>
@@ -47,14 +47,14 @@
                     <tbody>
                         @forelse($documents as $doc)
                             <tr wire:key="doc-{{ $doc['type'] }}-{{ $doc['reference'] }}">
-                                <td><span class="badge {{ $doc['type'] === 'outings' ? 'bg-info' : 'bg-secondary' }}">{{ __('finance.type_'.$doc['type']) }}</span></td>
+                                <td><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline {{ $doc['type'] === 'outings' ? 'bg-info' : 'bg-secondary' }}">{{ __('finance.type_'.$doc['type']) }}</span></td>
                                 <td>{{ $doc['reference'] }}</td>
                                 <td>{{ optional($doc['date'])->format('d/m/Y') }}</td>
                                 <td>{{ $doc['description'] }}</td>
                                 <td class="text-end">{{ number_format($doc['amount'], 2) }}</td>
                                 <td class="text-end">
                                     @if($doc['path'])
-                                        <a href="{{ \Illuminate\Support\Facades\Storage::url($doc['path']) }}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="bi bi-download"></i></a>
+                                        <a href="{{ \Illuminate\Support\Facades\Storage::url($doc['path']) }}" target="_blank" class="btn btn-sm btn-secondary"><i class="bi bi-download"></i></a>
                                     @else
                                         <span class="text-muted small">—</span>
                                     @endif

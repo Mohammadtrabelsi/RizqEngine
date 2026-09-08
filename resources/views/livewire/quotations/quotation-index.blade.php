@@ -15,14 +15,14 @@
         @forelse($quotations as $quotation)
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="quotation-{{ $quotation->id }}">
                 <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <span class="fw-bold me-2">{{ $quotation->reference }}</span>
                             @include('quotation.partials.status', ['data' => $quotation])
                         </div>
                         @include('quotation.partials.actions', ['data' => $quotation])
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <h6 class="mb-3"><i class="bi bi-person"></i> {{ $quotation->customer_name }}</h6>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.date') }}</span><span>{{ $quotation->date }}</span></li>
@@ -33,7 +33,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="card"><div class="card-body text-center text-muted">{{ __('quotations.no_quotations_found') }}</div></div>
+                <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('quotations.no_quotations_found') }}</div></div>
             </div>
         @endforelse
     </div>

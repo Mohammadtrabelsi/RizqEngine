@@ -16,8 +16,9 @@ class UpdatePurchaseRequest extends FormRequest
     {
         return [
             'supplier_id' => 'required|numeric',
+            'warehouse_id' => 'nullable|exists:warehouses,id',
             'reference' => 'required|string|max:255',
-            'tax_percentage' => 'required|integer|min:0|max:100',
+            'tax_percentage' => 'required|numeric|min:0|max:100',
             'discount_percentage' => 'required|integer|min:0|max:100',
             'shipping_amount' => 'required|numeric|min:0',
             'total_amount' => 'required|numeric|min:0',

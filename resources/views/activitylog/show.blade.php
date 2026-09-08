@@ -16,10 +16,10 @@
         <div class="row">
             <div class="col-lg-5">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0">{{ __('activitylog.activity_details') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.description') }}</span><span>{{ ucfirst($activity->description) }}</span></li>
                             <li class="list-group-item d-flex justify-content-between"><span class="fw-bold">{{ __('activitylog.event') }}</span><span>{{ ucfirst($activity->event ?? 'n/a') }}</span></li>
@@ -44,19 +44,19 @@
 
             <div class="col-lg-7">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0">{{ __('activitylog.attribute_changes') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         @if(count($changeSet['keys']))
                             <div class="row">
                                 @foreach($changeSet['keys'] as $key)
                                     <div class="col-md-6 mb-3">
                                         <div class="card border h-100">
-                                            <div class="card-header py-2">
+                                            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl py-2">
                                                 <strong>{{ \Illuminate\Support\Str::headline($key) }}</strong>
                                             </div>
-                                            <div class="card-body py-2">
+                                            <div class="flex-auto p-2 py-2">
                                                 <div class="mb-1">
                                                     <small class="text-muted d-block">{{ __('activitylog.old_value') }}</small>
                                                     <span class="text-danger">{{ is_array($changeSet['old'][$key] ?? null) ? json_encode($changeSet['old'][$key]) : ($changeSet['old'][$key] ?? '—') }}</span>

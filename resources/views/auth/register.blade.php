@@ -33,7 +33,7 @@
 
     <div class="login-form-wrap">
         <div class="login-form-card card">
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <form class="login-form" method="post" action="{{ url('/register') }}">
                     @csrf
 
@@ -44,28 +44,28 @@
 
                     <div class="login-form__field">
                         <label for="name">{{ __('auth.full-name') }}</label>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                        <input id="name" type="text" class="form-control @error('name') !border-red-500 @enderror"
                                name="name" value="{{ old('name') }}" placeholder="{{ __('auth.full-name') }}" autofocus>
                         @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="login-form__field">
                         <label for="email">{{ __('auth.email') }}</label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        <input id="email" type="email" class="form-control @error('email') !border-red-500 @enderror"
                                name="email" value="{{ old('email') }}" placeholder="you@store.com">
                         @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="login-form__field">
                         <label for="password">{{ __('login.password') }}</label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                        <input id="password" type="password" class="form-control @error('password') !border-red-500 @enderror"
                                name="password" placeholder="••••••••">
                         @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -75,7 +75,7 @@
                                class="form-control" placeholder="••••••••">
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block">{{ __('auth.register') }}</button>
+                    <button type="submit" class="btn btn-primary flex w-full">{{ __('auth.register') }}</button>
 
                     <div class="auth-footnote text-muted">
                         <a href="{{ route('login') }}">{{ __('auth.already-have-account') }}</a>

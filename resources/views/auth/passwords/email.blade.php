@@ -19,7 +19,11 @@
 <div class="login-grid">
 
     <div class="login-brand login-brand-copy">
-        <a href="{{ route('welcome') }}" class="auth-brand-link">
+        <a href="{{ route('welcome') }}" class="auth-brand-link d-flex align-items-center gap-2">
+            {{-- White-label client logo precedes the application logo. --}}
+            @if($clientLogo = client_logo_url())
+                <img src="{{ $clientLogo }}" alt="{{ settings()->client_name ?? 'Client logo' }}" style="height:26px;width:auto;object-fit:contain;">
+            @endif
             <x-logo :size="26" label="RizqEngine" />
         </a>
 
@@ -33,7 +37,7 @@
 
     <div class="login-form-wrap">
         <div class="login-form-card card">
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <form class="login-form" method="post" action="{{ url('/password/email') }}">
                     @csrf
 
@@ -50,14 +54,14 @@
 
                     <div class="login-form__field">
                         <label for="email">{{ __('password.email') }}</label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        <input id="email" type="email" class="form-control @error('email') !border-red-500 @enderror"
                                name="email" value="{{ old('email') }}" placeholder="you@store.com" autofocus>
                         @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <button class="btn btn-primary btn-block" type="submit">{{ __('password.send-reset-link') }}</button>
+                    <button class="btn btn-primary flex w-full" type="submit">{{ __('password.send-reset-link') }}</button>
 
                     <div class="auth-footnote text-muted">
                         <a href="{{ route('login') }}">{{ __('login.sign-in') }}</a>

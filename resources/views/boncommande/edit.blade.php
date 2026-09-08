@@ -21,20 +21,20 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form id="bon-commande-form" action="{{ route('bon-commandes.update', $bonCommande) }}" method="POST">
                             @csrf
                             @method('patch')
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="reference">{{ __('boncommande.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required value="{{ $bonCommande->reference }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="customer_id">{{ __('boncommande.customer') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="customer_id" id="customer_id" required>
                                             @foreach(\App\Models\Customer::all() as $customer)
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="date">{{ __('boncommande.date') }} <span class="text-danger">*</span></label>
                                         <input type="date" class="form-control" name="date" required value="{{ $bonCommande->getAttributes()['date'] }}">
                                     </div>
@@ -55,7 +55,7 @@
 
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="status">{{ __('boncommande.status_label') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="status" id="status" required>
                                             <option {{ $bonCommande->status == 'draft' ? 'selected' : '' }} value="draft">{{ __('boncommande.status_draft') }}</option>
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="note">{{ __('boncommande.note') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control">{{ $bonCommande->note }}</textarea>
                             </div>

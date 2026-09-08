@@ -1,7 +1,7 @@
 <div>
     <div class="form-row">
         <div class="col-md-7">
-            <div class="form-group">
+            <div class="mb-4">
                 <label>{{ __('sale.product-category') }}</label>
                 <select wire:model.live="category" class="form-control">
                     <option value="">{{ __('sale.select-category') }}</option>
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div class="form-group">
+            <div class="mb-4">
                 <label>{{ __('sale.product-count') }}   </label>
                 <select wire:model.live="showCount" class="form-control">
                     <option value="9">{{ __('sale.show-9-products') }}</option>

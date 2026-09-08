@@ -17,7 +17,7 @@
         <x-document-chain current="bon_commande" :quotation="$bonCommande->quotation" :bon-commande="$bonCommande" :commande="$bonCommande->commande" :sale="optional($bonCommande->commande)->sale" />
 
         <div class="card">
-            <div class="card-header d-flex flex-wrap align-items-center">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex flex-wrap align-items-center">
                 <div>
                     {{ __('boncommande.reference') }}: <strong>{{ $bonCommande->reference }}</strong>
                     @include('boncommande.partials.status', ['data' => $bonCommande])
@@ -54,7 +54,7 @@
                     @endif
                 </div>
             </div>
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <div class="row mb-4">
                     <div class="col-sm-4 mb-3 mb-md-0">
                         <h5 class="mb-2 border-bottom pb-2">{{ __('boncommande.company_info') }}</h5>
@@ -82,11 +82,11 @@
                     @foreach($bonCommande->bonCommandeDetails as $item)
                         <div class="col-xl-4 col-lg-6 mb-4">
                             <div class="card border h-100">
-                                <div class="card-header">
+                                <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                     {{ $item->product_name }}
-                                    <span class="badge badge-success">{{ $item->product_code }}</span>
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $item->product_code }}</span>
                                 </div>
-                                <div class="card-body">
+                                <div class="flex-auto p-2">
                                     <ul class="list-group list-group-flush mb-0">
                                         <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('boncommande.net_unit_price') }}</span><span>{{ format_currency($item->unit_price) }}</span></li>
                                         <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('boncommande.quantity') }}</span><span>{{ $item->quantity }}</span></li>

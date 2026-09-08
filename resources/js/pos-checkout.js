@@ -1,15 +1,16 @@
-// POS checkout modal money masking (moved out of the inline <script> in
-// sale/pos/index.blade.php). The checkout inputs live inside a modal that the
-// Checkout Livewire component reveals by dispatching the "showCheckoutModal"
-// event, so the masks are (re)applied each time that fires. Currency settings
-// come from the #money-mask-config element rendered by the money-mask-js
-// include.
+// POS checkout money masking (moved out of the inline <script> in
+// sale/pos/index.blade.php). The checkout inputs live inside an inline panel
+// that the Checkout Livewire component reveals by dispatching the
+// "showCheckoutForm" event, so the masks are (re)applied each time that fires.
+// Currency settings come from the #money-mask-config element rendered by the
+// money-mask-js include.
 //
 // The Checkout component fires this via Livewire's `$this->dispatch(...)`, which
 // travels on the Livewire event bus — it is NOT a native browser/window event,
 // so it must be caught with `Livewire.on()` rather than
 // `window.addEventListener()`. Listening on window (as this file previously did)
-// meant the modal never opened and the "Proceed" button appeared to do nothing.
+// meant the panel never received its masks and the "Proceed" flow appeared
+// inert.
 function bindPosCheckoutModal() {
     const $ = window.jQuery;
 
@@ -32,8 +33,15 @@ function bindPosCheckoutModal() {
         }
         : {};
 
-    Livewire.on('showCheckoutModal', function () {
-        $('#checkoutModal').modal('show');
+    // The checkout form is now rendered inline (no longer a Bootstrap modal).
+    // The Checkout Livewire component reveals it by toggling `show_checkout` and
+    // dispatching "showCheckoutForm"; we (re)apply the money masks and scroll it
+    // into view once it is in the DOM.
+    Livewire.on('showCheckoutForm', function () {
+        const panel = document.getElementById('checkoutForm');
+        if (panel) {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         if (hasMask && config) {
             $('#paid_amount').maskMoney(Object.assign({}, base, { allowZero: false }));

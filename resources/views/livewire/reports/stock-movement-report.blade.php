@@ -1,26 +1,21 @@
 <div>
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
-                <div class="card-body">
+                <div class="flex-auto p-2">
                     <form wire:submit="generateReport">
-                        <div class="form-row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
+                        <div class="form-row align-items-end">
+                            <div class="col-lg-2 col-md-6 mb-3">
                                     <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control">
                                     @error('start_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
-                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
+                            <div class="col-lg-2 col-md-6 mb-3">
                                     <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control">
                                     @error('end_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
-                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
+                            <div class="col-lg-3 col-md-6 mb-3">
                                     <label>{{ __('report.product') }}</label>
                                     <select wire:model="product_id" class="form-control">
                                         <option value="">{{ __('report.all-products') }}</option>
@@ -28,10 +23,8 @@
                                             <option value="{{ $product->id }}">{{ $product->product_name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
+                            <div class="col-lg-3 col-md-6 mb-3">
                                     <label>{{ __('report.type') }}</label>
                                     <select wire:model="type" class="form-control">
                                         <option value="">{{ __('report.all-types') }}</option>
@@ -40,15 +33,14 @@
                                         <option value="adjustment">{{ __('report.adjustment') }}</option>
                                         <option value="opening">{{ __('report.opening') }}</option>
                                     </select>
-                                </div>
                             </div>
-                        </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
-                                <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                {{ __('report.filter-report') }}
-                            </button>
+                            <div class="col-auto mb-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
+                                    {{ __('report.filter-report') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -59,9 +51,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
+                <div class="flex-auto p-2">
+                    <div class="block w-full overflow-x-auto">
+                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col">{{ __('report.product') }}</th>
@@ -80,13 +72,13 @@
                                         <td>{{ optional($movement->product)->product_name ?? '—' }}</td>
                                         <td>
                                             @if($movement->type === 'out')
-                                                <span class="badge badge-danger">Out</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-red-100 text-red-700">Out</span>
                                             @elseif($movement->type === 'in')
-                                                <span class="badge badge-success">In</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">In</span>
                                             @elseif($movement->type === 'opening')
-                                                <span class="badge badge-secondary">Opening</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-slate-100 text-slate-600">Opening</span>
                                             @else
-                                                <span class="badge badge-info">Adjustment</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-cyan-100 text-cyan-700">Adjustment</span>
                                             @endif
                                         </td>
                                         <td>{{ $movement->created_at->format('d M Y H:i') }}</td>

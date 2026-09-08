@@ -15,18 +15,18 @@
         @forelse($adjustments as $adjustment)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="adjustment-{{ $adjustment->id }}">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <h5 class="card-title">{{ $adjustment->reference }}</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('adjustment.date') }}</span><span>{{ $adjustment->date }}</span></li>
-                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('adjustment.products') }}</span><span class="badge bg-info">{{ $adjustment->adjusted_products_count }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('adjustment.products') }}</span><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info">{{ $adjustment->adjusted_products_count }}</span></li>
                         </ul>
                         <div class="btn-group">
                             @can('edit_adjustments')
-                                <a href="{{ route('adjustments.edit', $adjustment->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('adjustments.edit', $adjustment->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_adjustments')
-                                <a href="{{ route('adjustments.show', $adjustment->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('adjustments.show', $adjustment->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
                             @endcan
                             @can('delete_adjustments')
                                 <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $adjustment->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
@@ -37,7 +37,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="card"><div class="card-body text-center text-muted">{{ __('adjustment.no_adjustments_found') }}</div></div>
+                <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('adjustment.no_adjustments_found') }}</div></div>
             </div>
         @endforelse
     </div>

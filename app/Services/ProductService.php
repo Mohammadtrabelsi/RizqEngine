@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Product;
 use App\Models\PurchaseReturn;
 use App\Models\SaleReturn;
+use App\Models\Tax;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +23,10 @@ class ProductService
      */
     public function create(array $attributes, array $documents = []): Product
     {
+        $taxIds = $this->extractTaxIds($attributes);
+
         $product = Product::create($attributes);
+        $product->taxes()->sync($taxIds);
 
         foreach ($documents as $file) {
             $product->addMedia(Storage::path('temp/dropzone/'.$file))->toMediaCollection('images');
@@ -41,7 +45,10 @@ class ProductService
      */
     public function update(Product $product, array $attributes, ?array $documents = null): Product
     {
+        $taxIds = $this->extractTaxIds($attributes);
+
         $product->update($attributes);
+        $product->taxes()->sync($taxIds);
 
         if ($documents === null) {
             return $product;
@@ -67,6 +74,31 @@ class ProductService
     public function delete(Product $product): void
     {
         $product->delete();
+    }
+
+    /**
+     * Pull the submitted "product_taxes" tax IDs out of the attribute set
+     * (it isn't a products column) so they can be synced to the product's
+     * taxes pivot separately. The create/edit forms no longer have a manual
+     * tax-rate field: whenever a tax type (exclusive/inclusive) is chosen,
+     * product_order_tax is always (re)computed by compounding the selected
+     * percentage-type taxes one after another (19% then 7% is 27%, not 26%),
+     * including down to 0 when none are checked. With no tax type chosen the
+     * taxes picker isn't shown, so nothing here is touched.
+     *
+     * @param  array<string, mixed>  &$attributes
+     * @return array<int, int>
+     */
+    private function extractTaxIds(array &$attributes): array
+    {
+        $taxIds = array_map('intval', $attributes['product_taxes'] ?? []);
+        unset($attributes['product_taxes']);
+
+        if (in_array((string) ($attributes['product_tax_type'] ?? ''), ['1', '2'], true)) {
+            $attributes['product_order_tax'] = (int) round(Tax::compoundPercentageRate($taxIds));
+        }
+
+        return $taxIds;
     }
 
     /**

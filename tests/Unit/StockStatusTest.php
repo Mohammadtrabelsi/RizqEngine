@@ -29,11 +29,26 @@ class StockStatusTest extends TestCase
     }
 
     /** @test */
+    public function it_reports_in_stock_when_no_high_stock_threshold_is_configured(): void
+    {
+        $this->assertSame(StockStatus::InStock, StockStatus::fromQuantity(1000, 5, null));
+    }
+
+    /** @test */
+    public function it_reports_high_stock_above_the_configured_max_threshold(): void
+    {
+        $this->assertSame(StockStatus::HighStock, StockStatus::fromQuantity(51, 5, 50));
+        $this->assertSame(StockStatus::InStock, StockStatus::fromQuantity(50, 5, 50));
+    }
+
+    /** @test */
     public function each_status_exposes_display_metadata(): void
     {
         $this->assertSame('In Stock', StockStatus::InStock->label());
+        $this->assertSame('High Stock', StockStatus::HighStock->label());
         $this->assertSame('success', StockStatus::InStock->color());
         $this->assertSame('warning', StockStatus::LowStock->color());
+        $this->assertSame('info', StockStatus::HighStock->color());
         $this->assertSame('danger', StockStatus::OutOfStock->color());
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ResolvesProductPricing;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
 class StoreProductRequest extends FormRequest
 {
+    use ResolvesProductPricing;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,7 +17,7 @@ class StoreProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return $this->pricingRules() + [
             'product_name' => ['required', 'string', 'max:255'],
             'product_code' => ['required', 'numeric', 'max:2147483647', 'unique:products,product_code'],
             'product_barcode_symbology' => ['required', 'string', 'max:255'],
@@ -23,8 +26,11 @@ class StoreProductRequest extends FormRequest
             'product_cost' => ['required', 'numeric', 'max:2147483647'],
             'product_price' => ['required', 'numeric', 'max:2147483647'],
             'product_stock_alert' => ['required', 'integer', 'min:10'],
+            'product_stock_alert_max' => ['nullable', 'integer', 'gt:product_stock_alert'],
             'product_order_tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'product_tax_type' => ['nullable', 'integer'],
+            'product_taxes' => ['nullable', 'array'],
+            'product_taxes.*' => ['integer', 'exists:taxes,id'],
             'product_note' => ['nullable', 'string', 'max:1000'],
             'expiry_date' => ['nullable', 'date'],
             'category_id' => ['required', 'integer'],

@@ -4,13 +4,13 @@
         <div class="row justify-content-center">
             <div class="col-lg-9">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <form wire:submit="save">
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">{{ __('finance.date') }}</label>
-                                    <input type="date" wire:model="date" class="form-control @error('date') is-invalid @enderror">
-                                    @error('date') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                                    <input type="date" wire:model="date" class="form-control @error('date') !border-red-500 @enderror">
+                                    @error('date') <span class="block w-full mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">{{ __('finance.location') }}</label>
@@ -31,13 +31,13 @@
                                 @foreach(['food','gas','water','transport','misc'] as $cat)
                                     <div class="col-md-4 col-lg mb-3">
                                         <label class="form-label">{{ __('finance.cat_'.$cat) }}</label>
-                                        <input type="number" step="0.01" wire:model.live="{{ $cat }}" class="form-control @error($cat) is-invalid @enderror">
-                                        @error($cat) <span class="invalid-feedback">{{ $message }}</span> @enderror
+                                        <input type="number" step="0.01" wire:model.live="{{ $cat }}" class="form-control @error($cat) !border-red-500 @enderror">
+                                        @error($cat) <span class="block w-full mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
                                     </div>
                                 @endforeach
                             </div>
 
-                            <div class="alert alert-info d-flex justify-content-between">
+                            <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-indigo-50 text-indigo-700 border-indigo-200 d-flex justify-content-between">
                                 <span>{{ __('finance.total') }}</span>
                                 <strong>{{ number_format($this->total, 2) }}</strong>
                             </div>
@@ -51,7 +51,7 @@
 
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary">{{ __('app.save') }}</button>
-                                <a href="{{ route('outings.index') }}" class="btn btn-outline-secondary">{{ __('app.cancel') }}</a>
+                                <a href="{{ route('outings.index') }}" class="btn btn-secondary">{{ __('app.cancel') }}</a>
                             </div>
                         </form>
                     </div>

@@ -1,5 +1,5 @@
 <div class="btn-group dropdown inline-action-menu">
-    <button type="button" class="btn btn-ghost-primary rounded" data-toggle="dropdown" aria-expanded="false">
+    <button type="button" class="btn btn-ghost" data-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-three-dots-vertical"></i>
     </button>
     <div class="dropdown-menu">

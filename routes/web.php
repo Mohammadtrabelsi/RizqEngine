@@ -23,6 +23,8 @@ use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
 use App\Livewire\Suppliers\SupplierShow;
+use App\Livewire\Taxes\TaxForm;
+use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Livewire\Vehicles\VehicleForm;
@@ -163,6 +165,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/units', UnitIndex::class)->name('units.index');
         Route::get('/units/create', UnitForm::class)->name('units.create');
         Route::get('/units/{unit}/edit', UnitForm::class)->name('units.edit');
+        // Taxes (full-page Livewire components)
+        Route::get('/taxes', TaxIndex::class)->name('taxes.index');
+        Route::get('/taxes/create', TaxForm::class)->name('taxes.create');
+        Route::get('/taxes/{tax}/edit', TaxForm::class)->name('taxes.edit');
     });
 });
 
@@ -217,6 +223,7 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
 
     // Warehouses (dépôts) — full-page Livewire components.
     Route::get('/warehouses', \App\Livewire\Warehouses\WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/warehouses/stock', \App\Livewire\Warehouses\WarehouseStockDashboard::class)->name('warehouses.stock');
     Route::get('/warehouses/create', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.create');
     Route::get('/warehouses/{warehouse}/edit', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.edit');
 
@@ -394,6 +401,28 @@ Route::group(['middleware' => 'auth'], function () {
     // Commande → Facture (Sale)
     Route::post('/commandes/{commande}/generate-facture', 'Convert\CommandeToFactureController')
         ->name('commandes.convert');
+
+    // Devis → Commande (direct, shorter path)
+    Route::post('/quotations/{quotation}/convert-to-commande', 'Convert\QuotationToCommandeController')
+        ->name('quotations.convert-commande');
+
+    // Commande → Bon de Livraison
+    Route::post('/commandes/{commande}/convert-to-bon-livraison', 'Convert\CommandeToBonLivraisonController')
+        ->name('commandes.convert-bon-livraison');
+
+    // Commande → Bon de Sortie (consignment / dépôt-vente)
+    Route::post('/commandes/{commande}/convert-to-stock-exit', 'Convert\CommandeToStockExitController')
+        ->name('commandes.convert-stock-exit');
+
+    // Bon de Livraison
+    Route::resource('bon-livraisons', 'BonLivraisonController')
+        ->parameters(['bon-livraisons' => 'bonLivraison'])
+        ->only(['index', 'show', 'destroy']);
+    Route::post('/bon-livraisons/{bonLivraison}/deliver', 'BonLivraisonController@deliver')->name('bon-livraisons.deliver');
+
+    // Bon de Livraison → Facture (Sale)
+    Route::post('/bon-livraisons/{bonLivraison}/generate-facture', 'Convert\BonLivraisonToFactureController')
+        ->name('bon-livraisons.convert');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -416,6 +445,9 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    // Periodic Summary Report (bilan par jour / semaine / mois)
+    Route::get('/periodic-summary-report', 'ReportsController@periodicSummaryReport')
+        ->name('periodic-summary-report.index');
     // Profit Loss Report
     Route::get('/profit-loss-report', 'ReportsController@profitLossReport')
         ->name('profit-loss-report.index');
@@ -440,6 +472,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Low Stock Report
     Route::get('/low-stock-report', 'ReportsController@lowStockReport')
         ->name('low-stock-report.index');
+    // High Stock Report
+    Route::get('/high-stock-report', 'ReportsController@highStockReport')
+        ->name('high-stock-report.index');
     // Stock Movement Report
     Route::get('/stock-movement-report', 'ReportsController@stockMovementReport')
         ->name('stock-movement-report.index');

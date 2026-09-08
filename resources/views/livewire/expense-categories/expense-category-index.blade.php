@@ -16,9 +16,9 @@
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="expense-category-{{ $category->id }}">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <h5 class="card-title">{{ $category->category_name }}</h5>
-                        <span class="badge bg-info mb-2">{{ $category->expenses_count }} expenses</span>
+                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info mb-2">{{ $category->expenses_count }} expenses</span>
                         <p class="text-muted">{{ $category->category_description }}</p>
                         <div class="btn-group">
                             <a href="{{ route('expense-categories.edit', $category->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
@@ -29,7 +29,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="card"><div class="card-body text-center text-muted">{{ __('expense-category.no_categories_found') }}</div></div>
+                <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('expense-category.no_categories_found') }}</div></div>
             </div>
         @endforelse
     </div>

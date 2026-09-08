@@ -15,8 +15,8 @@
         </div>
 
         <div class="card border-0 shadow-sm">
-            <div class="card-body table-responsive">
-                <table class="table table-hover align-middle">
+            <div class="flex-auto p-2 block w-full overflow-x-auto">
+                <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
                     <thead>
                         <tr>
                             <th>{{ __('warehouses.reference') }}</th>
@@ -35,7 +35,7 @@
                                 <td>{{ $transfer->fromWarehouse?->name }}</td>
                                 <td>{{ $transfer->toWarehouse?->name }}</td>
                                 <td class="text-end">{{ $transfer->lines->count() }}</td>
-                                <td><span class="badge bg-{{ $transfer->status->color() }}">{{ $transfer->status->label() }}</span></td>
+                                <td><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $transfer->status->color() }}">{{ $transfer->status->label() }}</span></td>
                             </tr>
                         @empty
                             <tr><td colspan="6" class="text-center text-muted">{{ __('warehouses.no_transfers_found') }}</td></tr>

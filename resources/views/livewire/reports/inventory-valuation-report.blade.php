@@ -1,8 +1,8 @@
 <div>
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-12 col-lg-3">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-primary p-3 mfe-3 rounded">
                         <i class="bi bi-box-seam font-2xl"></i>
                     </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-info p-3 mfe-3 rounded">
                         <i class="bi bi-cash-stack font-2xl"></i>
                     </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-success p-3 mfe-3 rounded">
                         <i class="bi bi-tags font-2xl"></i>
                     </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-warning p-3 mfe-3 rounded">
                         <i class="bi bi-graph-up-arrow font-2xl"></i>
                     </div>
@@ -57,7 +57,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
-                <div class="card-body">
+                <div class="flex-auto p-2">
                     <div class="form-row mb-3">
                         <div class="col-lg-4">
                             <input wire:model.live="search" type="text" class="form-control" placeholder="{{ __('report.search-by-name-or-code') }}">
@@ -71,8 +71,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
+                    <div class="block w-full overflow-x-auto">
+                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col">{{ __('report.product') }}</th>

@@ -53,6 +53,7 @@ return [
     'sales-this-week' => 'Sale this period',
     'sales-today' => 'Sales today',
     'search-product' => 'Search product',
+    'search-results' => 'Search results',
     'see-features' => 'See-features',
     'shipping' => 'Shipping',
     'status' => 'Status',

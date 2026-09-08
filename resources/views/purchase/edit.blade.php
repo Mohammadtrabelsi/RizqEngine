@@ -21,21 +21,21 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form id="purchase-form" action="{{ route('purchases.update', $purchase) }}" method="POST">
                             @csrf
                             @method('patch')
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="reference">{{ __('purchase.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required value="{{ $purchase->reference }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="supplier_id">{{ __('purchase.supplier') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="supplier_id" id="supplier_id" required>
                                                 @foreach(\App\Models\Supplier::all() as $supplier)
@@ -47,10 +47,20 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="date">{{ __('purchase.date') }} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ $purchase->date }}">
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-4">
+                                        <label for="warehouse_id">{{ __('warehouses.warehouse') }}</label>
+                                        <select class="form-control" name="warehouse_id" id="warehouse_id">
+                                            @foreach(\App\Models\Warehouse::active()->orderByDesc('is_default')->get() as $warehouse)
+                                                <option value="{{ $warehouse->id }}" {{ $purchase->warehouse_id == $warehouse->id ? 'selected' : '' }}>{{ $warehouse->name }}{{ $warehouse->is_default ? ' ('.__('warehouses.default').')' : '' }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +69,7 @@
 
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="status">{{ __('purchase.status') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="status" id="status" required>
                                             <option {{ $purchase->status == 'Pending' ? 'selected' : '' }} value="Pending">{{ __('purchase.pending') }}</option>
@@ -70,21 +80,21 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="payment_method">{{ __('purchase.payment_method') }} <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="payment_method" required value="{{ $purchase->payment_method }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="paid_amount">{{ __('purchase.paid_amount') }} <span class="text-danger">*</span></label>
                                         <input id="paid_amount" type="text" class="form-control" name="paid_amount" data-money-mask data-money-allow-zero data-money-prefill required value="{{ $purchase->paid_amount }}" readonly>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="note">{{ __('purchase.note') }} ({{ __('purchase.optional') }})</label>
                                 <textarea name="note" id="note" rows="5" class="form-control">{{ $purchase->note }}</textarea>
                             </div>

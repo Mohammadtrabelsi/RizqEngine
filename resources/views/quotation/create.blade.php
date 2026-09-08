@@ -21,21 +21,21 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form id="quotation-form" action="{{ route('quotations.store') }}" method="POST">
                             @csrf
 
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="reference">{{ __('quotations.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="QT">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="customer_id">{{ __('quotations.customer') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="customer_id" id="customer_id" required>
                                                 @foreach(\App\Models\Customer::all() as $customer)
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="date">{{ __('quotations.date') }}    <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
                                         </div>
@@ -59,7 +59,7 @@
 
                             <div class="form-row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="status">{{ __('quotations.status') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="status" id="status" required>
                                             <option value="Pending">{{ __('quotations.pending') }}</option>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="note">{{ __('quotations.note') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>

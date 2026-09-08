@@ -66,6 +66,31 @@ class Commande extends Model
     }
 
     /**
+     * The Devis this Commande was created directly from (shorter path), if any.
+     *
+     * @return BelongsTo<Quotation, $this>
+     */
+    public function quotation(): BelongsTo
+    {
+        return $this->belongsTo(Quotation::class, 'quotation_id', 'id');
+    }
+
+    /**
+     * The Bon de Livraison (delivery note) generated from this Commande (if any).
+     *
+     * @return HasOne<BonLivraison, $this>
+     */
+    public function bonLivraison(): HasOne
+    {
+        return $this->hasOne(BonLivraison::class, 'commande_id', 'id');
+    }
+
+    public function hasBonLivraison(): bool
+    {
+        return $this->bonLivraison()->exists();
+    }
+
+    /**
      * The Facture (Sale) generated from this Commande (if any).
      *
      * @return HasOne<Sale, $this>
@@ -73,6 +98,21 @@ class Commande extends Model
     public function sale(): HasOne
     {
         return $this->hasOne(Sale::class, 'commande_id', 'id');
+    }
+
+    /**
+     * The Bons de Sortie (consignment exits) generated from this Commande.
+     *
+     * @return HasMany<StockExit, $this>
+     */
+    public function stockExits(): HasMany
+    {
+        return $this->hasMany(StockExit::class, 'commande_id', 'id');
+    }
+
+    public function hasStockExit(): bool
+    {
+        return $this->stockExits()->exists();
     }
 
     public function isInvoiced(): bool

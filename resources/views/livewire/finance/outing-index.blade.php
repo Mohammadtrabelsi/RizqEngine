@@ -11,8 +11,8 @@
         </div>
 
         <div class="card border-0 shadow-sm">
-            <div class="card-body table-responsive">
-                <table class="table align-middle">
+            <div class="flex-auto p-2 block w-full overflow-x-auto">
+                <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                     <thead><tr>
                         <th>{{ __('finance.reference') }}</th>
                         <th>{{ __('finance.date') }}</th>
@@ -32,7 +32,7 @@
                                 <td class="text-end">
                                     <div class="btn-group">
                                         @if($outing->hasVoucher())
-                                            <a href="{{ \Illuminate\Support\Facades\Storage::url($outing->voucher_path) }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="{{ __('finance.voucher') }}"><i class="bi bi-file-earmark-pdf"></i></a>
+                                            <a href="{{ \Illuminate\Support\Facades\Storage::url($outing->voucher_path) }}" target="_blank" class="btn btn-secondary btn-sm" title="{{ __('finance.voucher') }}"><i class="bi bi-file-earmark-pdf"></i></a>
                                         @endif
                                         <a href="{{ route('outings.edit', $outing) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                         <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $outing->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>

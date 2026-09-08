@@ -14,6 +14,13 @@ class ReportsController extends Controller
         return view('reports.profit-loss.index');
     }
 
+    public function periodicSummaryReport()
+    {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports.periodic-summary.index');
+    }
+
     public function paymentsReport()
     {
         abort_if(Gate::denies('access_reports'), 403);
@@ -61,6 +68,13 @@ class ReportsController extends Controller
         abort_if(Gate::denies('access_reports'), 403);
 
         return view('reports.low-stock.index');
+    }
+
+    public function highStockReport()
+    {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports.high-stock.index');
     }
 
     public function stockMovementReport()

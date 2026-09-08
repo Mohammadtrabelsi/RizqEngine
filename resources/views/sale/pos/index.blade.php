@@ -19,11 +19,11 @@
             <div class="col-12">
                 @include('utils.alerts')
             </div>
-            <div class="col-lg-7">
+            <div class="col-12 mb-4">
                 <livewire:search-product/>
                 <livewire:pos.product-list :categories="$product_categories"/>
             </div>
-            <div class="col-lg-5">
+            <div class="col-12 mb-4">
                 <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
             </div>
         </div>

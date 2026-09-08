@@ -5,41 +5,41 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label>{{ __('warehouses.name') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name">
-                                        @error('name') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="form-control @error('name') !border-red-500 @enderror" wire:model="name">
+                                        @error('name') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label>{{ __('warehouses.code') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('code') is-invalid @enderror" wire:model="code">
-                                        @error('code') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="form-control @error('code') !border-red-500 @enderror" wire:model="code">
+                                        @error('code') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label>{{ __('warehouses.phone') }}</label>
-                                        <input type="text" class="form-control @error('phone') is-invalid @enderror" wire:model="phone">
-                                        @error('phone') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="form-control @error('phone') !border-red-500 @enderror" wire:model="phone">
+                                        @error('phone') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label>{{ __('warehouses.city') }}</label>
-                                        <input type="text" class="form-control @error('city') is-invalid @enderror" wire:model="city">
-                                        @error('city') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <input type="text" class="form-control @error('city') !border-red-500 @enderror" wire:model="city">
+                                        @error('city') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label>{{ __('warehouses.address') }}</label>
-                                        <textarea class="form-control @error('address') is-invalid @enderror" rows="2" wire:model="address"></textarea>
-                                        @error('address') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <textarea class="form-control @error('address') !border-red-500 @enderror" rows="2" wire:model="address"></textarea>
+                                        @error('address') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -55,10 +55,10 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12 mt-3">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label>{{ __('warehouses.note') }}</label>
-                                        <textarea class="form-control @error('note') is-invalid @enderror" rows="3" wire:model="note"></textarea>
-                                        @error('note') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                        <textarea class="form-control @error('note') !border-red-500 @enderror" rows="3" wire:model="note"></textarea>
+                                        @error('note') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end">

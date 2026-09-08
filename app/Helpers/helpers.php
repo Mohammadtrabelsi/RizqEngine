@@ -67,6 +67,25 @@ if (! function_exists('default_customer_image')) {
     }
 }
 
+if (! function_exists('client_logo_url')) {
+    /**
+     * Resolve the white-label client logo to a public URL, or null when none
+     * has been uploaded. Used to display the tenant company's logo alongside
+     * (before) the application logo across the admin panel, auth screens and
+     * generated invoices.
+     */
+    function client_logo_url(): ?string
+    {
+        try {
+            $path = settings()->client_logo;
+        } catch (Throwable $e) {
+            $path = null;
+        }
+
+        return $path ? Storage::disk('public')->url($path) : null;
+    }
+}
+
 if (! function_exists('format_currency')) {
     function format_currency($value, $format = true)
     {

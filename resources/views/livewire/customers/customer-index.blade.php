@@ -7,7 +7,7 @@
                 <a href="{{ route('customers.create') }}" class="btn btn-primary">
                     {{ __('customer.add_customer') }} <i class="bi bi-plus"></i>
                 </a>
-                <a href="{{ route('customers.import') }}" class="btn btn-outline-primary">
+                <a href="{{ route('customers.import') }}" class="btn btn-outline">
                     {{ __('nav.import_customers') }} <i class="bi bi-upload"></i>
                 </a>
             @endcan
@@ -19,7 +19,7 @@
 
     {{-- Filters container --}}
     <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body">
+        <div class="flex-auto p-2">
             <h6 class="card-title text-muted mb-3">
                 <i class="bi bi-funnel"></i> {{ __('app.filters') }}
             </h6>
@@ -51,7 +51,7 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-3 mb-3">
-                    <button type="button" wire:click="resetFilters" class="btn btn-outline-secondary w-100">
+                    <button type="button" wire:click="resetFilters" class="btn btn-secondary w-100">
                         <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
                     </button>
                 </div>
@@ -73,7 +73,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <h5 class="card-title">{{ $customer->customer_name }}</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item px-0"><i class="bi bi-envelope"></i> {{ $customer->customer_email }}</li>
@@ -84,10 +84,10 @@
                         </ul>
                         <div class="btn-group">
                             @can('edit_customers')
-                                <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                             @endcan
                             @can('show_customers')
-                                <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
                             @endcan
                             @can('delete_customers')
                                 <button type="button" class="btn btn-outline-danger btn-sm" wire:click="delete({{ $customer->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
@@ -98,7 +98,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="card"><div class="card-body text-center text-muted">{{ __('customer.no_customers_found') }}</div></div>
+                <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('customer.no_customers_found') }}</div></div>
             </div>
         @endforelse
     </div>

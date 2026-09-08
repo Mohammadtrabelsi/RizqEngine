@@ -16,7 +16,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card border-0 shadow-sm bg-gradient">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <h2 class="mb-2">
@@ -40,10 +40,10 @@
             <div class="col-lg-9">
                 <!-- Basic Information -->
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-info-circle"></i> {{ __('product.product_details') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom mb-2">
@@ -71,10 +71,10 @@
 
                 <!-- Pricing & Cost -->
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-cash-coin"></i> {{ __('product.pricing_and_cost') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="p-3 bg-light rounded">
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="alert alert-info mb-0">
+                                <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-indigo-50 text-indigo-700 border-indigo-200 mb-0">
                                     <i class="bi bi-percent"></i> Profit Margin: <strong>{{ $product->product_price > 0 ? number_format((($product->product_price - $product->product_cost) / $product->product_price * 100), 2) . '%' : 'N/A' }}</strong>
                                 </div>
                             </div>
@@ -99,21 +99,27 @@
 
                 <!-- Stock Information -->
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-box2"></i> Stock Information</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <div class="p-3 bg-light rounded">
                                     <small class="text-muted d-block mb-1">{{ __('product.current_quantity') }}</small>
                                     <h4 class="mb-0">{{ $product->product_quantity }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <div class="p-3 bg-light rounded">
                                     <small class="text-muted d-block mb-1">{{ __('product.alert_threshold') }}</small>
                                     <h4 class="mb-0">{{ $product->product_stock_alert }} <small class="text-muted">{{ $product->product_unit }}</small></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-1">{{ __('product.stock_alert_max') }}</small>
+                                    <h4 class="mb-0">{{ $product->product_stock_alert_max ?? '—' }} @if($product->product_stock_alert_max)<small class="text-muted">{{ $product->product_unit }}</small>@endif</h4>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -139,10 +145,10 @@
 
                 <!-- Tax Information -->
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-calculator"></i> {{ __('product.tax_information') }}</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
@@ -153,7 +159,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
                                     <label class="text-muted small">{{ __('product.tax_type') }}</label>
-                                    <span class="badge bg-{{ $product->product_tax_type == 1 ? 'warning' : 'success' }}">
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $product->product_tax_type == 1 ? 'warning' : 'success' }}">
                                         @if($product->product_tax_type == 1)
                                             Exclusive
                                         @elseif($product->product_tax_type == 2)
@@ -165,24 +171,34 @@
                                 </div>
                             </div>
                         </div>
+                        @if($product->taxes->isNotEmpty())
+                            <div class="pt-2 border-top">
+                                <label class="text-muted small d-block mb-2">{{ __('taxes.select_taxes') }}</label>
+                                @foreach($product->taxes as $tax)
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary me-1">
+                                        {{ $tax->name }} ({{ $tax->type === 'fixed' ? format_currency($tax->rate) : rtrim(rtrim(number_format($tax->rate, 2), '0'), '.').'%' }})
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
 
                 <!-- Orders -->
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-receipt"></i> {{ __('product.orders') }}</h5>
-                        <span class="badge bg-secondary">{{ $orders->count() }}</span>
+                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ $orders->count() }}</span>
                     </div>
-                    <div class="card-body p-0">
+                    <div class="flex-auto p-2 p-0">
                         @if($orders->isEmpty())
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
                                 {{ __('product.no_orders') }}
                             </div>
                         @else
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                            <div class="block w-full overflow-x-auto">
+                                <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
                                             <th>{{ __('product.date') }}</th>
@@ -201,7 +217,7 @@
                                                     <small class="text-muted">{{ optional($order['date'])->format('H:i') }}</small>
                                                 </td>
                                                 <td>
-                                                    <span class="badge bg-{{ $order['badge'] }}">{{ $order['label'] }}</span>
+                                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $order['badge'] }}">{{ $order['label'] }}</span>
                                                 </td>
                                                 <td>
                                                     @if($order['route'])
@@ -211,7 +227,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $order['party'] ?? '—' }}</td>
-                                                <td><span class="badge bg-light text-dark text-capitalize">{{ $order['status'] ?? '—' }}</span></td>
+                                                <td><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-light text-dark text-capitalize">{{ $order['status'] ?? '—' }}</span></td>
                                                 <td class="text-end">{{ $order['quantity'] }}</td>
                                             </tr>
                                         @endforeach
@@ -224,19 +240,19 @@
 
                 <!-- Transaction History -->
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-clock-history"></i> {{ __('product.transaction_history') }}</h5>
-                        <span class="badge bg-secondary">{{ $transactions->count() }}</span>
+                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ $transactions->count() }}</span>
                     </div>
-                    <div class="card-body p-0">
+                    <div class="flex-auto p-2 p-0">
                         @if($transactions->isEmpty())
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
                                 {{ __('product.no_transactions') }}
                             </div>
                         @else
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                            <div class="block w-full overflow-x-auto">
+                                <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
                                             <th>{{ __('product.date') }}</th>
@@ -256,7 +272,7 @@
                                                     <small class="text-muted">{{ optional($transaction['date'])->format('H:i') }}</small>
                                                 </td>
                                                 <td>
-                                                    <span class="badge bg-{{ $transaction['badge'] }}">{{ $transaction['label'] }}</span>
+                                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $transaction['badge'] }}">{{ $transaction['label'] }}</span>
                                                 </td>
                                                 <td>
                                                     @if($transaction['route'])
@@ -283,10 +299,10 @@
             <div class="col-lg-3">
                 <!-- Product Image -->
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-image"></i> {{ __('product.product_image') }}</h5>
                     </div>
-                    <div class="card-body text-center">
+                    <div class="flex-auto p-2 text-center">
                         @forelse($product->getMedia('images') as $media)
                             <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-contain-300 img-fluid rounded mb-2">
                         @empty
@@ -297,10 +313,10 @@
 
                 <!-- Barcode Section -->
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-light border-bottom">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-qr-code"></i> {{ __('product.barcode') }}</h5>
                     </div>
-                    <div class="card-body text-center">
+                    <div class="flex-auto p-2 text-center">
                         <div class="mb-3">
                             {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
                         </div>

@@ -26,8 +26,9 @@ class SettingService
      *
      * @param  array<string, mixed>  $data  Scalar settings columns.
      * @param  array<string, UploadedFile|null>  $images  Keyed by column name.
+     * @param  array<int, string>  $remove  Image columns to clear (delete file + null the column).
      */
-    public function update(array $data, array $images = []): Setting
+    public function update(array $data, array $images = [], array $remove = []): Setting
     {
         $settings = $this->current();
 
@@ -41,6 +42,19 @@ class SettingService
             }
 
             $data[$column] = $file->store('settings', 'public');
+        }
+
+        // A removal is skipped when a replacement file was uploaded in the same request.
+        foreach ($remove as $column) {
+            if (array_key_exists($column, $data)) {
+                continue;
+            }
+
+            if ($settings->{$column}) {
+                Storage::disk('public')->delete($settings->{$column});
+            }
+
+            $data[$column] = null;
         }
 
         $settings->update($data);

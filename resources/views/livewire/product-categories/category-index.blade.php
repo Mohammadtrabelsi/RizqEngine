@@ -16,7 +16,7 @@
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="category-{{ $category->id }}">
                 <div class="card h-100">
-                    <div class="card-body text-center">
+                    <div class="flex-auto p-2 text-center">
                         <img src="{{ $category->image_url }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
                         <h5 class="card-title mb-1">
                             @if ($category->color)
@@ -29,11 +29,11 @@
                             <p class="text-muted mb-2"><small>{{ \Illuminate\Support\Str::limit($category->description, 60) }}</small></p>
                         @endif
                         <div class="mb-3">
-                            <span class="badge bg-info">{{ $category->products_count }} products</span>
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info">{{ $category->products_count }} products</span>
                             @if ($category->is_active)
-                                <span class="badge bg-success">{{ __('product.category_active') }}</span>
+                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('product.category_active') }}</span>
                             @else
-                                <span class="badge bg-secondary">{{ __('product.category_inactive') }}</span>
+                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ __('product.category_inactive') }}</span>
                             @endif
                         </div>
                         <div class="btn-group d-block">
@@ -49,7 +49,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="card"><div class="card-body text-center text-muted">{{ __('product.no_categories_found') }}</div></div>
+                <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('product.no_categories_found') }}</div></div>
             </div>
         @endforelse
     </div>

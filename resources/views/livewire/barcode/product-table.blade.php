@@ -1,6 +1,6 @@
 <div>
     @if (session()->has('message'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-amber-50 text-amber-700 border-amber-200 pr-12 fade show" role="alert">
             <div class="alert-body">
                 <span>{{ session('message') }}</span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -10,7 +10,7 @@
         </div>
     @endif
     <div class="card">
-        <div class="card-body">
+        <div class="flex-auto p-2">
             @if(!empty($product))
                 <ul class="list-group list-group-flush mb-0">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -55,7 +55,7 @@
             </button>
         </div>
         <div class="card">
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <div class="row justify-content-center">
                     @foreach($barcodes as $barcode)
                         <div class="col-lg-3 col-md-4 col-sm-6 barcode-label">

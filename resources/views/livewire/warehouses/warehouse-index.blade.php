@@ -19,12 +19,12 @@
         <div class="row">
             @forelse($warehouses as $warehouse)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="warehouse-{{ $warehouse->id }}">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
+                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                        <div class="flex-auto p-2">
                             <h5 class="card-title d-flex justify-content-between align-items-center">
                                 {{ $warehouse->name }}
                                 @if($warehouse->is_default)
-                                    <span class="badge bg-primary">{{ __('warehouses.default') }}</span>
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-primary">{{ __('warehouses.default') }}</span>
                                 @endif
                             </h5>
                             <ul class="list-group list-group-flush mb-3">
@@ -32,7 +32,7 @@
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('warehouses.city') }}</span><span>{{ $warehouse->city ?: '—' }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('warehouses.locations') }}</span><span>{{ $warehouse->locations_count }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('warehouses.status') }}</span>
-                                    <span class="badge bg-{{ $warehouse->is_active ? 'success' : 'secondary' }}">{{ $warehouse->is_active ? __('warehouses.active') : __('warehouses.inactive') }}</span>
+                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $warehouse->is_active ? 'success' : 'secondary' }}">{{ $warehouse->is_active ? __('warehouses.active') : __('warehouses.inactive') }}</span>
                                 </li>
                             </ul>
                             <div class="btn-group">
@@ -48,7 +48,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">{{ __('warehouses.no_warehouses_found') }}</div></div>
+                    <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('warehouses.no_warehouses_found') }}</div></div>
                 </div>
             @endforelse
         </div>

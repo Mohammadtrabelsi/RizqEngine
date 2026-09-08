@@ -30,6 +30,7 @@ use Spatie\Translatable\HasTranslations;
  * @property float $product_price
  * @property string $product_unit
  * @property int $product_stock_alert
+ * @property int|null $product_stock_alert_max
  * @property int $product_order_tax
  * @property int $product_tax_type
  * @property string|null $product_note
@@ -94,6 +95,19 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Warehouse::class, 'product_warehouse')
             ->withPivot(['quantity', 'location_id'])
             ->withTimestamps();
+    }
+
+    /**
+     * Taxes (master data) selected for this product when its tax type is
+     * "exclusive" (see product_tax_type). Percentage-type taxes here are
+     * summed into product_order_tax; fixed-amount taxes are recorded but not
+     * yet folded into computed prices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tax, $this>
+     */
+    public function taxes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Tax::class, 'product_taxes')->withTimestamps();
     }
 
     /**
@@ -193,7 +207,8 @@ class Product extends Model implements HasMedia
     {
         return StockStatus::fromQuantity(
             (int) $this->product_quantity,
-            (int) $this->product_stock_alert
+            (int) $this->product_stock_alert,
+            $this->product_stock_alert_max !== null ? (int) $this->product_stock_alert_max : null
         );
     }
 
@@ -209,7 +224,13 @@ class Product extends Model implements HasMedia
             StockStatus::OutOfStock => $query->where('product_quantity', '<=', 0),
             StockStatus::LowStock => $query->where('product_quantity', '>', 0)
                 ->whereColumn('product_quantity', '<=', 'product_stock_alert'),
-            StockStatus::InStock => $query->whereColumn('product_quantity', '>', 'product_stock_alert'),
+            StockStatus::HighStock => $query->whereNotNull('product_stock_alert_max')
+                ->whereColumn('product_quantity', '>', 'product_stock_alert_max'),
+            StockStatus::InStock => $query->whereColumn('product_quantity', '>', 'product_stock_alert')
+                ->where(function (Builder $query) {
+                    $query->whereNull('product_stock_alert_max')
+                        ->orWhereColumn('product_quantity', '<=', 'product_stock_alert_max');
+                }),
         };
     }
 

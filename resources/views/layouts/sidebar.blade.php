@@ -9,16 +9,13 @@
 --}}
 <aside class="app-sidebar" id="app-sidebar">
     <div class="app-sidebar-brand">
-        <a href="{{ route('dashboard') }}" class="app-sidebar-brand-link">
+        <a href="{{ route('dashboard') }}" class="app-sidebar-brand-link flex items-center gap-3">
+            {{-- White-label client logo precedes the application logo. --}}
             @if($sidebarSettings->client_logo)
-                <img src="{{ \Illuminate\Support\Facades\Storage::url($sidebarSettings->client_logo) }}" alt="{{ $sidebarSettings->client_name ?? 'Logo' }}" class="app-sidebar-logo-img">
-                @if($sidebarSettings->client_name)
-                    <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name }}</span>
-                @endif
-            @else
-                <x-logo-mark tone="dark" />
-                <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'RizqEngine' }}</span>
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($sidebarSettings->client_logo) }}" alt="{{ $sidebarSettings->client_name ?? 'Client logo' }}" class="app-sidebar-logo-img">
             @endif
+            <x-logo-mark tone="dark" />
+            <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'RizqEngine' }}</span>
         </a>
         <button class="app-sidebar-close d-lg-none" type="button"
                 data-toggle="collapse" data-target="#app-sidebar" aria-label="Close menu">
@@ -32,13 +29,13 @@
             <li class="app-sidebar-heading">{{ __('nav.group.overview') }}</li>
             <li class="app-sidebar-item {{ request()->routeIs('dashboard') || request()->routeIs('home') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('dashboard') }}">
-                    <span class="app-sidebar-dot"></span> <span>{{ __('nav.dashboard') }}</span>
+                    <i class="bi bi-speedometer2"></i> <span>{{ __('nav.dashboard') }}</span>
                 </a>
             </li>
             @can('create_pos_sales')
             <li class="app-sidebar-item {{ request()->routeIs('app.pos.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('app.pos.index') }}">
-                    <span class="app-sidebar-dot"></span> <span>{{ __('nav.point_of_sale') }}</span>
+                    <i class="bi bi-shop"></i> <span>{{ __('nav.point_of_sale') }}</span>
                 </a>
             </li>
             @endcan
@@ -46,7 +43,7 @@
             @can('access_cash_register')
             <li class="app-sidebar-item {{ request()->routeIs('cash-register.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('cash-register.index') }}">
-                    <span class="app-sidebar-dot"></span> <span>{{ __('cash_register.cash_register') }}</span>
+                    <i class="bi bi-cash-stack"></i> <span>{{ __('cash_register.cash_register') }}</span>
                 </a>
             </li>
             @endcan
@@ -57,7 +54,7 @@
             @can('access_products')
             <li class="app-sidebar-item {{ $inProducts ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inProducts ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inProducts ? 'true' : 'false' }}">
-                    <span>{{ __('nav.products') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-box-seam"></i> <span>{{ __('nav.products') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inProducts ? 'is-open' : '' }}">
@@ -78,7 +75,7 @@
             @canany(['access_sales', 'access_sale_returns'])
             <li class="app-sidebar-item {{ $inSales ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSales ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSales ? 'true' : 'false' }}">
-                    <span>{{ __('nav.sales') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-graph-up-arrow"></i> <span>{{ __('nav.sales') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inSales ? 'is-open' : '' }}">
@@ -95,7 +92,7 @@
             @canany(['access_purchases', 'access_purchase_returns'])
             <li class="app-sidebar-item {{ $inPurchases ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inPurchases ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inPurchases ? 'true' : 'false' }}">
-                    <span>{{ __('nav.purchases') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-bag-check"></i> <span>{{ __('nav.purchases') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inPurchases ? 'is-open' : '' }}">
@@ -112,7 +109,7 @@
             @canany(['access_adjustments', 'access_stock_exits', 'create_stock_exits'])
             <li class="app-sidebar-item {{ $inStock ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inStock ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inStock ? 'true' : 'false' }}">
-                    <span>{{ __('nav.stock') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-boxes"></i> <span>{{ __('nav.stock') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inStock ? 'is-open' : '' }}">
@@ -129,7 +126,7 @@
             @can('access_quotations')
             <li class="app-sidebar-item {{ $inQuotations ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inQuotations ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inQuotations ? 'true' : 'false' }}">
-                    <span>{{ __('nav.quotes') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-file-earmark-text"></i> <span>{{ __('nav.quotes') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inQuotations ? 'is-open' : '' }}">
@@ -141,10 +138,10 @@
             </li>
             @endcan
 
-            @canany(['access_bon_commandes', 'access_commandes'])
+            @canany(['access_bon_commandes', 'access_commandes', 'access_bon_livraisons'])
             <li class="app-sidebar-item {{ $inOrders ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inOrders ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inOrders ? 'true' : 'false' }}">
-                    <span>{{ __('nav.orders') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-clipboard-check"></i> <span>{{ __('nav.orders') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inOrders ? 'is-open' : '' }}">
@@ -154,6 +151,9 @@
                     @can('access_commandes')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}">{{ __('menu.all-commandes') }}</a></li>
                     @endcan
+                    @can('access_bon_livraisons')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}" href="{{ route('bon-livraisons.index') }}">{{ __('menu.all-bon-livraisons') }}</a></li>
+                    @endcan
                 </ul>
             </li>
             @endcanany
@@ -161,7 +161,7 @@
             @can('access_expenses')
             <li class="app-sidebar-item {{ $inExpenses ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inExpenses ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inExpenses ? 'true' : 'false' }}">
-                    <span>{{ __('nav.expenses') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-wallet2"></i> <span>{{ __('nav.expenses') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inExpenses ? 'is-open' : '' }}">
@@ -181,7 +181,7 @@
             <li class="app-sidebar-heading">{{ __('finance.monthly_budgets') }}</li>
             <li class="app-sidebar-item {{ $inFinance ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inFinance ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inFinance ? 'true' : 'false' }}">
-                    <span>{{ __('finance.monthly_budgets') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-piggy-bank"></i> <span>{{ __('finance.monthly_budgets') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inFinance ? 'is-open' : '' }}">
@@ -198,7 +198,7 @@
             @can('access_customers')
             <li class="app-sidebar-item {{ request()->routeIs('customers.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('customers.index') }}">
-                    <span>{{ __('nav.customers') }}</span>
+                    <i class="bi bi-people"></i> <span>{{ __('nav.customers') }}</span>
                 </a>
             </li>
             @endcan
@@ -206,7 +206,7 @@
             @can('access_suppliers')
             <li class="app-sidebar-item {{ request()->routeIs('suppliers.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('suppliers.index') }}">
-                    <span>{{ __('nav.suppliers') }}</span>
+                    <i class="bi bi-truck"></i> <span>{{ __('nav.suppliers') }}</span>
                 </a>
             </li>
             @endcan
@@ -214,7 +214,7 @@
             @can('access_user_management')
             <li class="app-sidebar-item {{ $inUsers ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inUsers ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inUsers ? 'true' : 'false' }}">
-                    <span>{{ __('nav.staff_roles') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-person-badge"></i> <span>{{ __('nav.staff_roles') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inUsers ? 'is-open' : '' }}">
@@ -230,7 +230,7 @@
             <li class="app-sidebar-heading">{{ __('nav.group.imports') }}</li>
             <li class="app-sidebar-item {{ $inImports ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inImports ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inImports ? 'true' : 'false' }}">
-                    <span>{{ __('nav.imports') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-cloud-upload"></i> <span>{{ __('nav.imports') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inImports ? 'is-open' : '' }}">
@@ -252,7 +252,7 @@
             <li class="app-sidebar-heading">{{ __('nav.group.fleet') }}</li>
             <li class="app-sidebar-item {{ $inFleet ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inFleet ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inFleet ? 'true' : 'false' }}">
-                    <span>{{ __('nav.fleet') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-truck-front"></i> <span>{{ __('nav.fleet') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inFleet ? 'is-open' : '' }}">
@@ -271,12 +271,13 @@
             <li class="app-sidebar-heading">{{ __('warehouses.warehouses') }}</li>
             <li class="app-sidebar-item {{ $inWarehousing ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inWarehousing ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inWarehousing ? 'true' : 'false' }}">
-                    <span>{{ __('warehouses.warehouses') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-building"></i> <span>{{ __('warehouses.warehouses') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inWarehousing ? 'is-open' : '' }}">
                     @can('access_warehouses')
-                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses*') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses.index') || request()->routeIs('warehouses.create') || request()->routeIs('warehouses.edit') ? 'is-active' : '' }}" href="{{ route('warehouses.index') }}">{{ __('warehouses.warehouses') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('warehouses.stock') ? 'is-active' : '' }}" href="{{ route('warehouses.stock') }}">{{ __('warehouses.stock_state') }}</a></li>
                     @endcan
                     @can('access_stock_transfers')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-transfers*') ? 'is-active' : '' }}" href="{{ route('stock-transfers.index') }}">{{ __('warehouses.stock_transfers') }}</a></li>
@@ -292,16 +293,17 @@
             @endcanany
 
             {{-- INSIGHT --}}
-            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units'])
+            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units', 'access_taxes'])
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
             @endcanany
             @can('access_reports')
             <li class="app-sidebar-item {{ $inReports ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inReports ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inReports ? 'true' : 'false' }}">
-                    <span>{{ __('nav.reports') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-bar-chart-line"></i> <span>{{ __('nav.reports') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inReports ? 'is-open' : '' }}">
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('periodic-summary-report.index') ? 'is-active' : '' }}" href="{{ route('periodic-summary-report.index') }}">{{ __('menu.periodic-summary-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('profit-loss-report.index') ? 'is-active' : '' }}" href="{{ route('profit-loss-report.index') }}">{{ __('menu.profit-loss-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('payments-report.index') ? 'is-active' : '' }}" href="{{ route('payments-report.index') }}">{{ __('menu.payments-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('sales-report.index') ? 'is-active' : '' }}" href="{{ route('sales-report.index') }}">{{ __('menu.sales-report') }}</a></li>
@@ -310,16 +312,17 @@
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('purchases-return-report.index') ? 'is-active' : '' }}" href="{{ route('purchases-return-report.index') }}">{{ __('menu.purchases-return-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('inventory-valuation-report.index') ? 'is-active' : '' }}" href="{{ route('inventory-valuation-report.index') }}">{{ __('menu.inventory-valuation-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('low-stock-report.index') ? 'is-active' : '' }}" href="{{ route('low-stock-report.index') }}">{{ __('menu.low-stock-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('high-stock-report.index') ? 'is-active' : '' }}" href="{{ route('high-stock-report.index') }}">{{ __('menu.high-stock-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}">{{ __('menu.stock-movement-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}">{{ __('menu.product-movement-report') }}</a></li>
                 </ul>
             </li>
             @endcan
 
-            @canany(['access_currencies', 'access_settings', 'access_units'])
+            @canany(['access_currencies', 'access_settings', 'access_units', 'access_taxes'])
             <li class="app-sidebar-item {{ $inSettings ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSettings ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSettings ? 'true' : 'false' }}">
-                    <span>{{ __('nav.settings') }}</span>
+                    <span class="app-sidebar-link-group"><i class="bi bi-gear"></i> <span>{{ __('nav.settings') }}</span></span>
                     <i class="bi bi-chevron-down app-sidebar-caret"></i>
                 </button>
                 <ul class="app-sidebar-sublist {{ $inSettings ? 'is-open' : '' }}">
@@ -328,6 +331,9 @@
                     @endcan
                     @can('access_units')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('units*') ? 'is-active' : '' }}" href="{{ route('units.index') }}">{{ __('menu.units') }}</a></li>
+                    @endcan
+                    @can('access_taxes')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('taxes*') ? 'is-active' : '' }}" href="{{ route('taxes.index') }}">{{ __('menu.taxes') }}</a></li>
                     @endcan
                     @can('access_currencies')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('currencies*') ? 'is-active' : '' }}" href="{{ route('currencies.index') }}">{{ __('menu.currencies') }}</a></li>
@@ -339,14 +345,14 @@
             @can('access_activity_logs')
             <li class="app-sidebar-item {{ request()->routeIs('activity-logs.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('activity-logs.index') }}">
-                    <span>{{ __('menu.activity-logs') }}</span>
+                    <i class="bi bi-clock-history"></i> <span>{{ __('menu.activity-logs') }}</span>
                 </a>
             </li>
             @endcan
 
             <li class="app-sidebar-item {{ request()->routeIs('documentation.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('documentation.index') }}">
-                    <span>{{ __('menu.documentation') }}</span>
+                    <i class="bi bi-journal-text"></i> <span>{{ __('menu.documentation') }}</span>
                 </a>
             </li>
         </ul>

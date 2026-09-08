@@ -16,8 +16,8 @@
         <div class="row">
             @forelse($units as $unit)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="unit-{{ $unit->id }}">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
+                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                        <div class="flex-auto p-2">
                             <h5 class="card-title">{{ $unit->name }} <small class="text-muted">({{ $unit->short_name }})</small></h5>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('units.operator') }}</span><span>{{ $unit->operator }}</span></li>
@@ -32,7 +32,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="card"><div class="card-body text-center text-muted">{{ __('units.no_units_found') }}</div></div>
+                    <div class="card"><div class="flex-auto p-2 text-center text-muted">{{ __('units.no_units_found') }}</div></div>
                 </div>
             @endforelse
         </div>

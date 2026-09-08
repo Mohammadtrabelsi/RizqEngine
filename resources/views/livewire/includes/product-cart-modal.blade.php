@@ -1,6 +1,6 @@
 <div class="d-inline-block">
     <!-- Button trigger Discount Modal -->
-    <span wire:click="$dispatch('discountModalRefresh', { product_id: {{ $cart_item->id }}, row_id: '{{ $cart_item->rowId }}' })" role="button" class="badge badge-warning pointer-event" data-toggle="modal" data-target="#discountModal{{ $cart_item->id }}">
+    <span wire:click="$dispatch('discountModalRefresh', { product_id: {{ $cart_item->id }}, row_id: '{{ $cart_item->rowId }}' })" role="button" class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-amber-100 text-amber-700 pointer-event" data-toggle="modal" data-target="#discountModal{{ $cart_item->id }}">
         <i class="bi bi-pencil-square text-white"></i>
     </span>
     <!-- Discount Modal -->
@@ -11,7 +11,7 @@
                     <h5 class="modal-title" id="discountModalLabel">
                         {{ $cart_item->name }}
                         <br>
-                        <span class="badge badge-success">
+                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">
                         {{ $cart_item->options->code }}
                     </span>
                     </h5>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="modal-body">
                     @if (session()->has('discount_message' . $cart_item->id))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-emerald-50 text-emerald-700 border-emerald-200 pr-12 fade show" role="alert">
                             <div class="alert-body">
                                 <span>{{ session('discount_message' . $cart_item->id) }}</span>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -30,14 +30,14 @@
                             </div>
                         </div>
                     @endif
-                    <div class="form-group">
+                    <div class="mb-4">
                         <label>Discount Type <span class="text-danger">*</span></label>
                         <select wire:model.live="discount_type.{{ $cart_item->id }}" class="form-control" required>
                             <option value="fixed">{{ __('product.fixed') }}</option>
                             <option value="percentage">{{ __('product.percentage') }}</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-4">
                         @if($discount_type[$cart_item->id] == 'percentage')
                             <label>Discount(%) <span class="text-danger">*</span></label>
                             <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">

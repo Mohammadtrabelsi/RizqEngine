@@ -1,26 +1,26 @@
 <div>
 <form wire:submit="save">
                     
-                    <div class="form-group">
+                    <div class="mb-4">
                         <button type="submit" class="btn btn-primary">{{ $roleId ? __('roles.update_role') : __('roles.create_role') }} <i class="bi bi-check"></i>
                         </button>
                     </div>
                     <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
+                        <div class="flex-auto p-2">
+                            <div class="mb-4">
                                 <label for="name">{{ __('roles.role_name') }} <span class="text-danger">*</span></label>
-                                <input class="form-control @error('name') is-invalid @enderror" type="text" wire:model="name">
-                                @error('name') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                <input class="form-control @error('name') !border-red-500 @enderror" type="text" wire:model="name">
+                                @error('name') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                             </div>
 
                             <hr>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="permissions">{{ __('roles.permissions') }} <span class="text-danger">*</span></label>
-                                @error('permissions') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
+                                @error('permissions') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="select-all" wire:model.live="selectAll">
                                     <label class="custom-control-label" for="select-all">{{ __('roles.give_all_permissions') }}</label>
@@ -31,10 +31,10 @@
                                 <!-- Dashboard Permissions -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.dashboard') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -84,10 +84,10 @@
                                 <!-- User Management Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.user_management') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -113,10 +113,10 @@
                                 <!-- Products Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.products') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -182,10 +182,10 @@
                                 <!-- Adjustments Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.adjustments') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -235,10 +235,10 @@
                                 <!-- Quotations Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.quotations') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -304,10 +304,10 @@
                                 <!-- Expenses Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.expenses') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -357,10 +357,10 @@
                                 <!-- Customers Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.customers') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -410,10 +410,10 @@
                                 <!-- Suppliers Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.suppliers') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -463,10 +463,10 @@
                                 <!-- Sales Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.sales') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -532,10 +532,10 @@
                                 <!-- Sale Returns Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.sale_returns') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -593,10 +593,10 @@
                                 <!-- Purchases Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             Purchases
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -654,10 +654,10 @@
                                 <!-- Purchases Returns Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.purchase_returns') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -715,10 +715,10 @@
                                 <!-- Currencies Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.currencies') }}    
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -760,10 +760,10 @@
                                 <!-- Reports -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.reports') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -781,10 +781,10 @@
                                 <!-- Settings -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.settings') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
@@ -802,10 +802,10 @@
                                 <!-- Activity Logs -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                                             {{ __('roles.activity_logs') }}
                                         </div>
-                                        <div class="card-body">
+                                        <div class="flex-auto p-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">

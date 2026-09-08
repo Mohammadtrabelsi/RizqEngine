@@ -84,6 +84,9 @@
                 @can('access_commandes')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}"><i class="bi bi-bag-check"></i> <span>{{ __('menu.all-commandes') }}</span></a></li>
                 @endcan
+                @can('access_bon_livraisons')
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}" href="{{ route('bon-livraisons.index') }}"><i class="bi bi-truck"></i> <span>{{ __('menu.all-bon-livraisons') }}</span></a></li>
+                @endcan
             @endif
 
             @if ($inExpenses)
@@ -106,6 +109,7 @@
             @endif
 
             @if ($inReports)
+                <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('periodic-summary-report.index') ? 'is-active' : '' }}" href="{{ route('periodic-summary-report.index') }}"><i class="bi bi-calendar3"></i> <span>{{ __('menu.periodic-summary-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('profit-loss-report.index') ? 'is-active' : '' }}" href="{{ route('profit-loss-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.profit-loss-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('payments-report.index') ? 'is-active' : '' }}" href="{{ route('payments-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.payments-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('sales-report.index') ? 'is-active' : '' }}" href="{{ route('sales-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.sales-report') }}</span></a></li>
@@ -114,6 +118,7 @@
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('purchases-return-report.index') ? 'is-active' : '' }}" href="{{ route('purchases-return-report.index') }}"><i class="bi bi-clipboard-data"></i> <span>{{ __('menu.purchases-return-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('inventory-valuation-report.index') ? 'is-active' : '' }}" href="{{ route('inventory-valuation-report.index') }}"><i class="bi bi-box-seam"></i> <span>{{ __('menu.inventory-valuation-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('low-stock-report.index') ? 'is-active' : '' }}" href="{{ route('low-stock-report.index') }}"><i class="bi bi-exclamation-triangle"></i> <span>{{ __('menu.low-stock-report') }}</span></a></li>
+                <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('high-stock-report.index') ? 'is-active' : '' }}" href="{{ route('high-stock-report.index') }}"><i class="bi bi-arrow-up-circle"></i> <span>{{ __('menu.high-stock-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}"><i class="bi bi-arrow-left-right"></i> <span>{{ __('menu.stock-movement-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}"><i class="bi bi-speedometer2"></i> <span>{{ __('menu.product-movement-report') }}</span></a></li>
             @endif

@@ -1,8 +1,8 @@
 <div>
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-12 col-lg-6">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-warning p-3 mfe-3 rounded">
                         <i class="bi bi-exclamation-triangle font-2xl"></i>
                     </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="col-12 col-lg-6">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 d-flex align-items-center">
+                <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-danger p-3 mfe-3 rounded">
                         <i class="bi bi-x-octagon font-2xl"></i>
                     </div>
@@ -31,13 +31,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
-                <div class="card-body">
+                <div class="flex-auto p-2">
                     <div class="form-check mb-3">
                         <input wire:model.live="only_out_of_stock" type="checkbox" class="form-check-input" id="only_out_of_stock">
                         <label class="form-check-label" for="only_out_of_stock">{{ __('report.show-only-out-of-stock-products') }}</label>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
+                    <div class="block w-full overflow-x-auto">
+                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col">{{ __('report.product') }}</th>
@@ -58,9 +58,9 @@
                                         <td class="text-end">{{ $product->product_stock_alert }}</td>
                                         <td class="text-center">
                                             @if($product->product_quantity <= 0)
-                                                <span class="badge badge-danger">{{ __('report.out-of-stock') }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-red-100 text-red-700">{{ __('report.out-of-stock') }}</span>
                                             @else
-                                                <span class="badge badge-warning">{{ __('report.low-stock') }}</span>
+                                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-amber-100 text-amber-700">{{ __('report.low-stock') }}</span>
                                             @endif
                                         </td>
                                     </tr>

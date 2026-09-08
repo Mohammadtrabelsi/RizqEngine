@@ -23,22 +23,22 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include('utils.alerts')
-                    <div class="form-group">
+                    <div class="mb-4">
                         <button class="btn btn-primary">{{ __('users.create_user') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="name">{{ __('users.name') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="email">{{ __('users.email') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="email" name="email" required>
                                     </div>
@@ -46,13 +46,13 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="password">{{ __('users.password') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="password" name="password" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="password_confirmation">{{ __('users.confirm_password') }} <span
                                                 class="text-danger">*</span></label>
                                         <input class="form-control" type="password" name="password_confirmation"
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="role">{{ __('users.role') }} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="role" id="role" required>
                                     <option value="" selected disabled>{{ __('users.select_role') }}</option>
@@ -70,7 +70,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="is_active">{{ __('users.status') }} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="is_active" id="is_active" required>
                                     <option value="" selected disabled>{{ __('users.select_status') }}</option>
@@ -83,8 +83,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
+                        <div class="flex-auto p-2">
+                            <div class="mb-4">
                                 <label for="image">{{ __('users.profile_image') }} <span class="text-danger">*</span></label>
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">
                             </div>

@@ -22,6 +22,10 @@
     {{-- Brand panel --}}
     <div class="auth-aside login-brand">
         <div class="login-brand__logo d-flex align-items-center gap-2">
+            {{-- White-label client logo precedes the application logo. --}}
+            @if($clientLogo = client_logo_url())
+                <img src="{{ $clientLogo }}" alt="{{ settings()->client_name ?? 'Client logo' }}" class="login-brand__client-logo" style="height:26px;width:auto;object-fit:contain;">
+            @endif
             <svg width="26" height="23" viewBox="0 0 100 90" aria-hidden="true">
                 <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"></polygon>
                 <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"></polygon>
@@ -42,7 +46,7 @@
     {{-- Form panel --}}
     <div class="login-form-wrap bg-slate-50">
         <div class="login-form-card card bg-white border rounded-lg shadow-md">
-            <div class="card-body p-4 p-md-5">
+            <div class="flex-auto p-2 p-4 p-md-5">
                 <div class="login-lang d-flex justify-content-end mb-4">
                     @include('includes.language-switcher')
                 </div>
@@ -56,17 +60,17 @@
                     </div>
 
                     @if(Session::has('account_deactivated'))
-                        <div class="alert alert-warning py-2 px-3 small">
+                        <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-amber-50 text-amber-700 border-amber-200 py-2 px-3 small">
                             {{ Session::get('account_deactivated') }}
                         </div>
                     @endif
 
-                    <div class="field form-group mb-3">
+                    <div class="field mb-4 mb-3">
                         <label for="email" class="form-label text-slate-700 small mb-1">{{ __('login.email') }}</label>
                         <div class="input-group">
                             <span class="input-group-text bg-slate-50 border-slate-300"><i class="bi bi-envelope text-indigo-600"></i></span>
                             <input id="email" type="email"
-                                   class="form-control input @error('email') is-invalid @enderror"
+                                   class="form-control input @error('email') !border-red-500 @enderror"
                                    name="email" value="{{ old('email') }}"
                                    placeholder="you@store.com" autocomplete="email" autofocus>
                         </div>
@@ -75,12 +79,12 @@
                         @enderror
                     </div>
 
-                    <div class="field form-group mb-3">
+                    <div class="field mb-4 mb-3">
                         <label for="password" class="form-label text-slate-700 small mb-1">{{ __('login.password') }}</label>
                         <div class="input-group">
                             <span class="input-group-text bg-slate-50 border-slate-300"><i class="bi bi-lock text-indigo-600"></i></span>
                             <input id="password" type="password"
-                                   class="form-control input @error('password') is-invalid @enderror"
+                                   class="form-control input @error('password') !border-red-500 @enderror"
                                    name="password"
                                    placeholder="••••••••" autocomplete="current-password">
                         </div>
@@ -102,7 +106,7 @@
                     </div>
 
                     <div class="login-form__actions mt-3">
-                        <button id="submit" class="btn btn-primary btn-block py-2 shadow-sm" type="submit">
+                        <button id="submit" class="btn btn-primary flex w-full py-2 shadow-sm" type="submit">
                             <span>{{ __('login.sign-in') }}</span>
                             <span id="spinner" class="spinner-border spinner-border-sm text-light login-spinner ms-2" role="status">
                                 <span class="sr-only">Loading...</span>

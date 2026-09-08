@@ -16,7 +16,7 @@
         <div class="row justify-content-center">
             <div class="col-md-7">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <livewire:expense-categories.expense-category-form :expense-category="$expenseCategory"/>
                     </div>
                 </div>

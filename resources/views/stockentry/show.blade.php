@@ -14,15 +14,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="card">
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <h4 class="mb-1">{{ __('stockexit.bon_dentree') }} — {{ $stockEntry->reference }}</h4>
                 <ul class="list-group list-group-horizontal mb-4 flex-wrap">
                     <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('stockexit.origin_reference') }}</span>{{ $stockEntry->stockExit->reference }}</li>
                     <li class="list-group-item flex-fill"><span class="fw-bold d-block">{{ __('stockexit.reception_date') }}</span>{{ \Illuminate\Support\Carbon::parse($stockEntry->date)->format('d M, Y') }}</li>
                 </ul>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered">
+                <div class="block w-full overflow-x-auto">
+                    <table class="w-full mb-4 text-slate-900 border-collapse table-bordered">
                         <thead>
                             <tr>
                                 <th>{{ __('product.code') }}</th>
@@ -43,11 +43,11 @@
                                     <td class="text-end">{{ $detail->quantity_lost }}</td>
                                     <td>
                                         @if($detail->quantity_lost === 0)
-                                            <span class="badge bg-success">{{ __('stockexit.full_return') }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('stockexit.full_return') }}</span>
                                         @elseif($detail->quantity_returned === 0)
-                                            <span class="badge bg-danger">{{ __('stockexit.fully_consumed') }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-danger">{{ __('stockexit.fully_consumed') }}</span>
                                         @else
-                                            <span class="badge bg-warning text-dark">{{ __('stockexit.partial_return') }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark">{{ __('stockexit.partial_return') }}</span>
                                         @endif
                                     </td>
                                 </tr>

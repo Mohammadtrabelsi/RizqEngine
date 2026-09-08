@@ -14,6 +14,11 @@
             font-size: 13px;
         }
         .page { padding: 45px 55px; }
+        .header { width: 100%; margin-bottom: 8px; }
+        .header td { vertical-align: middle; }
+        .header .brand { text-align: right; }
+        .header .brand img { max-height: 90px; max-width: 240px; }
+        .header .brand .company { font-weight: bold; font-size: 18px; }
         .invoice-title {
             font-size: 72px;
             font-weight: bold;
@@ -78,8 +83,47 @@
     </style>
 </head>
 <body>
+@php
+    $embedLogo = function (?string $path) {
+        if (! $path || ! is_file($path)) {
+            return null;
+        }
+        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $mime = $ext === 'svg' ? 'image/svg+xml' : ($ext === 'jpg' || $ext === 'jpeg' ? 'image/jpeg' : 'image/png');
+
+        return 'data:'.$mime.';base64,'.base64_encode(file_get_contents($path));
+    };
+
+    // White-label client logo, displayed before the application logo.
+    $clientLogoData = settings()->client_logo
+        ? $embedLogo(storage_path('app/public/'.settings()->client_logo))
+        : null;
+
+    // Application logo (configured site logo, else bundled default).
+    $appLogoData = ($p = settings()->site_logo ? storage_path('app/public/'.settings()->site_logo) : null)
+        ? $embedLogo($p)
+        : $embedLogo(public_path('images/logo-dark.png'));
+@endphp
 <div class="page">
-    <div class="invoice-title">FACTURE</div>
+    <table class="header">
+        <tr>
+            <td>
+                <div class="invoice-title">FACTURE</div>
+            </td>
+            <td class="brand">
+                @if($clientLogoData || $appLogoData)
+                    @if($clientLogoData)
+                        <img src="{{ $clientLogoData }}" alt="Client logo" style="max-height:48px;vertical-align:middle;">
+                    @endif
+                    @if($appLogoData)
+                        <img src="{{ $appLogoData }}" alt="Logo" style="max-height:48px;vertical-align:middle;">
+                    @endif
+                @else
+                    <div class="company">{{ strtoupper(settings()->company_name) }}</div>
+                @endif
+            </td>
+        </tr>
+    </table>
     <div class="meta-pills">
         <span class="pill">Facture n°{{ $sale->reference }}</span>
         <span class="pill">{{ \Carbon\Carbon::parse($sale->date)->format('d/m/y') }}</span>

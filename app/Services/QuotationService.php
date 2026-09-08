@@ -20,6 +20,7 @@ class QuotationService
     public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
     {
         return Quotation::query()
+            ->with(['bonCommande', 'commande'])
             ->when($search, function ($query) use ($search) {
                 $term = '%'.$search.'%';
                 $query->where('reference', 'like', $term)

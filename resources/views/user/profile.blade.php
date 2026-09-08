@@ -23,32 +23,32 @@
             </div>
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <form action="{{ route('profile.update') }}" method="POST">
                             @csrf
                             @method('patch')
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="image">{{ __('profile.profile_image') }} <span class="text-danger">*</span></label>
                                 <img class="avatar-100 d-block mx-auto img-thumbnail img-fluid rounded-circle mb-2" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">
                             </div>
 
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="name">{{ __('profile.name') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="name" required value="{{ auth()->user()->name }}">
                                 @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="email">{{ __('profile.email') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="email" name="email" required value="{{ auth()->user()->email }}">
                                 @error('email')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <button type="submit" class="btn btn-primary">{{ __('profile.update_profile') }} <i class="bi bi-check"></i></button>
                             </div>
                         </form>
@@ -57,32 +57,32 @@
             </div>
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         <form action="{{ route('profile.update.password') }}" method="POST">
                             @csrf
                             @method('patch')
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="current_password">{{ __('profile.current_password') }} <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" name="current_password" required>
                                 @error('current_password')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="password">{{ __('profile.new_password') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="password" name="password" required>
                                 @error('password')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="password_confirmation">{{ __('profile.confirm_password') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="password" name="password_confirmation" required>
                                 @error('password_confirmation')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <button type="submit" class="btn btn-primary">{{ __('profile.update_password') }} <i class="bi bi-check"></i></button>
                             </div>
                         </form>

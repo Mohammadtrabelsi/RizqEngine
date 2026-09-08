@@ -15,14 +15,14 @@
     <div class="container-fluid">
         @include('utils.alerts')
         <div class="card">
-            <div class="card-body">
+            <div class="flex-auto p-2">
                 <h4 class="mb-1">{{ __('stockexit.bon_dentree') }}</h4>
                 <p class="text-muted">{{ __('stockexit.origin_reference') }}: <strong>{{ $stockExit->reference }}</strong></p>
                 @if($stockExit->isConsignment() && $stockExit->customer)
                     <p class="text-muted">{{ __('stockexit.consignee') }}: <strong>{{ $stockExit->customer->customer_name }}</strong></p>
                 @endif
 
-                <div class="alert alert-info">
+                <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-indigo-50 text-indigo-700 border-indigo-200">
                     <i class="bi bi-info-circle"></i>
                     {{ $stockExit->isConsignment() ? __('stockexit.consignment_return_hint') : __('stockexit.return_control_hint') }}
                 </div>
@@ -31,15 +31,15 @@
                     @csrf
                     <div class="form-row">
                         <div class="col-lg-4">
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="date">{{ __('stockexit.reception_date') }} <span class="text-danger">*</span></label>
                                 <input type="date" id="date" name="date" class="form-control" required value="{{ old('date', now()->format('Y-m-d')) }}">
                             </div>
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered align-middle">
+                    <div class="block w-full overflow-x-auto">
+                        <table class="w-full mb-4 text-slate-900 border-collapse table-bordered align-middle">
                             <thead>
                                 <tr>
                                     <th>{{ __('product.code') }}</th>
@@ -75,7 +75,7 @@
                         </table>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-4">
                         <label for="note">{{ __('stockexit.note') }}</label>
                         <textarea name="note" id="note" rows="3" class="form-control">{{ old('note') }}</textarea>
                     </div>

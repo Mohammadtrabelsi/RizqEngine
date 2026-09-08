@@ -21,20 +21,20 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form action="{{ route('adjustments.store') }}" method="POST">
                             @csrf
                             <div class="form-row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="mb-4">
                                         <label for="reference">{{ __('adjustment.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="ADJ">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="from-group">
-                                        <div class="form-group">
+                                        <div class="mb-4">
                                             <label for="date">{{ __('adjustment.date') }} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
                                         </div>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <livewire:adjustment.product-table/>
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <label for="note">{{ __('adjustment.note') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
