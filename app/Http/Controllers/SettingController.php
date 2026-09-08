@@ -50,7 +50,7 @@ class SettingController extends Controller
 
         $this->settings->update($data, [
             'client_logo' => $request->file('client_logo'),
-        ]);
+        ], $request->boolean('remove_client_logo') ? ['client_logo'] : []);
 
         session()->flash('info', trans('setting.settings-updated'));
 

@@ -22,6 +22,10 @@
     {{-- Brand panel --}}
     <div class="auth-aside login-brand">
         <div class="login-brand__logo d-flex align-items-center gap-2">
+            {{-- White-label client logo precedes the application logo. --}}
+            @if($clientLogo = client_logo_url())
+                <img src="{{ $clientLogo }}" alt="{{ settings()->client_name ?? 'Client logo' }}" class="login-brand__client-logo" style="height:26px;width:auto;object-fit:contain;">
+            @endif
             <svg width="26" height="23" viewBox="0 0 100 90" aria-hidden="true">
                 <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"></polygon>
                 <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"></polygon>

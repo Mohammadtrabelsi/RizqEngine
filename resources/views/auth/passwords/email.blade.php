@@ -19,7 +19,11 @@
 <div class="login-grid">
 
     <div class="login-brand login-brand-copy">
-        <a href="{{ route('welcome') }}" class="auth-brand-link">
+        <a href="{{ route('welcome') }}" class="auth-brand-link d-flex align-items-center gap-2">
+            {{-- White-label client logo precedes the application logo. --}}
+            @if($clientLogo = client_logo_url())
+                <img src="{{ $clientLogo }}" alt="{{ settings()->client_name ?? 'Client logo' }}" style="height:26px;width:auto;object-fit:contain;">
+            @endif
             <x-logo :size="26" label="RizqEngine" />
         </a>
 

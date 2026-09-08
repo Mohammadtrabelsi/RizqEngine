@@ -84,23 +84,25 @@
 </head>
 <body>
 @php
-    $logoData = null;
-    $candidates = [];
-    if (settings()->client_logo) {
-        $candidates[] = storage_path('app/public/'.settings()->client_logo);
-    }
-    if (settings()->site_logo) {
-        $candidates[] = storage_path('app/public/'.settings()->site_logo);
-    }
-    $candidates[] = public_path('images/logo-dark.png');
-    foreach ($candidates as $logoPath) {
-        if ($logoPath && is_file($logoPath)) {
-            $ext = strtolower(pathinfo($logoPath, PATHINFO_EXTENSION));
-            $mime = $ext === 'svg' ? 'image/svg+xml' : ($ext === 'jpg' || $ext === 'jpeg' ? 'image/jpeg' : 'image/png');
-            $logoData = 'data:'.$mime.';base64,'.base64_encode(file_get_contents($logoPath));
-            break;
+    $embedLogo = function (?string $path) {
+        if (! $path || ! is_file($path)) {
+            return null;
         }
-    }
+        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $mime = $ext === 'svg' ? 'image/svg+xml' : ($ext === 'jpg' || $ext === 'jpeg' ? 'image/jpeg' : 'image/png');
+
+        return 'data:'.$mime.';base64,'.base64_encode(file_get_contents($path));
+    };
+
+    // White-label client logo, displayed before the application logo.
+    $clientLogoData = settings()->client_logo
+        ? $embedLogo(storage_path('app/public/'.settings()->client_logo))
+        : null;
+
+    // Application logo (configured site logo, else bundled default).
+    $appLogoData = ($p = settings()->site_logo ? storage_path('app/public/'.settings()->site_logo) : null)
+        ? $embedLogo($p)
+        : $embedLogo(public_path('images/logo-dark.png'));
 @endphp
 <div class="page">
     <table class="header">
@@ -109,8 +111,13 @@
                 <div class="invoice-title">FACTURE</div>
             </td>
             <td class="brand">
-                @if($logoData)
-                    <img src="{{ $logoData }}" alt="Logo">
+                @if($clientLogoData || $appLogoData)
+                    @if($clientLogoData)
+                        <img src="{{ $clientLogoData }}" alt="Client logo" style="max-height:48px;vertical-align:middle;">
+                    @endif
+                    @if($appLogoData)
+                        <img src="{{ $appLogoData }}" alt="Logo" style="max-height:48px;vertical-align:middle;">
+                    @endif
                 @else
                     <div class="company">{{ strtoupper(settings()->company_name) }}</div>
                 @endif

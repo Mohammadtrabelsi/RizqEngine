@@ -9,16 +9,13 @@
 --}}
 <aside class="app-sidebar" id="app-sidebar">
     <div class="app-sidebar-brand">
-        <a href="{{ route('dashboard') }}" class="app-sidebar-brand-link">
+        <a href="{{ route('dashboard') }}" class="app-sidebar-brand-link flex items-center gap-3">
+            {{-- White-label client logo precedes the application logo. --}}
             @if($sidebarSettings->client_logo)
-                <img src="{{ \Illuminate\Support\Facades\Storage::url($sidebarSettings->client_logo) }}" alt="{{ $sidebarSettings->client_name ?? 'Logo' }}" class="app-sidebar-logo-img">
-                @if($sidebarSettings->client_name)
-                    <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name }}</span>
-                @endif
-            @else
-                <x-logo-mark tone="dark" />
-                <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'RizqEngine' }}</span>
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($sidebarSettings->client_logo) }}" alt="{{ $sidebarSettings->client_name ?? 'Client logo' }}" class="app-sidebar-logo-img">
             @endif
+            <x-logo-mark tone="dark" />
+            <span class="app-sidebar-brand-name">{{ $sidebarSettings->client_name ?? 'RizqEngine' }}</span>
         </a>
         <button class="app-sidebar-close d-lg-none" type="button"
                 data-toggle="collapse" data-target="#app-sidebar" aria-label="Close menu">
