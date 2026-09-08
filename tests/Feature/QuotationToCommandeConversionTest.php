@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Exceptions\ConversionException;
-use App\Models\BonCommande;
 use App\Models\Commande;
 use App\Models\Customer;
 use App\Models\Product;

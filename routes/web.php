@@ -2,6 +2,9 @@
 
 use App\Http\Middleware\SetLocale;
 use App\Livewire\Auth\Login as RedesignLogin;
+use App\Livewire\Batches\BatchForm;
+use App\Livewire\Batches\BatchIndex;
+use App\Livewire\CashRegister\CashRegisterIndex;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
@@ -19,6 +22,9 @@ use App\Livewire\Finance\OutingForm;
 use App\Livewire\Finance\OutingIndex;
 use App\Livewire\LandingPage as RedesignLandingPage;
 use App\Livewire\Products\ProductImport;
+use App\Livewire\SerialNumbers\SerialNumberIndex;
+use App\Livewire\StockTransfers\StockTransferForm;
+use App\Livewire\StockTransfers\StockTransferIndex;
 use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
@@ -29,6 +35,9 @@ use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Livewire\Vehicles\VehicleForm;
 use App\Livewire\Vehicles\VehicleIndex;
+use App\Livewire\Warehouses\WarehouseForm;
+use App\Livewire\Warehouses\WarehouseIndex;
+use App\Livewire\Warehouses\WarehouseStockDashboard;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\PurchaseReturn;
@@ -222,25 +231,25 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
     Route::get('/vehicles/{vehicle}/edit', VehicleForm::class)->name('vehicles.edit');
 
     // Warehouses (dépôts) — full-page Livewire components.
-    Route::get('/warehouses', \App\Livewire\Warehouses\WarehouseIndex::class)->name('warehouses.index');
-    Route::get('/warehouses/stock', \App\Livewire\Warehouses\WarehouseStockDashboard::class)->name('warehouses.stock');
-    Route::get('/warehouses/create', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.create');
-    Route::get('/warehouses/{warehouse}/edit', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.edit');
+    Route::get('/warehouses', WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/warehouses/stock', WarehouseStockDashboard::class)->name('warehouses.stock');
+    Route::get('/warehouses/create', WarehouseForm::class)->name('warehouses.create');
+    Route::get('/warehouses/{warehouse}/edit', WarehouseForm::class)->name('warehouses.edit');
 
     // Stock transfers between warehouses.
-    Route::get('/stock-transfers', \App\Livewire\StockTransfers\StockTransferIndex::class)->name('stock-transfers.index');
-    Route::get('/stock-transfers/create', \App\Livewire\StockTransfers\StockTransferForm::class)->name('stock-transfers.create');
+    Route::get('/stock-transfers', StockTransferIndex::class)->name('stock-transfers.index');
+    Route::get('/stock-transfers/create', StockTransferForm::class)->name('stock-transfers.create');
 
     // Batches (lots) — traceability with DLC/DLUO.
-    Route::get('/batches', \App\Livewire\Batches\BatchIndex::class)->name('batches.index');
-    Route::get('/batches/create', \App\Livewire\Batches\BatchForm::class)->name('batches.create');
-    Route::get('/batches/{batch}/edit', \App\Livewire\Batches\BatchForm::class)->name('batches.edit');
+    Route::get('/batches', BatchIndex::class)->name('batches.index');
+    Route::get('/batches/create', BatchForm::class)->name('batches.create');
+    Route::get('/batches/{batch}/edit', BatchForm::class)->name('batches.edit');
 
     // Serial numbers — individually tracked units.
-    Route::get('/serial-numbers', \App\Livewire\SerialNumbers\SerialNumberIndex::class)->name('serial-numbers.index');
+    Route::get('/serial-numbers', SerialNumberIndex::class)->name('serial-numbers.index');
 
     // Cash register (caisse) — open/close sessions and daily Z report.
-    Route::get('/cash-register', \App\Livewire\CashRegister\CashRegisterIndex::class)->name('cash-register.index');
+    Route::get('/cash-register', CashRegisterIndex::class)->name('cash-register.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {

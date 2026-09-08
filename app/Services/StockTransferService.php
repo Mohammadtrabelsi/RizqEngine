@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\TransferStatus;
+use App\Exceptions\InsufficientStockException;
 use App\Models\Product;
 use App\Models\StockTransfer;
 use App\Models\Warehouse;
@@ -37,7 +38,7 @@ class StockTransferService
      * @param  array<int, array{product_id:int, quantity:int}>  $lines
      *
      * @throws \InvalidArgumentException when source and destination match or lines are empty.
-     * @throws \App\Exceptions\InsufficientStockException when the source lacks stock.
+     * @throws InsufficientStockException when the source lacks stock.
      */
     public function create(Warehouse $from, Warehouse $to, array $lines, ?string $date = null, ?string $note = null): StockTransfer
     {

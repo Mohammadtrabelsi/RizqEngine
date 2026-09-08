@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Tax;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Owns all persistence for taxes so Livewire components never touch the
@@ -26,9 +27,9 @@ class TaxService
      * Taxes selectable for the given scope ("product" or "order"), in the
      * order they should be applied/listed.
      *
-     * @return \Illuminate\Support\Collection<int, Tax>
+     * @return Collection<int, Tax>
      */
-    public function forScope(string $applyTo): \Illuminate\Support\Collection
+    public function forScope(string $applyTo): Collection
     {
         return Tax::where('apply_to', $applyTo)
             ->orderBy('order')

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
@@ -88,9 +89,9 @@ class Product extends Model implements HasMedia
      * Warehouses this product is stocked in, with the per-warehouse on-hand
      * quantity carried on the pivot.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Warehouse, $this>
+     * @return BelongsToMany<Warehouse, $this>
      */
-    public function warehouses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'product_warehouse')
             ->withPivot(['quantity', 'location_id'])
@@ -103,9 +104,9 @@ class Product extends Model implements HasMedia
      * summed into product_order_tax; fixed-amount taxes are recorded but not
      * yet folded into computed prices.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tax, $this>
+     * @return BelongsToMany<Tax, $this>
      */
-    public function taxes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function taxes(): BelongsToMany
     {
         return $this->belongsToMany(Tax::class, 'product_taxes')->withTimestamps();
     }
