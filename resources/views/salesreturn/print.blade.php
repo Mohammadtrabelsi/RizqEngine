@@ -18,7 +18,7 @@
                     <span>Reference::</span> <strong>{{ $sale_return->reference }}</strong>
                 </h4>
             </div>
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+            <div class="card">
                 <div class="flex-auto p-2">
                     <div class="row mb-4">
                         <div class="col-xs-4 mb-3 mb-md-0">
@@ -54,7 +54,7 @@
                     <div class="row" style="margin-top: 30px;">
                         @foreach($sale_return->saleReturnDetails as $item)
                             <div class="col-xs-6" style="margin-bottom: 20px;">
-                                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                                <div class="card">
                                     <div class="flex-auto p-2">
                                         <div><strong>{{ $item->product_name }}</strong>
                                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">{{ $item->product_code }}</span>

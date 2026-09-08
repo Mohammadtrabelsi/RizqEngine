@@ -1,23 +1,23 @@
 <div>
     <div class="row mb-4">
         <div class="col-12">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
                     <form wire:submit="generateReport">
                         <div class="form-row align-items-end">
                             <div class="col-lg-2 col-md-6 mb-3">
                                     <label>{{ __('report.start-date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="start_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
+                                    <input wire:model="start_date" type="date" class="form-control">
                                     @error('start_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-2 col-md-6 mb-3">
                                     <label>{{ __('report.end-date') }} <span class="text-danger">*</span></label>
-                                    <input wire:model="end_date" type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
+                                    <input wire:model="end_date" type="date" class="form-control">
                                     @error('end_date') <span class="text-danger mt-1">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-3 col-md-6 mb-3">
                                     <label>{{ __('report.product') }}</label>
-                                    <select wire:model="product_id" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
+                                    <select wire:model="product_id" class="form-control">
                                         <option value="">{{ __('report.all-products') }}</option>
                                         @foreach($products as $product)
                                             <option value="{{ $product->id }}">{{ $product->product_name }}</option>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-lg-3 col-md-6 mb-3">
                                     <label>{{ __('report.type') }}</label>
-                                    <select wire:model="type" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
+                                    <select wire:model="type" class="form-control">
                                         <option value="">{{ __('report.all-types') }}</option>
                                         <option value="in">{{ __('report.stock-in') }}</option>
                                         <option value="out">{{ __('report.stock-out') }}</option>
@@ -35,7 +35,7 @@
                                     </select>
                             </div>
                             <div class="col-auto mb-3">
-                                <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">
+                                <button type="submit" class="btn btn-primary">
                                     <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
                                     {{ __('report.filter-report') }}
@@ -50,7 +50,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
                     <div class="block w-full overflow-x-auto">
                         <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">

@@ -4,7 +4,7 @@
         {{-- Filters --}}
         <div class="row mb-3">
             <div class="col-12 col-md-4 mb-2">
-                <select wire:model.live="warehouseId" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">
+                <select wire:model.live="warehouseId" class="form-control">
                     <option value="0">{{ __('warehouses.all_warehouses') }}</option>
                     @foreach($warehouses as $warehouse)
                         <option value="{{ $warehouse->id }}">{{ $warehouse->name }}{{ $warehouse->is_default ? ' ('.__('warehouses.default').')' : '' }}</option>
@@ -12,11 +12,11 @@
                 </select>
             </div>
             <div class="col-12 col-md-5 mb-2">
-                <input type="text" wire:model.live.debounce.300ms="search" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="{{ __('app.search') }}">
+                <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
             </div>
             <div class="col-12 col-md-3 mb-2 text-md-end">
                 @can('access_stock_exits')
-                    <a href="{{ route('stock-exits.index') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:!text-white">
+                    <a href="{{ route('stock-exits.index') }}" class="btn btn-outline">
                         <i class="bi bi-box-arrow-up"></i> {{ __('stockexit.stock_exits') }}
                     </a>
                 @endcan
@@ -44,7 +44,7 @@
         </div>
 
         {{-- Detailed stock table --}}
-        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm mb-4">
+        <div class="card border-0 shadow-sm mb-4">
             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.stock_state') }}</strong></div>
             <div class="flex-auto p-2 p-0">
                 <div class="block w-full overflow-x-auto">
@@ -79,7 +79,7 @@
         </div>
 
         {{-- Outstanding Bons de Sortie --}}
-        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+        <div class="card border-0 shadow-sm">
             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-white"><strong>{{ __('warehouses.outstanding_exits') }}</strong></div>
             <div class="flex-auto p-2 p-0">
                 <div class="block w-full overflow-x-auto">
@@ -102,7 +102,7 @@
                                     <td class="text-end">{{ number_format((int) $exit->outstanding_quantity) }}</td>
                                     <td class="text-end">
                                         @can('access_stock_exits')
-                                            <a href="{{ route('stock-exits.show', $exit) }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !px-3 !py-1.5 !text-xs !text-slate-600 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('stock-exits.show', $exit) }}" class="btn btn-sm btn-secondary"><i class="bi bi-eye"></i></a>
                                         @endcan
                                     </td>
                                 </tr>

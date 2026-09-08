@@ -45,7 +45,7 @@
 
     {{-- Form panel --}}
     <div class="login-form-wrap bg-slate-50">
-        <div class="login-form-card relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 bg-white border rounded-lg shadow-md">
+        <div class="login-form-card card bg-white border rounded-lg shadow-md">
             <div class="flex-auto p-2 p-4 p-md-5">
                 <div class="login-lang d-flex justify-content-end mb-4">
                     @include('includes.language-switcher')
@@ -66,11 +66,11 @@
                     @endif
 
                     <div class="field mb-4 mb-3">
-                        <label for="email" class="inline-block mb-1.5 text-sm font-medium text-slate-900 text-slate-700 small mb-1">{{ __('login.email') }}</label>
+                        <label for="email" class="form-label text-slate-700 small mb-1">{{ __('login.email') }}</label>
                         <div class="input-group">
                             <span class="input-group-text bg-slate-50 border-slate-300"><i class="bi bi-envelope text-indigo-600"></i></span>
                             <input id="email" type="email"
-                                   class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 input @error('email') !border-red-500 @enderror"
+                                   class="form-control input @error('email') !border-red-500 @enderror"
                                    name="email" value="{{ old('email') }}"
                                    placeholder="you@store.com" autocomplete="email" autofocus>
                         </div>
@@ -80,11 +80,11 @@
                     </div>
 
                     <div class="field mb-4 mb-3">
-                        <label for="password" class="inline-block mb-1.5 text-sm font-medium text-slate-900 text-slate-700 small mb-1">{{ __('login.password') }}</label>
+                        <label for="password" class="form-label text-slate-700 small mb-1">{{ __('login.password') }}</label>
                         <div class="input-group">
                             <span class="input-group-text bg-slate-50 border-slate-300"><i class="bi bi-lock text-indigo-600"></i></span>
                             <input id="password" type="password"
-                                   class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 input @error('password') !border-red-500 @enderror"
+                                   class="form-control input @error('password') !border-red-500 @enderror"
                                    name="password"
                                    placeholder="••••••••" autocomplete="current-password">
                         </div>
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="login-form__actions mt-3">
-                        <button id="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700 flex w-full py-2 shadow-sm" type="submit">
+                        <button id="submit" class="btn btn-primary flex w-full py-2 shadow-sm" type="submit">
                             <span>{{ __('login.sign-in') }}</span>
                             <span id="spinner" class="spinner-border spinner-border-sm text-light login-spinner ms-2" role="status">
                                 <span class="sr-only">Loading...</span>

@@ -15,7 +15,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-7">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                <div class="card">
                     <div class="flex-auto p-2">
                         <livewire:product-categories.category-form :category="$category"/>
                     </div>

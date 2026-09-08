@@ -15,7 +15,7 @@
         <!-- Product Header Section -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm bg-gradient">
+                <div class="card border-0 shadow-sm bg-gradient">
                     <div class="flex-auto p-2">
                         <div class="row align-items-center">
                             <div class="col-md-6">
@@ -39,7 +39,7 @@
             <!-- Main Content -->
             <div class="col-lg-9">
                 <!-- Basic Information -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4 border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-info-circle"></i> {{ __('product.product_details') }}</h5>
                     </div>
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- Pricing & Cost -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4 border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-cash-coin"></i> {{ __('product.pricing_and_cost') }}</h5>
                     </div>
@@ -98,7 +98,7 @@
                 </div>
 
                 <!-- Stock Information -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4 border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-box2"></i> Stock Information</h5>
                     </div>
@@ -144,7 +144,7 @@
                 </div>
 
                 <!-- Tax Information -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4 border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-calculator"></i> {{ __('product.tax_information') }}</h5>
                     </div>
@@ -185,7 +185,7 @@
                 </div>
 
                 <!-- Orders -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4 border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-receipt"></i> {{ __('product.orders') }}</h5>
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ $orders->count() }}</span>
@@ -239,7 +239,7 @@
                 </div>
 
                 <!-- Transaction History -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="card border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-clock-history"></i> {{ __('product.transaction_history') }}</h5>
                         <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ $transactions->count() }}</span>
@@ -298,7 +298,7 @@
             <!-- Sidebar -->
             <div class="col-lg-3">
                 <!-- Product Image -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 mb-4 border-0 shadow-sm">
+                <div class="card mb-4 border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-image"></i> {{ __('product.product_image') }}</h5>
                     </div>
@@ -312,7 +312,7 @@
                 </div>
 
                 <!-- Barcode Section -->
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+                <div class="card border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl bg-light border-bottom">
                         <h5 class="mb-0"><i class="bi bi-qr-code"></i> {{ __('product.barcode') }}</h5>
                     </div>

@@ -1,5 +1,5 @@
 <div class="btn-group dropdown inline-action-menu">
-    <button type="button" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default !text-indigo-600 bg-transparent border-transparent px-2 hover:bg-indigo-50 rounded" data-toggle="dropdown" aria-expanded="false">
+    <button type="button" class="btn btn-ghost" data-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-three-dots-vertical"></i>
     </button>
     <div class="dropdown-menu">

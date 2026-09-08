@@ -32,7 +32,7 @@
     </div>
 
     <div class="login-form-wrap">
-        <div class="login-form-card relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+        <div class="login-form-card card">
             <div class="flex-auto p-2">
                 <form class="login-form" method="post" action="{{ url('/password/reset') }}">
                     @csrf
@@ -45,7 +45,7 @@
 
                     <div class="login-form__field">
                         <label for="email">{{ __('password.email') }}</label>
-                        <input id="email" type="email" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('email') !border-red-500 @enderror"
+                        <input id="email" type="email" class="form-control @error('email') !border-red-500 @enderror"
                                name="email" value="{{ $email ?? old('email') }}" placeholder="you@store.com" autofocus>
                         @error('email')
                             <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
@@ -54,7 +54,7 @@
 
                     <div class="login-form__field">
                         <label for="password">{{ __('password.password') }}</label>
-                        <input id="password" type="password" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 @error('password') !border-red-500 @enderror"
+                        <input id="password" type="password" class="form-control @error('password') !border-red-500 @enderror"
                                name="password" placeholder="••••••••">
                         @error('password')
                             <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
@@ -64,10 +64,10 @@
                     <div class="login-form__field">
                         <label for="password_confirmation">{{ __('password.confirm-password') }}</label>
                         <input id="password_confirmation" type="password" name="password_confirmation"
-                               class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" placeholder="••••••••">
+                               class="form-control" placeholder="••••••••">
                     </div>
 
-                    <button type="submit" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700 flex w-full">{{ __('password.reset') }}</button>
+                    <button type="submit" class="btn btn-primary flex w-full">{{ __('password.reset') }}</button>
                 </form>
             </div>
         </div>

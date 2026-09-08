@@ -15,7 +15,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-5">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                <div class="card">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0">{{ __('activitylog.activity_details') }}</h5>
                     </div>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="col-lg-7">
-                <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                <div class="card">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0">{{ __('activitylog.attribute_changes') }}</h5>
                     </div>
@@ -52,7 +52,7 @@
                             <div class="row">
                                 @foreach($changeSet['keys'] as $key)
                                     <div class="col-md-6 mb-3">
-                                        <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border h-100">
+                                        <div class="card border h-100">
                                             <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl py-2">
                                                 <strong>{{ \Illuminate\Support\Str::headline($key) }}</strong>
                                             </div>
@@ -80,7 +80,7 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <a href="{{ route('activity-logs.index') }}" class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-white !text-slate-700 border-slate-300 hover:bg-slate-50 hover:!text-slate-900 hover:border-slate-400">
+                <a href="{{ route('activity-logs.index') }}" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> {{ __('activitylog.back_to_activity_logs') }}
                 </a>
             </div>

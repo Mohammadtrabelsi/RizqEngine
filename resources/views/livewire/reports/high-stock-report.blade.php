@@ -1,7 +1,7 @@
 <div>
     <div class="row mb-4">
         <div class="col-12">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-info p-3 mfe-3 rounded">
                         <i class="bi bi-arrow-up-circle font-2xl"></i>
@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
                     <div class="block w-full overflow-x-auto">
                         <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">

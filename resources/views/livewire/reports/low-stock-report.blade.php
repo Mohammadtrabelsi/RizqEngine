@@ -1,7 +1,7 @@
 <div>
     <div class="row mb-4">
         <div class="col-12 col-lg-6">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-warning p-3 mfe-3 rounded">
                         <i class="bi bi-exclamation-triangle font-2xl"></i>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2 p-3 d-flex align-items-center">
                     <div class="bg-danger p-3 mfe-3 rounded">
                         <i class="bi bi-x-octagon font-2xl"></i>
@@ -30,7 +30,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm">
+            <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
                     <div class="form-check mb-3">
                         <input wire:model.live="only_out_of_stock" type="checkbox" class="form-check-input" id="only_out_of_stock">

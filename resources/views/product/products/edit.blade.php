@@ -19,23 +19,23 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="mb-4">
-                        <button class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700">{{ __('product.update_product') }} <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('product.update_product') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="card">
                         <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-md-7">
                                     <div class="mb-4">
                                         <label for="product_name">{{ __('product.product_name') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_name" required value="{{ $product->product_name }}">
+                                        <input type="text" class="form-control" name="product_name" required value="{{ $product->product_name }}">
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="mb-4">
                                         <label for="product_code">{{ __('product.product_code') }} <span class="text-danger">*</span></label>
-                                        <input type="number" min="0" step="1" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_code" required value="{{ $product->product_code }}">
+                                        <input type="number" min="0" step="1" class="form-control" name="product_code" required value="{{ $product->product_code }}">
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="category_id">{{ __('product.category') }} <span class="text-danger">*</span></label>
-                                        <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="category_id" id="category_id" required>
+                                        <select class="form-control" name="category_id" id="category_id" required>
                                             @foreach(\App\Models\Category::all() as $category)
                                                 <option {{ $category->id == $product->category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->category_name }}</option>
                                             @endforeach
@@ -54,7 +54,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="supplier_id">{{ __('product.supplier') }} <span class="text-danger">*</span></label>
-                                        <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="supplier_id" id="supplier_id" required>
+                                        <select class="form-control" name="supplier_id" id="supplier_id" required>
                                             <option value="" disabled>{{ __('product.select_supplier') }}</option>
                                             @foreach(\App\Models\Supplier::all() as $supplier)
                                                 <option value="{{ $supplier->id }}" {{ $product->supplier_id == $supplier->id ? 'selected' : '' }}>{{ $supplier->supplier_name }}</option>
@@ -68,7 +68,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="barcode_symbology">{{ __('product.barcode_symbology') }} <span class="text-danger">*</span></label>
-                                        <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_barcode_symbology" id="barcode_symbology" required>
+                                        <select class="form-control" name="product_barcode_symbology" id="barcode_symbology" required>
                                             <option {{ $product->product_barcode_symbology == 'C128' ? 'selected' : '' }} value="C128">Code 128</option>
                                             <option {{ $product->product_barcode_symbology == 'C39' ? 'selected' : '' }} value="C39">Code 39</option>
                                             <option {{ $product->product_barcode_symbology == 'UPCA' ? 'selected' : '' }} value="UPCA">UPC-A</option>
@@ -102,20 +102,20 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_cost">{{ __('product.cost') }} <span class="text-danger">*</span></label>
-                                        <input id="product_cost" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" min="0" name="product_cost" data-money-mask data-money-prefill required value="{{ $product->product_cost }}">
+                                        <input id="product_cost" type="text" class="form-control" min="0" name="product_cost" data-money-mask data-money-prefill required value="{{ $product->product_cost }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6" id="product_margin_wrapper" style="display:none;">
                                     <div class="mb-4">
                                         <label for="product_margin">{{ __('product.margin') }}</label>
-                                        <input id="product_margin" type="number" step="0.01" min="0" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_margin" value="{{ old('product_margin', $computedMargin) }}">
+                                        <input id="product_margin" type="number" step="0.01" min="0" class="form-control" name="product_margin" value="{{ old('product_margin', $computedMargin) }}">
                                         <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('product.margin_help') }}</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_price">{{ __('product.price') }} <span class="text-danger">*</span></label>
-                                        <input id="product_price" type="text" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" min="0" name="product_price" data-money-mask data-money-prefill required value="{{ $product->product_price }}">
+                                        <input id="product_price" type="text" class="form-control" min="0" name="product_price" data-money-mask data-money-prefill required value="{{ $product->product_price }}">
                                     </div>
                                 </div>
                             </div>
@@ -124,13 +124,13 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_quantity">{{ __('product.quantity') }} <span class="text-danger">*</span></label>
-                                        <input type="number" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_quantity" required value="{{ $product->product_quantity }}" min="1">
+                                        <input type="number" class="form-control" name="product_quantity" required value="{{ $product->product_quantity }}" min="1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_stock_alert">{{ __('product.stock_alert') }} <span class="text-danger">*</span></label>
-                                        <input type="number" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_stock_alert" required value="{{ $product->product_stock_alert }}" min="10">
+                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ $product->product_stock_alert }}" min="10">
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_stock_alert_max">{{ __('product.stock_alert_max') }}</label>
-                                        <input type="number" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_stock_alert_max" value="{{ $product->product_stock_alert_max }}" min="1">
+                                        <input type="number" class="form-control" name="product_stock_alert_max" value="{{ $product->product_stock_alert_max }}" min="1">
                                         <small class="block mt-1 text-xs text-slate-500 text-muted">{{ __('product.stock_alert_max_help') }}</small>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_tax_type">{{ __('product.tax_type') }}</label>
-                                        <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_tax_type" id="product_tax_type">
+                                        <select class="form-control" name="product_tax_type" id="product_tax_type">
                                             <option value="" selected>None</option>
                                             <option {{ $product->product_tax_type == 1 ? 'selected' : '' }}  value="1">Exclusive</option>
                                             <option {{ $product->product_tax_type == 2 ? 'selected' : '' }} value="2">Inclusive</option>
@@ -159,7 +159,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="product_unit">{{ __('product.unit') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This short text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
-                                        <select class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="product_unit" id="product_unit" required>
+                                        <select class="form-control" name="product_unit" id="product_unit" required>
                                             <option value="" selected >Select Unit</option>
                                             @foreach(\App\Models\Unit::all() as $unit)
                                                 <option {{ $product->product_unit == $unit->short_name ? 'selected' : '' }} value="{{ $unit->short_name }}">{{ $unit->name . ' | ' . $unit->short_name }}</option>
@@ -197,28 +197,28 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="expiry_date">{{ __('product.expiry_date') }}</label>
-                                        <input type="date" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45" name="expiry_date" id="expiry_date" value="{{ old('expiry_date', optional($product->expiry_date)->format('Y-m-d')) }}">
+                                        <input type="date" class="form-control" name="expiry_date" id="expiry_date" value="{{ old('expiry_date', optional($product->expiry_date)->format('Y-m-d')) }}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label for="product_note">Note</label>
-                                <textarea name="product_note" id="product_note" rows="4 " class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm leading-normal text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45">{{ $product->product_note }}</textarea>
+                                <textarea name="product_note" id="product_note" rows="4 " class="form-control">{{ $product->product_note }}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-12">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white border border-slate-200 rounded-xl shadow-sm text-slate-900">
+                    <div class="card">
                         <div class="flex-auto p-2">
                             <div class="mb-4">
                                 <label for="image">{{ __('product.images') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                     <div class="dz-message text-center" data-dz-message>
                                         <i class="bi bi-cloud-arrow-up d-block"></i>
-                                        <span class="inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 text-sm font-medium leading-tight text-slate-900 transition-colors cursor-pointer select-none no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-45 disabled:cursor-default bg-indigo-600 !text-white border-indigo-600 hover:bg-indigo-700 hover:border-indigo-700 mt-2">{{ __('product.choose_image') }}</span>
+                                        <span class="btn btn-primary mt-2">{{ __('product.choose_image') }}</span>
                                         <p class="text-muted mt-2 mb-0">{{ __('product.drop_image_hint') }}</p>
                                     </div>
                                 </div>
