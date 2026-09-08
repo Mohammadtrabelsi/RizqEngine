@@ -28,6 +28,12 @@ class SupplierForm extends Component
 
     public string $tax_identification_number = '';
 
+    public bool $subject_to_withholding = true;
+
+    public string $legal_form = '';
+
+    public string $fiscal_category = '';
+
     public string $iban = '';
 
     public string $city = '';
@@ -55,6 +61,9 @@ class SupplierForm extends Component
             $this->whatsapp_number = (string) $supplier->whatsapp_number;
             $this->responsible_person = (string) $supplier->responsible_person;
             $this->tax_identification_number = (string) $supplier->tax_identification_number;
+            $this->subject_to_withholding = (bool) $supplier->subject_to_withholding;
+            $this->legal_form = (string) $supplier->legal_form;
+            $this->fiscal_category = (string) $supplier->fiscal_category;
             $this->iban = (string) $supplier->iban;
             $this->city = (string) $supplier->city;
             $this->country = (string) $supplier->country;
@@ -74,6 +83,9 @@ class SupplierForm extends Component
             'whatsapp_number' => 'nullable|string|max:255',
             'responsible_person' => 'nullable|string|max:255',
             'tax_identification_number' => 'nullable|string|max:255',
+            'subject_to_withholding' => 'boolean',
+            'legal_form' => 'nullable|string|max:255',
+            'fiscal_category' => 'nullable|string|max:255',
             'iban' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',

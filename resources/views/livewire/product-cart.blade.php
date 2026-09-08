@@ -101,14 +101,33 @@
                         </span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
-                        <span class="fw-bold">Grand Total</span><span class="fw-bold">(=) {{ format_currency($total_with_shipping) }}</span>
+                        <span class="fw-bold">{{ __('withholding.total_ttc') }}</span><span class="fw-bold">(=) {{ format_currency($total_with_shipping) }}</span>
                     </li>
+                    @if($cart_instance === 'purchase' && $withholding['total'] > 0)
+                        @foreach($withholding['lines'] as $line)
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>{{ $line['name'] }} ({{ rtrim(rtrim(number_format($line['rate'], 3), '0'), '.') }}%)</span>
+                                <span>(-) {{ format_currency($line['amount']) }}</span>
+                            </li>
+                        @endforeach
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span class="fw-bold">{{ __('withholding.withholding') }}</span><span>(-) {{ format_currency($withholding['total']) }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span class="fw-bold">{{ __('withholding.net_payable') }}</span><span class="fw-bold">(=) {{ format_currency($withholding['net_payable']) }}</span>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
     </div>
 
     <input type="hidden" name="total_amount" value="{{ $total_with_shipping }}">
+    @if($cart_instance === 'purchase')
+        @foreach($selected_withholding_taxes as $wht_id)
+            <input type="hidden" name="withholding_tax_ids[]" value="{{ $wht_id }}">
+        @endforeach
+    @endif
 
     <div class="form-row">
         <div class="col-lg-4">
@@ -160,4 +179,31 @@
             </div>
         </div>
     </div>
+
+    {{-- Fiscalité : retenue à la source (RAS). Deducted after the TTC to give the net payable. --}}
+    @if($cart_instance === 'purchase')
+    <div class="form-row">
+        <div class="col-lg-12">
+            <div class="mb-4">
+                <label class="fw-bold">{{ __('withholding.withholding_taxes') }}</label>
+                @forelse($available_withholding_taxes as $withholding_tax)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" wire:model.live="selected_withholding_taxes" value="{{ $withholding_tax->id }}" id="wht-{{ $withholding_tax->id }}">
+                        <label class="form-check-label" for="wht-{{ $withholding_tax->id }}">
+                            {{ $withholding_tax->name }}
+                            ({{ rtrim(rtrim(number_format($withholding_tax->rate, 3), '0'), '.') }}% · {{ __($withholding_tax->calculation_base->label()) }})
+                        </label>
+                    </div>
+                @empty
+                    <p class="text-muted mb-0">
+                        {{ __('withholding.no_withholding_defined') }}
+                        @can('create_withholding_taxes')
+                            <a href="{{ route('withholding-taxes.create') }}" target="_blank">{{ __('withholding.add_withholding') }}</a>
+                        @endcan
+                    </p>
+                @endforelse
+            </div>
+        </div>
+    </div>
+    @endif
 </div>

@@ -28,7 +28,7 @@ class NavigationComposer
             'inReports' => Request::routeIs('*-report.index'),
             'inUsers' => Request::routeIs('users*') || Request::routeIs('roles*'),
             'inFleet' => Request::routeIs('drivers*') || Request::routeIs('vehicles*'),
-            'inSettings' => Request::routeIs('currencies*') || Request::routeIs('units*') || Request::routeIs('settings*'),
+            'inSettings' => Request::routeIs('currencies*') || Request::routeIs('units*') || Request::routeIs('settings*') || Request::routeIs('taxes*') || Request::routeIs('withholding-taxes*'),
         ];
 
         $flags['hasSecondary'] = in_array(true, $flags, true);
