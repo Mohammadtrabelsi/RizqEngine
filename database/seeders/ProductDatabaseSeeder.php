@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Tax;
 use App\Models\Unit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -40,6 +41,13 @@ class ProductDatabaseSeeder extends Seeder
 
         $suppliers = Supplier::pluck('id', 'supplier_name');
 
+        // Product-scoped taxes keyed by their percentage rate, so each product's
+        // order-tax rate can be linked to the matching named tax (e.g. 19 -> TVA).
+        $taxesByRate = Tax::where('apply_to', Tax::APPLY_TO_PRODUCT)
+            ->where('type', Tax::TYPE_PERCENTAGE)
+            ->get()
+            ->keyBy(fn (Tax $tax) => (int) $tax->rate);
+
         foreach ($this->products() as $product) {
             $category = $categories[$product['category_code']] ?? null;
 
@@ -55,7 +63,7 @@ class ProductDatabaseSeeder extends Seeder
             $numericCode = $this->numericCode($reference);
             $note = trim('Réf. '.$reference.' — '.$product['product_note']);
 
-            Product::firstOrCreate(
+            $model = Product::firstOrCreate(
                 ['product_code' => $numericCode],
                 [
                     'category_id' => $category->id,
@@ -73,6 +81,15 @@ class ProductDatabaseSeeder extends Seeder
                     'expiry_date' => $product['expiry_date'],
                 ]
             );
+
+            // Link the product to the named tax that matches its order-tax rate
+            // (e.g. 7% -> "TVA 7"). syncWithoutDetaching keeps re-seeding
+            // idempotent and preserves any taxes attached elsewhere.
+            $tax = $taxesByRate[(int) $product['product_order_tax']] ?? null;
+
+            if ($tax !== null) {
+                $model->taxes()->syncWithoutDetaching([$tax->id]);
+            }
         }
 
         Model::reguard();
