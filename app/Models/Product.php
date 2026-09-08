@@ -138,7 +138,7 @@ class Product extends Model implements HasMedia
     {
         $pivot = $this->warehouses()->where('warehouses.id', $warehouseId)->first();
 
-        return $pivot ? (int) $pivot->pivot->quantity : 0;
+        return $pivot ? (int) $pivot->pivot->getAttribute('quantity') : 0;
     }
 
     /**

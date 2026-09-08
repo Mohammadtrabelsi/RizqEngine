@@ -2400,12 +2400,11 @@ hr { display: none; }
    select2 result lists — are left untouched. */
 ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) {
     border-radius: var(--radius-field, 12px);
-    padding: 1rem 1rem 1rem 2rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.25rem;
 }
 
 ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.pagination):not(.list-group):not(.breadcrumb):not(.navbar-nav):not(.nav):not([class*="select2"]) > li {
-    padding: 0.35rem 0;
+    padding: 0.05rem 0;
     line-height: 1.55;
 }
 
