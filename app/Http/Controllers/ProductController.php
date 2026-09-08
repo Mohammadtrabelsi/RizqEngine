@@ -35,7 +35,7 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $this->products->create($request->except('document'), $request->input('document', []));
+        $this->products->create($request->except(['document', 'pricing_mode', 'product_margin']), $request->input('document', []));
 
         session()->flash('success', trans('product.product-created'));
 
@@ -66,7 +66,7 @@ class ProductController extends Controller
     {
         $this->products->update(
             $product,
-            $request->except('document'),
+            $request->except(['document', 'pricing_mode', 'product_margin']),
             $request->has('document') ? $request->input('document', []) : null,
         );
 
