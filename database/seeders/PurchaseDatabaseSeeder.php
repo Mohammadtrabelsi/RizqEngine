@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\PurchasePayment;
 use App\Models\Supplier;
 use Carbon\Carbon;
@@ -25,6 +27,8 @@ class PurchaseDatabaseSeeder extends Seeder
         if ($suppliers->isEmpty()) {
             return;
         }
+
+        $products = Product::all();
 
         $startDate = Carbon::today()->subMonths(3);
         $endDate = Carbon::today();
@@ -67,6 +71,36 @@ class PurchaseDatabaseSeeder extends Seeder
                 'payment_method' => $paymentMethods[array_rand($paymentMethods)],
                 'note' => 'Seeded purchase for testing purposes.',
             ]);
+
+            // Seed the purchased products (line items) so the purchase detail
+            // view has products to display.
+            if ($products->isNotEmpty()) {
+                $lineProducts = $products->count() > 1
+                    ? $products->random(min($products->count(), rand(1, 4)))
+                    : $products;
+
+                foreach ($lineProducts as $product) {
+                    $quantity = rand(1, 10);
+                    $unitPrice = $product->product_cost > 0
+                        ? $product->product_cost
+                        : $product->product_price;
+                    $subTotal = $unitPrice * $quantity;
+
+                    PurchaseDetail::create([
+                        'purchase_id' => $purchase->id,
+                        'product_id' => $product->id,
+                        'product_name' => $product->product_name,
+                        'product_code' => $product->product_code,
+                        'quantity' => $quantity,
+                        'price' => (int) round($unitPrice * 100),
+                        'unit_price' => (int) round($unitPrice * 100),
+                        'sub_total' => (int) round($subTotal * 100),
+                        'product_discount_amount' => 0,
+                        'product_discount_type' => 'fixed',
+                        'product_tax_amount' => 0,
+                    ]);
+                }
+            }
 
             if ($paidAmount > 0) {
                 PurchasePayment::create([
