@@ -15,6 +15,19 @@ if (! function_exists('settings')) {
     }
 }
 
+if (! function_exists('public_storage_url')) {
+    /**
+     * Build a public-disk URL for a stored file and collapse any accidental
+     * duplicate slashes (e.g. "//storage") that a trailing-slash APP_URL or a
+     * stale cached config would otherwise leak into the markup. The "//" in the
+     * scheme (http://) is preserved because it is preceded by a colon.
+     */
+    function public_storage_url(string $path): string
+    {
+        return preg_replace('#(?<!:)/{2,}#', '/', Storage::disk('public')->url($path));
+    }
+}
+
 if (! function_exists('default_product_image')) {
     function default_product_image()
     {
@@ -24,7 +37,7 @@ if (! function_exists('default_product_image')) {
             $path = null;
         }
 
-        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_product_image.png');
+        return $path ? public_storage_url($path) : asset('images/fallback_product_image.png');
     }
 }
 
@@ -37,7 +50,7 @@ if (! function_exists('default_category_image')) {
             $path = null;
         }
 
-        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_product_image.png');
+        return $path ? public_storage_url($path) : asset('images/fallback_product_image.png');
     }
 }
 
@@ -50,7 +63,7 @@ if (! function_exists('default_supplier_image')) {
             $path = null;
         }
 
-        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_profile_image.png');
+        return $path ? public_storage_url($path) : asset('images/fallback_profile_image.png');
     }
 }
 
@@ -63,7 +76,7 @@ if (! function_exists('default_customer_image')) {
             $path = null;
         }
 
-        return $path ? Storage::disk('public')->url($path) : asset('images/fallback_profile_image.png');
+        return $path ? public_storage_url($path) : asset('images/fallback_profile_image.png');
     }
 }
 
@@ -82,7 +95,7 @@ if (! function_exists('client_logo_url')) {
             $path = null;
         }
 
-        return $path ? Storage::disk('public')->url($path) : null;
+        return $path ? public_storage_url($path) : null;
     }
 }
 

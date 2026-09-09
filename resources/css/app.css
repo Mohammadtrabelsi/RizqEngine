@@ -2408,3 +2408,77 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
     line-height: 1.55;
 }
 
+
+/* -------------------------------------------------------------------------
+ * Responsive report tables.
+ * On small screens the wide report tables would overflow horizontally, so we
+ * turn each row into a stacked card: the table elements become block-level
+ * (div-like) and every cell shows its column heading via the `data-label`
+ * attribute set in the Blade markup. Above the sm breakpoint the tables keep
+ * their normal tabular layout untouched.
+ * ---------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+    table.report-table,
+    table.report-table tbody,
+    table.report-table tfoot,
+    table.report-table tr,
+    table.report-table td {
+        display: block;
+        width: 100%;
+    }
+
+    table.report-table thead {
+        display: none;
+    }
+
+    table.report-table tbody tr,
+    table.report-table tfoot tr {
+        margin-bottom: 1rem;
+        padding: 0.5rem 0.85rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+
+    table.report-table tbody td,
+    table.report-table tfoot td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.4rem 0;
+        text-align: right;
+        border: 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    table.report-table tbody td:last-child,
+    table.report-table tfoot td:last-child {
+        border-bottom: 0;
+    }
+
+    table.report-table tbody td::before,
+    table.report-table tfoot td::before {
+        content: attr(data-label);
+        flex: 0 0 auto;
+        margin-right: auto;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: #64748b;
+        text-align: left;
+    }
+
+    /* Full-width spanned cells (empty states) render as plain centered text. */
+    table.report-table td[colspan] {
+        display: block;
+        text-align: center;
+    }
+
+    table.report-table td[colspan]::before {
+        content: "";
+        margin: 0;
+    }
+}

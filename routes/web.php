@@ -33,6 +33,8 @@ use App\Livewire\Taxes\TaxForm;
 use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
+use App\Livewire\WithholdingTaxes\WithholdingTaxForm;
+use App\Livewire\WithholdingTaxes\WithholdingTaxIndex;
 use App\Livewire\Vehicles\VehicleForm;
 use App\Livewire\Vehicles\VehicleIndex;
 use App\Livewire\Warehouses\WarehouseForm;
@@ -110,6 +112,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/documentation', 'DocumentationController@index')
         ->name('documentation.index');
+
+    Route::get('/documentation/{section}', 'DocumentationController@show')
+        ->name('documentation.show');
 });
 
 /*
@@ -178,6 +183,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/taxes', TaxIndex::class)->name('taxes.index');
         Route::get('/taxes/create', TaxForm::class)->name('taxes.create');
         Route::get('/taxes/{tax}/edit', TaxForm::class)->name('taxes.edit');
+        // Withholding taxes / retenues à la source (full-page Livewire components)
+        Route::get('/withholding-taxes', WithholdingTaxIndex::class)->name('withholding-taxes.index');
+        Route::get('/withholding-taxes/create', WithholdingTaxForm::class)->name('withholding-taxes.create');
+        Route::get('/withholding-taxes/{withholding_tax}/edit', WithholdingTaxForm::class)->name('withholding-taxes.edit');
     });
 });
 
@@ -264,6 +273,23 @@ Route::group(['middleware' => 'auth'], function () {
 
         return $pdf->stream('purchase-'.$purchase->reference.'.pdf');
     })->name('purchases.pdf');
+
+    // Withholding-tax certificate (certificat de retenue à la source).
+    Route::get('/purchases/{id}/withholding-certificate', function ($id) {
+        abort_if(\Illuminate\Support\Facades\Gate::denies('show_purchases'), 403);
+
+        $purchase = Purchase::with('withholdingTaxes')->findOrFail($id);
+
+        abort_if($purchase->withholding_amount <= 0, 404);
+
+        $certificate = app(\App\Services\WithholdingCertificateService::class)->forPurchase($purchase);
+
+        $pdf = PDF::loadView('withholding.certificate', [
+            'certificate' => $certificate,
+        ])->setPaper('a4');
+
+        return $pdf->stream('withholding-certificate-'.$purchase->reference.'.pdf');
+    })->name('purchases.withholding-certificate');
     // Sales
     Route::resource('purchases', 'PurchaseController');
     // Payments

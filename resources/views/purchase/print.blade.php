@@ -247,9 +247,21 @@
                         <td class="amount">{{ format_currency($purchase->shipping_amount) }}</td>
                     </tr>
                     <tr class="grand">
-                        <td>Grand Total</td>
+                        <td>{{ __('withholding.total_ttc') }}</td>
                         <td class="amount">{{ format_currency($purchase->total_amount) }}</td>
                     </tr>
+                    @if($purchase->withholding_amount > 0)
+                        @foreach($purchase->withholdingTaxes as $line)
+                            <tr>
+                                <td class="label">{{ $line->name }} ({{ rtrim(rtrim(number_format($line->rate, 3), '0'), '.') }}%)</td>
+                                <td class="amount">(-) {{ format_currency($line->amount) }}</td>
+                            </tr>
+                        @endforeach
+                        <tr class="grand">
+                            <td>{{ __('withholding.net_payable') }}</td>
+                            <td class="amount">{{ format_currency($purchase->net_payable) }}</td>
+                        </tr>
+                    @endif
                 </table>
             </td>
         </tr>

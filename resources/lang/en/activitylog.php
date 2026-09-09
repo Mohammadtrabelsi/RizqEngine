@@ -8,6 +8,8 @@ return [
     'activity_logs' => 'Activity logs',
     'attribute_changes' => 'Attribute changes',
     'back_to_activity_logs' => 'Back to activity logs',
+    'clear_all_logs' => 'Clear all logs',
+    'clear_all_logs_confirm' => 'Are you sure you want to permanently delete all activity logs? This action cannot be undone.',
     'date_time' => 'Date & time',
     'description' => 'Description',
     'event' => 'Event',

@@ -319,7 +319,7 @@
             </li>
             @endcan
 
-            @canany(['access_currencies', 'access_settings', 'access_units', 'access_taxes'])
+            @canany(['access_currencies', 'access_settings', 'access_units', 'access_taxes', 'access_withholding_taxes'])
             <li class="app-sidebar-item {{ $inSettings ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inSettings ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inSettings ? 'true' : 'false' }}">
                     <span class="app-sidebar-link-group"><i class="bi bi-gear"></i> <span>{{ __('nav.settings') }}</span></span>
@@ -334,6 +334,9 @@
                     @endcan
                     @can('access_taxes')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('taxes*') ? 'is-active' : '' }}" href="{{ route('taxes.index') }}">{{ __('menu.taxes') }}</a></li>
+                    @endcan
+                    @can('access_withholding_taxes')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('withholding-taxes*') ? 'is-active' : '' }}" href="{{ route('withholding-taxes.index') }}">{{ __('menu.withholding_taxes') }}</a></li>
                     @endcan
                     @can('access_currencies')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('currencies*') ? 'is-active' : '' }}" href="{{ route('currencies.index') }}">{{ __('menu.currencies') }}</a></li>

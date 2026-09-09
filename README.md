@@ -24,7 +24,7 @@ RizqEngine is a web-based Point of Sale and inventory management system built wi
 
 # Local Installation
 
-- run `` git clone https://github.com/Mohammadtrabelsi/triangle-pos.git ``
+- run `` git clone https://github.com/Mohammadtrabelsi/RizqEngine.git ``
 - run ``composer install `` 
 - run `` npm install ``
 - run ``npm run dev``
@@ -42,7 +42,7 @@ RizqEngine is a web-based Point of Sale and inventory management system built wi
 
 This will start the application along with the mysql database using docker compose. Note that the `DB_HOST` variable must be the mysql docker container name, in this case `db`.
 
-- run `` docker build -t triangle-pos . `` 
+- run `` docker build -t rizqengine . `` 
 - run `` docker compose up ``
 - then visit `` http://localhost:8000 or http://127.0.0.1:8000 ``.
 
@@ -64,21 +64,35 @@ A user is seeded for every role. All accounts use the password `12345678`.
 
 ## RizqEngine Features
 
-- **Products Management & Barcode Printing**
-- **Stock Management**
-- **Make Quotation & Send Via Email**
-- **Purchase Management**
-- **Sale Management**
-- **Purchase & Sale Return Management**
-- **Expense Management**
-- **Customer & Supplier Management**
-- **User Management (Roles & Permissions)**
-- **Activity Logs / Audit Trail (records who created, updated or deleted each record)**
-- **Product Multiple Images**
-- **Multiple Currency Settings**
-- **Unit Settings**
-- **System Settings**
-- **Reports**
+**Catalog & inventory**
+- Products management with multiple images, categories and barcode printing
+- Stock adjustments, multi-warehouse stock and inter-warehouse transfers
+- Serial-number and batch/expiry tracking
+
+**Sales & purchasing**
+- Point of Sale (POS) with cart, discounts and receipts
+- Quotations (print / email) and one-click conversion to sales or orders
+- Purchases, plus sale and purchase returns with payments
+- Orders workflow: customer orders, purchase orders (bon de commande) and delivery notes (bon de livraison)
+
+**Finance**
+- Expenses with categories, taxes and multiple currencies
+- Cash register sessions (open / close / reconcile)
+- Monthly budgets, cash outings and an invoice archive
+
+**Contacts & logistics**
+- Customer and supplier management with running balances and bulk import
+- Fleet: drivers and vehicles
+
+**Administration & insights**
+- User management with roles & permissions
+- Activity logs / audit trail (records who created, updated or deleted each record)
+- Reports (Profit & Loss, Payments, Sales, Purchases, returns, inventory valuation, stock/product movement and more)
+- System settings, units and currency configuration
+
+# Documentation
+
+A built-in user guide is available inside the app at `/documentation`, split into a page per topic and translated into English, French and Arabic. It walks through every module above, from getting started to settings.
 
 # License
 **[Creative Commons Attribution 4.0	cc-by-4.0](https://creativecommons.org/licenses/by/4.0/)**

@@ -57,6 +57,7 @@ return [
     'suppliers' => 'الموردون',
     'system-settings' => 'إعدادات النظام',
     'taxes' => 'الضرائب',
+    'withholding_taxes' => 'الخصم من المصدر',
     'units' => 'الوحدات',
     'user-management' => 'إدارة المستخدمين',
     'vehicles' => 'المركبات',

@@ -25,6 +25,11 @@
                         <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('purchases.pdf', $purchase->id) }}">
                             <i class="bi bi-save"></i> Save
                         </a>
+                        @if($purchase->withholding_amount > 0)
+                            <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('purchases.withholding-certificate', $purchase->id) }}">
+                                <i class="bi bi-file-earmark-text"></i> {{ __('withholding.certificate') }}
+                            </a>
+                        @endif
                     </div>
                     <div class="flex-auto p-2">
                         <div class="row mb-4">
@@ -88,7 +93,13 @@
                                     <li class="list-group-item d-flex justify-content-between"><strong>Discount ({{ $purchase->discount_percentage }}%)</strong><span>{{ format_currency($purchase->discount_amount) }}</span></li>
                                     <li class="list-group-item d-flex justify-content-between"><strong>Tax ({{ $purchase->tax_percentage }}%)</strong><span>{{ format_currency($purchase->tax_amount) }}</span></li>
                                     <li class="list-group-item d-flex justify-content-between"><strong>Shipping</strong><span>{{ format_currency($purchase->shipping_amount) }}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Grand Total</strong><strong>{{ format_currency($purchase->total_amount) }}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>{{ __('withholding.total_ttc') }}</strong><strong>{{ format_currency($purchase->total_amount) }}</strong></li>
+                                    @if($purchase->withholding_amount > 0)
+                                        @foreach($purchase->withholdingTaxes as $line)
+                                            <li class="list-group-item d-flex justify-content-between"><span>{{ $line->name }} ({{ rtrim(rtrim(number_format($line->rate, 3), '0'), '.') }}%)</span><span>(-) {{ format_currency($line->amount) }}</span></li>
+                                        @endforeach
+                                        <li class="list-group-item d-flex justify-content-between"><strong>{{ __('withholding.net_payable') }}</strong><strong>{{ format_currency($purchase->net_payable) }}</strong></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>

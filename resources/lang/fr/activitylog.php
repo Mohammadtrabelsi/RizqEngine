@@ -8,6 +8,8 @@ return [
     'activity_logs' => 'Journaux d\'activité',
     'attribute_changes' => 'Modifications des attributs',
     'back_to_activity_logs' => 'Retour aux journaux d\'activité',
+    'clear_all_logs' => 'Effacer tous les journaux',
+    'clear_all_logs_confirm' => 'Êtes-vous sûr de vouloir supprimer définitivement tous les journaux d\'activité ? Cette action est irréversible.',
     'date_time' => 'Date et heure',
     'description' => 'Description',
     'event' => 'Événement',
