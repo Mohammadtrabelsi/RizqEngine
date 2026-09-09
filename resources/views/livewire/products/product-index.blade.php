@@ -61,10 +61,10 @@
 
     {{-- Filters container --}}
     <div class="card border-0 shadow-sm mb-4">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-funnel text-primary"></i> {{ __('app.filters') }}</h5>
+        </div>
         <div class="flex-auto p-2">
-            <h6 class="card-title text-muted mb-3">
-                <i class="bi bi-funnel"></i> {{ __('app.filters') }}
-            </h6>
             <div class="d-flex flex-wrap align-items-end gap-3">
                 <div class="flex-fill" style="min-width: 160px;">
                     <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
