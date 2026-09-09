@@ -50,9 +50,9 @@
                                             @endforeach
                                         </select>
                                         <div class="input-group-append d-flex">
-                                            <button data-toggle="modal" data-target="#categoryCreateModal" class="btn btn-outline" type="button">
+                                            <a href="{{ route('product-categories.create') }}" target="_blank" rel="noopener" class="btn btn-outline">
                                                 Add
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -231,9 +231,6 @@
             </div>
         </form>
     </div>
-
-    <!-- Create Category Modal -->
-    @include('product.includes.category-modal')
 @endsection
 
 

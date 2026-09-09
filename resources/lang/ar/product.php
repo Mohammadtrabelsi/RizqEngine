@@ -8,6 +8,7 @@ return [
     'barcode_symbology' => 'ترميز الباركود',
     'by_cost' => 'حسب التكلفة',
     'by_price' => 'حسب السعر',
+    'add_category' => 'إضافة فئة',
     'categories' => 'الفئات',
     'category' => 'الفئة',
     'category_active' => 'نشط',

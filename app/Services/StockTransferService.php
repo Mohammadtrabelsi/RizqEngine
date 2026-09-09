@@ -21,13 +21,25 @@ class StockTransferService
 {
     public function __construct(private readonly WarehouseStockService $warehouseStock) {}
 
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{status?: string, warehouse_id?: int|string, date_from?: string, date_to?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return StockTransfer::query()
             ->with(['fromWarehouse', 'toWarehouse', 'lines'])
             ->when($search, function ($query) use ($search) {
                 $query->where('reference', 'like', '%'.$search.'%');
             })
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['warehouse_id'] ?? null, function ($query, $warehouseId) {
+                $query->where(function ($query) use ($warehouseId) {
+                    $query->where('from_warehouse_id', $warehouseId)
+                        ->orWhere('to_warehouse_id', $warehouseId);
+                });
+            })
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->orderByDesc('id')
             ->paginate($perPage);
     }

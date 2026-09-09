@@ -16,6 +16,8 @@ use App\Livewire\Dashboard as RedesignDashboard;
 use App\Livewire\Drivers\DriverForm;
 use App\Livewire\Drivers\DriverImport;
 use App\Livewire\Drivers\DriverIndex;
+use App\Livewire\ExpenseCategories\ExpenseCategoryForm;
+use App\Livewire\ExpenseCategories\ExpenseCategoryIndex;
 use App\Livewire\Finance\InvoiceArchive;
 use App\Livewire\Finance\MonthlyBudgetForm;
 use App\Livewire\Finance\MonthlyBudgetIndex;
@@ -23,6 +25,8 @@ use App\Livewire\Finance\MonthlyBudgetShow;
 use App\Livewire\Finance\OutingForm;
 use App\Livewire\Finance\OutingIndex;
 use App\Livewire\LandingPage as RedesignLandingPage;
+use App\Livewire\ProductCategories\CategoryForm;
+use App\Livewire\ProductCategories\CategoryIndex;
 use App\Livewire\Products\ProductImport;
 use App\Livewire\SerialNumbers\SerialNumberIndex;
 use App\Livewire\StockTransfers\StockTransferForm;
@@ -135,10 +139,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['namespace' => '\\'], function () {
         Route::get('/products/import', ProductImport::class)->name('products.import');
         Route::get('/product-categories/import', CategoryImport::class)->name('product-categories.import');
+        // Product Category (full-page Livewire components)
+        Route::get('/product-categories', CategoryIndex::class)->name('product-categories.index');
+        Route::get('/product-categories/create', CategoryForm::class)->name('product-categories.create');
+        Route::get('/product-categories/{category}/edit', CategoryForm::class)->name('product-categories.edit');
     });
     Route::resource('products', 'ProductController');
-    // Product Category
-    Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
 
 // Parties — customers & suppliers management (full-page Livewire UI under the /parties prefix).
@@ -211,8 +217,12 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    // Expense Category
-    Route::resource('expense-categories', 'ExpenseCategoriesController')->except('show', 'create');
+    // Expense Category (full-page Livewire components)
+    Route::group(['namespace' => '\\'], function () {
+        Route::get('/expense-categories', ExpenseCategoryIndex::class)->name('expense-categories.index');
+        Route::get('/expense-categories/create', ExpenseCategoryForm::class)->name('expense-categories.create');
+        Route::get('/expense-categories/{expenseCategory}/edit', ExpenseCategoryForm::class)->name('expense-categories.edit');
+    });
     // Expense
     Route::resource('expenses', 'ExpenseController')->except('show');
 });

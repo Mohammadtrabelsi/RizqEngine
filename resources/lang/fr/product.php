@@ -10,6 +10,7 @@ return [
     'barcode_symbology' => 'Symbologie du code-barres',
     'by_cost' => 'Par coût',
     'by_price' => 'Par prix',
+    'add_category' => 'Ajouter une catégorie',
     'categories' => 'Catégories',
     'category' => 'Catégorie',
     'category_code' => 'Code de la catégorie',

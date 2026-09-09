@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\DB;
  */
 class WarehouseService
 {
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{status?: string, city?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Warehouse::query()
             ->withCount('locations')
@@ -22,9 +25,27 @@ class WarehouseService
                     ->orWhere('code', 'like', $term)
                     ->orWhere('city', 'like', $term);
             })
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('is_active', $status === 'active'))
+            ->when($filters['city'] ?? null, fn ($query, $city) => $query->where('city', $city))
             ->orderByDesc('is_default')
             ->orderBy('name')
             ->paginate($perPage);
+    }
+
+    /**
+     * Distinct, non-empty warehouse cities for the index filter dropdown.
+     *
+     * @return array<int, string>
+     */
+    public function cities(): array
+    {
+        return Warehouse::query()
+            ->whereNotNull('city')
+            ->where('city', '!=', '')
+            ->distinct()
+            ->orderBy('city')
+            ->pluck('city')
+            ->all();
     }
 
     public function create(array $data): Warehouse

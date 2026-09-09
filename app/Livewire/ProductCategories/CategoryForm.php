@@ -83,6 +83,7 @@ class CategoryForm extends Component
 
     public function render()
     {
-        return view('livewire.product-categories.category-form');
+        return view('livewire.product-categories.category-form')
+            ->layout('components.layouts.admin', ['title' => $this->categoryId ? __('product.edit_category') : __('product.add_category')]);
     }
 }

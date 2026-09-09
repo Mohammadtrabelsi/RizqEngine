@@ -10,6 +10,7 @@ return [
     'barcode_symbology' => 'Barcode Symbology',
     'by_cost' => 'By cost',
     'by_price' => 'By price',
+    'add_category' => 'Add category',
     'categories' => 'Categories',
     'category' => 'Category',
     'category_code' => 'Category code',
