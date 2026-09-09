@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-md-6 mb-3">
             @can('delete_activity_logs')
-                <button type="button" class="btn btn-danger" wire:click="clear" wire:confirm="{{ __('app.are_you_sure') }}">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clearLogsModal">
                     Clear All Logs <i class="bi bi-trash"></i>
                 </button>
             @endcan
@@ -56,4 +56,28 @@
     <div class="d-flex justify-content-center">
         {{ $activities->links('pagination::bootstrap-5') }}
     </div>
+
+    @can('delete_activity_logs')
+        <div class="modal fade" id="clearLogsModal" tabindex="-1" role="dialog" aria-labelledby="clearLogsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="clearLogsModalLabel">{{ __('activitylog.clear_all_logs') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ __('activitylog.clear_all_logs_confirm') }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('app.cancel') }}</button>
+                        <button type="button" class="btn btn-danger" wire:click="clear" data-dismiss="modal">
+                            {{ __('app.yes') }} <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
 </div>

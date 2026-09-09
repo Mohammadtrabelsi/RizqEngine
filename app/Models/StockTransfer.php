@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * A movement of stock from one warehouse to another.
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $reference
  * @property int $from_warehouse_id
  * @property int $to_warehouse_id
- * @property \Illuminate\Support\Carbon $date
+ * @property Carbon $date
  * @property TransferStatus $status
  * @property string|null $note
  */

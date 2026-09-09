@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="block w-full overflow-x-auto">
-                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
+                        <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small text-uppercase">
                                     <th scope="col">{{ __('report.product') }}</th>
@@ -87,13 +87,13 @@
                             <tbody>
                                 @forelse($products as $product)
                                     <tr>
-                                        <td class="fw-bold">{{ $product->product_name }}</td>
-                                        <td class="text-muted">{{ $product->product_code }}</td>
-                                        <td>{{ optional($product->category)->category_name }}</td>
-                                        <td class="text-end">{{ $product->product_quantity }}</td>
-                                        <td class="text-end">{{ format_currency($product->product_cost) }}</td>
-                                        <td class="text-end">{{ format_currency($product->product_quantity * $product->product_cost) }}</td>
-                                        <td class="text-end text-success">{{ format_currency($product->product_quantity * $product->product_price) }}</td>
+                                        <td class="fw-bold" data-label="{{ __('report.product') }}">{{ $product->product_name }}</td>
+                                        <td class="text-muted" data-label="{{ __('report.reference') }}">{{ $product->product_code }}</td>
+                                        <td data-label="{{ __('report.category') }}">{{ optional($product->category)->category_name }}</td>
+                                        <td class="text-end" data-label="{{ __('report.quantity') }}">{{ $product->product_quantity }}</td>
+                                        <td class="text-end" data-label="{{ __('report.unit-cost') }}">{{ format_currency($product->product_cost) }}</td>
+                                        <td class="text-end" data-label="{{ __('report.stock-value-cost') }}">{{ format_currency($product->product_quantity * $product->product_cost) }}</td>
+                                        <td class="text-end text-success" data-label="{{ __('report.stock-value-retail') }}">{{ format_currency($product->product_quantity * $product->product_price) }}</td>
                                     </tr>
                                 @empty
                                     <tr>

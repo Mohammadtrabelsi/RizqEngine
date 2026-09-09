@@ -17,6 +17,15 @@ class QuotationIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url]
+    public string $status = '';
+
+    #[Url]
+    public string $dateFrom = '';
+
+    #[Url]
+    public string $dateTo = '';
+
     public function mount(): void
     {
         abort_if(Gate::denies('access_quotations'), 403);
@@ -27,10 +36,35 @@ class QuotationIndex extends Component
         $this->resetPage();
     }
 
+    public function updatingStatus(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateFrom(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateTo(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['status', 'dateFrom', 'dateTo']);
+        $this->resetPage();
+    }
+
     public function render(QuotationService $quotations)
     {
         return view('livewire.quotations.quotation-index', [
-            'quotations' => $quotations->paginate($this->search),
+            'quotations' => $quotations->paginate($this->search, [
+                'status' => $this->status,
+                'date_from' => $this->dateFrom,
+                'date_to' => $this->dateTo,
+            ]),
         ]);
     }
 }

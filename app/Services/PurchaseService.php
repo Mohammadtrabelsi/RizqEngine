@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\PurchasePayment;
+use App\Models\PurchaseWithholdingTax;
 use App\Models\Supplier;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -24,12 +25,64 @@ class PurchaseService
     public function __construct(
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
+        private readonly WithholdingTaxCalculator $withholdingCalculator,
     ) {}
+
+    /**
+     * Multiplier used to persist withholding amounts as integers in millimes
+     * (× 1000), preserving the Tunisian dinar's three-decimal precision.
+     */
+    private const WITHHOLDING_SCALE = 1000;
+
+    /**
+     * Compute the withholding (retenue à la source) breakdown for the purchase
+     * cart from the selected withholding-tax ids and the document totals.
+     *
+     * @param  array<string, mixed>  $data
+     * @return array{lines: array<int, array<string, mixed>>, total: float, net_payable: float}
+     */
+    private function resolveWithholding(array $data, float $ttc, float $tva): array
+    {
+        $ht = $ttc - $tva;
+        $ids = (array) ($data['withholding_tax_ids'] ?? []);
+
+        $result = $this->withholdingCalculator->calculateForIds($ids, $ht, $tva, $ttc);
+
+        return [
+            'lines' => $result['lines'],
+            'total' => $result['total'],
+            'net_payable' => $result['net_payable'],
+        ];
+    }
+
+    /**
+     * Persist the withholding snapshot lines for a purchase.
+     *
+     * @param  array<int, array<string, mixed>>  $lines
+     */
+    private function saveWithholdingLines(Purchase $purchase, array $lines): void
+    {
+        foreach ($lines as $line) {
+            PurchaseWithholdingTax::create([
+                'purchase_id' => $purchase->id,
+                'withholding_tax_id' => $line['withholding_tax_id'],
+                'name' => $line['name'],
+                'code' => $line['code'],
+                'rate' => $line['rate'],
+                'calculation_base' => $line['calculation_base'],
+                'taxable_amount' => (int) round($line['taxable_amount'] * self::WITHHOLDING_SCALE),
+                'amount' => (int) round($line['amount'] * self::WITHHOLDING_SCALE),
+            ]);
+        }
+    }
 
     /**
      * Paginate purchases, optionally filtered by reference or supplier name.
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{status?: string, payment_status?: string, date_from?: string, date_to?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Purchase::query()
             ->when($search, function ($query) use ($search) {
@@ -37,6 +90,10 @@ class PurchaseService
                 $query->where('reference', 'like', $term)
                     ->orWhere('supplier_name', 'like', $term);
             })
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['payment_status'] ?? null, fn ($query, $status) => $query->where('payment_status', $status))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }
@@ -113,8 +170,18 @@ class PurchaseService
         return DB::transaction(function () use ($data) {
             $cart = Cart::instance('purchase');
 
-            $dueAmount = $data['total_amount'] - $data['paid_amount'];
-            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $data['total_amount']);
+            // Retenue à la source is deducted after the TTC: the supplier is
+            // owed the net (TTC − RAS), so the due balance tracks the net, not
+            // the gross. With no withholding selected the net equals the TTC
+            // and behaviour is unchanged for existing purchases.
+            $withholding = $this->resolveWithholding(
+                $data,
+                (float) $data['total_amount'],
+                (float) $cart->tax(),
+            );
+
+            $dueAmount = $withholding['net_payable'] - $data['paid_amount'];
+            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $withholding['net_payable']);
 
             $purchase = Purchase::create([
                 'date' => $data['date'],
@@ -132,8 +199,11 @@ class PurchaseService
                 'payment_method' => $data['payment_method'],
                 'note' => $data['note'] ?? null,
                 'tax_amount' => (float) $cart->tax() * 100,
+                'withholding_amount' => (int) round($withholding['total'] * self::WITHHOLDING_SCALE),
                 'discount_amount' => (float) $cart->discount() * 100,
             ]);
+
+            $this->saveWithholdingLines($purchase, $withholding['lines']);
 
             foreach ($cart->content() as $cart_item) {
                 $this->createPurchaseDetail($purchase, $cart_item);
@@ -174,8 +244,18 @@ class PurchaseService
         return DB::transaction(function () use ($purchase, $data) {
             $cart = Cart::instance('purchase');
 
-            $dueAmount = $data['total_amount'] - $data['paid_amount'];
-            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $data['total_amount']);
+            $withholding = $this->resolveWithholding(
+                $data,
+                (float) $data['total_amount'],
+                (float) $cart->tax(),
+            );
+
+            $dueAmount = $withholding['net_payable'] - $data['paid_amount'];
+            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $withholding['net_payable']);
+
+            // Replace the previous withholding snapshot with a freshly computed
+            // one so an edited document stays consistent with its taxes.
+            $purchase->withholdingTaxes()->delete();
 
             foreach ($purchase->purchaseDetails as $purchase_detail) {
                 if ($purchase->status == 'Completed') {
@@ -208,8 +288,11 @@ class PurchaseService
                 'payment_method' => $data['payment_method'],
                 'note' => $data['note'] ?? null,
                 'tax_amount' => (float) $cart->tax() * 100,
+                'withholding_amount' => (int) round($withholding['total'] * self::WITHHOLDING_SCALE),
                 'discount_amount' => (float) $cart->discount() * 100,
             ]);
+
+            $this->saveWithholdingLines($purchase, $withholding['lines']);
 
             foreach ($cart->content() as $cart_item) {
                 $this->createPurchaseDetail($purchase, $cart_item);

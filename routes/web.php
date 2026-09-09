@@ -2,6 +2,10 @@
 
 use App\Http\Middleware\SetLocale;
 use App\Livewire\Auth\Login as RedesignLogin;
+use App\Livewire\Batches\BatchForm;
+use App\Livewire\Batches\BatchIndex;
+use App\Livewire\CashRegister\CashRegisterIndex;
+use App\Livewire\Categories\CategoryImport;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
@@ -10,7 +14,10 @@ use App\Livewire\Customers\CustomerIndex;
 use App\Livewire\Customers\CustomerShow;
 use App\Livewire\Dashboard as RedesignDashboard;
 use App\Livewire\Drivers\DriverForm;
+use App\Livewire\Drivers\DriverImport;
 use App\Livewire\Drivers\DriverIndex;
+use App\Livewire\ExpenseCategories\ExpenseCategoryForm;
+use App\Livewire\ExpenseCategories\ExpenseCategoryIndex;
 use App\Livewire\Finance\InvoiceArchive;
 use App\Livewire\Finance\MonthlyBudgetForm;
 use App\Livewire\Finance\MonthlyBudgetIndex;
@@ -18,7 +25,12 @@ use App\Livewire\Finance\MonthlyBudgetShow;
 use App\Livewire\Finance\OutingForm;
 use App\Livewire\Finance\OutingIndex;
 use App\Livewire\LandingPage as RedesignLandingPage;
+use App\Livewire\ProductCategories\CategoryForm;
+use App\Livewire\ProductCategories\CategoryIndex;
 use App\Livewire\Products\ProductImport;
+use App\Livewire\SerialNumbers\SerialNumberIndex;
+use App\Livewire\StockTransfers\StockTransferForm;
+use App\Livewire\StockTransfers\StockTransferIndex;
 use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
@@ -28,7 +40,13 @@ use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Livewire\Vehicles\VehicleForm;
+use App\Livewire\Vehicles\VehicleImport;
 use App\Livewire\Vehicles\VehicleIndex;
+use App\Livewire\Warehouses\WarehouseForm;
+use App\Livewire\Warehouses\WarehouseIndex;
+use App\Livewire\Warehouses\WarehouseStockDashboard;
+use App\Livewire\WithholdingTaxes\WithholdingTaxForm;
+use App\Livewire\WithholdingTaxes\WithholdingTaxIndex;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\PurchaseReturn;
@@ -36,7 +54,9 @@ use App\Models\Quotation;
 use App\Models\Sale;
 use App\Models\SaleReturn;
 use App\Models\Supplier;
+use App\Services\WithholdingCertificateService;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,6 +121,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/documentation', 'DocumentationController@index')
         ->name('documentation.index');
+
+    Route::get('/documentation/{section}', 'DocumentationController@show')
+        ->name('documentation.show');
 });
 
 /*
@@ -115,10 +138,13 @@ Route::group(['middleware' => 'auth'], function () {
     // Product
     Route::group(['namespace' => '\\'], function () {
         Route::get('/products/import', ProductImport::class)->name('products.import');
+        Route::get('/product-categories/import', CategoryImport::class)->name('product-categories.import');
+        // Product Category (full-page Livewire components)
+        Route::get('/product-categories', CategoryIndex::class)->name('product-categories.index');
+        Route::get('/product-categories/create', CategoryForm::class)->name('product-categories.create');
+        Route::get('/product-categories/{category}/edit', CategoryForm::class)->name('product-categories.edit');
     });
     Route::resource('products', 'ProductController');
-    // Product Category
-    Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
 
 // Parties — customers & suppliers management (full-page Livewire UI under the /parties prefix).
@@ -169,6 +195,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/taxes', TaxIndex::class)->name('taxes.index');
         Route::get('/taxes/create', TaxForm::class)->name('taxes.create');
         Route::get('/taxes/{tax}/edit', TaxForm::class)->name('taxes.edit');
+        // Withholding taxes / retenues à la source (full-page Livewire components)
+        Route::get('/withholding-taxes', WithholdingTaxIndex::class)->name('withholding-taxes.index');
+        Route::get('/withholding-taxes/create', WithholdingTaxForm::class)->name('withholding-taxes.create');
+        Route::get('/withholding-taxes/{withholding_tax}/edit', WithholdingTaxForm::class)->name('withholding-taxes.edit');
     });
 });
 
@@ -187,8 +217,12 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    // Expense Category
-    Route::resource('expense-categories', 'ExpenseCategoriesController')->except('show', 'create');
+    // Expense Category (full-page Livewire components)
+    Route::group(['namespace' => '\\'], function () {
+        Route::get('/expense-categories', ExpenseCategoryIndex::class)->name('expense-categories.index');
+        Route::get('/expense-categories/create', ExpenseCategoryForm::class)->name('expense-categories.create');
+        Route::get('/expense-categories/{expenseCategory}/edit', ExpenseCategoryForm::class)->name('expense-categories.edit');
+    });
     // Expense
     Route::resource('expenses', 'ExpenseController')->except('show');
 });
@@ -213,34 +247,36 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
     // Drivers (chauffeurs) — full-page Livewire components.
     Route::get('/drivers', DriverIndex::class)->name('drivers.index');
+    Route::get('/drivers/import', DriverImport::class)->name('drivers.import');
     Route::get('/drivers/create', DriverForm::class)->name('drivers.create');
     Route::get('/drivers/{driver}/edit', DriverForm::class)->name('drivers.edit');
 
     // Vehicles (véhicules) — full-page Livewire components.
     Route::get('/vehicles', VehicleIndex::class)->name('vehicles.index');
+    Route::get('/vehicles/import', VehicleImport::class)->name('vehicles.import');
     Route::get('/vehicles/create', VehicleForm::class)->name('vehicles.create');
     Route::get('/vehicles/{vehicle}/edit', VehicleForm::class)->name('vehicles.edit');
 
     // Warehouses (dépôts) — full-page Livewire components.
-    Route::get('/warehouses', \App\Livewire\Warehouses\WarehouseIndex::class)->name('warehouses.index');
-    Route::get('/warehouses/stock', \App\Livewire\Warehouses\WarehouseStockDashboard::class)->name('warehouses.stock');
-    Route::get('/warehouses/create', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.create');
-    Route::get('/warehouses/{warehouse}/edit', \App\Livewire\Warehouses\WarehouseForm::class)->name('warehouses.edit');
+    Route::get('/warehouses', WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/warehouses/stock', WarehouseStockDashboard::class)->name('warehouses.stock');
+    Route::get('/warehouses/create', WarehouseForm::class)->name('warehouses.create');
+    Route::get('/warehouses/{warehouse}/edit', WarehouseForm::class)->name('warehouses.edit');
 
     // Stock transfers between warehouses.
-    Route::get('/stock-transfers', \App\Livewire\StockTransfers\StockTransferIndex::class)->name('stock-transfers.index');
-    Route::get('/stock-transfers/create', \App\Livewire\StockTransfers\StockTransferForm::class)->name('stock-transfers.create');
+    Route::get('/stock-transfers', StockTransferIndex::class)->name('stock-transfers.index');
+    Route::get('/stock-transfers/create', StockTransferForm::class)->name('stock-transfers.create');
 
     // Batches (lots) — traceability with DLC/DLUO.
-    Route::get('/batches', \App\Livewire\Batches\BatchIndex::class)->name('batches.index');
-    Route::get('/batches/create', \App\Livewire\Batches\BatchForm::class)->name('batches.create');
-    Route::get('/batches/{batch}/edit', \App\Livewire\Batches\BatchForm::class)->name('batches.edit');
+    Route::get('/batches', BatchIndex::class)->name('batches.index');
+    Route::get('/batches/create', BatchForm::class)->name('batches.create');
+    Route::get('/batches/{batch}/edit', BatchForm::class)->name('batches.edit');
 
     // Serial numbers — individually tracked units.
-    Route::get('/serial-numbers', \App\Livewire\SerialNumbers\SerialNumberIndex::class)->name('serial-numbers.index');
+    Route::get('/serial-numbers', SerialNumberIndex::class)->name('serial-numbers.index');
 
     // Cash register (caisse) — open/close sessions and daily Z report.
-    Route::get('/cash-register', \App\Livewire\CashRegister\CashRegisterIndex::class)->name('cash-register.index');
+    Route::get('/cash-register', CashRegisterIndex::class)->name('cash-register.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -255,6 +291,23 @@ Route::group(['middleware' => 'auth'], function () {
 
         return $pdf->stream('purchase-'.$purchase->reference.'.pdf');
     })->name('purchases.pdf');
+
+    // Withholding-tax certificate (certificat de retenue à la source).
+    Route::get('/purchases/{id}/withholding-certificate', function ($id) {
+        abort_if(Gate::denies('show_purchases'), 403);
+
+        $purchase = Purchase::with('withholdingTaxes')->findOrFail($id);
+
+        abort_if($purchase->withholding_amount <= 0, 404);
+
+        $certificate = app(WithholdingCertificateService::class)->forPurchase($purchase);
+
+        $pdf = PDF::loadView('withholding.certificate', [
+            'certificate' => $certificate,
+        ])->setPaper('a4');
+
+        return $pdf->stream('withholding-certificate-'.$purchase->reference.'.pdf');
+    })->name('purchases.withholding-certificate');
     // Sales
     Route::resource('purchases', 'PurchaseController');
     // Payments

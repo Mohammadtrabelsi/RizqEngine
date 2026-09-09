@@ -27,8 +27,10 @@ class BonCommandeService
 {
     /**
      * Paginate bons de commande, optionally filtered by reference or customer name.
+     *
+     * @param  array{status?: string, date_from?: string, date_to?: string}  $filters
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return BonCommande::query()
             ->when($search, function ($query) use ($search) {
@@ -36,6 +38,9 @@ class BonCommandeService
                 $query->where('reference', 'like', $term)
                     ->orWhere('customer_name', 'like', $term);
             })
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }

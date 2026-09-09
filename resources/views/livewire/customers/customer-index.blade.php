@@ -19,12 +19,12 @@
 
     {{-- Filters container --}}
     <div class="card border-0 shadow-sm mb-4">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-funnel text-primary"></i> {{ __('app.filters') }}</h5>
+        </div>
         <div class="flex-auto p-2">
-            <h6 class="card-title text-muted mb-3">
-                <i class="bi bi-funnel"></i> {{ __('app.filters') }}
-            </h6>
             <div class="row align-items-end">
-                <div class="col-12 col-md-3 mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('customer.city') }}</label>
                     <select wire:model.live="city" class="form-select">
                         <option value="">{{ __('app.all') }}</option>
@@ -33,7 +33,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-3 mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('customer.country') }}</label>
                     <select wire:model.live="country" class="form-select">
                         <option value="">{{ __('app.all') }}</option>
@@ -42,7 +42,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-3 mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('customer.tax_identification_number') }}</label>
                     <select wire:model.live="hasTaxId" class="form-select">
                         <option value="">{{ __('app.all') }}</option>
@@ -50,7 +50,7 @@
                         <option value="no">{{ __('app.no') }}</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-3 mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <button type="button" wire:click="resetFilters" class="btn btn-secondary w-100">
                         <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
                     </button>

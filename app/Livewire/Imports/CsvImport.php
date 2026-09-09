@@ -4,6 +4,7 @@ namespace App\Livewire\Imports;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -101,6 +102,36 @@ abstract class CsvImport extends Component
 
     /** Page/heading title. */
     abstract public function title(): string;
+
+    /**
+     * Basename of the ready-to-fill example CSV shipped for this import,
+     * relative to storage/app/import-examples (e.g. "products.csv").
+     */
+    abstract public function exampleFile(): string;
+
+    /** Storage path (on the local disk) of the example CSV for this import. */
+    protected function examplePath(): string
+    {
+        return 'import-examples/'.$this->exampleFile();
+    }
+
+    /** Whether a downloadable example CSV exists for this import. */
+    public function hasExample(): bool
+    {
+        return Storage::disk('local')->exists($this->examplePath());
+    }
+
+    /**
+     * Stream the example CSV to the browser so the user has a correctly
+     * formatted starting point to fill in and upload.
+     */
+    public function downloadExample()
+    {
+        abort_if(Gate::denies($this->gate()), 403);
+        abort_unless($this->hasExample(), 404);
+
+        return Storage::disk('local')->download($this->examplePath(), $this->exampleFile());
+    }
 
     /**
      * Hook for subclasses to pre-load lookup data before parsing rows. Runs once

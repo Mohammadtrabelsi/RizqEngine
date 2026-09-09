@@ -1,38 +1,33 @@
-<div class="btn-group dropdown inline-action-menu">
-    <button type="button" class="btn btn-ghost" data-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-three-dots-vertical"></i>
-    </button>
-    <div class="dropdown-menu">
-        @can('access_sale_payments')
-            <a href="{{ route('sale-return-payments.index', $data->id) }}" class="dropdown-item">
-                <i class="line-1 bi bi-cash-coin mr-2 text-warning"></i> Show Payments
+<div class="d-flex flex-wrap justify-content-center gap-2">
+    @can('access_sale_payments')
+        <a href="{{ route('sale-return-payments.index', $data->id) }}" class="btn btn-sm btn-secondary">
+            <i class="bi bi-cash-coin me-1 text-warning"></i> Show Payments
+        </a>
+    @endcan
+    @can('access_sale_payments')
+        @if($data->due_amount > 0)
+            <a href="{{ route('sale-return-payments.create', $data->id) }}" class="btn btn-sm btn-secondary">
+                <i class="bi bi-plus-circle-dotted me-1 text-success"></i> Add Payment
             </a>
-        @endcan
-        @can('access_sale_payments')
-            @if($data->due_amount > 0)
-                <a href="{{ route('sale-return-payments.create', $data->id) }}" class="dropdown-item">
-                    <i class="line-1 bi bi-plus-circle-dotted mr-2 text-success"></i> Add Payment
-                </a>
-            @endif
-        @endcan
-        @can('edit_sales')
-            <a href="{{ route('sale-returns.edit', $data->id) }}" class="dropdown-item">
-                <i class="line-1 bi bi-pencil mr-2 text-primary"></i> Edit
-            </a>
-        @endcan
-        @can('show_sales')
-            <a href="{{ route('sale-returns.show', $data->id) }}" class="dropdown-item">
-                <i class="line-1 bi bi-eye mr-2 text-info"></i> Details
-            </a>
-        @endcan
-        @can('delete_sales')
-            <button id="delete" class="dropdown-item" data-submit-form="destroy{{ $data->id }}">
-                <i class="line-1 bi bi-trash mr-2 text-danger"></i> Delete
-                <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sale-returns.destroy', $data->id) }}" method="POST">
-                    @csrf
-                    @method('delete')
-                </form>
-            </button>
-        @endcan
-    </div>
+        @endif
+    @endcan
+    @can('edit_sales')
+        <a href="{{ route('sale-returns.edit', $data->id) }}" class="btn btn-sm btn-secondary">
+            <i class="bi bi-pencil me-1 text-primary"></i> Edit
+        </a>
+    @endcan
+    @can('show_sales')
+        <a href="{{ route('sale-returns.show', $data->id) }}" class="btn btn-sm btn-secondary">
+            <i class="bi bi-eye me-1 text-info"></i> Details
+        </a>
+    @endcan
+    @can('delete_sales')
+        <button type="button" class="btn btn-sm btn-outline-danger" data-submit-form="destroy{{ $data->id }}">
+            <i class="bi bi-trash me-1"></i> Delete
+            <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sale-returns.destroy', $data->id) }}" method="POST">
+                @csrf
+                @method('delete')
+            </form>
+        </button>
+    @endcan
 </div>

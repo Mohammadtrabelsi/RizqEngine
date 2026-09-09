@@ -39,6 +39,6 @@ class ExpenseCategoryIndex extends Component
     {
         return view('livewire.expense-categories.expense-category-index', [
             'categories' => $categories->paginate($this->search),
-        ]);
+        ])->layout('components.layouts.admin', ['title' => __('expense-category.categories')]);
     }
 }

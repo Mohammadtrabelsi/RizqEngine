@@ -19,10 +19,17 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string|null $tax_identification_number
  * @property string|null $iban
  * @property string|null $note
+ * @property bool $subject_to_withholding
+ * @property string|null $legal_form
+ * @property string|null $fiscal_category
  */
 class Supplier extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, RecordsActivity, TracksUserActions;
+
+    protected $casts = [
+        'subject_to_withholding' => 'boolean',
+    ];
 
     protected $guarded = [];
 
@@ -61,5 +68,15 @@ class Supplier extends Model implements HasMedia
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'supplier_id', 'id');
+    }
+
+    /**
+     * The purchases (orders) placed with this supplier.
+     *
+     * @return HasMany<Purchase, $this>
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class, 'supplier_id', 'id');
     }
 }

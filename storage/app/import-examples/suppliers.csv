@@ -1,0 +1,3 @@
+supplier_name,supplier_phone,supplier_email,whatsapp_number,responsible_person,tax_identification_number,iban,city,country,address,note
+Example Supplier,+216 71 000 000,supplier@example.com,+216 98 000 000,John Doe,0000000A/A/M/000,TN5900000000000000000000,Tunis,Tunisia,1 Example Street 1000 Tunis,Delivers on Mondays and Thursdays.
+Second Supplier,+216 73 000 000,second@example.com,,Jane Doe,,,Sousse,Tunisia,2 Sample Avenue 4000 Sousse,

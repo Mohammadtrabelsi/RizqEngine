@@ -57,6 +57,7 @@ class ExpenseCategoryForm extends Component
 
     public function render()
     {
-        return view('livewire.expense-categories.expense-category-form');
+        return view('livewire.expense-categories.expense-category-form')
+            ->layout('components.layouts.admin', ['title' => $this->categoryId ? __('expense-category.edit') : __('expense-category.add_category')]);
     }
 }

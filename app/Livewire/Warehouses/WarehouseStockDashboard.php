@@ -4,6 +4,7 @@ namespace App\Livewire\Warehouses;
 
 use App\Models\StockExit;
 use App\Models\Warehouse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
@@ -48,9 +49,9 @@ class WarehouseStockDashboard extends Component
      * On-hand rows joined across the product_warehouse pivot, filtered by the
      * selected warehouse and product search.
      *
-     * @return \Illuminate\Support\Collection<int, object>
+     * @return Collection<int, \stdClass>
      */
-    protected function stockRows(): \Illuminate\Support\Collection
+    protected function stockRows(): Collection
     {
         return DB::table('product_warehouse as pw')
             ->join('products as p', 'p.id', '=', 'pw.product_id')
@@ -80,9 +81,9 @@ class WarehouseStockDashboard extends Component
     /**
      * Bons de Sortie still in transit, with their outstanding quantity.
      *
-     * @return \Illuminate\Support\Collection<int, StockExit>
+     * @return Collection<int, StockExit>
      */
-    protected function outstandingExits(): \Illuminate\Support\Collection
+    protected function outstandingExits(): Collection
     {
         return StockExit::query()
             ->where('status', StockExit::STATUS_IN_TRANSIT)

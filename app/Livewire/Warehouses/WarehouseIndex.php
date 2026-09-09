@@ -17,8 +17,30 @@ class WarehouseIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url]
+    public string $status = '';
+
+    #[Url]
+    public string $city = '';
+
     public function updatingSearch(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatingStatus(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingCity(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['status', 'city']);
         $this->resetPage();
     }
 
@@ -36,7 +58,11 @@ class WarehouseIndex extends Component
         abort_if(Gate::denies('access_warehouses'), 403);
 
         return view('livewire.warehouses.warehouse-index', [
-            'warehouses' => $warehouses->paginate($this->search),
+            'warehouses' => $warehouses->paginate($this->search, [
+                'status' => $this->status,
+                'city' => $this->city,
+            ]),
+            'cities' => $warehouses->cities(),
         ])->layout('components.layouts.admin', ['title' => __('warehouses.warehouses')]);
     }
 }

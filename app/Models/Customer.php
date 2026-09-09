@@ -7,6 +7,7 @@ use App\Traits\TracksUserActions;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -59,6 +60,16 @@ class Customer extends Model implements HasMedia
     public function isLegalEntity(): bool
     {
         return $this->client_type === self::TYPE_LEGAL_ENTITY;
+    }
+
+    /**
+     * The sales (orders) placed by this customer.
+     *
+     * @return HasMany<Sale, $this>
+     */
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class, 'customer_id', 'id');
     }
 
     public function registerMediaCollections(): void

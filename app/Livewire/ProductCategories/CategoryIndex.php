@@ -39,6 +39,6 @@ class CategoryIndex extends Component
     {
         return view('livewire.product-categories.category-index', [
             'categories' => $categories->paginate($this->search),
-        ]);
+        ])->layout('components.layouts.admin', ['title' => __('product.categories')]);
     }
 }

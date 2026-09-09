@@ -2,9 +2,14 @@
     @include('utils.alerts')
     <div class="row">
         <div class="col-12 col-md-6 mb-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryCreateModal">
+            <a href="{{ route('product-categories.create') }}" class="btn btn-primary">
                 Add Category <i class="bi bi-plus"></i>
-            </button>
+            </a>
+            @can('access_product_categories')
+                <a href="{{ route('product-categories.import') }}" class="btn btn-outline">
+                    {{ __('import.categories') }} <i class="bi bi-upload"></i>
+                </a>
+            @endcan
         </div>
         <div class="col-12 col-md-6 mb-3">
             <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
@@ -56,22 +61,5 @@
 
     <div class="d-flex justify-content-center">
         {{ $categories->links('pagination::bootstrap-5') }}
-    </div>
-
-    <!-- Create Modal -->
-    <div class="modal fade" id="categoryCreateModal" tabindex="-1" role="dialog" aria-labelledby="categoryCreateModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="categoryCreateModalLabel">Create Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <livewire:product-categories.category-form/>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

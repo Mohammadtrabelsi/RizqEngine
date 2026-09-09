@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ConversionException;
+use App\Exceptions\InsufficientStockException;
 use App\Exceptions\StockInconsistencyException;
 use App\Models\Commande;
 use App\Models\Product;
@@ -37,9 +38,12 @@ class StockExitService
 
     /**
      * Paginate stock exits (with a count of their detail lines), optionally
-     * filtered by reference, destination or responsible party.
+     * filtered by reference, destination or responsible party, kind, status,
+     * and/or a date range.
+     *
+     * @param  array{kind?: string, status?: string, date_from?: string, date_to?: string}  $filters
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return StockExit::query()
             ->withCount('details')
@@ -48,6 +52,10 @@ class StockExitService
                     ->orWhere('destination', 'like', '%'.$search.'%')
                     ->orWhere('responsible', 'like', '%'.$search.'%');
             })
+            ->when($filters['kind'] ?? null, fn ($query, $kind) => $query->where('kind', $kind))
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }
@@ -107,6 +115,8 @@ class StockExitService
      *
      * @param  array<string, mixed>  $attributes  date, reason, destination, responsible, driver_id, vehicle_id, note
      * @param  array<int, array{product_id:int, quantity:int}>  $lines
+     *
+     * @throws InsufficientStockException when a line lacks sufficient stock.
      */
     public function createExit(array $attributes, array $lines): StockExit
     {
@@ -176,6 +186,7 @@ class StockExitService
      *
      * @throws ConversionException when the Commande has already produced an exit
      *                             or carries no orderable line.
+     * @throws InsufficientStockException when a line lacks sufficient stock.
      */
     public function createFromCommande(Commande $commande): StockExit
     {

@@ -10,60 +10,67 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="flex-auto p-2 d-flex align-items-center">
-                        <i class="bi bi-book display-4 text-primary mb-0 mr-3"></i>
-                        <div>
-                            <h4 class="mb-1">{{ __('documentation.page_title') }}</h4>
-                            <p class="mb-0 text-muted">{{ __('documentation.intro') }}</p>
-                        </div>
-                    </div>
+    <div class="container-fluid py-4">
+
+        {{-- Hero --}}
+        <div class="mb-6 overflow-hidden rounded-xl border border-hairline bg-white shadow-sm">
+            <div class="flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
+                <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent">
+                    <i class="bi bi-book text-3xl"></i>
+                </span>
+                <div>
+                    <h1 class="mb-1 text-2xl font-semibold text-ink">{{ __('documentation.page_title') }}</h1>
+                    <p class="mb-0 max-w-3xl text-muted">{{ __('documentation.intro') }}</p>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="flex-auto p-2 px-3 py-2">
-                        <nav class="nav nav-pills flex-row flex-nowrap gap-2 overflow-auto">
-                            @foreach ($sections as $section)
-                                <a href="#{{ $section }}" class="nav-link py-2 px-3 text-nowrap">
-                                    {{ __('documentation.sections.' . $section . '.title') }}
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+
+            {{-- Sidebar nav (hidden on small screens; cards below act as nav there) --}}
+            <aside class="hidden lg:block">
+                <div class="sticky top-4 rounded-xl border border-hairline bg-white p-4 shadow-sm">
+                    @include('documentation.partials.nav', ['navGroups' => $navGroups, 'current' => null])
+                </div>
+            </aside>
+
+            {{-- Grouped topic cards --}}
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-lg font-semibold text-ink">{{ __('documentation.overview_heading') }}</h2>
+                    <p class="text-sm text-muted">{{ __('documentation.overview_subheading') }}</p>
+                </div>
+
+                @foreach ($groups as $group)
+                    <section aria-label="{{ $group['label'] }}">
+                        <h3 class="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-3">{{ $group['label'] }}</h3>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                            @foreach ($group['sections'] as $section)
+                                <a href="{{ route('documentation.show', $section['key']) }}"
+                                   class="group flex h-full flex-col rounded-xl border border-hairline bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-accent hover:shadow-md">
+                                    <span class="mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-accent-light text-accent transition group-hover:bg-accent group-hover:text-white">
+                                        <i class="bi {{ $section['icon'] }} text-xl"></i>
+                                    </span>
+                                    <h4 class="mb-1 font-semibold text-ink">{{ $section['title'] }}</h4>
+                                    <p class="mb-3 flex-1 text-sm text-muted">{{ $section['summary'] }}</p>
+                                    <span class="inline-flex items-center gap-1 text-sm font-medium text-accent">
+                                        {{ __('documentation.read_guide') }}
+                                        <i class="bi bi-arrow-right transition group-hover:translate-x-0.5 rtl:hidden"></i>
+                                        <i class="bi bi-arrow-left transition group-hover:-translate-x-0.5 ltr:hidden"></i>
+                                    </span>
                                 </a>
                             @endforeach
-                        </nav>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-
-                <div class="row">
-                    @foreach ($sectionChunks as $chunk)
-                        <div class="col-lg-6">
-                            @foreach ($chunk as $section)
-                                <div class="card mb-4" id="{{ $section }}">
-                                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
-                                        <h5 class="mb-0">{{ __('documentation.sections.' . $section . '.title') }}</h5>
-                                    </div>
-                                    <div class="flex-auto p-2">
-                                        @foreach (__('documentation.sections.' . $section . '.body') as $paragraph)
-                                            <p class="{{ $loop->last ? 'mb-0' : '' }}">{{ $paragraph }}</p>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
-                    @endforeach
-                </div>
+                    </section>
+                @endforeach
 
-                <div class="card border-primary">
-                    <div class="flex-auto p-2">
-                        <h5 class="mb-1"><i class="bi bi-question-circle text-primary"></i> {{ __('documentation.need_help') }}</h5>
-                        <p class="mb-0 text-muted">{{ __('documentation.need_help_body') }}</p>
-                    </div>
+                {{-- Help callout --}}
+                <div class="rounded-xl border border-accent-soft bg-accent-light p-5">
+                    <h4 class="mb-1 flex items-center gap-2 font-semibold text-ink">
+                        <i class="bi bi-question-circle text-accent"></i>
+                        {{ __('documentation.need_help') }}
+                    </h4>
+                    <p class="mb-0 text-sm text-muted">{{ __('documentation.need_help_body') }}</p>
                 </div>
             </div>
         </div>

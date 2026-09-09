@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'already-converted' => 'تم بالفعل إصدار إيصال تسليم للطلب :reference.',
+    'already-invoiced' => 'تم بالفعل فوترة إيصال التسليم :reference.',
+    'bon_livraisons' => 'إيصالات التسليم',
+    'code' => 'الرمز',
+    'company_info' => 'معلومات الشركة',
+    'customer_info' => 'معلومات العميل',
+    'date' => 'التاريخ',
+    'delete' => 'حذف',
+    'delivery_info' => 'معلومات التوصيل',
+    'details' => 'التفاصيل',
+    'email' => 'البريد الإلكتروني',
+    'generate-facture' => 'إنشاء فاتورة',
+    'mark-delivered' => 'تحديد كتم التسليم',
+    'none-found' => 'لم يتم العثور على إيصالات تسليم',
+    'note' => 'ملاحظة',
+    'only-pending-deliverable' => 'يمكن تحديد إيصال التسليم المعلق فقط كتم التسليم.',
+    'phone' => 'الهاتف',
+    'product' => 'المنتج',
+    'quantity' => 'الكمية',
+    'reference' => 'المرجع',
+    'status_' => 'الحالة',
+    'status_label' => 'الحالة',
+    'total' => 'الإجمالي',
+];

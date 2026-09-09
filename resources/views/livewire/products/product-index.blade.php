@@ -61,12 +61,12 @@
 
     {{-- Filters container --}}
     <div class="card border-0 shadow-sm mb-4">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-funnel text-primary"></i> {{ __('app.filters') }}</h5>
+        </div>
         <div class="flex-auto p-2">
-            <h6 class="card-title text-muted mb-3">
-                <i class="bi bi-funnel"></i> {{ __('app.filters') }}
-            </h6>
-            <div class="d-flex flex-wrap align-items-end gap-3">
-                <div class="flex-fill" style="min-width: 160px;">
+            <div class="row align-items-end">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
                     <select wire:model.live="categoryId" class="form-select" aria-label="Filter by category">
                         <option value="">{{ __('app.all') }}</option>
@@ -75,7 +75,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex-fill" style="min-width: 160px;">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.supplier') }}</label>
                     <select wire:model.live="supplierId" class="form-select" aria-label="Filter by supplier">
                         <option value="">{{ __('app.all') }}</option>
@@ -84,7 +84,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex-fill" style="min-width: 140px;">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.stock') }}</label>
                     <select wire:model.live="stockStatus" class="form-select" aria-label="Filter by stock status">
                         @foreach($this->stockStatusOptions as $value => $label)
@@ -92,7 +92,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex-fill" style="min-width: 140px;">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.expiry') }}</label>
                     <select wire:model.live="expiry" class="form-select" aria-label="Filter by expiry">
                         @foreach($this->expiryOptions as $value => $label)
@@ -100,16 +100,16 @@
                         @endforeach
                     </select>
                 </div>
-                <div style="min-width: 100px; max-width: 130px;">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.min_price') }}</label>
                     <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="form-control" placeholder="0">
                 </div>
-                <div style="min-width: 100px; max-width: 130px;">
+                <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.max_price') }}</label>
                     <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="maxPrice" class="form-control" placeholder="∞">
                 </div>
-                <div class="flex-shrink-0">
-                    <button type="button" wire:click="resetFilters" class="btn btn-secondary btn-sm">
+                <div class="col-12 col-lg-6 mb-3">
+                    <button type="button" wire:click="resetFilters" class="btn btn-secondary w-100">
                         <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
                     </button>
                 </div>

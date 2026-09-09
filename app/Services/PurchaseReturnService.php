@@ -27,9 +27,12 @@ class PurchaseReturnService
     ) {}
 
     /**
-     * Paginate purchase returns, optionally filtered by reference or supplier name.
+     * Paginate purchase returns, optionally filtered by reference/supplier
+     * name, status, payment status, and/or a date range.
+     *
+     * @param  array{status?: string, payment_status?: string, date_from?: string, date_to?: string}  $filters
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return PurchaseReturn::query()
             ->when($search, function ($query) use ($search) {
@@ -37,6 +40,10 @@ class PurchaseReturnService
                 $query->where('reference', 'like', $term)
                     ->orWhere('supplier_name', 'like', $term);
             })
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['payment_status'] ?? null, fn ($query, $status) => $query->where('payment_status', $status))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }
