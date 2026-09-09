@@ -1,4 +1,5 @@
 <?php
+
 return [
     'action' => 'Action',
     'bank-transfer' => 'Bank transfer',
