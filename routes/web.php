@@ -33,13 +33,13 @@ use App\Livewire\Taxes\TaxForm;
 use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
-use App\Livewire\WithholdingTaxes\WithholdingTaxForm;
-use App\Livewire\WithholdingTaxes\WithholdingTaxIndex;
 use App\Livewire\Vehicles\VehicleForm;
 use App\Livewire\Vehicles\VehicleIndex;
 use App\Livewire\Warehouses\WarehouseForm;
 use App\Livewire\Warehouses\WarehouseIndex;
 use App\Livewire\Warehouses\WarehouseStockDashboard;
+use App\Livewire\WithholdingTaxes\WithholdingTaxForm;
+use App\Livewire\WithholdingTaxes\WithholdingTaxIndex;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\PurchaseReturn;
@@ -47,7 +47,9 @@ use App\Models\Quotation;
 use App\Models\Sale;
 use App\Models\SaleReturn;
 use App\Models\Supplier;
+use App\Services\WithholdingCertificateService;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -276,13 +278,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Withholding-tax certificate (certificat de retenue à la source).
     Route::get('/purchases/{id}/withholding-certificate', function ($id) {
-        abort_if(\Illuminate\Support\Facades\Gate::denies('show_purchases'), 403);
+        abort_if(Gate::denies('show_purchases'), 403);
 
         $purchase = Purchase::with('withholdingTaxes')->findOrFail($id);
 
         abort_if($purchase->withholding_amount <= 0, 404);
 
-        $certificate = app(\App\Services\WithholdingCertificateService::class)->forPurchase($purchase);
+        $certificate = app(WithholdingCertificateService::class)->forPurchase($purchase);
 
         $pdf = PDF::loadView('withholding.certificate', [
             'certificate' => $certificate,

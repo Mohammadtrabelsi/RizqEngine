@@ -7,6 +7,7 @@ use App\Traits\TracksUserActions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -84,7 +85,7 @@ class WithholdingTax extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<PurchaseWithholdingTax, $this>
+     * @return HasMany<PurchaseWithholdingTax, $this>
      */
     public function purchaseLines()
     {

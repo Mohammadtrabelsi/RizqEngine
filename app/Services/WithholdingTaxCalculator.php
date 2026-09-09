@@ -29,7 +29,7 @@ class WithholdingTaxCalculator
      * Compute the withholding breakdown for a document.
      *
      * @param  iterable<WithholdingTax>  $withholdingTaxes  The taxes to apply.
-     * @param  float  $ht   Net amount excluding tax (montant HT).
+     * @param  float  $ht  Net amount excluding tax (montant HT).
      * @param  float  $tva  VAT amount (montant TVA).
      * @param  float  $ttc  Tax-inclusive total (montant TTC).
      * @return array{
