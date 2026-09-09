@@ -19,11 +19,7 @@
                 <div class="card h-100">
                     <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 rounded-t-xl d-flex justify-content-between align-items-center">
                         <span class="fw-bold">{{ $stockExit->reference }}</span>
-                        @if($stockExit->status === \App\Models\StockExit::STATUS_CLOSED)
-                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('stockexit.status_closed') }}</span>
-                        @else
-                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark">{{ __('stockexit.status_in_transit') }}</span>
-                        @endif
+                        @include('stockexit.partials.status', ['data' => $stockExit])
                     </div>
                     <div class="flex-auto p-2">
                         <ul class="list-group list-group-flush mb-0">

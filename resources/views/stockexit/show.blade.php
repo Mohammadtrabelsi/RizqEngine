@@ -14,18 +14,22 @@
     <div class="container-fluid">
         @include('utils.alerts')
         <div class="card">
-            <div class="flex-auto p-2">
-                <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
-                    <h4 class="mb-0">{{ __('stockexit.bon_de_sortie') }} — {{ $stockExit->reference }}</h4>
-                    <div>
-                        @if($stockExit->status === \App\Models\StockExit::STATUS_CLOSED)
-                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success p-2">{{ __('stockexit.status_closed') }}</span>
-                        @else
-                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-warning text-dark p-2">{{ __('stockexit.status_in_transit') }}</span>
-                        @endif
-                    </div>
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex flex-wrap align-items-center">
+                <div>
+                    {{ __('stockexit.bon_de_sortie') }} — {{ __('stockexit.reference') }}: <strong>{{ $stockExit->reference }}</strong>
+                    @include('stockexit.partials.status', ['data' => $stockExit])
                 </div>
-
+                <div class="mfs-auto d-print-none">
+                    @can('create_stock_entries')
+                        @if($stockExit->status !== \App\Models\StockExit::STATUS_CLOSED)
+                            <a href="{{ route('stock-entries.create', $stockExit->id) }}" class="btn btn-sm btn-success">
+                                <i class="bi bi-box-arrow-in-down"></i> {{ __('stockexit.declare_return') }}
+                            </a>
+                        @endif
+                    @endcan
+                </div>
+            </div>
+            <div class="flex-auto p-2">
                 <div class="row mb-4">
                     <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.date') }}</span>{{ \Illuminate\Support\Carbon::parse($stockExit->date)->format('d M, Y') }}</div>
                     <div class="col-md-3"><span class="fw-bold d-block">{{ __('stockexit.reason') }}</span>{{ $stockExit->reason ?: '—' }}</div>
@@ -93,17 +97,6 @@
                 @if($stockExit->note)
                     <p class="mt-3"><span class="fw-bold">{{ __('stockexit.note') }}:</span> {{ $stockExit->note }}</p>
                 @endif
-
-                <div class="mt-3">
-                    @can('create_stock_entries')
-                        @if($stockExit->status !== \App\Models\StockExit::STATUS_CLOSED)
-                            <a href="{{ route('stock-entries.create', $stockExit->id) }}" class="btn btn-success">
-                                <i class="bi bi-box-arrow-in-down"></i> {{ __('stockexit.declare_return') }}
-                            </a>
-                        @endif
-                    @endcan
-                    <a href="{{ route('stock-exits.index') }}" class="btn btn-secondary">{{ __('app.back') }}</a>
-                </div>
             </div>
         </div>
 
