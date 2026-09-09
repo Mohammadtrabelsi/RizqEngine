@@ -7,6 +7,9 @@
                     <a href="{{ route('drivers.create') }}" class="btn btn-primary">
                         {{ __('drivers.add_driver') }} <i class="bi bi-plus"></i>
                     </a>
+                    <a href="{{ route('drivers.import') }}" class="btn btn-outline">
+                        {{ __('import.drivers') }} <i class="bi bi-upload"></i>
+                    </a>
                 @endcan
             </div>
             <div class="col-12 col-md-6 mb-3">
