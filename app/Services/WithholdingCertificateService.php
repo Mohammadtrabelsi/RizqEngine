@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Purchase;
+use App\Models\PurchaseWithholdingTax;
 use App\Models\Setting;
 use App\Models\Supplier;
 
@@ -28,7 +29,7 @@ class WithholdingCertificateService
         $settings = Setting::first();
         $supplier = Supplier::find($purchase->supplier_id);
 
-        $lines = $purchase->withholdingTaxes->map(fn ($line) => [
+        $lines = $purchase->withholdingTaxes->map(fn (PurchaseWithholdingTax $line) => [
             'name' => $line->name,
             'code' => $line->code,
             'rate' => (float) $line->rate,
@@ -47,9 +48,9 @@ class WithholdingCertificateService
             // Beneficiary of the payment (le bénéficiaire).
             'beneficiary' => [
                 'name' => $purchase->supplier_name,
-                'tax_id' => $supplier?->tax_identification_number ?? '',
-                'legal_form' => $supplier?->legal_form ?? '',
-                'fiscal_category' => $supplier?->fiscal_category ?? '',
+                'tax_id' => $supplier->tax_identification_number ?? '',
+                'legal_form' => $supplier->legal_form ?? '',
+                'fiscal_category' => $supplier->fiscal_category ?? '',
             ],
             'invoice' => [
                 'reference' => $purchase->reference,

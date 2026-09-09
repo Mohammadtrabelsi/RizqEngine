@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property string $code
  * @property float $rate
- * @property string $calculation_base
+ * @property WithholdingCalculationBase $calculation_base
  * @property float $taxable_amount
  * @property float $amount
  */

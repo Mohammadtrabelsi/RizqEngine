@@ -28,7 +28,7 @@ class WithholdingTaxCalculator
     /**
      * Compute the withholding breakdown for a document.
      *
-     * @param  iterable<WithholdingTax>  $withholdingTaxes  The taxes to apply.
+     * @param  iterable<int, object{id?: int|null, name: string, code: string, rate: float, calculation_base: string|WithholdingCalculationBase}>  $withholdingTaxes  The taxes to apply.
      * @param  float  $ht  Net amount excluding tax (montant HT).
      * @param  float  $tva  VAT amount (montant TVA).
      * @param  float  $ttc  Tax-inclusive total (montant TTC).
@@ -47,7 +47,7 @@ class WithholdingTaxCalculator
         foreach ($withholdingTaxes as $withholding) {
             $base = $withholding->calculation_base instanceof WithholdingCalculationBase
                 ? $withholding->calculation_base
-                : WithholdingCalculationBase::from((string) $withholding->calculation_base);
+                : WithholdingCalculationBase::from($withholding->calculation_base);
 
             $taxable = $this->round($base->taxableAmount($ht, $tva, $ttc));
             $amount = $this->round($taxable * ((float) $withholding->rate) / 100);

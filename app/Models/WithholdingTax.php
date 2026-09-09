@@ -27,7 +27,7 @@ use Illuminate\Support\Carbon;
  * @property string $code
  * @property string|null $description
  * @property float $rate Percentage rate (0–100) applied to the calculation base.
- * @property string $calculation_base One of {@see WithholdingCalculationBase}.
+ * @property WithholdingCalculationBase $calculation_base
  * @property bool $active
  * @property bool $applicable_to_purchases
  * @property bool $applicable_to_sales
