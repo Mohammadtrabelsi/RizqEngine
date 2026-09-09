@@ -5,6 +5,7 @@ use App\Livewire\Auth\Login as RedesignLogin;
 use App\Livewire\Batches\BatchForm;
 use App\Livewire\Batches\BatchIndex;
 use App\Livewire\CashRegister\CashRegisterIndex;
+use App\Livewire\Categories\CategoryImport;
 use App\Livewire\Currencies\CurrencyForm;
 use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
@@ -13,6 +14,7 @@ use App\Livewire\Customers\CustomerIndex;
 use App\Livewire\Customers\CustomerShow;
 use App\Livewire\Dashboard as RedesignDashboard;
 use App\Livewire\Drivers\DriverForm;
+use App\Livewire\Drivers\DriverImport;
 use App\Livewire\Drivers\DriverIndex;
 use App\Livewire\Finance\InvoiceArchive;
 use App\Livewire\Finance\MonthlyBudgetForm;
@@ -34,6 +36,7 @@ use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
 use App\Livewire\Units\UnitIndex;
 use App\Livewire\Vehicles\VehicleForm;
+use App\Livewire\Vehicles\VehicleImport;
 use App\Livewire\Vehicles\VehicleIndex;
 use App\Livewire\Warehouses\WarehouseForm;
 use App\Livewire\Warehouses\WarehouseIndex;
@@ -131,6 +134,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Product
     Route::group(['namespace' => '\\'], function () {
         Route::get('/products/import', ProductImport::class)->name('products.import');
+        Route::get('/product-categories/import', CategoryImport::class)->name('product-categories.import');
     });
     Route::resource('products', 'ProductController');
     // Product Category
@@ -233,11 +237,13 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
     // Drivers (chauffeurs) — full-page Livewire components.
     Route::get('/drivers', DriverIndex::class)->name('drivers.index');
+    Route::get('/drivers/import', DriverImport::class)->name('drivers.import');
     Route::get('/drivers/create', DriverForm::class)->name('drivers.create');
     Route::get('/drivers/{driver}/edit', DriverForm::class)->name('drivers.edit');
 
     // Vehicles (véhicules) — full-page Livewire components.
     Route::get('/vehicles', VehicleIndex::class)->name('vehicles.index');
+    Route::get('/vehicles/import', VehicleImport::class)->name('vehicles.import');
     Route::get('/vehicles/create', VehicleForm::class)->name('vehicles.create');
     Route::get('/vehicles/{vehicle}/edit', VehicleForm::class)->name('vehicles.edit');
 

@@ -5,6 +5,11 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryCreateModal">
                 Add Category <i class="bi bi-plus"></i>
             </button>
+            @can('access_product_categories')
+                <a href="{{ route('product-categories.import') }}" class="btn btn-outline">
+                    {{ __('import.categories') }} <i class="bi bi-upload"></i>
+                </a>
+            @endcan
         </div>
         <div class="col-12 col-md-6 mb-3">
             <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
