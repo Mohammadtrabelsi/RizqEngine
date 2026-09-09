@@ -128,4 +128,9 @@ class CustomerImport extends CsvImport
     {
         return __('import.customers');
     }
+
+    public function exampleFile(): string
+    {
+        return 'customers.csv';
+    }
 }

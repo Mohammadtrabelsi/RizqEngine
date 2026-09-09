@@ -100,4 +100,9 @@ class SupplierImport extends CsvImport
     {
         return __('import.suppliers');
     }
+
+    public function exampleFile(): string
+    {
+        return 'suppliers.csv';
+    }
 }

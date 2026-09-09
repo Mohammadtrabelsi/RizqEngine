@@ -31,6 +31,14 @@
                 <p class="mb-2"><strong>{{ __('import.expected_columns') }}:</strong></p>
                 <code class="d-block mb-3">{{ implode(', ', $this->expectedColumns()) }}</code>
 
+                @if ($this->hasExample())
+                    <p class="mb-3">
+                        <a href="#" wire:click.prevent="downloadExample" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-download"></i> {{ __('import.download_example') }}
+                        </a>
+                    </p>
+                @endif
+
                 <form wire:submit="parse">
                     <div class="form-row align-items-end">
                         <div class="col-lg-8">
