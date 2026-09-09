@@ -17,8 +17,38 @@ class ExpenseIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url]
+    public string $categoryId = '';
+
+    #[Url]
+    public string $dateFrom = '';
+
+    #[Url]
+    public string $dateTo = '';
+
     public function updatingSearch(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatingCategoryId(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateFrom(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateTo(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['categoryId', 'dateFrom', 'dateTo']);
         $this->resetPage();
     }
 
@@ -34,7 +64,12 @@ class ExpenseIndex extends Component
     public function render(ExpenseService $expenses)
     {
         return view('livewire.expenses.expense-index', [
-            'expenses' => $expenses->paginate($this->search),
+            'expenses' => $expenses->paginate($this->search, [
+                'category_id' => $this->categoryId,
+                'date_from' => $this->dateFrom,
+                'date_to' => $this->dateTo,
+            ]),
+            'categories' => $expenses->categories(),
         ]);
     }
 }

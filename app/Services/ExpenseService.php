@@ -13,13 +13,19 @@ use Illuminate\Support\Collection;
  */
 class ExpenseService
 {
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{category_id?: string, date_from?: string, date_to?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Expense::query()
             ->with('category')
             ->when($search, function ($query) use ($search) {
                 $query->where('reference', 'like', '%'.$search.'%');
             })
+            ->when($filters['category_id'] ?? null, fn ($query, $categoryId) => $query->where('category_id', $categoryId))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }

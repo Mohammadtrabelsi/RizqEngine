@@ -38,9 +38,12 @@ class StockExitService
 
     /**
      * Paginate stock exits (with a count of their detail lines), optionally
-     * filtered by reference, destination or responsible party.
+     * filtered by reference, destination or responsible party, kind, status,
+     * and/or a date range.
+     *
+     * @param  array{kind?: string, status?: string, date_from?: string, date_to?: string}  $filters
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return StockExit::query()
             ->withCount('details')
@@ -49,6 +52,10 @@ class StockExitService
                     ->orWhere('destination', 'like', '%'.$search.'%')
                     ->orWhere('responsible', 'like', '%'.$search.'%');
             })
+            ->when($filters['kind'] ?? null, fn ($query, $kind) => $query->where('kind', $kind))
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }
