@@ -7,6 +7,7 @@ return [
     'back' => 'Back',
     'intro' => 'Upload a CSV file to bulk-create records. The first row must contain the column names. Rows are validated before anything is saved, and only valid rows are imported.',
     'expected_columns' => 'Expected columns',
+    'download_example' => 'Download example CSV',
     'csv_file' => 'CSV file',
     'preview' => 'Preview',
     'loading' => 'Loading',
