@@ -1,5 +1,8 @@
 <div>
     <div class="card border-0 shadow-sm">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-cart-check text-primary"></i> {{ __('sale.checkout') }}</h5>
+        </div>
         <div class="flex-auto p-2">
             <div>
                 @if (session()->has('message'))

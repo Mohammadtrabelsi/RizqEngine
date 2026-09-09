@@ -1,9 +1,9 @@
 <div class="position-relative">
     <div class="card mb-0 border-0 shadow-sm">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-search text-primary"></i> {{ __('general.search-product') }}</h5>
+        </div>
         <div class="flex-auto p-2">
-            <h6 class="card-title text-muted">
-                <i class="bi bi-search"></i> {{ __('general.search-product') }}
-            </h6>
             <div class="mb-4 mb-2">
                 <div class="position-relative">
                     <i class="bi bi-search text-primary position-absolute top-50 translate-middle-y" style="left: 0.75rem;"></i>

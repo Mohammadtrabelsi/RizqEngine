@@ -1,5 +1,8 @@
 <div>
     <div class="card border-0 shadow-sm mt-3">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-grid text-primary"></i> {{ __('general.products') }}</h5>
+        </div>
         <div class="flex-auto p-2">
             <livewire:pos.filter :categories="$categories"/>
             <div class="d-flex justify-content-center mb-3">{{ $products->links('pagination::bootstrap-5') }}</div>
