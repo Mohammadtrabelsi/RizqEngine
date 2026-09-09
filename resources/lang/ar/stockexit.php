@@ -56,5 +56,6 @@ return [
     'status_closed' => 'الحالة مغلقة',
     'status_in_transit' => 'الحالة قيد النقل',
     'stock_exits' => 'أذونات خروج المخزون',
+    'total' => 'الإجمالي',
     'vehicle' => 'المركبة',
 ];

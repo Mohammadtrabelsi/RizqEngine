@@ -16,18 +16,18 @@
             <div class="col-xl-4 col-lg-6 mb-4" wire:key="quotation-{{ $quotation->id }}">
                 <div class="card h-100">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <span class="fw-bold me-2">{{ $quotation->reference }}</span>
-                            @include('quotation.partials.status', ['data' => $quotation])
-                        </div>
-                        @include('quotation.partials.actions', ['data' => $quotation])
+                        <span class="fw-bold me-2">{{ $quotation->reference }}</span>
+                        @include('quotation.partials.status', ['data' => $quotation])
                     </div>
                     <div class="flex-auto p-2">
                         <h6 class="mb-3"><i class="bi bi-person"></i> {{ $quotation->customer_name }}</h6>
-                        <ul class="list-group list-group-flush mb-3">
+                        <ul class="list-group list-group-flush mb-0">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.date') }}</span><span>{{ $quotation->date }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('quotations.total') }}</span><span>{{ format_currency($quotation->total_amount) }}</span></li>
                         </ul>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200">
+                        @include('quotation.partials.actions', ['data' => $quotation])
                     </div>
                 </div>
             </div>

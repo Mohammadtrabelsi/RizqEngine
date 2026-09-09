@@ -15,7 +15,9 @@ return [
     'no_adjustments_found' => 'Aucun ajustement trouvé',
     'note' => 'Note',
     'products' => 'Produits',
+    'quantity' => 'Quantité',
     'reference' => 'Référence',
     'subtraction' => 'Soustraction',
+    'type' => 'Type',
     'update_adjustment' => 'Mettre à jour l\'ajustement',
 ];

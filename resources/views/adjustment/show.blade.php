@@ -30,12 +30,12 @@
                                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
                                     <div class="card border h-100">
                                         <div class="flex-auto p-2">
-                                            <h6 class="mb-1">{{ $adjustedProduct->product->product_name }}</h6>
+                                            <h6 class="mb-1">{{ translatable_string($adjustedProduct->product->product_name) }}</h6>
                                             <p class="text-muted small mb-2">{{ $adjustedProduct->product->product_code }}</p>
                                             <ul class="list-group list-group-flush mb-0">
-                                                <li class="list-group-item d-flex justify-content-between px-0"><span>Quantity</span><span>{{ $adjustedProduct->quantity }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('adjustment.quantity') }}</span><span>{{ $adjustedProduct->quantity }}</span></li>
                                                 <li class="list-group-item d-flex justify-content-between px-0">
-                                                    <span>Type</span>
+                                                    <span>{{ __('adjustment.type') }}</span>
                                                     <span>
                                                         @if($adjustedProduct->type == 'add')
                                                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-emerald-100 text-emerald-700">(+) {{ __('adjustment.addition') }}</span>

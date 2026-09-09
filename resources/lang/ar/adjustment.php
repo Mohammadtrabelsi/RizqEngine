@@ -15,7 +15,9 @@ return [
     'no_adjustments_found' => 'لم يتم العثور على تعديلات',
     'note' => 'ملاحظة',
     'products' => 'المنتجات',
+    'quantity' => 'الكمية',
     'reference' => 'المرجع',
     'subtraction' => 'خصم',
+    'type' => 'النوع',
     'update_adjustment' => 'تحديث التعديل',
 ];
