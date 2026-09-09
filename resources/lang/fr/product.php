@@ -50,6 +50,7 @@ return [
     'images' => 'Images',
     'inclusive' => 'Inclusif',
     'import_code_exists' => 'Un produit avec le code « :code » existe déjà.',
+    'import_category_code_exists' => 'Une catégorie avec le code « :code » existe déjà.',
     'import_category_unknown' => 'Catégorie inconnue « :value ».',
     'import_supplier_unknown' => 'Fournisseur inconnu « :value ».',
     'invalid-product-code' => 'Code produit invalide',

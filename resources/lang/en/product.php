@@ -51,6 +51,7 @@ return [
     'inclusive' => 'Inclusive',
     'import_code_exists' => 'A product with code ":code" already exists.',
     'import_category_unknown' => 'Unknown category ":value".',
+    'import_category_code_exists' => 'A category with code ":code" already exists.',
     'import_supplier_unknown' => 'Unknown supplier ":value".',
     'invalid-product-code' => 'Invalid product code',
     'loading' => 'Loading',

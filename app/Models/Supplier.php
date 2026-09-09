@@ -69,4 +69,14 @@ class Supplier extends Model implements HasMedia
     {
         return $this->hasMany(Product::class, 'supplier_id', 'id');
     }
+
+    /**
+     * The purchases (orders) placed with this supplier.
+     *
+     * @return HasMany<Purchase, $this>
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class, 'supplier_id', 'id');
+    }
 }

@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\Categories\CategoryImport;
 use App\Livewire\Customers\CustomerImport;
+use App\Livewire\Drivers\DriverImport;
 use App\Livewire\Products\ProductImport;
 use App\Livewire\Suppliers\SupplierImport;
+use App\Livewire\Vehicles\VehicleImport;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
@@ -24,7 +27,7 @@ class CsvImportTest extends TestCase
     {
         parent::setUp();
 
-        foreach (['create_products', 'create_customers', 'create_suppliers'] as $permission) {
+        foreach (['create_products', 'create_customers', 'create_suppliers', 'access_product_categories', 'create_drivers', 'create_vehicles'] as $permission) {
             Permission::findOrCreate($permission, 'web');
         }
     }
@@ -157,6 +160,75 @@ class CsvImportTest extends TestCase
         $this->assertDatabaseHas('suppliers', [
             'supplier_name' => 'Globex',
             'supplier_email' => 'globex@example.com',
+        ]);
+    }
+
+    public function test_categories_are_imported_from_a_valid_csv(): void
+    {
+        $this->actingAs($this->userWith('access_product_categories'));
+
+        $csv = "category_code,category_name,description,color,is_active\n"
+            ."CA_99,Beverages,Drinks,#2563eb,1\n";
+
+        Livewire::test(CategoryImport::class)
+            ->set('file', $this->csv($csv))
+            ->call('parse')
+            ->call('import');
+
+        $this->assertDatabaseHas('categories', [
+            'category_code' => 'CA_99',
+        ]);
+    }
+
+    public function test_duplicate_category_code_is_rejected(): void
+    {
+        $this->actingAs($this->userWith('access_product_categories'));
+
+        Category::factory()->create(['category_code' => 'CA_50']);
+
+        $csv = "category_code,category_name\n"
+            ."CA_50,Dupe\n";
+
+        $component = Livewire::test(CategoryImport::class)
+            ->set('file', $this->csv($csv))
+            ->call('parse');
+
+        $this->assertSame(0, $component->instance()->validCount);
+    }
+
+    public function test_drivers_are_imported_from_a_valid_csv(): void
+    {
+        $this->actingAs($this->userWith('create_drivers'));
+
+        $csv = "name,phone,license_number,note\n"
+            ."Ali Ben Salah,12345,TN-123456,Weekdays\n";
+
+        Livewire::test(DriverImport::class)
+            ->set('file', $this->csv($csv))
+            ->call('parse')
+            ->call('import');
+
+        $this->assertDatabaseHas('drivers', [
+            'name' => 'Ali Ben Salah',
+            'license_number' => 'TN-123456',
+        ]);
+    }
+
+    public function test_vehicles_are_imported_from_a_valid_csv(): void
+    {
+        $this->actingAs($this->userWith('create_vehicles'));
+
+        $csv = "registration,brand,model,note\n"
+            ."123 TUN 4567,Renault,Kangoo,Van\n";
+
+        Livewire::test(VehicleImport::class)
+            ->set('file', $this->csv($csv))
+            ->call('parse')
+            ->call('import');
+
+        $this->assertDatabaseHas('vehicles', [
+            'registration' => '123 TUN 4567',
+            'brand' => 'Renault',
         ]);
     }
 

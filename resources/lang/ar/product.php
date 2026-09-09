@@ -47,6 +47,7 @@ return [
     'images' => 'الصور',
     'import_category_unknown' => 'فئة غير معروفة ":value".',
     'import_code_exists' => 'يوجد بالفعل منتج بالرمز ":code".',
+    'import_category_code_exists' => 'توجد بالفعل فئة بالرمز ":code".',
     'import_supplier_unknown' => 'مورّد غير معروف ":value".',
     'inclusive' => 'شامل',
     'invalid-product-code' => 'رمز المنتج غير صالح',

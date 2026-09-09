@@ -7,6 +7,9 @@
                     <a href="{{ route('vehicles.create') }}" class="btn btn-primary">
                         {{ __('vehicles.add_vehicle') }} <i class="bi bi-plus"></i>
                     </a>
+                    <a href="{{ route('vehicles.import') }}" class="btn btn-outline">
+                        {{ __('import.vehicles') }} <i class="bi bi-upload"></i>
+                    </a>
                 @endcan
             </div>
             <div class="col-12 col-md-6 mb-3">
