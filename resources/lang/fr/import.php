@@ -7,6 +7,7 @@ return [
     'back' => 'Retour',
     'intro' => 'Téléversez un fichier CSV pour créer des enregistrements en masse. La première ligne doit contenir les noms des colonnes. Les lignes sont validées avant tout enregistrement, et seules les lignes valides sont importées.',
     'expected_columns' => 'Colonnes attendues',
+    'download_example' => 'Télécharger un exemple CSV',
     'csv_file' => 'Fichier CSV',
     'preview' => 'Aperçu',
     'loading' => 'Chargement',

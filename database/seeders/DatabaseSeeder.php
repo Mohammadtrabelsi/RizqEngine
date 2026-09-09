@@ -23,15 +23,19 @@ class DatabaseSeeder extends Seeder
         $this->call(PeopleDatabaseSeeder::class);
         $this->call(UnitDatabaseSeeder::class);
         $this->call(WarehouseDatabaseSeeder::class);
+
+        // Products, categories, suppliers and customers are intentionally NOT
+        // seeded: a fresh install starts with an empty catalogue and address
+        // book. The business loads its own data through the CSV import screens
+        // (example files ship in storage/app/import-examples). The seeders
+        // below run but no-op while there is no product/customer data to build
+        // sales, purchases, orders and returns on top of.
         $this->call(ProductDatabaseSeeder::class);
-        $this->call(LeBonPlanSeeder::class);
         $this->call(SaleDatabaseSeeder::class);
         $this->call(PurchaseDatabaseSeeder::class);
         $this->call(SalesReturnDatabaseSeeder::class);
         $this->call(PurchasesReturnDatabaseSeeder::class);
         $this->call(CommandeDatabaseSeeder::class);
         $this->call(ExpenseDatabaseSeeder::class);
-        $this->call(TestDataSeeder::class);
-
     }
 }

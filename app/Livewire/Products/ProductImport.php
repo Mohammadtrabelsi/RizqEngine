@@ -172,4 +172,9 @@ class ProductImport extends CsvImport
     {
         return __('import.products');
     }
+
+    public function exampleFile(): string
+    {
+        return 'products.csv';
+    }
 }

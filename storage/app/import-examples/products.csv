@@ -1,0 +1,4 @@
+product_name,product_code,product_barcode_symbology,product_unit,product_quantity,product_cost,product_price,product_stock_alert,product_order_tax,product_tax_type,product_note,expiry_date,category,supplier
+Example Mineral Water 1.5L,1000001,C128,PC,240,0.550,0.800,48,7,1,Still mineral water 1.5 litre bottle,,Beverages,Example Supplier
+Example Wheat Flour 1kg,1000002,C128,PC,150,0.900,1.250,30,7,1,All-purpose wheat flour 1kg,2027-03-01,Bakery & Grains,Example Supplier
+Example Dish Soap 750ml,1000003,C128,PC,85,1.800,2.600,18,19,1,Concentrated dishwashing liquid 750ml,,Cleaning & Personal Care,Example Supplier
