@@ -6,6 +6,7 @@ use App\Rules\MatchCurrentPassword;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
 {
@@ -38,7 +39,7 @@ class ProfileController extends Controller
     {
         $request->validate([
             'current_password' => ['required', 'max:255', new MatchCurrentPassword],
-            'password' => 'required|min:8|max:255|confirmed',
+            'password' => ['required', 'max:255', 'confirmed', Password::defaults()],
         ]);
 
         $this->users->updatePassword(auth()->user(), $request->password);
