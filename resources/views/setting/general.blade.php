@@ -120,6 +120,18 @@
                                         <input type="text" class="form-control" name="company_tax_id" value="{{ $settings->company_tax_id }}">
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label for="fiscal_stamp_amount">{{ __('settings.fiscal_stamp_amount') }}</label>
+                                        <input type="number" step="0.001" min="0" class="form-control" name="fiscal_stamp_amount" value="{{ $settings->fiscal_stamp_amount }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-4">
+                                        <label for="invoice_legal_mention">{{ __('settings.invoice_legal_mention') }}</label>
+                                        <textarea class="form-control" name="invoice_legal_mention" rows="3">{{ $settings->invoice_legal_mention }}</textarea>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-4 mb-0">

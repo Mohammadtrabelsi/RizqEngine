@@ -90,4 +90,11 @@ class ReportsController extends Controller
 
         return view('reports.product-movement.index');
     }
+
+    public function vatReturnReport()
+    {
+        abort_if(Gate::denies('access_reports'), 403);
+
+        return view('reports.vat-return.index');
+    }
 }

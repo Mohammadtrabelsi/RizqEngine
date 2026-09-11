@@ -38,4 +38,9 @@ class WithholdingTaxFactory extends Factory
     {
         return $this->state(fn () => ['active' => false]);
     }
+
+    public function forSales(): self
+    {
+        return $this->state(fn () => ['applicable_to_sales' => true]);
+    }
 }

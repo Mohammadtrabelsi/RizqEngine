@@ -315,6 +315,7 @@
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('high-stock-report.index') ? 'is-active' : '' }}" href="{{ route('high-stock-report.index') }}">{{ __('menu.high-stock-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}">{{ __('menu.stock-movement-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}">{{ __('menu.product-movement-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('vat-return-report.index') ? 'is-active' : '' }}" href="{{ route('vat-return-report.index') }}">{{ __('menu.vat-return-report') }}</a></li>
                 </ul>
             </li>
             @endcan

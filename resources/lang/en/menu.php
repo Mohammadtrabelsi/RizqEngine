@@ -37,6 +37,7 @@ return [
     'payments-report' => 'Payments Report',
     'print-barcode' => 'Print Barcode',
     'product-movement-report' => 'Product Movement Report',
+    'vat-return-report' => 'VAT Return',
     'products' => 'Products',
     'periodic-summary-report' => 'Periodic Summary',
     'profit-loss-report' => 'Profit Loss Report',

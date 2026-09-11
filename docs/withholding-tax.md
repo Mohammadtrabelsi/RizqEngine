@@ -139,10 +139,35 @@ operation and the beneficiary's fiscal regime and change over time, so:
 > egress blocked), so the suite must be run in CI / locally:
 > `php artisan test --filter Withholding`.
 
-## Scope / follow-up
+## Sales side (facture client)
 
-This lot wires RAS end-to-end on the **purchase (achat / facture fournisseur)**
-side. The model, enum and calculator are side-agnostic
-(`applicable_to_sales`, `WithholdingTax::scopeForSide`), so extending it to sales
-is a mirror of the `PurchaseService` integration plus a `sale_withholding_taxes`
-table.
+RAS is now wired on the **sale (facture client)** side too, mirroring the
+purchase integration:
+
+- `sale_withholding_taxes` — one immutable snapshot row per applied withholding
+  (same columns as `purchase_withholding_taxes`).
+- `sales.withholding_amount` — total withheld on the sale (millimes × 1000).
+- `Sale::withholdingTaxes()` + `Sale::net_payable` accessor (= TTC − RAS).
+- `SaleService::createSale()` / `updateSale()` compute and persist the RAS via
+  the same `WithholdingTaxCalculator`; `sales.due_amount` tracks the **net**.
+- The shared `ProductCart` RAS selector is shown on the sale form, listing the
+  sale-applicable withholding taxes (`WithholdingTax::scopeForSide('sale')`).
+- Applied sale withholdings are printed on the invoice (see below) and block
+  deletion of the master tax (`WithholdingTax::isUsed()` now checks both sides).
+
+> Precision note: the per-line snapshot models
+> (`Purchase/SaleWithholdingTax`) store amounts in **millimes (× 1000)** and now
+> expose them through `/1000` accessors. A prior `/100` divisor on
+> `PurchaseWithholdingTax` (which returned 10× the real value) was corrected.
+
+## Related Tunisian-compliance features
+
+Shipped alongside sales RAS (see `docs/tunisia-compliance.md`):
+
+- **Legal invoice numbering** — sales references come from a gapless,
+  non-reusable counter (`document_sequences` + `DocumentNumberService`) and are
+  immutable.
+- **Legal invoice mentions** — matricule fiscal of both parties, HT / TVA /
+  timbre fiscal / TTC / RAS / net à payer, and a configurable legal footer.
+- **VAT return** — the *Déclaration de TVA* report (collected vs deductible VAT
+  by rate, net VAT due / credit).
