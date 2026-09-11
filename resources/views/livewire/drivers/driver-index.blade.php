@@ -21,7 +21,7 @@
         <div class="row">
             @forelse($drivers as $driver)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="driver-{{ $driver->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                    <div class="card h-100">
                         <div class="flex-auto p-2">
                             <h5 class="card-title">{{ $driver->name }}</h5>
                             <ul class="list-group list-group-flush mb-3">
