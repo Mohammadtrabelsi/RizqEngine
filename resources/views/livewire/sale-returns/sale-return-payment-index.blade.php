@@ -9,8 +9,10 @@
         @forelse($payments as $payment)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="srp-{{ $payment->id }}">
                 <div class="card h-100">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0">{{ $payment->reference }}</h5>
+                    </div>
                     <div class="flex-auto p-2">
-                        <h5 class="card-title">{{ $payment->reference }}</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.date') }}</span><span>{{ $payment->date }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.amount') }}</span><span>{{ format_currency($payment->amount) }}</span></li>

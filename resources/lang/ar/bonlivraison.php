@@ -22,6 +22,9 @@ return [
     'quantity' => 'الكمية',
     'reference' => 'المرجع',
     'status_' => 'الحالة',
+    'status_delivered' => 'تم التسليم',
+    'status_invoiced' => 'تم الفوترة',
     'status_label' => 'الحالة',
+    'status_pending' => 'معلق',
     'total' => 'الإجمالي',
 ];

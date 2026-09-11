@@ -46,7 +46,9 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-            'hash' => false,
+            // Tokens are stored hashed; clients send the raw token and the
+            // guard compares its SHA-256 hash against the stored value.
+            'hash' => true,
         ],
     ],
 

@@ -21,15 +21,17 @@
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="category-{{ $category->id }}">
                 <div class="card h-100">
-                    <div class="flex-auto p-2 text-center">
-                        <img src="{{ $category->image_url }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
-                        <h5 class="card-title mb-1">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0">
                             @if ($category->color)
                                 <span class="d-inline-block rounded-circle align-middle me-1" style="width: 12px; height: 12px; background-color: {{ $category->color }};"></span>
                             @endif
                             {{ $category->category_name }}
+                            <small class="text-muted fw-normal">{{ $category->category_code }}</small>
                         </h5>
-                        <p class="text-muted mb-2"><small>{{ $category->category_code }}</small></p>
+                    </div>
+                    <div class="flex-auto p-2 p-3 text-center">
+                        <img src="{{ $category->image_url }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
                         @if ($category->description)
                             <p class="text-muted mb-2"><small>{{ \Illuminate\Support\Str::limit($category->description, 60) }}</small></p>
                         @endif

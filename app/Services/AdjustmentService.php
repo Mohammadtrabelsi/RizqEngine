@@ -19,15 +19,19 @@ class AdjustmentService
 
     /**
      * Paginate adjustments (with a count of adjusted products), optionally
-     * filtered by reference.
+     * filtered by reference and/or a date range.
+     *
+     * @param  array{date_from?: string, date_to?: string}  $filters
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Adjustment::query()
             ->withCount('adjustedProducts')
             ->when($search, function ($query) use ($search) {
                 $query->where('reference', 'like', '%'.$search.'%');
             })
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }

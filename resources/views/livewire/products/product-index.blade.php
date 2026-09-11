@@ -122,6 +122,10 @@
         @forelse($products as $product)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="product-{{ $product->id }}">
                 <div class="card h-100 border-0 shadow-sm card-lift">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0 text-truncate" title="{{ $product->product_name }}">{{ $product->product_name }}</h5>
+                        <small class="text-muted fw-normal"><i class="bi bi-upc-scan"></i> {{ $product->product_code }}</small>
+                    </div>
                     <!-- Image Section -->
                     <div class="position-relative overflow-hidden media-thumb media-thumb--lg">
                         <img src="{{ $product->getFirstMediaUrl('images', 'thumb') }}"
@@ -140,12 +144,6 @@
                     </div>
 
                     <div class="flex-auto p-2 d-flex flex-column">
-                        <!-- Product Name & Code -->
-                        <h5 class="card-title mb-1 text-truncate" title="{{ $product->product_name }}">{{ $product->product_name }}</h5>
-                        <p class="text-muted mb-2">
-                            <small><i class="bi bi-upc-scan"></i> {{ $product->product_code }}</small>
-                        </p>
-
                         <!-- Category & Supplier -->
                         <div class="mb-3">
                             <div class="mb-1">

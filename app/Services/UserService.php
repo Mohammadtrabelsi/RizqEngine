@@ -14,7 +14,10 @@ class UserService
 {
     public function __construct(private readonly UploadService $uploads) {}
 
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{role?: string, status?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return User::query()
             ->when($search, function ($query) use ($search) {
@@ -22,6 +25,8 @@ class UserService
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term);
             })
+            ->when($filters['role'] ?? null, fn ($query, $role) => $query->role($role))
+            ->when(($filters['status'] ?? '') !== '', fn ($query) => $query->where('is_active', $filters['status']))
             ->latest()
             ->paginate($perPage);
     }

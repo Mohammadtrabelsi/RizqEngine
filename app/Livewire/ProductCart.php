@@ -95,7 +95,11 @@ class ProductCart extends Component
         } else {
             $this->global_discount = 0;
             $this->global_tax = 0;
-            $this->tax_mode = 'included';
+            // A new document opens in the tenant's configured default tax mode
+            // for its side of the ledger (purchase vs sale), set in Settings.
+            $this->tax_mode = in_array($this->cart_instance, Tax::SALE_CART_INSTANCES, true)
+                ? default_sale_tax_mode()
+                : default_purchase_tax_mode();
             $this->selected_taxes = [];
             $this->selected_withholding_taxes = [];
             $this->shipping = 0.00;

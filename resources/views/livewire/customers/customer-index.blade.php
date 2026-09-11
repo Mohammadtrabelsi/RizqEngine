@@ -64,7 +64,10 @@
         @forelse($customers as $customer)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="customer-{{ $customer->id }}">
                 <div class="card h-100">
-                    <div class="position-relative overflow-hidden rounded-top media-thumb">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0">{{ $customer->customer_name }}</h5>
+                    </div>
+                    <div class="position-relative overflow-hidden media-thumb">
                         @if ($customer->image_url)
                             <img src="{{ $customer->image_url }}" class="w-100 h-100 thumb-cover" alt="{{ $customer->customer_name }}">
                         @else
@@ -74,7 +77,6 @@
                         @endif
                     </div>
                     <div class="flex-auto p-2">
-                        <h5 class="card-title">{{ $customer->customer_name }}</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item px-0"><i class="bi bi-envelope"></i> {{ $customer->customer_email }}</li>
                             <li class="list-group-item px-0"><i class="bi bi-telephone"></i> {{ $customer->customer_phone }}</li>

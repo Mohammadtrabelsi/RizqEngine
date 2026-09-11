@@ -52,14 +52,14 @@
         <div class="row">
             @forelse($warehouses as $warehouse)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="warehouse-{{ $warehouse->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                    <div class="card h-100">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ $warehouse->name }}</h5>
+                            @if($warehouse->is_default)
+                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-primary">{{ __('warehouses.default') }}</span>
+                            @endif
+                        </div>
                         <div class="flex-auto p-2">
-                            <h5 class="card-title d-flex justify-content-between align-items-center">
-                                {{ $warehouse->name }}
-                                @if($warehouse->is_default)
-                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-primary">{{ __('warehouses.default') }}</span>
-                                @endif
-                            </h5>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('warehouses.code') }}</span><span>{{ $warehouse->code }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('warehouses.city') }}</span><span>{{ $warehouse->city ?: '—' }}</span></li>

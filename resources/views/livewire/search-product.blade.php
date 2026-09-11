@@ -1,33 +1,26 @@
 <div class="position-relative">
-    <div class="card mb-0 border-0 shadow-sm">
-        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
-            <h5 class="mb-0"><i class="bi bi-search text-primary"></i> {{ __('general.search-product') }}</h5>
+    <div class="mb-4 mb-2">
+        <div class="position-relative">
+            <i class="bi bi-search text-primary position-absolute top-50 translate-middle-y" style="left: 0.75rem;"></i>
+            <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" style="padding-left: 2.25rem;" placeholder="{{ __('general.search-product') }}">
         </div>
-        <div class="flex-auto p-2">
-            <div class="mb-4 mb-2">
-                <div class="position-relative">
-                    <i class="bi bi-search text-primary position-absolute top-50 translate-middle-y" style="left: 0.75rem;"></i>
-                    <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" style="padding-left: 2.25rem;" placeholder="{{ __('general.search-product') }}">
-                </div>
-            </div>
+    </div>
 
-            <div class="row g-2 align-items-center">
-                <div class="col-sm-7">
-                    <select wire:model.live="category" class="form-select !py-1 !text-xs">
-                        <option value="">{{ __('general.all-categories') }}</option>
-                        @foreach($categories as $categoryOption)
-                            <option value="{{ $categoryOption->id }}">{{ $categoryOption->category_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-sm-5">
-                    <div class="form-check">
-                        <input wire:model.live="in_stock_only" class="form-check-input" type="checkbox" id="search-in-stock-only">
-                        <label class="form-check-label small" for="search-in-stock-only">
-                            {{ __('general.in-stock-only') }}
-                        </label>
-                    </div>
-                </div>
+    <div class="row g-2 align-items-center">
+        <div class="col-sm-7">
+            <select wire:model.live="category" class="form-select !py-1 !text-xs">
+                <option value="">{{ __('general.all-categories') }}</option>
+                @foreach($categories as $categoryOption)
+                    <option value="{{ $categoryOption->id }}">{{ $categoryOption->category_name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-check">
+                <input wire:model.live="in_stock_only" class="form-check-input" type="checkbox" id="search-in-stock-only">
+                <label class="form-check-label small" for="search-in-stock-only">
+                    {{ __('general.in-stock-only') }}
+                </label>
             </div>
         </div>
     </div>
