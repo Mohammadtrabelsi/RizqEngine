@@ -26,4 +26,10 @@ return [
     'notification_email' => 'E-mail de notification',
     'save_changes' => 'Enregistrer les modifications',
     'settings' => 'Paramètres',
+    'tax_settings' => 'Paramètres de taxe',
+    'tax_settings_hint' => "Choisissez le mode de saisie des taxes par défaut à l'achat et à la vente. Les nouveaux devis, commandes et factures s'ouvrent dans le mode sélectionné ici.",
+    'purchase_tax_mode' => 'Mode de taxe à l\'achat',
+    'purchase_tax_mode_hint' => 'Mode par défaut pour les documents d\'achat (achats, bons de commande fournisseur).',
+    'sale_tax_mode' => 'Mode de taxe à la vente',
+    'sale_tax_mode_hint' => 'Mode par défaut pour les documents de vente (devis, commandes, factures).',
 ];

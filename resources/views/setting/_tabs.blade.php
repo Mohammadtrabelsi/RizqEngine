@@ -1,6 +1,7 @@
 @php
     $settingsTabs = [
         ['route' => 'settings.general', 'label' => __('settings.general_settings')],
+        ['route' => 'settings.tax', 'label' => __('settings.tax_settings')],
         ['route' => 'settings.mail', 'label' => __('settings.mail_settings')],
         ['route' => 'settings.images', 'label' => __('settings.default_product_image')],
     ];
