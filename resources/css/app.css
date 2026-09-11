@@ -271,6 +271,62 @@ h4, .h4 { font-size: 19px; }
 }
 
 /* =========================================================================
+ * Inline form labels — app-wide.
+ * A label immediately followed by its control sits on the same row, and
+ * every form label is bold. Uses :has() so no Blade markup needs editing.
+ * Collapses back to a stacked layout on narrow (phone) screens.
+ * ====================================================================== */
+@layer components {
+    /* Bold every label that introduces a form control. */
+    .form-label,
+    :where(.card, form, .modal, .app-content) label:has(+ .form-control),
+    :where(.card, form, .modal, .app-content) label:has(+ .form-select),
+    :where(.card, form, .modal, .app-content) label:has(+ textarea) {
+        font-weight: 700;
+    }
+
+    /* Lay the wrapper (label + control) out as a single inline row. */
+    :where(.card, form, .modal, .app-content) div:has(> label + .form-control),
+    :where(.card, form, .modal, .app-content) div:has(> label + .form-select),
+    :where(.card, form, .modal, .app-content) div:has(> label + textarea) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem 0.75rem;
+    }
+
+    :where(.card, form, .modal, .app-content) div:has(> label + .form-control) > label,
+    :where(.card, form, .modal, .app-content) div:has(> label + .form-select) > label,
+    :where(.card, form, .modal, .app-content) div:has(> label + textarea) > label {
+        flex: 0 0 clamp(120px, 28%, 190px);
+        margin-bottom: 0;
+    }
+
+    :where(.card, form, .modal, .app-content) div:has(> label + .form-control) > .form-control,
+    :where(.card, form, .modal, .app-content) div:has(> label + .form-select) > .form-select,
+    :where(.card, form, .modal, .app-content) div:has(> label + textarea) > textarea {
+        flex: 1 1 200px;
+        width: auto;
+    }
+
+    /* Phones: stack the label above its control again for readability. */
+    @media (max-width: 575.98px) {
+        :where(.card, form, .modal, .app-content) div:has(> label + .form-control),
+        :where(.card, form, .modal, .app-content) div:has(> label + .form-select),
+        :where(.card, form, .modal, .app-content) div:has(> label + textarea) {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        :where(.card, form, .modal, .app-content) div:has(> label + .form-control) > label,
+        :where(.card, form, .modal, .app-content) div:has(> label + .form-select) > label,
+        :where(.card, form, .modal, .app-content) div:has(> label + textarea) > label {
+            flex-basis: auto;
+        }
+    }
+}
+
+/* =========================================================================
  * UTILITIES — Bootstrap-compatible layout / spacing / helpers
  * ====================================================================== */
 @layer utilities {
