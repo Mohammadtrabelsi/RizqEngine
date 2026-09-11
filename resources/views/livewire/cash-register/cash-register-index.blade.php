@@ -5,11 +5,11 @@
             <div class="col-12 mb-4">
                 @if($current)
                     <div class="card border-0 shadow-sm">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="bi bi-cash-stack text-primary"></i> {{ __('cash_register.current_session') }}</h5>
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('cash_register.open') }}</span>
+                        </div>
                         <div class="flex-auto p-2">
-                            <h5 class="card-title d-flex justify-content-between align-items-center">
-                                {{ __('cash_register.current_session') }}
-                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('cash_register.open') }}</span>
-                            </h5>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('cash_register.opened_at') }}</span><span>{{ $current->opened_at->format('Y-m-d H:i') }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('cash_register.opening_float') }}</span><span>{{ number_format($current->opening_float / 100, 2) }}</span></li>
@@ -34,8 +34,10 @@
                     </div>
                 @else
                     <div class="card border-0 shadow-sm">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                            <h5 class="mb-0"><i class="bi bi-unlock text-primary"></i> {{ __('cash_register.open_session') }}</h5>
+                        </div>
                         <div class="flex-auto p-2">
-                            <h5 class="card-title">{{ __('cash_register.open_session') }}</h5>
                             @can('open_cash_register')
                             <form wire:submit="open">
                                 <div class="mb-4">
@@ -59,8 +61,10 @@
 
             <div class="col-12 mb-4">
                 <div class="card border-0 shadow-sm">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0"><i class="bi bi-clock-history text-primary"></i> {{ __('cash_register.history') }}</h5>
+                    </div>
                     <div class="flex-auto p-2 block w-full overflow-x-auto">
-                        <h5 class="card-title">{{ __('cash_register.history') }}</h5>
                         <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
                             <thead>
                                 <tr>
