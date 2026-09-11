@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Console\Commands\SendStockAlerts;
 use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
@@ -10,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Daily digest e-mail warning managers about products that are low on stock,
  * out of stock, or approaching their expiry date. Built by the
- * {@see \App\Console\Commands\SendStockAlerts} command.
+ * {@see SendStockAlerts} command.
  */
 class StockAlertDigest extends Mailable
 {

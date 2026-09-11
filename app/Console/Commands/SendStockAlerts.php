@@ -6,6 +6,7 @@ use App\Mail\StockAlertDigest;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
@@ -94,7 +95,7 @@ class SendStockAlerts extends Command
     /**
      * Active users who should receive the digest.
      *
-     * @return \Illuminate\Support\Collection<int, User>
+     * @return Collection<int, User>
      */
     private function recipients()
     {
