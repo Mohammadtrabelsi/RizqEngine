@@ -17,8 +17,30 @@ class AdjustmentIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url]
+    public string $dateFrom = '';
+
+    #[Url]
+    public string $dateTo = '';
+
     public function updatingSearch(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatingDateFrom(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateTo(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['dateFrom', 'dateTo']);
         $this->resetPage();
     }
 
@@ -34,7 +56,10 @@ class AdjustmentIndex extends Component
     public function render(AdjustmentService $adjustments)
     {
         return view('livewire.adjustments.adjustment-index', [
-            'adjustments' => $adjustments->paginate($this->search),
+            'adjustments' => $adjustments->paginate($this->search, [
+                'date_from' => $this->dateFrom,
+                'date_to' => $this->dateTo,
+            ]),
         ]);
     }
 }

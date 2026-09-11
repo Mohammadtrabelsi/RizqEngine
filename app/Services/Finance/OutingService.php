@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Storage;
  */
 class OutingService
 {
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{date_from?: string, date_to?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Outing::query()
             ->when($search, function ($query) use ($search) {
@@ -24,6 +27,8 @@ class OutingService
                     ->orWhere('location', 'like', $term)
                     ->orWhere('purpose', 'like', $term);
             })
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->orderByDesc('date')
             ->orderByDesc('id')
             ->paginate($perPage);

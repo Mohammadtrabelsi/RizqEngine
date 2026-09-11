@@ -17,8 +17,22 @@ class VehicleIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url]
+    public string $brand = '';
+
     public function updatingSearch(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatingBrand(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['brand']);
         $this->resetPage();
     }
 
@@ -36,7 +50,8 @@ class VehicleIndex extends Component
         abort_if(Gate::denies('access_vehicles'), 403);
 
         return view('livewire.vehicles.vehicle-index', [
-            'vehicles' => $vehicles->paginate($this->search),
+            'vehicles' => $vehicles->paginate($this->search, ['brand' => $this->brand]),
+            'brands' => $vehicles->brands(),
         ])->layout('components.layouts.admin', ['title' => __('vehicles.vehicles')]);
     }
 }
