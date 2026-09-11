@@ -7,6 +7,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rules\Password;
 
 class UsersController extends Controller
 {
@@ -34,7 +35,7 @@ class UsersController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|max:255|confirmed',
+            'password' => ['required', 'string', 'max:255', 'confirmed', Password::defaults()],
         ]);
 
         $data['is_active'] = $request->is_active;

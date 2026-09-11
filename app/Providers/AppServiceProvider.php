@@ -9,6 +9,7 @@ use App\View\Composers\WelcomeComposer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventLazyLoading(! app()->isProduction());
 
+        $this->definePasswordPolicy();
+
         Product::observe(ProductObserver::class);
 
         // Provide low-stock products to the header notifications dropdown so the
@@ -50,5 +53,25 @@ class AppServiceProvider extends ServiceProvider
 
         // Static marketing content for the landing page.
         View::composer('welcome', WelcomeComposer::class);
+    }
+
+    /**
+     * Central password policy used everywhere a password is set (user
+     * management, registration, profile). Kept in one place so the rules can
+     * be tightened without hunting through controllers. Production enforces
+     * complexity and, where the network allows, a breached-password check;
+     * local/testing stays permissive so seeders and factories are unaffected.
+     */
+    private function definePasswordPolicy(): void
+    {
+        Password::defaults(function () {
+            $rule = Password::min(8);
+
+            if (app()->isProduction()) {
+                return $rule->mixedCase()->numbers()->uncompromised();
+            }
+
+            return $rule;
+        });
     }
 }

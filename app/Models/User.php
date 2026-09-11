@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -36,6 +37,7 @@ class User extends Authenticatable implements HasMedia
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token',
     ];
 
     /**
@@ -58,6 +60,30 @@ class User extends Authenticatable implements HasMedia
     public function scopeIsActive(Builder $builder)
     {
         return $builder->where('is_active', 1);
+    }
+
+    /**
+     * Issue a fresh API token for this user, storing only its SHA-256 hash.
+     *
+     * The raw token is returned once and never persisted in plain text; the
+     * caller must hand it to the client immediately. Calling this again
+     * rotates (and therefore revokes) any previously issued token.
+     */
+    public function generateApiToken(): string
+    {
+        $token = Str::random(60);
+
+        $this->forceFill(['api_token' => hash('sha256', $token)])->save();
+
+        return $token;
+    }
+
+    /**
+     * Revoke this user's API token, if any.
+     */
+    public function revokeApiToken(): void
+    {
+        $this->forceFill(['api_token' => null])->save();
     }
 
     /**

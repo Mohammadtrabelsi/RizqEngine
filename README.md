@@ -94,5 +94,55 @@ A user is seeded for every role. All accounts use the password `12345678`.
 
 A built-in user guide is available inside the app at `/documentation`, split into a page per topic and translated into English, French and Arabic. It walks through every module above, from getting started to settings.
 
+# Operations
+
+## Scheduler
+
+Some maintenance runs on a schedule (marking expired stock out, and the daily
+low-stock / near-expiry e-mail digest). Add the standard Laravel cron entry so
+these fire automatically:
+
+```
+* * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+The digest is e-mailed to active managers; configure your mailer in `.env`. To
+send it manually (or preview without sending):
+
+```
+php artisan stock:send-alerts            # send now
+php artisan stock:send-alerts --dry-run  # list what would be sent
+```
+
+## Queue
+
+For anything beyond a single-process demo, set `QUEUE_CONNECTION=database` (or
+`redis`) in `.env` and run a worker so e-mail and PDF generation do not block
+web requests:
+
+```
+php artisan queue:work
+```
+
+## API authentication
+
+The REST API under `/api` is guarded by token authentication. Tokens are stored
+hashed; issue one for a user and copy the raw value (shown only once):
+
+```
+php artisan user:api-token user@example.com           # issue / rotate
+php artisan user:api-token user@example.com --revoke  # revoke
+```
+
+Send it as a bearer token: `Authorization: Bearer <token>`. For multi-token,
+scoped, per-device access, migrating this guard to Laravel Sanctum is the
+recommended next step.
+
+## Password policy
+
+Password rules are centralised in `AppServiceProvider` via `Password::defaults()`.
+In production they require a minimum length, mixed case, numbers and a
+breached-password check; local and testing environments stay permissive.
+
 # License
 **[Creative Commons Attribution 4.0	cc-by-4.0](https://creativecommons.org/licenses/by/4.0/)**
