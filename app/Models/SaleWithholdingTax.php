@@ -9,17 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * A single withholding tax (retenue à la source) applied to a purchase,
- * stored as an immutable snapshot of the fiscal figures used at invoice time.
+ * A single withholding tax (retenue à la source) applied to a sale, stored as
+ * an immutable snapshot of the fiscal figures used at invoice time.
  *
  * The name/code/rate/base are copied from the {@see WithholdingTax} so a later
  * edit of the master data never rewrites this historical line. Monetary
- * amounts are persisted in millimes (× 1000) to preserve the Tunisian dinar's
- * three-decimal precision on RAS figures, and exposed as decimals through
- * accessors.
+ * amounts are persisted in millimes (× 1000) and exposed as decimals through
+ * accessors, matching {@see PurchaseWithholdingTax}.
  *
  * @property int $id
- * @property int $purchase_id
+ * @property int $sale_id
  * @property int|null $withholding_tax_id
  * @property string $name
  * @property string $code
@@ -28,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $taxable_amount
  * @property float $amount
  */
-class PurchaseWithholdingTax extends Model
+class SaleWithholdingTax extends Model
 {
     use HasFactory, TracksUserActions;
 
@@ -40,11 +39,11 @@ class PurchaseWithholdingTax extends Model
     ];
 
     /**
-     * @return BelongsTo<Purchase, $this>
+     * @return BelongsTo<Sale, $this>
      */
-    public function purchase(): BelongsTo
+    public function sale(): BelongsTo
     {
-        return $this->belongsTo(Purchase::class);
+        return $this->belongsTo(Sale::class);
     }
 
     /**

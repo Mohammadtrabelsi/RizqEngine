@@ -40,6 +40,7 @@ return [
     'periodic-summary-report' => 'الملخص الدوري',
     'print-barcode' => 'طباعة الباركود',
     'product-movement-report' => 'تقرير حركة المنتج',
+    'vat-return-report' => 'الإقرار بالأداء على القيمة المضافة',
     'products' => 'المنتجات',
     'profit-loss-report' => 'تقرير الأرباح والخسائر',
     'purchases' => 'المشتريات',

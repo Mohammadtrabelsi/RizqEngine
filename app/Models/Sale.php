@@ -59,14 +59,46 @@ class Sale extends Model
         return $this->belongsTo(BonLivraison::class, 'bon_livraison_id', 'id');
     }
 
+    /**
+     * The withholding taxes (retenues à la source) applied to this sale, each
+     * an immutable snapshot taken at invoice time.
+     *
+     * @return HasMany<SaleWithholdingTax, $this>
+     */
+    public function withholdingTaxes(): HasMany
+    {
+        return $this->hasMany(SaleWithholdingTax::class, 'sale_id', 'id');
+    }
+
     public static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
-            $number = Sale::max('id') + 1;
-            $model->reference = make_reference_id('SL', $number);
+            // Legal, uninterrupted numbering: the reference is allocated from a
+            // dedicated monotonic counter (never max(id)+1, which races and
+            // reuses numbers after a deletion). It is assigned here so it can
+            // never be set or overridden from user input.
+            $model->reference = app(\App\Services\DocumentNumberService::class)->next('sale', 'SL');
         });
+    }
+
+    /**
+     * Total withholding (retenue à la source) deducted from the TTC. Stored in
+     * millimes (× 1000) to preserve the Tunisian dinar's three decimals.
+     */
+    public function getWithholdingAmountAttribute($value): float
+    {
+        return ($value ?? 0) / 1000;
+    }
+
+    /**
+     * The net actually receivable from the customer: TTC minus the withholding
+     * the customer is entitled to retain. With no RAS it equals the TTC.
+     */
+    public function getNetPayableAttribute(): float
+    {
+        return round($this->total_amount - $this->withholding_amount, 3);
     }
 
     public function scopeCompleted($query)

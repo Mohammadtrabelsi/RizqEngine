@@ -80,6 +80,13 @@ A user is seeded for every role. All accounts use the password `12345678`.
 - Cash register sessions (open / close / reconcile)
 - Monthly budgets, cash outings and an invoice archive
 
+**Tunisian fiscal compliance**
+- Retenue à la source (RAS) on both purchases and sales, with certificates
+- Legal, gapless and immutable invoice numbering (factures)
+- Legally-compliant invoices: matricule fiscal of both parties, HT / TVA /
+  timbre fiscal / TTC / RAS / net à payer, and a configurable legal footer
+- VAT return report (déclaration de TVA): collected vs deductible VAT by rate
+
 **Contacts & logistics**
 - Customer and supplier management with running balances and bulk import
 - Fleet: drivers and vehicles

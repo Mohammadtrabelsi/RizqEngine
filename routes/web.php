@@ -537,6 +537,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Fast / Slow Moving Products Report
     Route::get('/product-movement-report', 'ReportsController@productMovementReport')
         ->name('product-movement-report.index');
+    // VAT Return (déclaration de TVA)
+    Route::get('/vat-return-report', 'ReportsController@vatReturnReport')
+        ->name('vat-return-report.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
