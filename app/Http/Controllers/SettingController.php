@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreImageSettingsRequest;
 use App\Http\Requests\StoreSettingsRequest;
 use App\Http\Requests\StoreSmtpSettingsRequest;
+use App\Http\Requests\StoreTaxSettingsRequest;
 use App\Services\SettingService;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
@@ -79,6 +80,27 @@ class SettingController extends Controller
         session()->flash('info', trans('setting.settings-updated'));
 
         return redirect()->route('settings.images');
+    }
+
+    public function tax()
+    {
+        abort_if(Gate::denies('access_settings'), 403);
+
+        $settings = $this->settings->current();
+
+        return view('setting.tax', compact('settings'));
+    }
+
+    public function updateTax(StoreTaxSettingsRequest $request)
+    {
+        $this->settings->update([
+            'purchase_tax_mode' => $request->purchase_tax_mode,
+            'sale_tax_mode' => $request->sale_tax_mode,
+        ]);
+
+        session()->flash('info', trans('setting.settings-updated'));
+
+        return redirect()->route('settings.tax');
     }
 
     public function mail()

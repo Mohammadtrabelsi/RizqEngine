@@ -26,4 +26,10 @@ return [
     'notification_email' => 'Notification email',
     'save_changes' => 'Save changes',
     'settings' => 'Settings',
+    'tax_settings' => 'Tax settings',
+    'tax_settings_hint' => 'Choose how taxes are entered by default when buying and selling. New quotes, orders and invoices open in the mode selected here.',
+    'purchase_tax_mode' => 'Purchase tax mode',
+    'purchase_tax_mode_hint' => 'Default mode for purchase-side documents (purchases, supplier orders).',
+    'sale_tax_mode' => 'Sale tax mode',
+    'sale_tax_mode_hint' => 'Default mode for sale-side documents (quotes, orders, invoices).',
 ];

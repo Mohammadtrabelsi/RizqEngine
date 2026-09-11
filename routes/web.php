@@ -180,6 +180,9 @@ Route::group(['middleware' => 'auth'], function () {
     // General Settings
     Route::get('/settings/general', 'SettingController@general')->name('settings.general');
     Route::patch('/settings/general', 'SettingController@update')->name('settings.update');
+    // Tax Settings
+    Route::get('/settings/tax', 'SettingController@tax')->name('settings.tax');
+    Route::patch('/settings/tax', 'SettingController@updateTax')->name('settings.tax.update');
     // Mail Settings
     Route::get('/settings/mail', 'SettingController@mail')->name('settings.mail');
     Route::patch('/settings/smtp', 'SettingController@updateSmtp')->name('settings.smtp.update');

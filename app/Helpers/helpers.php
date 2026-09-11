@@ -99,6 +99,42 @@ if (! function_exists('client_logo_url')) {
     }
 }
 
+if (! function_exists('default_purchase_tax_mode')) {
+    /**
+     * The tenant's default tax entry mode for purchase-side documents
+     * (achats / bons de commande): "included" (Taxe incluse) or "excluded"
+     * (Hors taxes). Falls back to "included" when settings are unavailable.
+     */
+    function default_purchase_tax_mode(): string
+    {
+        try {
+            $mode = settings()->purchase_tax_mode;
+        } catch (Throwable $e) {
+            $mode = null;
+        }
+
+        return $mode === 'excluded' ? 'excluded' : 'included';
+    }
+}
+
+if (! function_exists('default_sale_tax_mode')) {
+    /**
+     * The tenant's default tax entry mode for sale-side documents (devis,
+     * commandes, factures): "included" (Taxe incluse) or "excluded" (Hors
+     * taxes). Falls back to "included" when settings are unavailable.
+     */
+    function default_sale_tax_mode(): string
+    {
+        try {
+            $mode = settings()->sale_tax_mode;
+        } catch (Throwable $e) {
+            $mode = null;
+        }
+
+        return $mode === 'excluded' ? 'excluded' : 'included';
+    }
+}
+
 if (! function_exists('format_currency')) {
     function format_currency($value, $format = true)
     {
