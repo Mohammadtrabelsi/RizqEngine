@@ -52,7 +52,7 @@ class SendStockAlerts extends Command
 
         $expiring = Product::query()
             ->with('category')
-            ->expiring($days)
+            ->expiringSoon($days)
             ->where('product_quantity', '>', 0)
             ->orderBy('expiry_date')
             ->get();
