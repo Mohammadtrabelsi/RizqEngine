@@ -126,7 +126,7 @@
             </a>
         </div>
 
-        <div class="mt-8 flex justify-between text-[13px] text-muted">
+        <div class="mt-8 flex flex-wrap justify-between gap-x-4 gap-y-1.5 text-[13px] text-muted">
             <span>© {{ now()->year }} RizqEngine</span>
             <span class="font-mono">Laravel · Livewire</span>
         </div>

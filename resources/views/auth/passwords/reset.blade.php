@@ -1,82 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+@extends('layouts.auth')
 
-    <title>{{ __('password.reset') }} | {{ config('app.name') }}</title>
+@section('title', __('password.reset'))
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
-    <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
-    <!-- Application CSS (Tailwind) -->
-    @vite('resources/css/app.css')
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-</head>
-<body>
-<div class="login-grid">
+@section('form')
+    <h2 class="mb-2 font-display text-[36px] font-bold tracking-[-0.03em]">{{ __('password.reset') }}</h2>
+    <p class="mb-8 text-[15px] leading-relaxed text-body">{{ __('password.reset-message') }}</p>
 
-    <div class="login-brand login-brand-copy">
-        <a href="{{ route('welcome') }}" class="auth-brand-link">
-            <x-logo :size="26" label="RizqEngine" />
-        </a>
+    <form method="post" action="{{ url('/password/reset') }}" novalidate>
+        @csrf
+        <input type="hidden" name="token" value="{{ $token ?? request()->route('token') }}">
 
-        <div class="auth-card">
-            <div class="login-brand-lead text-white">{{ __('login.welcome') }}</div>
-            <div class="auth-subtitle">{{ __('login.description') }}</div>
-        </div>
+        <label for="email" class="block text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{{ __('password.email') }}</label>
+        <input id="email" type="email" name="email" value="{{ $email ?? old('email') }}" autocomplete="username" autofocus
+               placeholder="you@store.com"
+               @class([
+                   'mt-2 w-full rounded-field border bg-white px-4 py-3.5 text-[15px] font-medium outline-none transition',
+                   'focus:border-accent focus:ring-4 focus:ring-accent/15',
+                   'border-danger' => $errors->has('email'),
+                   'border-hairline' => ! $errors->has('email'),
+               ])>
+        @error('email') <p class="mt-1.5 text-[12.5px] text-danger">{{ $message }}</p> @enderror
 
-        <div class="auth-fineprint text-muted">© {{ date('Y') }} RizqEngine</div>
-    </div>
+        <label for="password" class="mt-[22px] block text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{{ __('password.password') }}</label>
+        <input id="password" type="password" name="password" autocomplete="new-password"
+               placeholder="••••••••"
+               @class([
+                   'mt-2 w-full rounded-field border bg-white px-4 py-3.5 text-[15px] font-medium outline-none transition',
+                   'focus:border-accent focus:ring-4 focus:ring-accent/15',
+                   'border-danger' => $errors->has('password'),
+                   'border-hairline' => ! $errors->has('password'),
+               ])>
+        @error('password') <p class="mt-1.5 text-[12.5px] text-danger">{{ $message }}</p> @enderror
 
-    <div class="login-form-wrap">
-        <div class="login-form-card card">
-            <div class="flex-auto p-2">
-                <form class="login-form" method="post" action="{{ url('/password/reset') }}">
-                    @csrf
-                    <input type="hidden" name="token" value="{{ $token ?? request()->route('token') }}">
+        <label for="password_confirmation" class="mt-[22px] block text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{{ __('password.confirm-password') }}</label>
+        <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password"
+               placeholder="••••••••"
+               class="mt-2 w-full rounded-field border border-hairline bg-white px-4 py-3.5 text-[15px] font-medium outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/15">
 
-                    <div class="login-form__heading">
-                        <h2 class="login-form__title">{{ __('password.reset') }}</h2>
-                        <p class="login-form__subtitle">{{ __('password.reset-message') }}</p>
-                    </div>
+        <button type="submit"
+                class="mt-7 w-full rounded-field bg-accent py-4 text-[15.5px] font-semibold text-white shadow-cta transition-colors hover:bg-accent-hover">
+            {{ __('password.reset') }}
+        </button>
+    </form>
 
-                    <div class="login-form__field">
-                        <label for="email">{{ __('password.email') }}</label>
-                        <input id="email" type="email" class="form-control @error('email') !border-red-500 @enderror"
-                               name="email" value="{{ $email ?? old('email') }}" placeholder="you@store.com" autofocus>
-                        @error('email')
-                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="login-form__field">
-                        <label for="password">{{ __('password.password') }}</label>
-                        <input id="password" type="password" class="form-control @error('password') !border-red-500 @enderror"
-                               name="password" placeholder="••••••••">
-                        @error('password')
-                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="login-form__field">
-                        <label for="password_confirmation">{{ __('password.confirm-password') }}</label>
-                        <input id="password_confirmation" type="password" name="password_confirmation"
-                               class="form-control" placeholder="••••••••">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary flex w-full">{{ __('password.reset') }}</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Application JS -->
-@vite('resources/js/app.js')
-
-</body>
-</html>
+    <p class="mt-7 text-center text-sm text-body">
+        <a href="{{ route('login') }}" class="font-semibold text-accent hover:text-accent-hover">{{ __('login.sign-in') }}</a>
+    </p>
+@endsection
