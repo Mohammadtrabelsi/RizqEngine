@@ -2681,6 +2681,12 @@ body.app-with-sidebar > div > header .bg-ink {
     transform: translateY(-3px);
     box-shadow: var(--aurora-card-shadow-hover);
 }
+/* Card header bars (e.g. rounded-t-xl) round less than the card itself (18px),
+   leaving a visible square notch at the top corners. Match the card's radius. */
+.card > .rounded-t-xl:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
 .dash-icon-badge {
     background: var(--aurora-grad) !important;
     color: #fff !important;

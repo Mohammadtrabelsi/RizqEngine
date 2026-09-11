@@ -11,10 +11,10 @@
                         </div>
                         <div class="flex-auto p-2">
                             <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('cash_register.opened_at') }}</span><span>{{ $current->opened_at->format('Y-m-d H:i') }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('cash_register.opening_float') }}</span><span>{{ number_format($current->opening_float / 100, 2) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('cash_register.cash_sales') }}</span><span>{{ number_format($cashSales / 100, 2) }}</span></li>
-                                <li class="list-group-item d-flex justify-content-between px-0 fw-bold"><span>{{ __('cash_register.expected_cash') }}</span><span>{{ number_format($expected / 100, 2) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.opened_at') }}</span><span>{{ $current->opened_at->format('Y-m-d H:i') }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.opening_float') }}</span><span>{{ number_format($current->opening_float / 100, 2) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.cash_sales') }}</span><span>{{ number_format($cashSales / 100, 2) }}</span></li>
+                                <li class="list-group-item d-flex justify-content-between px-0 fw-bold"><span class="text-muted fw-normal">{{ __('cash_register.expected_cash') }}</span><span>{{ number_format($expected / 100, 2) }}</span></li>
                             </ul>
                             @can('close_cash_register')
                             <form wire:submit="close">
@@ -64,37 +64,37 @@
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0"><i class="bi bi-clock-history text-primary"></i> {{ __('cash_register.history') }}</h5>
                     </div>
-                    <div class="flex-auto p-2 block w-full overflow-x-auto">
-                        <table class="w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50 align-middle">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('cash_register.cashier') }}</th>
-                                    <th>{{ __('cash_register.opened_at') }}</th>
-                                    <th class="text-end">{{ __('cash_register.opening_float') }}</th>
-                                    <th class="text-end">{{ __('cash_register.expected_cash') }}</th>
-                                    <th class="text-end">{{ __('cash_register.counted_amount') }}</th>
-                                    <th class="text-end">{{ __('cash_register.difference') }}</th>
-                                    <th>{{ __('cash_register.status') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($sessions as $session)
-                                    <tr wire:key="session-{{ $session->id }}">
-                                        <td>{{ $session->user?->name }}</td>
-                                        <td>{{ $session->opened_at->format('Y-m-d H:i') }}</td>
-                                        <td class="text-end">{{ number_format($session->opening_float / 100, 2) }}</td>
-                                        <td class="text-end">{{ $session->expected_amount !== null ? number_format($session->expected_amount / 100, 2) : '—' }}</td>
-                                        <td class="text-end">{{ $session->closing_amount !== null ? number_format($session->closing_amount / 100, 2) : '—' }}</td>
-                                        <td class="text-end {{ ($session->difference ?? 0) < 0 ? 'text-danger' : (($session->difference ?? 0) > 0 ? 'text-warning' : '') }}">
-                                            {{ $session->difference !== null ? number_format($session->difference / 100, 2) : '—' }}
-                                        </td>
-                                        <td><span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $session->status->color() }}">{{ $session->status->label() }}</span></td>
-                                    </tr>
-                                @empty
-                                    <tr><td colspan="7" class="text-center text-muted">{{ __('cash_register.no_sessions') }}</td></tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                    <div class="flex-auto p-2">
+                        <div class="row">
+                            @forelse($sessions as $session)
+                                <div class="col-xl-4 col-lg-6 mb-4" wire:key="session-{{ $session->id }}">
+                                    <div class="card h-100">
+                                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
+                                            <span class="fw-bold">{{ $session->user?->name }}</span>
+                                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $session->status->color() }}">{{ $session->status->label() }}</span>
+                                        </div>
+                                        <div class="flex-auto p-2">
+                                            <ul class="list-group list-group-flush mb-0">
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.opened_at') }}</span><span>{{ $session->opened_at->format('Y-m-d H:i') }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.opening_float') }}</span><span>{{ number_format($session->opening_float / 100, 2) }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.expected_cash') }}</span><span>{{ $session->expected_amount !== null ? number_format($session->expected_amount / 100, 2) : '—' }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0"><span class="text-muted">{{ __('cash_register.counted_amount') }}</span><span>{{ $session->closing_amount !== null ? number_format($session->closing_amount / 100, 2) : '—' }}</span></li>
+                                                <li class="list-group-item d-flex justify-content-between px-0 fw-bold">
+                                                    <span class="text-muted fw-normal">{{ __('cash_register.difference') }}</span>
+                                                    <span class="{{ ($session->difference ?? 0) < 0 ? 'text-danger' : (($session->difference ?? 0) > 0 ? 'text-warning' : '') }}">
+                                                        {{ $session->difference !== null ? number_format($session->difference / 100, 2) : '—' }}
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12">
+                                    <p class="text-center text-muted mb-0">{{ __('cash_register.no_sessions') }}</p>
+                                </div>
+                            @endforelse
+                        </div>
                         <div class="d-flex justify-content-center">{{ $sessions->links('pagination::bootstrap-5') }}</div>
                     </div>
                 </div>

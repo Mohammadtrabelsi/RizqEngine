@@ -21,7 +21,7 @@
         @forelse($categories as $category)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="category-{{ $category->id }}">
                 <div class="card h-100">
-                    <div class="flex-auto p-2 text-center">
+                    <div class="flex-auto p-2 p-3 text-center">
                         <img src="{{ $category->image_url }}" alt="{{ $category->category_name }}" class="thumb-cover img-thumbnail mb-2" width="80" height="80">
                         <h5 class="card-title mb-1">
                             @if ($category->color)
