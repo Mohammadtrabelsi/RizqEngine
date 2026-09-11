@@ -25,9 +25,12 @@ use Illuminate\Support\Facades\DB;
 class BonLivraisonService
 {
     /**
-     * Paginate bons de livraison, optionally filtered by reference or customer name.
+     * Paginate bons de livraison, optionally filtered by reference/customer
+     * name, status, and/or a date range.
+     *
+     * @param  array{status?: string, date_from?: string, date_to?: string}  $filters
      */
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return BonLivraison::query()
             ->with('commande')
@@ -36,6 +39,9 @@ class BonLivraisonService
                 $query->where('reference', 'like', $term)
                     ->orWhere('customer_name', 'like', $term);
             })
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['date_from'] ?? null, fn ($query, $date) => $query->whereDate('date', '>=', $date))
+            ->when($filters['date_to'] ?? null, fn ($query, $date) => $query->whereDate('date', '<=', $date))
             ->latest()
             ->paginate($perPage);
     }

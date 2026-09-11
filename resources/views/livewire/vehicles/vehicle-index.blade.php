@@ -17,6 +17,31 @@
             </div>
         </div>
 
+        {{-- Filters container --}}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                <h5 class="mb-0"><i class="bi bi-funnel text-primary"></i> {{ __('app.filters') }}</h5>
+            </div>
+            <div class="flex-auto p-2">
+                <div class="row align-items-end">
+                    <div class="col-12 col-lg-6 mb-3">
+                        <label class="form-label small text-muted mb-1">{{ __('vehicles.brand') }}</label>
+                        <select wire:model.live="brand" class="form-select">
+                            <option value="">{{ __('app.all') }}</option>
+                            @foreach($brands as $b)
+                                <option value="{{ $b }}">{{ $b }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-6 mb-3">
+                        <button type="button" wire:click="resetFilters" class="btn btn-secondary w-100">
+                            <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex justify-content-center mb-3">{{ $vehicles->links('pagination::bootstrap-5') }}</div>
         <div class="row">
             @forelse($vehicles as $vehicle)

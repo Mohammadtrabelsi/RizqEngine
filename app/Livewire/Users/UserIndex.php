@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 
 class UserIndex extends Component
 {
@@ -17,6 +18,12 @@ class UserIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url]
+    public string $role = '';
+
+    #[Url]
+    public string $status = '';
+
     public function mount(): void
     {
         abort_if(Gate::denies('access_user_management'), 403);
@@ -24,6 +31,22 @@ class UserIndex extends Component
 
     public function updatingSearch(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatingRole(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingStatus(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['role', 'status']);
         $this->resetPage();
     }
 
@@ -39,7 +62,11 @@ class UserIndex extends Component
     public function render(UserService $users)
     {
         return view('livewire.users.user-index', [
-            'users' => $users->paginate($this->search),
+            'users' => $users->paginate($this->search, [
+                'role' => $this->role,
+                'status' => $this->status,
+            ]),
+            'roles' => Role::where('name', '!=', 'Super Admin')->get(),
         ]);
     }
 }

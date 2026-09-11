@@ -10,6 +10,39 @@
         </div>
     </div>
 
+    {{-- Filters container --}}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-funnel text-primary"></i> {{ __('app.filters') }}</h5>
+        </div>
+        <div class="flex-auto p-2">
+            <div class="row align-items-end">
+                <div class="col-12 col-lg-4 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('users.role') }}</label>
+                    <select wire:model.live="role" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($roles as $r)
+                            <option value="{{ $r->name }}">{{ $r->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-lg-4 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('users.status') }}</label>
+                    <select wire:model.live="status" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        <option value="1">{{ __('users.active') }}</option>
+                        <option value="0">{{ __('users.deactivated') }}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-4 mb-3">
+                    <button type="button" wire:click="resetFilters" class="btn btn-secondary w-100">
+                        <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-center mb-3">{{ $users->links('pagination::bootstrap-5') }}</div>
     <div class="row">
         @forelse($users as $user)

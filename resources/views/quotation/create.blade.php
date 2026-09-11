@@ -20,12 +20,15 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="flex-auto p-2">
-                        @include('utils.alerts')
-                        <form id="quotation-form" action="{{ route('quotations.store') }}" method="POST">
-                            @csrf
+                @include('utils.alerts')
+                <form id="quotation-form" action="{{ route('quotations.store') }}" method="POST">
+                    @csrf
 
+                    <div class="card mb-4">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                            <i class="bi bi-file-earmark-text text-primary"></i> {{ __('quotations.quotation_details') }}
+                        </div>
+                        <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="mb-4">
@@ -54,9 +57,23 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
+                    <div class="card mb-4">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                            <i class="bi bi-cart text-primary"></i> {{ __('quotations.details') }}
+                        </div>
+                        <div class="flex-auto p-2">
                             <livewire:product-cart :cartInstance="'quotation'"/>
+                        </div>
+                    </div>
 
+                    <div class="card mb-4">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                            <i class="bi bi-info-circle text-primary"></i> {{ __('quotations.status') }} &amp; {{ __('quotations.note') }}
+                        </div>
+                        <div class="flex-auto p-2">
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="mb-4">
@@ -69,19 +86,19 @@
                                 </div>
                             </div>
 
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <label for="note">{{ __('quotations.note') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
-
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('quotations.create') }} <i class="bi bi-check"></i>
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('quotations.create') }} <i class="bi bi-check"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

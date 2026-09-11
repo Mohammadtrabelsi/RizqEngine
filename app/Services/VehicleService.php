@@ -11,7 +11,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  */
 class VehicleService
 {
-    public function paginate(?string $search = null, int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{brand?: string}  $filters
+     */
+    public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Vehicle::query()
             ->when($search, function ($query) use ($search) {
@@ -20,8 +23,24 @@ class VehicleService
                     ->orWhere('brand', 'like', $term)
                     ->orWhere('model', 'like', $term);
             })
+            ->when($filters['brand'] ?? null, fn ($query, $brand) => $query->where('brand', $brand))
             ->orderByDesc('id')
             ->paginate($perPage);
+    }
+
+    /**
+     * Distinct vehicle brands, for the index page's brand filter.
+     *
+     * @return array<int, string>
+     */
+    public function brands(): array
+    {
+        return Vehicle::query()
+            ->whereNotNull('brand')
+            ->distinct()
+            ->orderBy('brand')
+            ->pluck('brand')
+            ->all();
     }
 
     public function create(array $data): Vehicle

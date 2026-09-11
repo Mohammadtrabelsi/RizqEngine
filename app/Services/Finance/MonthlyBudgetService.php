@@ -11,9 +11,14 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  */
 class MonthlyBudgetService
 {
-    public function paginate(int $perPage = 12): LengthAwarePaginator
+    /**
+     * @param  array{year?: int|string, month?: int|string}  $filters
+     */
+    public function paginate(array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return MonthlyBudget::query()
+            ->when($filters['year'] ?? null, fn ($query, $year) => $query->where('year', $year))
+            ->when($filters['month'] ?? null, fn ($query, $month) => $query->where('month', $month))
             ->orderByDesc('year')
             ->orderByDesc('month')
             ->paginate($perPage);
@@ -37,5 +42,20 @@ class MonthlyBudgetService
     public function delete(int $id): void
     {
         MonthlyBudget::findOrFail($id)->delete();
+    }
+
+    /**
+     * Distinct years present in the budgets table, newest first — for the
+     * index page's year filter.
+     *
+     * @return array<int, int>
+     */
+    public function years(): array
+    {
+        return MonthlyBudget::query()
+            ->orderByDesc('year')
+            ->distinct()
+            ->pluck('year')
+            ->all();
     }
 }
