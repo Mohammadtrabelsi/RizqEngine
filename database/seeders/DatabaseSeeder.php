@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrencyDatabaseSeeder::class);
         $this->call(TaxDatabaseSeeder::class);
         $this->call(SettingDatabaseSeeder::class);
-        $this->call(PeopleDatabaseSeeder::class);
         $this->call(UnitDatabaseSeeder::class);
         $this->call(WarehouseDatabaseSeeder::class);
 
@@ -30,7 +29,6 @@ class DatabaseSeeder extends Seeder
         // (example files ship in storage/app/import-examples). The seeders
         // below run but no-op while there is no product/customer data to build
         // sales, purchases, orders and returns on top of.
-        $this->call(ProductDatabaseSeeder::class);
         $this->call(SaleDatabaseSeeder::class);
         $this->call(PurchaseDatabaseSeeder::class);
         $this->call(SalesReturnDatabaseSeeder::class);
