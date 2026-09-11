@@ -2482,3 +2482,338 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
         margin: 0;
     }
 }
+
+/* =========================================================================
+ * AURORA REDESIGN — 2026 visual overhaul
+ * A radical, cohesive refresh of the app shell: a deep glassy sidebar, a
+ * frosted navbar, an immersive login, and elevated dashboard surfaces.
+ * Authored as a trailing override layer so the signature look wins the
+ * cascade without rewriting the component definitions above. One signature
+ * violet→indigo→orchid gradient anchors every hero moment.
+ * ====================================================================== */
+:root {
+    --aurora-grad: linear-gradient(135deg, #6366f1 0%, #7c5cff 46%, #a855f7 100%);
+    --aurora-grad-soft: linear-gradient(135deg, #eef1ff 0%, #f3edff 55%, #fbf0ff 100%);
+    --aurora-glow: 0 10px 30px -8px rgba(124, 92, 255, 0.55);
+    --aurora-glow-lg: 0 24px 60px -18px rgba(124, 92, 255, 0.45);
+    --aurora-ink-1: #191734;
+    --aurora-ink-2: #221f42;
+    --aurora-ink-3: #2c2953;
+    --aurora-ring: rgba(255, 255, 255, 0.08);
+    --aurora-card-shadow: 0 1px 2px rgba(24, 22, 51, 0.04), 0 12px 28px -14px rgba(24, 22, 51, 0.14);
+    --aurora-card-shadow-hover: 0 4px 10px rgba(24, 22, 51, 0.06), 0 26px 52px -20px rgba(99, 91, 220, 0.32);
+}
+
+/* -------------------------------------------------------------------------
+ * SIDEBAR — deep midnight glass panel with a glowing active pill
+ * ---------------------------------------------------------------------- */
+.app-sidebar {
+    background:
+        radial-gradient(120% 60% at 0% 0%, rgba(124, 92, 255, 0.16) 0%, transparent 55%),
+        radial-gradient(120% 60% at 100% 100%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+        linear-gradient(180deg, var(--aurora-ink-1) 0%, #131127 100%);
+    border-inline-end: 1px solid var(--aurora-ring);
+    box-shadow: 22px 0 60px -40px rgba(20, 16, 45, 0.9);
+}
+.app-sidebar-brand {
+    background: transparent;
+    border-bottom: 1px solid var(--aurora-ring);
+    height: 66px;
+}
+.app-sidebar-brand-name { font-size: 1.12rem; letter-spacing: -0.02em; }
+/* Glow the triangle logo mark chip. */
+.app-sidebar-brand .logo-mark {
+    background: var(--aurora-grad) !important;
+    box-shadow: var(--aurora-glow);
+}
+.app-sidebar-heading {
+    color: rgba(255, 255, 255, 0.32);
+    letter-spacing: 0.16em;
+    font-size: 0.6rem;
+}
+.app-sidebar-link {
+    color: rgba(255, 255, 255, 0.72);
+    border-radius: 11px;
+    padding: 0.5rem 0.65rem;
+}
+.app-sidebar-link i { color: rgba(255, 255, 255, 0.5); }
+.app-sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.07);
+    transform: none;
+    color: #fff;
+}
+.app-sidebar-link:hover i { color: #c9befd; }
+[dir="rtl"] .app-sidebar-link:hover { transform: none; }
+
+.app-sidebar-item.is-active > .app-sidebar-link {
+    background: var(--aurora-grad);
+    box-shadow: var(--aurora-glow);
+    border-radius: 11px;
+}
+.app-sidebar-item.is-active > .app-sidebar-link::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -0.65rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+}
+.app-sidebar-item.is-active > .app-sidebar-toggle {
+    background: rgba(124, 92, 255, 0.16);
+    border: 1px solid rgba(124, 92, 255, 0.28);
+}
+.app-sidebar-sublist { border-inline-start-color: rgba(124, 92, 255, 0.28); }
+.app-sidebar-sublink { color: rgba(255, 255, 255, 0.58); border-radius: 9px; }
+.app-sidebar-sublink:hover { background: rgba(255, 255, 255, 0.07); transform: none; color: #fff; }
+[dir="rtl"] .app-sidebar-sublink:hover { transform: none; }
+.app-sidebar-sublink.is-active {
+    background: rgba(124, 92, 255, 0.9);
+    box-shadow: var(--aurora-glow);
+}
+
+.app-sidebar-shift {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--aurora-ring);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+.app-sidebar-shift::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(80% 120% at 100% 0%, rgba(124, 92, 255, 0.28) 0%, transparent 60%);
+    pointer-events: none;
+}
+.app-sidebar-shift-label { color: #b6a6ff; }
+
+/* -------------------------------------------------------------------------
+ * NAVBAR — frosted glass sticky header
+ * ---------------------------------------------------------------------- */
+body.app-with-sidebar > div > header {
+    background: color-mix(in srgb, var(--color-canvas) 72%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--color-hairline);
+}
+/* Turn the header POS button into the signature gradient CTA. */
+body.app-with-sidebar > div > header a.bg-accent {
+    background: var(--aurora-grad);
+    box-shadow: var(--aurora-glow);
+    border-radius: 12px;
+}
+body.app-with-sidebar > div > header a.bg-accent:hover { filter: brightness(1.05); }
+/* Give the user avatar chip the gradient identity. */
+body.app-with-sidebar > div > header .bg-ink {
+    background: var(--aurora-grad);
+    box-shadow: var(--aurora-glow);
+}
+
+/* -------------------------------------------------------------------------
+ * DASHBOARD — elevated cards, gradient badges & bars
+ * ---------------------------------------------------------------------- */
+.card {
+    border-radius: 18px;
+    box-shadow: var(--aurora-card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--aurora-card-shadow-hover);
+}
+.dash-icon-badge {
+    background: var(--aurora-grad) !important;
+    color: #fff !important;
+    box-shadow: var(--aurora-glow);
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+}
+.dash-kicker { color: #7c5cff; }
+.dash-value { letter-spacing: -0.02em; }
+.n-bar {
+    background: linear-gradient(180deg, #e6e2fb 0%, #d8d0f7 100%);
+    border-radius: 8px 8px 3px 3px;
+}
+.n-bar-col.is-current .n-bar,
+.n-bar-col:last-child .n-bar,
+.n-bar-col:hover .n-bar { background: var(--aurora-grad); box-shadow: var(--aurora-glow); }
+.tag-paid { background: var(--aurora-grad-soft); color: #6d28d9; border-color: #d8ccff; }
+
+/* -------------------------------------------------------------------------
+ * LOGIN — immersive aurora split with a frosted form card
+ * ---------------------------------------------------------------------- */
+.login-grid { background: #0f0e1f; }
+.login-brand {
+    position: relative;
+    overflow: hidden;
+    border-right: 0;
+    color: #fff;
+    background:
+        radial-gradient(60% 55% at 18% 22%, rgba(124, 92, 255, 0.55) 0%, transparent 60%),
+        radial-gradient(55% 50% at 85% 78%, rgba(217, 70, 239, 0.42) 0%, transparent 60%),
+        radial-gradient(50% 60% at 70% 15%, rgba(59, 130, 246, 0.35) 0%, transparent 55%),
+        linear-gradient(160deg, #16152e 0%, #0f0e1f 100%);
+    padding: clamp(2.5rem, 6vw, 5rem);
+}
+/* Floating aurora orbs */
+.login-brand::before,
+.login-brand::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(30px);
+    opacity: 0.6;
+    pointer-events: none;
+    animation: aurora-float 14s ease-in-out infinite alternate;
+}
+.login-brand::before {
+    width: 320px; height: 320px; top: -60px; inset-inline-end: -40px;
+    background: radial-gradient(circle, rgba(124, 92, 255, 0.6), transparent 70%);
+}
+.login-brand::after {
+    width: 260px; height: 260px; bottom: -50px; inset-inline-start: 8%;
+    background: radial-gradient(circle, rgba(217, 70, 239, 0.5), transparent 70%);
+    animation-delay: -6s;
+}
+@keyframes aurora-float {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(0, -26px, 0) scale(1.08); }
+}
+.login-brand > * { position: relative; z-index: 1; }
+.login-brand__logo { border-bottom: 0; box-shadow: none; padding-bottom: 0; gap: 0.7rem; }
+.login-brand__logo svg polygon[stroke="#0f172a"] { stroke: #fff; }
+.login-brand__name { color: #fff !important; font-size: 22px; }
+.login-brand__title {
+    color: #fff !important;
+    background: linear-gradient(120deg, #fff 0%, #d8ccff 55%, #f6c8ff 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(2.8rem, 5vw, 4rem);
+}
+.login-brand__text { color: rgba(255, 255, 255, 0.78) !important; font-size: 16px; max-width: 34ch; }
+.login-brand__footer { color: rgba(255, 255, 255, 0.55) !important; }
+
+.login-form-wrap {
+    background: #0f0e1f;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3rem);
+}
+.login-form-card {
+    max-width: 460px;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    overflow: hidden;
+}
+.login-form-card .login-form__title { color: #fff; font-size: 30px; }
+.login-form-card .login-form__subtitle,
+.login-form-card .form-label { color: rgba(255, 255, 255, 0.7) !important; }
+.login-form-card .form-label { font-weight: 500; }
+.login-form-card .input-group-text {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #b6a6ff;
+}
+.login-form-card .input-group-text i { color: #b6a6ff !important; }
+.login-form-card .form-control,
+.login-form-card .input {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    color: #fff !important;
+}
+.login-form-card .form-control::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
+.login-form-card .form-control:focus {
+    border-color: #7c5cff !important;
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.3) !important;
+}
+.login-form-card .custom-control-label,
+.login-form-card label[for="remember"] { color: rgba(255, 255, 255, 0.65) !important; }
+.login-form-card a { color: #b6a6ff !important; }
+.login-form-card .btn-primary {
+    background: var(--aurora-grad) !important;
+    border: 0 !important;
+    box-shadow: var(--aurora-glow) !important;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: filter 0.2s ease, transform 0.15s ease;
+}
+.login-form-card .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+@media (max-width: 850px) {
+    .login-grid { grid-template-columns: 1fr; }
+    .login-brand { min-height: 40vh; }
+}
+
+/* Dashboard welcome hero (front space) */
+.dash-hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.9rem 2rem;
+    border-radius: 22px;
+    color: #fff;
+    background:
+        radial-gradient(70% 140% at 100% 0%, rgba(217, 70, 239, 0.4) 0%, transparent 55%),
+        radial-gradient(60% 130% at 0% 100%, rgba(59, 130, 246, 0.32) 0%, transparent 55%),
+        linear-gradient(120deg, #211d47 0%, #14122a 100%);
+    box-shadow: var(--aurora-glow-lg);
+}
+.dash-hero__glow {
+    position: absolute;
+    width: 340px; height: 340px;
+    top: -140px; inset-inline-end: 12%;
+    background: radial-gradient(circle, rgba(124, 92, 255, 0.55), transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+}
+.dash-hero__content { position: relative; z-index: 1; }
+.dash-hero__eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.68rem;
+    color: #b6a6ff;
+    margin: 0 0 0.5rem;
+}
+.dash-hero__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #fff;
+    background: linear-gradient(110deg, #fff 0%, #d8ccff 60%, #f6c8ff 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.dash-hero__subtitle { margin: 0.4rem 0 0; color: rgba(255, 255, 255, 0.75); font-size: 0.95rem; }
+.dash-hero__cta {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.35rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #2c2953;
+    background: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.dash-hero__cta:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -12px rgba(0, 0, 0, 0.55); color: #2c2953; }

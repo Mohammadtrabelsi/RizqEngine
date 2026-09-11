@@ -11,6 +11,21 @@
 @section('content')
     <div class="container-fluid pb-5">
 
+        {{-- Aurora welcome hero --}}
+        <div class="dash-hero mb-4">
+            <div class="dash-hero__glow" aria-hidden="true"></div>
+            <div class="dash-hero__content">
+                <p class="dash-hero__eyebrow">{{ now()->isoFormat('dddd, D MMMM YYYY') }}</p>
+                <h2 class="dash-hero__title">{{ __('general.dashboard') }}</h2>
+                <p class="dash-hero__subtitle">{{ __('login.welcome') }}, {{ auth()->user()->name }}.</p>
+            </div>
+            @can('create_pos_sales')
+                <a href="{{ route('app.pos.index') }}" class="dash-hero__cta">
+                    <i class="bi bi-shop"></i> {{ __('dash.open_pos') }}
+                </a>
+            @endcan
+        </div>
+
         {{-- Date range filter --}}
         <div class="row mb-4">
             <div class="col-12">
