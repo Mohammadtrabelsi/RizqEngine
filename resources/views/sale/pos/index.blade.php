@@ -20,7 +20,16 @@
                 @include('utils.alerts')
             </div>
             <div class="col-12 mb-4">
-                <livewire:search-product/>
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0"><i class="bi bi-search text-primary"></i> {{ __('general.search-product') }}</h5>
+                    </div>
+                    <div class="flex-auto p-2">
+                        <livewire:search-product/>
+                        <hr class="my-3">
+                        <livewire:pos.filter :categories="$product_categories"/>
+                    </div>
+                </div>
                 <livewire:pos.product-list :categories="$product_categories"/>
             </div>
             <div class="col-12 mb-4">

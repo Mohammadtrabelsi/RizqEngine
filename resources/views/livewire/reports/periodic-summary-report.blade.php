@@ -3,6 +3,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
+                    <h5 class="card-title">{{ __('report.filter-report') }}</h5>
                     <form wire:submit="generateReport">
                         <div class="form-row align-items-end">
                             <div class="col-lg-3 col-md-6 mb-3">
@@ -45,6 +46,7 @@
     </div>
 
     {{-- Summary cards --}}
+    <h5 class="card-title">{{ __('report.summary') }}</h5>
     <div class="row mb-4">
         <div class="col-12 col-lg-3 col-md-6">
             <div class="card border-0 shadow-sm">
@@ -105,6 +107,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="flex-auto p-2">
+                    <h5 class="card-title">{{ __('report.breakdown-by-period') }}</h5>
                     <div class="block w-full overflow-x-auto">
                         <table class="report-table w-full mb-4 text-slate-900 border-collapse [&_tbody_tr:hover]:bg-slate-50">
                             <thead>

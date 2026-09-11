@@ -4,7 +4,6 @@
             <h5 class="mb-0"><i class="bi bi-grid text-primary"></i> {{ __('general.products') }}</h5>
         </div>
         <div class="flex-auto p-2">
-            <livewire:pos.filter :categories="$categories"/>
             <div class="d-flex justify-content-center mb-3">{{ $products->links('pagination::bootstrap-5') }}</div>
             <div class="row position-relative">
                 <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center wire-loading-overlay">
