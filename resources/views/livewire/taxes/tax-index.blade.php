@@ -16,9 +16,11 @@
         <div class="row">
             @forelse($taxes as $tax)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="tax-{{ $tax->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                    <div class="card h-100">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                            <h5 class="mb-0">{{ $tax->name }}</h5>
+                        </div>
                         <div class="flex-auto p-2">
-                            <h5 class="card-title">{{ $tax->name }}</h5>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item d-flex justify-content-between px-0">
                                     <span>{{ $tax->type === 'fixed' ? __('taxes.amount') : __('taxes.rate') }}</span>

@@ -46,15 +46,15 @@
         <div class="row">
             @forelse($budgets as $budget)
                 <div class="col-xl-4 col-lg-6 mb-4" wire:key="budget-{{ $budget->id }}">
-                    <div class="relative flex flex-col min-w-0 break-words border border-slate-200 rounded-xl shadow-sm text-slate-900 border-0 shadow-sm h-100">
+                    <div class="card h-100">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ $budget->label() }}</h5>
+                            @php($remaining = $budget->remainingBalance())
+                            <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline {{ $remaining < 0 ? 'bg-danger' : 'bg-success' }}">
+                                {{ number_format($remaining, 2) }}
+                            </span>
+                        </div>
                         <div class="flex-auto p-2">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h5 class="card-title mb-0">{{ $budget->label() }}</h5>
-                                @php($remaining = $budget->remainingBalance())
-                                <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline {{ $remaining < 0 ? 'bg-danger' : 'bg-success' }}">
-                                    {{ number_format($remaining, 2) }}
-                                </span>
-                            </div>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('finance.starting_budget') }}</span><span>{{ number_format($budget->starting_budget, 2) }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('finance.total_fixed') }}</span><span>{{ number_format($budget->totalFixedPayments(), 2) }}</span></li>

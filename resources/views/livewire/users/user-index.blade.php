@@ -48,9 +48,11 @@
         @forelse($users as $user)
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="user-{{ $user->id }}">
                 <div class="card h-100">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0">{{ $user->name }}</h5>
+                    </div>
                     <div class="flex-auto p-2 text-center">
-                        <img src="{{ $user->getFirstMediaUrl('avatars') }}" class="avatar-80 img-thumbnail rounded-circle mb-3" alt="{{ $user->name }}">
-                        <h5 class="card-title mb-1">{{ $user->name }}</h5>
+                        <img src="{{ $user->getFirstMediaUrl('avatars') }}" class="avatar-80 img-thumbnail rounded-circle mb-3 mt-2" alt="{{ $user->name }}">
                         <p class="text-muted mb-2"><small>{{ $user->email }}</small></p>
                         <div class="mb-2">
                             @include('user.users.partials.roles', ['roles' => $user->getRoleNames()])

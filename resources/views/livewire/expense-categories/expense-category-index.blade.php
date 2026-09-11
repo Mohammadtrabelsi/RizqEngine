@@ -18,8 +18,10 @@
             @forelse($categories as $category)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4" wire:key="expense-category-{{ $category->id }}">
                     <div class="card h-100">
+                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                            <h5 class="mb-0">{{ $category->category_name }}</h5>
+                        </div>
                         <div class="flex-auto p-2">
-                            <h5 class="card-title">{{ $category->category_name }}</h5>
                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info mb-2">{{ $category->expenses_count }} expenses</span>
                             <p class="text-muted">{{ $category->category_description }}</p>
                             <div class="btn-group">
