@@ -31,7 +31,7 @@
                             <div class="mb-4">
                                 <label for="category_id">{{ __('expense.category') }} <span class="text-danger">*</span></label>
                                 <select wire:model="category_id" id="category_id" class="form-control @error('category_id') !border-red-500 @enderror">
-                                    <option value="">Select Category</option>
+                                    <option value="">{{ __('app.select') }}</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                     @endforeach

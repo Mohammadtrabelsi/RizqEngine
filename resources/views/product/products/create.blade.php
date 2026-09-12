@@ -44,7 +44,7 @@
                                     <label for="category_id">{{ __('product.category') }} <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <select class="form-control" name="category_id" id="category_id" required>
-                                            <option value="" selected disabled>Select Category</option>
+                                            <option value="" selected disabled></option>
                                             @foreach(\App\Models\Category::all() as $category)
                                                 <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                             @endforeach
