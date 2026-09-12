@@ -15,13 +15,13 @@
         <form id="product-form" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12">
                     @include('utils.alerts')
                     <div class="mb-4">
                         <button class="btn btn-primary">{{ __('product.create_product') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-12 col-lg-8 mb-4">
                     <div class="card">
                         <div class="flex-auto p-2">
                             <div class="form-row">
@@ -212,7 +212,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12">
+                <div class="col-12 col-lg-4 mb-4">
                     <div class="card">
                         <div class="flex-auto p-2">
                             <div class="mb-4">

@@ -1,11 +1,17 @@
 {{-- Full-page Livewire component: single root, shell provides chrome. --}}
 <div>
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-9">
-                <div class="card border-0 shadow-sm">
-                    <div class="flex-auto p-2">
-                        <form wire:submit="save">
+        <form wire:submit="save">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">{{ __('app.save') }}</button>
+                        <a href="{{ route('outings.index') }}" class="btn btn-secondary">{{ __('app.cancel') }}</a>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="flex-auto p-2">
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">{{ __('finance.date') }}</label>
@@ -36,7 +42,12 @@
                                     </div>
                                 @endforeach
                             </div>
-
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="flex-auto p-2">
                             <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-indigo-50 text-indigo-700 border-indigo-200 d-flex justify-content-between">
                                 <span>{{ __('finance.total') }}</span>
                                 <strong>{{ number_format($this->total, 2) }}</strong>
@@ -47,16 +58,11 @@
                                 <textarea wire:model="note" class="form-control" rows="2"></textarea>
                             </div>
 
-                            <p class="text-muted small">{{ __('finance.voucher_auto_note') }}</p>
-
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">{{ __('app.save') }}</button>
-                                <a href="{{ route('outings.index') }}" class="btn btn-secondary">{{ __('app.cancel') }}</a>
-                            </div>
-                        </form>
+                            <p class="text-muted small mb-0">{{ __('finance.voucher_auto_note') }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

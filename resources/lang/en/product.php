@@ -14,6 +14,7 @@ return [
     'categories' => 'Categories',
     'category' => 'Category',
     'category_code' => 'Category code',
+    'category_code_auto_help' => 'Generated automatically and cannot be edited.',
     'category_name' => 'Category name',
     'category_description' => 'Description',
     'category_color' => 'Color',

@@ -84,6 +84,8 @@
                                 <li class="list-group-item px-0"><i class="bi bi-receipt"></i> {{ $supplier->tax_identification_number }}</li>
                             @endif
                         </ul>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                         <div class="btn-group">
                             @can('edit_suppliers')
                                 <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>

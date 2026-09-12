@@ -64,6 +64,8 @@
                                 <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-amber-100 text-amber-700">{{ __('users.deactivated') }}</span>
                             @endif
                         </div>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                         <div class="btn-group">
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
                             <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $user->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>
