@@ -23,6 +23,26 @@ class Expense extends Model
         return $this->belongsTo(ExpenseCategory::class, 'category_id', 'id');
     }
 
+    /**
+     * The driver (chauffeur) this expense is attributed to, if any.
+     *
+     * @return BelongsTo<Driver, $this>
+     */
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(Driver::class, 'driver_id', 'id');
+    }
+
+    /**
+     * The vehicle (véhicule) this expense is attributed to, if any.
+     *
+     * @return BelongsTo<Vehicle, $this>
+     */
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
+    }
+
     public static function boot()
     {
         parent::boot();

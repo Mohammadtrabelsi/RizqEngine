@@ -33,4 +33,6 @@ return [
     'vat_due' => 'TVA à payer',
     'vat_credit' => 'Crédit de TVA',
     'vat_no_data' => 'Aucune donnée pour cette période',
+    'expense_by_vehicle' => 'Dépenses par véhicule',
+    'expense_by_driver' => 'Dépenses par chauffeur',
 ];

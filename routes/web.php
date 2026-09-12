@@ -540,6 +540,12 @@ Route::group(['middleware' => 'auth'], function () {
     // VAT Return (déclaration de TVA)
     Route::get('/vat-return-report', 'ReportsController@vatReturnReport')
         ->name('vat-return-report.index');
+    // Expenses by Vehicle Report
+    Route::get('/expense-by-vehicle-report', 'ReportsController@expenseByVehicleReport')
+        ->name('expense-by-vehicle-report.index');
+    // Expenses by Driver Report
+    Route::get('/expense-by-driver-report', 'ReportsController@expenseByDriverReport')
+        ->name('expense-by-driver-report.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
