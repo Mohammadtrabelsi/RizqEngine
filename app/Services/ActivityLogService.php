@@ -10,8 +10,13 @@ use Spatie\Activitylog\Models\Activity;
  */
 class ActivityLogService
 {
-    public function paginate(?string $search = null, int $perPage = 15): LengthAwarePaginator
-    {
+    public function paginate(
+        ?string $search = null,
+        int $perPage = 15,
+        ?string $event = null,
+        ?string $dateFrom = null,
+        ?string $dateTo = null,
+    ): LengthAwarePaginator {
         return Activity::query()
             ->with('causer')
             ->when($search, function ($query) use ($search) {
@@ -19,6 +24,9 @@ class ActivityLogService
                 $query->where('description', 'like', $term)
                     ->orWhere('log_name', 'like', $term);
             })
+            ->when($event, fn ($query) => $query->where('event', $event))
+            ->when($dateFrom, fn ($query) => $query->whereDate('created_at', '>=', $dateFrom))
+            ->when($dateTo, fn ($query) => $query->whereDate('created_at', '<=', $dateTo))
             ->latest()
             ->paginate($perPage);
     }

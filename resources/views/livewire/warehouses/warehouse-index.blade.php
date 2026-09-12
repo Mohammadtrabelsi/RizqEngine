@@ -68,6 +68,8 @@
                                     <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-{{ $warehouse->is_active ? 'success' : 'secondary' }}">{{ $warehouse->is_active ? __('warehouses.active') : __('warehouses.inactive') }}</span>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 @can('edit_warehouses')
                                     <a href="{{ route('warehouses.edit', $warehouse) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>

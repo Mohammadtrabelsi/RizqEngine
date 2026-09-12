@@ -14,12 +14,19 @@
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <livewire:search-product/>
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0"><i class="bi bi-search text-primary"></i> {{ __('general.search-product') }}</h5>
+                    </div>
+                    <div class="flex-auto p-2">
+                        <livewire:search-product/>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-12">
                 @include('utils.alerts')
                 <form id="quotation-form" action="{{ route('quotations.store') }}" method="POST">
                     @csrf

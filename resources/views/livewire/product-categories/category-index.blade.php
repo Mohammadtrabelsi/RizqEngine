@@ -43,6 +43,8 @@
                                 <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-secondary">{{ __('product.category_inactive') }}</span>
                             @endif
                         </div>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                         <div class="btn-group d-block">
                             <a href="{{ route('product-categories.edit', $category->id) }}" class="btn btn-info btn-sm">
                                 <i class="bi bi-pencil"></i>

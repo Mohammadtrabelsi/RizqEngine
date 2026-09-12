@@ -204,9 +204,9 @@
                                 </div>
                             @endif
                         </div>
-
-                        <!-- Action Buttons -->
-                        <div class="btn-group w-100 mt-auto" role="group">
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
+                        <div class="btn-group w-100" role="group">
                             @can('edit_products')
                                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline btn-sm" title="Edit">
                                     <i class="bi bi-pencil"></i>

@@ -2450,6 +2450,10 @@ hr { display: none; }
 
 .pos-stock-badge { left: 10px; top: 10px; }
 
+@media (min-width: 992px) {
+    .pos-checkout-sticky { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+}
+
 /* Content lists → roomier, in step with the design system (tokens above).
    Scoped to plain <ul>s: component lists that carry their own look —
    navigation, dropdowns, pagination, Bootstrap list-groups, breadcrumbs and

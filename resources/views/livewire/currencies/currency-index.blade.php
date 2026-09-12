@@ -29,6 +29,8 @@
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('currency.thousand_separator') }}</span><span>{{ $currency->thousand_separator }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('currency.decimal_separator') }}</span><span>{{ $currency->decimal_separator }}</span></li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 @can('edit_currencies')
                                     <a href="{{ route('currencies.edit', $currency->id) }}" class="btn btn-info btn-sm">

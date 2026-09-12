@@ -13,6 +13,7 @@ return [
     'category' => 'الفئة',
     'category_active' => 'نشط',
     'category_code' => 'رمز الفئة',
+    'category_code_auto_help' => 'يتم إنشاؤه تلقائيًا ولا يمكن تعديله.',
     'category_color' => 'اللون',
     'category_description' => 'الوصف',
     'category_image' => 'الصورة',

@@ -55,6 +55,8 @@
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('vehicles.brand') }}</span><span>{{ $vehicle->brand ?: '—' }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('vehicles.model') }}</span><span>{{ $vehicle->model ?: '—' }}</span></li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 @can('edit_vehicles')
                                     <a href="{{ route('vehicles.edit', $vehicle) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
