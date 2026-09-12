@@ -27,13 +27,13 @@
                             @csrf
 
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="mb-4">
                                         <label for="reference">{{ __('purchase.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="PR">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="from-group">
                                         <div class="mb-4">
                                             <label for="supplier_id">{{ __('purchase.supplier') }} <span class="text-danger">*</span></label>
@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="from-group">
                                         <div class="mb-4">
                                             <label for="date">{{ __('purchase.date') }} <span class="text-danger">*</span></label>
@@ -53,7 +53,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="mb-4">
                                         <label for="warehouse_id">{{ __('warehouses.warehouse') }}</label>
                                         <select class="form-control" name="warehouse_id" id="warehouse_id">
