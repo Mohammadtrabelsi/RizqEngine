@@ -1,12 +1,7 @@
 <div>
+<div class="container-fluid">
 <form wire:submit="save">
-                    
-                    <div class="mb-4">
-                        <button type="submit" class="btn btn-primary">{{ $roleId ? __('roles.update_role') : __('roles.create_role') }} <i class="bi bi-check"></i>
-                        </button>
-                    </div>
-                    <div class="card">
-                        <div class="flex-auto p-2">
+                    <x-form-card :title="$roleId ? __('roles.update_role') : __('roles.create_role')" icon="bi-shield-lock">
                             <div class="mb-4">
                                 <label for="name">{{ __('roles.role_name') }} <span class="text-danger">*</span></label>
                                 <input class="form-control @error('name') !border-red-500 @enderror" type="text" wire:model="name">
@@ -829,7 +824,12 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
+                        <x-slot:footer>
+                            <button type="submit" class="btn btn-primary">
+                                {{ $roleId ? __('roles.update_role') : __('roles.create_role') }} <i class="bi bi-check"></i>
+                            </button>
+                        </x-slot:footer>
+                    </x-form-card>
                 </form>
+</div>
 </div>
