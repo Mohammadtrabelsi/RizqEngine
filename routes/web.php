@@ -11,6 +11,7 @@ use App\Livewire\Currencies\CurrencyIndex;
 use App\Livewire\Customers\CustomerForm;
 use App\Livewire\Customers\CustomerImport;
 use App\Livewire\Customers\CustomerIndex;
+use App\Livewire\Customers\CustomerPriceList;
 use App\Livewire\Customers\CustomerShow;
 use App\Livewire\Dashboard as RedesignDashboard;
 use App\Livewire\Drivers\DriverForm;
@@ -156,6 +157,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'parties', 'namespace' => '\\'
     Route::get('customers/create', CustomerForm::class)->name('customers.create');
     Route::get('customers/{customer}', CustomerShow::class)->name('customers.show');
     Route::get('customers/{customer}/edit', CustomerForm::class)->name('customers.edit');
+    Route::get('customers/{customer}/prices', CustomerPriceList::class)->name('customers.prices');
 
     // Suppliers (full-page Livewire components)
     Route::get('suppliers', SupplierIndex::class)->name('suppliers.index');
