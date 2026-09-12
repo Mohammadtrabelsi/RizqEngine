@@ -14,6 +14,11 @@
     <div class="container-fluid">
         @include('utils.alerts')
 
+        @php
+            $deliveredQuantities = $commande->deliveredQuantities();
+            $remainingQuantities = $commande->remainingQuantities();
+        @endphp
+
         @if($commande->bonLivraison)
             <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :commande="$commande" :bon-livraison="$commande->bonLivraison" :sale="optional($commande->bonLivraison)->sale ?? $commande->sale" />
         @else
@@ -35,12 +40,15 @@
                             </form>
                         @endcan
                     @endif
-                    @if(! $commande->hasBonLivraison())
+                    @if(! $commande->isFullyDelivered())
                         @can('convert_commandes_to_bon_livraison')
                             <form class="d-inline" action="{{ route('commandes.convert-bon-livraison', $commande->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-truck"></i> {{ __('commande.create-bon-livraison') }}</button>
                             </form>
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="collapse" data-bs-target="#partial-shipping">
+                                <i class="bi bi-truck"></i> {{ __('commande.create-partial-bon-livraison') }}
+                            </button>
                         @endcan
                     @endif
                     @if(! $commande->hasStockExit())
@@ -82,8 +90,84 @@
                         <div>{{ __('commande.reference') }}: <strong>{{ $commande->reference }}</strong></div>
                         <div>{{ __('commande.date') }}: {{ $commande->date }}</div>
                         <div>{{ __('commande.status_label') }}: <strong>{{ __('commande.status_'.$commande->status) }}</strong></div>
+                        <div>{{ __('commande.shipping_status_label') }}: <strong>{{ __('commande.shipping_'.$commande->shipping_status) }}</strong></div>
                     </div>
                 </div>
+
+                @if($commande->bonLivraisons->isNotEmpty() || $commande->isPartiallyDelivered())
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h5 class="mb-2 border-bottom pb-2">{{ __('commande.delivery_progress') }}</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __('commande.product') }}</th>
+                                            <th class="text-end">{{ __('commande.ordered_quantity') }}</th>
+                                            <th class="text-end">{{ __('commande.delivered_quantity') }}</th>
+                                            <th class="text-end">{{ __('commande.remaining_quantity') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($commande->commandeDetails as $item)
+                                            <tr>
+                                                <td>{{ $item->product_name }}</td>
+                                                <td class="text-end">{{ $item->quantity }}</td>
+                                                <td class="text-end">{{ $deliveredQuantities[$item->id] ?? 0 }}</td>
+                                                <td class="text-end fw-bold">{{ $remainingQuantities[$item->id] ?? 0 }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if(! $commande->isFullyDelivered())
+                    @can('convert_commandes_to_bon_livraison')
+                        <div class="collapse mb-4 d-print-none" id="partial-shipping">
+                            <div class="card border">
+                                <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                                    {{ __('commande.create-partial-bon-livraison') }}
+                                </div>
+                                <div class="flex-auto p-3">
+                                    <p class="text-muted small">{{ __('commande.partial-shipping-help') }}</p>
+                                    <form action="{{ route('commandes.convert-bon-livraison', $commande->id) }}" method="POST">
+                                        @csrf
+                                        <div class="table-responsive">
+                                            <table class="table table-sm align-middle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ __('commande.product') }}</th>
+                                                        <th class="text-end">{{ __('commande.remaining_quantity') }}</th>
+                                                        <th class="text-end" style="width: 140px;">{{ __('commande.to_deliver') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($commande->commandeDetails as $item)
+                                                        @php($lineRemaining = $remainingQuantities[$item->id] ?? 0)
+                                                        <tr>
+                                                            <td>{{ $item->product_name }} <span class="text-muted">({{ $item->product_code }})</span></td>
+                                                            <td class="text-end">{{ $lineRemaining }}</td>
+                                                            <td class="text-end">
+                                                                <input type="number" name="quantities[{{ $item->id }}]"
+                                                                    class="form-control form-control-sm text-end"
+                                                                    min="0" max="{{ $lineRemaining }}" value="0"
+                                                                    @disabled($lineRemaining === 0)>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-truck"></i> {{ __('commande.ship') }}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endcan
+                @endif
 
                 <div class="row">
                     @foreach($commande->commandeDetails as $item)

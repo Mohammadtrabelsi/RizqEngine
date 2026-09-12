@@ -12,7 +12,7 @@
             </button>
         @endcan
     @endif
-    @if(! $data->hasBonLivraison())
+    @if(! $data->isFullyDelivered())
         @can('convert_commandes_to_bon_livraison')
             <button type="button" class="btn btn-sm btn-secondary" data-submit-form="bl-cmd-{{ $data->id }}">
                 <i class="bi bi-truck me-1 text-info"></i> {{ __('commande.create-bon-livraison') }}
