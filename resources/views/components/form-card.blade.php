@@ -8,7 +8,7 @@
     Usage:
         <form wire:submit="save">
             <x-form-card :title="__('customer.create')" icon="bi-person">
-                {{-- form fields --}}
+                // form fields
                 <x-slot:footer>
                     <button type="submit" class="btn btn-primary">{{ __('app.save') }}</button>
                 </x-slot:footer>
