@@ -6,11 +6,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 /**
- * The document chain breadcrumb for the Devis workflows. Two paths are
+ * The document chain breadcrumb for the order workflows. Two paths are
  * supported and rendered depending on which documents are supplied:
  *
- *   Devis → Bon de Commande → Commande → Facture   (classic path)
- *   Devis → Commande → Bon de Livraison → Facture  (delivery-note path)
+ *   Bon de Commande → Devis → Commande → Facture                    (classic path)
+ *   Bon de Commande → Devis → Commande → Bon de Livraison → Facture (delivery-note path)
  *
  * The delivery-note path is used whenever a Bon de Livraison is supplied or the
  * current step is the delivery note; otherwise the classic path is shown. The
@@ -30,12 +30,14 @@ class DocumentChain extends Component
         public mixed $bonLivraison = null,
         public mixed $sale = null,
     ) {
+        $bonCommandeStep = ['key' => 'bon_commande', 'label' => __('boncommande.bon_commande'), 'ref' => $bonCommande->reference ?? null, 'url' => $bonCommande ? route('bon-commandes.show', $bonCommande->id) : null];
         $quotationStep = ['key' => 'quotation', 'label' => __('boncommande.devis'), 'ref' => $quotation->reference ?? null, 'url' => $quotation ? route('quotations.show', $quotation->id) : null];
         $commandeStep = ['key' => 'commande', 'label' => __('commande.commande'), 'ref' => $commande->reference ?? null, 'url' => $commande ? route('commandes.show', $commande->id) : null];
         $saleStep = ['key' => 'sale', 'label' => __('commande.facture'), 'ref' => $sale->reference ?? null, 'url' => $sale ? route('sales.show', $sale->id) : null];
 
         if ($bonLivraison !== null || $current === 'bon_livraison') {
             $this->steps = [
+                $bonCommandeStep,
                 $quotationStep,
                 $commandeStep,
                 ['key' => 'bon_livraison', 'label' => __('bonlivraison.bon_livraison'), 'ref' => $bonLivraison->reference ?? null, 'url' => $bonLivraison ? route('bon-livraisons.show', $bonLivraison->id) : null],
@@ -46,8 +48,8 @@ class DocumentChain extends Component
         }
 
         $this->steps = [
+            $bonCommandeStep,
             $quotationStep,
-            ['key' => 'bon_commande', 'label' => __('boncommande.bon_commande'), 'ref' => $bonCommande->reference ?? null, 'url' => $bonCommande ? route('bon-commandes.show', $bonCommande->id) : null],
             $commandeStep,
             $saleStep,
         ];

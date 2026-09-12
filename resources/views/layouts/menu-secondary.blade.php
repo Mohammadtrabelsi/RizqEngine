@@ -70,16 +70,15 @@
                 @endcan
             @endif
 
-            @if ($inQuotations)
-                @can('create_adjustments')
-                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('quotations.create') ? 'is-active' : '' }}" href="{{ route('quotations.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-quotation') }}</span></a></li>
-                @endcan
-                <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('quotations.index') ? 'is-active' : '' }}" href="{{ route('quotations.index') }}"><i class="bi bi-journals"></i> <span>{{ __('menu.all-quotations') }}</span></a></li>
-            @endif
-
             @if ($inOrders)
                 @can('access_bon_commandes')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('bon-commandes.*') ? 'is-active' : '' }}" href="{{ route('bon-commandes.index') }}"><i class="bi bi-clipboard-check"></i> <span>{{ __('menu.all-bon-commandes') }}</span></a></li>
+                @endcan
+                @can('access_quotations')
+                    @can('create_adjustments')
+                        <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('quotations.create') ? 'is-active' : '' }}" href="{{ route('quotations.create') }}"><i class="bi bi-journal-plus"></i> <span>{{ __('menu.create-quotation') }}</span></a></li>
+                    @endcan
+                    <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('quotations.index') ? 'is-active' : '' }}" href="{{ route('quotations.index') }}"><i class="bi bi-journals"></i> <span>{{ __('menu.all-quotations') }}</span></a></li>
                 @endcan
                 @can('access_commandes')
                     <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}"><i class="bi bi-bag-check"></i> <span>{{ __('menu.all-commandes') }}</span></a></li>

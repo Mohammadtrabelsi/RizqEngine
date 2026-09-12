@@ -48,17 +48,9 @@
                 </li>
                 @endcanany
 
-                @can('access_quotations')
-                <li class="app-topnav-item {{ request()->routeIs('quotations.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link" href="{{ route('quotations.index') }}">
-                        <i class="bi bi-cart-check"></i> <span>{{ __('menu.quotations') }}</span>
-                    </a>
-                </li>
-                @endcan
-
-                @canany(['access_bon_commandes', 'access_commandes', 'access_bon_livraisons'])
-                <li class="app-topnav-item {{ request()->routeIs('bon-commandes.*') || request()->routeIs('commandes.*') || request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}">
-                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_bon_commandes') ? route('bon-commandes.index') : (auth()->user()->can('access_commandes') ? route('commandes.index') : route('bon-livraisons.index')) }}">
+                @canany(['access_bon_commandes', 'access_quotations', 'access_commandes', 'access_bon_livraisons'])
+                <li class="app-topnav-item {{ request()->routeIs('bon-commandes.*') || request()->routeIs('quotations.*') || request()->routeIs('commandes.*') || request()->routeIs('bon-livraisons.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ auth()->user()->can('access_bon_commandes') ? route('bon-commandes.index') : (auth()->user()->can('access_quotations') ? route('quotations.index') : (auth()->user()->can('access_commandes') ? route('commandes.index') : route('bon-livraisons.index'))) }}">
                         <i class="bi bi-clipboard-check"></i> <span>{{ __('menu.orders') }}</span>
                     </a>
                 </li>

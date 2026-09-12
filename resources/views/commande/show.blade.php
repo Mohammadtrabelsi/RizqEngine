@@ -15,7 +15,7 @@
         @include('utils.alerts')
 
         @if($commande->bonLivraison)
-            <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :commande="$commande" :bon-livraison="$commande->bonLivraison" :sale="optional($commande->bonLivraison)->sale ?? $commande->sale" />
+            <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :bon-commande="$commande->bonCommande" :commande="$commande" :bon-livraison="$commande->bonLivraison" :sale="optional($commande->bonLivraison)->sale ?? $commande->sale" />
         @else
             <x-document-chain current="commande" :quotation="$commande->quotation ?? optional($commande->bonCommande)->quotation" :bon-commande="$commande->bonCommande" :commande="$commande" :sale="$commande->sale" />
         @endif

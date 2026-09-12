@@ -21,7 +21,7 @@ class NavigationComposer
             'inPurchases' => Request::routeIs('purchases.*') || Request::routeIs('purchase-payments*') || Request::routeIs('purchase-returns.*') || Request::routeIs('purchase-return-payments.*'),
             'inStock' => Request::routeIs('adjustments.*') || Request::routeIs('stock-exits.*') || Request::routeIs('stock-entries.*'),
             'inQuotations' => Request::routeIs('quotations.*'),
-            'inOrders' => Request::routeIs('bon-commandes.*') || Request::routeIs('commandes.*') || Request::routeIs('bon-livraisons.*'),
+            'inOrders' => Request::routeIs('bon-commandes.*') || Request::routeIs('quotations.*') || Request::routeIs('commandes.*') || Request::routeIs('bon-livraisons.*'),
             'inExpenses' => Request::routeIs('expenses.*') || Request::routeIs('expense-categories.*'),
             'inParties' => Request::routeIs('customers.*') || Request::routeIs('suppliers.*'),
             'inImports' => Request::routeIs('products.import') || Request::routeIs('customers.import') || Request::routeIs('suppliers.import'),
