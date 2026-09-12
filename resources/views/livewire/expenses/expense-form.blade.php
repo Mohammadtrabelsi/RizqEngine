@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </x-form-card>
             </div>
         </div>
         <div class="col-12 col-lg-4 mb-4">
