@@ -78,6 +78,64 @@
     --tracking-micro: 0.12em;
 }
 
+/* -------------------------------------------------------------------------
+ * Palette harmonisation — make legacy utility classes speak the redesign.
+ *
+ * Most content screens (the ~86 CRUD / list / form Livewire views) were
+ * authored with Tailwind's stock `slate` neutral ramp and `indigo` brand
+ * ramp, plus `rounded-xl` corners. The dashboard / landing / sign-in were
+ * rebuilt on the redesign tokens (ink / body / hairline / canvas / accent
+ * + the 16px card radius) shown in the reference design.
+ *
+ * Rather than rewrite hundreds of Blade files, we override the DEFAULT
+ * Tailwind ramps so every `bg-slate-50`, `border-slate-200`, `text-slate-900`,
+ * `text-indigo-700`, `rounded-xl` … already in the markup renders in the
+ * redesign palette. One source of truth; every screen inherits the look in
+ * the reference image. Pages built directly on the redesign tokens are
+ * unaffected (they never reference slate / indigo).
+ * ---------------------------------------------------------------------- */
+@theme {
+    /* Neutral ramp → warm indigo-ink surfaces, borders and text. */
+    --color-slate-50:  #f7f7fb;  /* canvas — card headers / footers / zebra */
+    --color-slate-100: #f2f2f8;  /* canvas-2 — hover / muted fills */
+    --color-slate-200: #e7e7ee;  /* hairline — default borders */
+    --color-slate-300: #dcdce6;  /* stronger hairline */
+    --color-slate-400: #b6b6c6;  /* disabled / placeholder ink */
+    --color-slate-500: #82829b;  /* muted text */
+    --color-slate-600: #6b6b85;  /* body text */
+    --color-slate-700: #4a4a63;  /* ink-3 */
+    --color-slate-800: #35354d;  /* ink-2 */
+    --color-slate-900: #26263a;  /* ink — headings / primary text */
+
+    /* Gray ramp aliased to the same neutral scale for stray gray-* usage. */
+    --color-gray-50:  #f7f7fb;
+    --color-gray-100: #f2f2f8;
+    --color-gray-200: #e7e7ee;
+    --color-gray-300: #dcdce6;
+    --color-gray-400: #b6b6c6;
+    --color-gray-500: #82829b;
+    --color-gray-600: #6b6b85;
+    --color-gray-700: #4a4a63;
+    --color-gray-800: #35354d;
+    --color-gray-900: #26263a;
+
+    /* Brand ramp → single-indigo accent from the design handoff. */
+    --color-indigo-50:  #f4f2fe;
+    --color-indigo-100: #eeecfd;  /* accent-light */
+    --color-indigo-200: #dedaf9;  /* accent-soft */
+    --color-indigo-300: #c9c2f5;
+    --color-indigo-400: #9d8def;
+    --color-indigo-500: #6a56e6;
+    --color-indigo-600: #4f39e0;  /* accent */
+    --color-indigo-700: #4229c9;  /* accent-hover */
+    --color-indigo-800: #3a24ad;
+    --color-indigo-900: #2f1d8a;
+
+    /* Corner radii align with the 16px card in the reference design. */
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+}
+
 :root {
     /* --- Light Mode Core --- */
     --color-bg: #f7f7fb;
