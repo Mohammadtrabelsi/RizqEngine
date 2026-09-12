@@ -2,47 +2,45 @@
 <div>
     <div class="container-fluid">
         <form wire:submit="save">
-            <div class="card mb-3">
-                <div class="flex-auto p-2">
-                    <div class="form-row">
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <label>{{ __('warehouses.from') }} <span class="text-danger">*</span></label>
-                                <select class="form-control @error('from_warehouse_id') !border-red-500 @enderror" wire:model="from_warehouse_id">
-                                    <option value="">{{ __('warehouses.select_warehouse') }}</option>
-                                    @foreach($warehouses as $warehouse)
-                                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }} ({{ $warehouse->code }})</option>
-                                    @endforeach
-                                </select>
-                                @error('from_warehouse_id') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
-                            </div>
+            <x-form-card :title="__('warehouses.create_transfer')" icon="bi-arrow-left-right">
+                <div class="form-row">
+                    <div class="col-lg-4">
+                        <div class="mb-4 mb-lg-0">
+                            <label>{{ __('warehouses.from') }} <span class="text-danger">*</span></label>
+                            <select class="form-control @error('from_warehouse_id') !border-red-500 @enderror" wire:model="from_warehouse_id">
+                                <option value="">{{ __('warehouses.select_warehouse') }}</option>
+                                @foreach($warehouses as $warehouse)
+                                    <option value="{{ $warehouse->id }}">{{ $warehouse->name }} ({{ $warehouse->code }})</option>
+                                @endforeach
+                            </select>
+                            @error('from_warehouse_id') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                         </div>
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <label>{{ __('warehouses.to') }} <span class="text-danger">*</span></label>
-                                <select class="form-control @error('to_warehouse_id') !border-red-500 @enderror" wire:model="to_warehouse_id">
-                                    <option value="">{{ __('warehouses.select_warehouse') }}</option>
-                                    @foreach($warehouses as $warehouse)
-                                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }} ({{ $warehouse->code }})</option>
-                                    @endforeach
-                                </select>
-                                @error('to_warehouse_id') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
-                            </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mb-4 mb-lg-0">
+                            <label>{{ __('warehouses.to') }} <span class="text-danger">*</span></label>
+                            <select class="form-control @error('to_warehouse_id') !border-red-500 @enderror" wire:model="to_warehouse_id">
+                                <option value="">{{ __('warehouses.select_warehouse') }}</option>
+                                @foreach($warehouses as $warehouse)
+                                    <option value="{{ $warehouse->id }}">{{ $warehouse->name }} ({{ $warehouse->code }})</option>
+                                @endforeach
+                            </select>
+                            @error('to_warehouse_id') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                         </div>
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <label>{{ __('warehouses.date') }} <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control @error('date') !border-red-500 @enderror" wire:model="date">
-                                @error('date') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
-                            </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mb-4 mb-lg-0">
+                            <label>{{ __('warehouses.date') }} <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control @error('date') !border-red-500 @enderror" wire:model="date">
+                            @error('date') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                         </div>
                     </div>
                 </div>
-            </div>
+            </x-form-card>
 
-            <div class="card mb-3">
-                <div class="flex-auto p-2">
-                    @error('lines') <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-red-50 text-red-700 border-red-200">{{ $message }}</div> @enderror
+            <x-form-card :title="__('warehouses.products')" icon="bi-box-seam">
+                @error('lines') <div class="relative px-5 py-3 mb-4 rounded-md border border-transparent bg-red-50 text-red-700 border-red-200">{{ $message }}</div> @enderror
+                <div class="table-responsive">
                     <table class="w-full mb-4 text-slate-900 border-collapse align-middle">
                         <thead>
                             <tr>
@@ -74,25 +72,24 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-outline btn-sm" wire:click="addLine">
-                        {{ __('warehouses.add_line') }} <i class="bi bi-plus"></i>
-                    </button>
                 </div>
-            </div>
+                <button type="button" class="btn btn-outline btn-sm" wire:click="addLine">
+                    {{ __('warehouses.add_line') }} <i class="bi bi-plus"></i>
+                </button>
+            </x-form-card>
 
-            <div class="card mb-3">
-                <div class="flex-auto p-2">
-                    <div class="mb-4">
-                        <label>{{ __('warehouses.note') }}</label>
-                        <textarea class="form-control" rows="2" wire:model="note"></textarea>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('warehouses.create_transfer') }} <i class="bi bi-check"></i>
-                        </button>
-                    </div>
+            <x-form-card :title="__('warehouses.note')" icon="bi-card-text">
+                <div class="mb-4 mb-0">
+                    <label>{{ __('warehouses.note') }}</label>
+                    <textarea class="form-control" rows="2" wire:model="note"></textarea>
                 </div>
-            </div>
+
+                <x-slot:footer>
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('warehouses.create_transfer') }} <i class="bi bi-check"></i>
+                    </button>
+                </x-slot:footer>
+            </x-form-card>
         </form>
     </div>
 </div>

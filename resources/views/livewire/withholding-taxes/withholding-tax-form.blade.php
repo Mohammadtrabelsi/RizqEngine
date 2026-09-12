@@ -4,11 +4,7 @@
         <form wire:submit="save">
             <div class="row">
                 <div class="col-12">
-                    <div class="card border-0 shadow-sm mb-4">
-                        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
-                            <h5 class="mb-0"><i class="bi bi-receipt text-primary"></i> {{ $withholdingTaxId ? __('withholding.update_withholding') : __('withholding.create_withholding') }}</h5>
-                        </div>
-                        <div class="flex-auto p-2">
+                    <x-form-card :title="$withholdingTaxId ? __('withholding.update_withholding') : __('withholding.create_withholding')" icon="bi-receipt">
                             <div class="form-row">
                                 <div class="col-12 col-lg-6">
                                     <div class="mb-4">
@@ -84,13 +80,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-end">
+
+                        <x-slot:footer>
                             <button type="submit" class="btn btn-primary">
                                 {{ $withholdingTaxId ? __('withholding.update_withholding') : __('withholding.create_withholding') }} <i class="bi bi-check"></i>
                             </button>
-                        </div>
-                    </div>
+                        </x-slot:footer>
+                    </x-form-card>
                 </div>
             </div>
         </form>
