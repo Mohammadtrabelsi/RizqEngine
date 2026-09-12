@@ -13,9 +13,15 @@ use Livewire\Component;
 
 class ProductCart extends Component
 {
-    public $listeners = ['productSelected', 'discountModalRefresh'];
+    public $listeners = ['productSelected', 'discountModalRefresh', 'customerSelected'];
 
     public $cart_instance;
+
+    /**
+     * Id of the customer the sale document is for, when one is selected.
+     * Drives the per-customer price list ("liste de prix par client").
+     */
+    public $customer_id;
 
     public $global_discount;
 
@@ -57,6 +63,7 @@ class ProductCart extends Component
 
         if ($data) {
             $this->data = $data;
+            $this->customer_id = $data->customer_id ?? null;
 
             $this->global_discount = $data->discount_percentage;
             $this->global_tax = $data->tax_percentage;
@@ -328,11 +335,74 @@ class ProductCart extends Component
             $this->unit_price[$product['id']] = $product['product_price'];
             if ($this->cart_instance == 'purchase' || $this->cart_instance == 'purchase_return') {
                 $this->unit_price[$product['id']] = $product['product_cost'];
+            } elseif (($customerPrice = $this->customerPriceFor($product['id'])) !== null) {
+                // The customer's negotiated price overrides the default sale
+                // price ("liste de prix par client").
+                $this->unit_price[$product['id']] = $customerPrice;
             }
             $product_price = $this->unit_price[$product['id']];
         }
 
         return app(CartPricingService::class)->calculate($product, $product_price);
+    }
+
+    /**
+     * The selected customer's negotiated price for the given product, or null
+     * when none applies (no customer, not a sale document, or no custom price).
+     */
+    protected function customerPriceFor($product_id): ?int
+    {
+        if (! $this->customer_id || ! in_array($this->cart_instance, Tax::SALE_CART_INSTANCES, true)) {
+            return null;
+        }
+
+        $price = \App\Models\CustomerProductPrice::query()
+            ->where('customer_id', $this->customer_id)
+            ->where('product_id', $product_id)
+            ->value('price');
+
+        return $price === null ? null : (int) $price;
+    }
+
+    /**
+     * React to the customer selection changing on a sale document: store the
+     * new customer and re-price every cart line from its price list so the
+     * negotiated prices apply without the products being re-added.
+     */
+    public function customerSelected($customer_id): void
+    {
+        $this->customer_id = $customer_id ?: null;
+
+        if (! in_array($this->cart_instance, Tax::SALE_CART_INSTANCES, true)) {
+            return;
+        }
+
+        $cart = Cart::instance($this->cart_instance);
+
+        foreach ($cart->content() as $cart_item) {
+            $product = app(ProductCatalogService::class)->findOrFail($cart_item->id)->toArray();
+
+            $pricing = $this->calculate($product);
+
+            $cart->update($cart_item->rowId, ['price' => $pricing['price']]);
+            $cart->update($cart_item->rowId, [
+                'options' => [
+                    'sub_total' => $pricing['sub_total'] * $cart_item->qty,
+                    'code' => $cart_item->options['code'],
+                    'stock' => $cart_item->options['stock'],
+                    'unit' => $cart_item->options['unit'],
+                    'product_tax' => $pricing['product_tax'],
+                    'unit_price' => $pricing['unit_price'],
+                    // Re-pricing resets any per-line discount, since it was
+                    // computed against the previous price basis.
+                    'product_discount' => 0.00,
+                    'product_discount_type' => 'fixed',
+                ],
+            ]);
+
+            $this->item_discount[$cart_item->id] = 0;
+            $this->discount_type[$cart_item->id] = 'fixed';
+        }
     }
 
     public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount)
