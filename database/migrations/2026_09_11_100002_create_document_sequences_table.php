@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\DocumentNumberService;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ return new class extends Migration
      * both races under concurrency and reuses numbers after a deletion, which
      * is not compliant. Each row here is a monotonic counter that only ever
      * increases, allocated atomically under a row lock by
-     * {@see \App\Services\DocumentNumberService}.
+     * {@see DocumentNumberService}.
      */
     public function up(): void
     {

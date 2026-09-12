@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\DocumentNumberService;
 use App\Traits\RecordsActivity;
 use App\Traits\TracksUserActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -79,7 +80,7 @@ class Sale extends Model
             // dedicated monotonic counter (never max(id)+1, which races and
             // reuses numbers after a deletion). It is assigned here so it can
             // never be set or overridden from user input.
-            $model->reference = app(\App\Services\DocumentNumberService::class)->next('sale', 'SL');
+            $model->reference = app(DocumentNumberService::class)->next('sale', 'SL');
         });
     }
 

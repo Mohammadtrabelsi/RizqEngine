@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Services\DocumentNumberService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * A monotonic numbering counter for a family of fiscal documents (e.g. sales
  * invoices). Allocation is performed exclusively through
- * {@see \App\Services\DocumentNumberService} under a row lock so numbers are
+ * {@see DocumentNumberService} under a row lock so numbers are
  * gapless per allocation and never reused.
  *
  * @property int $id

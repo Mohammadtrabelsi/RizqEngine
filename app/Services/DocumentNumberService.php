@@ -27,9 +27,9 @@ class DocumentNumberService
      * already runs in one) so the row lock is held until the surrounding write
      * commits.
      *
-     * @param  string  $key             Sequence identifier, e.g. "sale".
+     * @param  string  $key  Sequence identifier, e.g. "sale".
      * @param  string  $fallbackPrefix  Prefix used when the counter row does
-     *                                   not exist yet (first ever allocation).
+     *                                  not exist yet (first ever allocation).
      */
     public function next(string $key, string $fallbackPrefix): string
     {
