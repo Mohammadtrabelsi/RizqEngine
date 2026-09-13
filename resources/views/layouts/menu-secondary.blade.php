@@ -121,6 +121,8 @@
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}"><i class="bi bi-arrow-left-right"></i> <span>{{ __('menu.stock-movement-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}"><i class="bi bi-speedometer2"></i> <span>{{ __('menu.product-movement-report') }}</span></a></li>
                 <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('vat-return-report.index') ? 'is-active' : '' }}" href="{{ route('vat-return-report.index') }}"><i class="bi bi-receipt"></i> <span>{{ __('menu.vat-return-report') }}</span></a></li>
+                <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('expense-by-vehicle-report.index') ? 'is-active' : '' }}" href="{{ route('expense-by-vehicle-report.index') }}"><i class="bi bi-truck"></i> <span>{{ __('menu.expense-by-vehicle-report') }}</span></a></li>
+                <li class="app-subnav-item"><a class="app-subnav-link {{ request()->routeIs('expense-by-driver-report.index') ? 'is-active' : '' }}" href="{{ route('expense-by-driver-report.index') }}"><i class="bi bi-person-badge"></i> <span>{{ __('menu.expense-by-driver-report') }}</span></a></li>
             @endif
 
             @if ($inUsers)

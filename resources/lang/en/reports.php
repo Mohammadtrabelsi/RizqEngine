@@ -33,4 +33,6 @@ return [
     'vat_due' => 'VAT due',
     'vat_credit' => 'VAT credit',
     'vat_no_data' => 'No data for this period',
+    'expense_by_vehicle' => 'Expenses by vehicle',
+    'expense_by_driver' => 'Expenses by driver',
 ];

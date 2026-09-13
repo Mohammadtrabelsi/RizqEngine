@@ -307,6 +307,8 @@
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}">{{ __('menu.stock-movement-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}">{{ __('menu.product-movement-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('vat-return-report.index') ? 'is-active' : '' }}" href="{{ route('vat-return-report.index') }}">{{ __('menu.vat-return-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('expense-by-vehicle-report.index') ? 'is-active' : '' }}" href="{{ route('expense-by-vehicle-report.index') }}">{{ __('menu.expense-by-vehicle-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('expense-by-driver-report.index') ? 'is-active' : '' }}" href="{{ route('expense-by-driver-report.index') }}">{{ __('menu.expense-by-driver-report') }}</a></li>
                 </ul>
             </li>
             @endcan

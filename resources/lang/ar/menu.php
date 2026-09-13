@@ -62,4 +62,6 @@ return [
     'units' => 'الوحدات',
     'user-management' => 'إدارة المستخدمين',
     'vehicles' => 'المركبات',
+    'expense-by-vehicle-report' => 'المصاريف حسب المركبة',
+    'expense-by-driver-report' => 'المصاريف حسب السائق',
 ];

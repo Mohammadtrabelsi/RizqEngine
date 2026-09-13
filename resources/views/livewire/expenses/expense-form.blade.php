@@ -40,6 +40,33 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="col-12 col-lg-6">
+                            <div class="mb-4 mb-lg-0">
+                                <label for="driver_id">{{ __('expense.driver') }}</label>
+                                <select wire:model="driver_id" id="driver_id" class="form-control @error('driver_id') !border-red-500 @enderror">
+                                    <option value="">{{ __('app.select') }}</option>
+                                    @foreach($drivers as $driver)
+                                        <option value="{{ $driver->id }}">{{ $driver->name }}{{ $driver->phone ? ' — '.$driver->phone : '' }}</option>
+                                    @endforeach
+                                </select>
+                                @error('driver_id') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="mb-0">
+                                <label for="vehicle_id">{{ __('expense.vehicle') }}</label>
+                                <select wire:model="vehicle_id" id="vehicle_id" class="form-control @error('vehicle_id') !border-red-500 @enderror">
+                                    <option value="">{{ __('app.select') }}</option>
+                                    @foreach($vehicles as $vehicle)
+                                        <option value="{{ $vehicle->id }}">{{ $vehicle->label }}</option>
+                                    @endforeach
+                                </select>
+                                @error('vehicle_id') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
                 </x-form-card>
             </div>
         </div>

@@ -17,4 +17,6 @@ return [
     'no_expenses_found' => 'لم يتم العثور على مصروفات',
     'reference' => 'المرجع',
     'update' => 'تحديث',
+    'driver' => 'السائق',
+    'vehicle' => 'المركبة',
 ];

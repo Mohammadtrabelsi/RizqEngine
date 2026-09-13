@@ -68,4 +68,6 @@ return [
     'drivers' => 'Chauffeurs',
     'vehicles' => 'Véhicules',
     'user-management' => 'Gestion des utilisateurs',
+    'expense-by-vehicle-report' => 'Dépenses par véhicule',
+    'expense-by-driver-report' => 'Dépenses par chauffeur',
 ];
