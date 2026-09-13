@@ -35,5 +35,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomerDatabaseSeeder::class);
         $this->call(DriverDatabaseSeeder::class);
         $this->call(VehicleDatabaseSeeder::class);
+
+        // Demo transactions: customer orders (Bon de Commande → Commande →
+        // Bon de Livraison) covering every status, plus supplier purchase
+        // orders. Depends on the catalogue and address book above.
+        $this->call(OrdersWorkflowDatabaseSeeder::class);
     }
 }
