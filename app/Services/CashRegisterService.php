@@ -6,6 +6,8 @@ use App\Enums\CashRegisterStatus;
 use App\Models\CashRegisterSession;
 use App\Models\SalePayment;
 use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -108,6 +110,86 @@ class CashRegisterService
 
             return $locked->refresh();
         });
+    }
+
+    /**
+     * Operation types that can be registered in the caisse ledger.
+     */
+    public const OPERATION_TYPES = ['sale', 'commande'];
+
+    /**
+     * A table query bounded by an optional [from, to] date range on `date`.
+     */
+    private function dateBounded(string $table, ?string $from, ?string $to): Builder
+    {
+        $query = DB::table($table);
+
+        if ($from !== null && $from !== '') {
+            $query->whereDate('date', '>=', $from);
+        }
+
+        if ($to !== null && $to !== '') {
+            $query->whereDate('date', '<=', $to);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Paginated ledger of every operation registered in the caisse — selling
+     * (sales) and ordering (commandes) — filtered by date range and type.
+     * Defaults span the last year when no range is supplied.
+     *
+     * @param  'all'|'sale'|'commande'  $type
+     */
+    public function transactions(?string $from = null, ?string $to = null, string $type = 'all', int $perPage = 15): LengthAwarePaginator
+    {
+        $columns = "id, ? as type, date, reference, customer_name, total_amount, status";
+        $sales = $this->dateBounded('sales', $from, $to)->selectRaw($columns, ['sale']);
+        $commandes = $this->dateBounded('commandes', $from, $to)->selectRaw($columns, ['commande']);
+
+        $union = match ($type) {
+            'sale' => $sales,
+            'commande' => $commandes,
+            default => $sales->unionAll($commandes),
+        };
+
+        return DB::query()
+            ->fromSub($union, 'operations')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->paginate($perPage);
+    }
+
+    /**
+     * Count and total (cents) per operation type over the filtered range, honouring
+     * the type filter (a narrowed type zeroes the others).
+     *
+     * @param  'all'|'sale'|'commande'  $type
+     * @return array{sale:array{count:int,total:int}, commande:array{count:int,total:int}, total:int}
+     */
+    public function transactionsTotals(?string $from = null, ?string $to = null, string $type = 'all'): array
+    {
+        $aggregate = function (string $table, string $opType) use ($from, $to, $type): array {
+            if ($type !== 'all' && $type !== $opType) {
+                return ['count' => 0, 'total' => 0];
+            }
+
+            $row = $this->dateBounded($table, $from, $to)
+                ->selectRaw('COUNT(*) as count, COALESCE(SUM(total_amount), 0) as total')
+                ->first();
+
+            return ['count' => (int) $row->count, 'total' => (int) $row->total];
+        };
+
+        $sale = $aggregate('sales', 'sale');
+        $commande = $aggregate('commandes', 'commande');
+
+        return [
+            'sale' => $sale,
+            'commande' => $commande,
+            'total' => $sale['total'] + $commande['total'],
+        ];
     }
 
     /**
