@@ -26,5 +26,14 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingDatabaseSeeder::class);
         $this->call(UnitDatabaseSeeder::class);
         $this->call(WarehouseDatabaseSeeder::class);
+
+        // Demo catalogue and address book. Categories and suppliers are
+        // seeded before products, which reference them by foreign key.
+        $this->call(CategoryDatabaseSeeder::class);
+        $this->call(SupplierDatabaseSeeder::class);
+        $this->call(ProductDatabaseSeeder::class);
+        $this->call(CustomerDatabaseSeeder::class);
+        $this->call(DriverDatabaseSeeder::class);
+        $this->call(VehicleDatabaseSeeder::class);
     }
 }
