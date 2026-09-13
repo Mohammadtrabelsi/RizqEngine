@@ -1,12 +1,9 @@
 <div>
     <div class="row">
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 mb-3">
             <a href="{{ route('expenses.create') }}" class="btn btn-primary">
                 {{ __('expense.create') }} <i class="bi bi-plus"></i>
             </a>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-            <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
         </div>
     </div>
 
@@ -17,6 +14,10 @@
         </div>
         <div class="flex-auto p-2">
             <div class="row align-items-end">
+                <div class="col-12 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('app.search') }}</label>
+                    <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
+                </div>
                 <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('expense.category') }}</label>
                     <select wire:model.live="categoryId" class="form-select">

@@ -137,12 +137,18 @@
                 <div class="party-line">{{ settings()->company_phone }}</div>
                 <div class="party-line">{{ settings()->company_email }}</div>
                 <div class="party-line">{{ settings()->company_address }}</div>
+                @if(settings()->company_tax_id)
+                    <div class="party-line">M.F. : {{ settings()->company_tax_id }}</div>
+                @endif
             </td>
             <td class="right">
                 <div class="party-label">À L'ATTENTION DE</div>
                 <div class="party-line party-name">{{ $customer->customer_name }}</div>
                 <div class="party-line">{{ $customer->customer_phone }}</div>
                 <div class="party-line">{{ $customer->address }}</div>
+                @if($customer->tax_identification_number)
+                    <div class="party-line">M.F. : {{ $customer->tax_identification_number }}</div>
+                @endif
             </td>
         </tr>
     </table>
@@ -168,19 +174,56 @@
         </tbody>
     </table>
 
+    @php
+        // Legally-required Tunisian invoice figures. RAS is deducted after the
+        // TTC; the timbre fiscal (droit de timbre) is a fixed per-invoice stamp
+        // added to the amount actually due.
+        $stampAmount = (float) (settings()->fiscal_stamp_amount ?? 0);
+        $withholdingAmount = (float) $sale->withholding_amount;
+        $netPayable = round($sale->total_amount + $stampAmount - $withholdingAmount, 3);
+    @endphp
+
     <table class="totals">
         <tr>
-            <td class="label">Sous total :</td>
+            <td class="label">Total HT :</td>
             <td class="value">{{ format_currency($sale->total_amount - $sale->tax_amount + $sale->discount_amount) }}</td>
         </tr>
+        @if($sale->discount_amount > 0)
+            <tr>
+                <td class="label">Remise :</td>
+                <td class="value">- {{ format_currency($sale->discount_amount) }}</td>
+            </tr>
+        @endif
         <tr>
             <td class="label">TVA ({{ $sale->tax_percentage }}%) :</td>
             <td class="value">{{ format_currency($sale->tax_amount) }}</td>
         </tr>
+        @if($stampAmount > 0)
+            <tr>
+                <td class="label">Timbre fiscal :</td>
+                <td class="value">{{ format_currency($stampAmount) }}</td>
+            </tr>
+        @endif
         <tr class="grand">
-            <td class="label">TOTAL :</td>
-            <td class="value">{{ format_currency($sale->total_amount) }}</td>
+            <td class="label">TOTAL TTC :</td>
+            <td class="value">{{ format_currency($sale->total_amount + $stampAmount) }}</td>
         </tr>
+        @if($withholdingAmount > 0)
+            @foreach($sale->withholdingTaxes as $line)
+                <tr>
+                    <td class="label">{{ $line->name }} ({{ rtrim(rtrim(number_format($line->rate, 3), '0'), '.') }}%) :</td>
+                    <td class="value">- {{ format_currency($line->amount) }}</td>
+                </tr>
+            @endforeach
+            <tr>
+                <td class="label">Retenue à la source :</td>
+                <td class="value">- {{ format_currency($withholdingAmount) }}</td>
+            </tr>
+            <tr class="grand">
+                <td class="label">NET À PAYER :</td>
+                <td class="value">{{ format_currency($netPayable) }}</td>
+            </tr>
+        @endif
     </table>
 
     <table class="footer">
@@ -195,6 +238,12 @@
             </td>
         </tr>
     </table>
+
+    @if(settings()->invoice_legal_mention)
+        <div style="margin-top: 22px; font-size: 11px; color: #444;">
+            {!! nl2br(e(settings()->invoice_legal_mention)) !!}
+        </div>
+    @endif
 
     <div class="thanks">MERCI DE VOTRE CONFIANCE</div>
 </div>

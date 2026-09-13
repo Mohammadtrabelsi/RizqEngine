@@ -24,6 +24,8 @@
                         <div class="mb-3">
                             @include('user.roles.partials.permissions', ['data' => $role])
                         </div>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                         <div class="btn-group">
                             <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
                             <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $role->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>

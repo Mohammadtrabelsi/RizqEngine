@@ -25,6 +25,8 @@
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('units.operator') }}</span><span>{{ $unit->operator }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('units.operation_value') }}</span><span>{{ $unit->operation_value }}</span></li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 <a href="{{ route('units.edit', $unit) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $unit->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>

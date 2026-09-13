@@ -1,80 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+@extends('layouts.auth')
 
-    <title>{{ __('password.reset') }} | {{ config('app.name') }}</title>
+@section('title', __('password.reset'))
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
-    <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
-    <!-- Application CSS (Tailwind) -->
-    @vite('resources/css/app.css')
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-</head>
-<body>
-<div class="login-grid">
+@section('form')
+    <h2 class="mb-2 font-display text-[36px] font-bold tracking-[-0.03em]">{{ __('password.reset') }}</h2>
+    <p class="mb-8 text-[15px] leading-relaxed text-body">{{ __('password.reset-message') }}</p>
 
-    <div class="login-brand login-brand-copy">
-        <a href="{{ route('welcome') }}" class="auth-brand-link d-flex align-items-center gap-2">
-            {{-- White-label client logo precedes the application logo. --}}
-            @if($clientLogo = client_logo_url())
-                <img src="{{ $clientLogo }}" alt="{{ settings()->client_name ?? 'Client logo' }}" style="height:26px;width:auto;object-fit:contain;">
-            @endif
-            <x-logo :size="26" label="RizqEngine" />
-        </a>
-
-        <div class="auth-card">
-            <div class="login-brand-lead text-white">{{ __('login.welcome') }}</div>
-            <div class="auth-subtitle">{{ __('login.description') }}</div>
+    @if (session('status'))
+        <div class="mb-6 rounded-field border border-ok/30 bg-ok-bg px-4 py-3 text-[13.5px] font-medium text-ok">
+            {{ session('status') }}
         </div>
+    @endif
 
-        <div class="auth-fineprint text-muted">© {{ date('Y') }} RizqEngine</div>
-    </div>
+    <form method="post" action="{{ url('/password/email') }}" novalidate>
+        @csrf
 
-    <div class="login-form-wrap">
-        <div class="login-form-card card">
-            <div class="flex-auto p-2">
-                <form class="login-form" method="post" action="{{ url('/password/email') }}">
-                    @csrf
+        <label for="email" class="block text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{{ __('password.email') }}</label>
+        <input id="email" type="email" name="email" value="{{ old('email') }}" autocomplete="username" autofocus
+               placeholder="you@store.com"
+               @class([
+                   'mt-2 w-full rounded-field border bg-white px-4 py-3.5 text-[15px] font-medium outline-none transition',
+                   'focus:border-accent focus:ring-4 focus:ring-accent/15',
+                   'border-danger' => $errors->has('email'),
+                   'border-hairline' => ! $errors->has('email'),
+               ])>
+        @error('email') <p class="mt-1.5 text-[12.5px] text-danger">{{ $message }}</p> @enderror
 
-                    <div class="login-form__heading">
-                        <h2 class="login-form__title">{{ __('password.reset') }}</h2>
-                        <p class="login-form__subtitle">{{ __('password.reset-message') }}</p>
-                    </div>
+        <button type="submit"
+                class="mt-7 w-full rounded-field bg-accent py-4 text-[15.5px] font-semibold text-white shadow-cta transition-colors hover:bg-accent-hover">
+            {{ __('password.send-reset-link') }}
+        </button>
+    </form>
 
-                    @if (session('status'))
-                        <div class="auth-alert-accent login-form__alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <div class="login-form__field">
-                        <label for="email">{{ __('password.email') }}</label>
-                        <input id="email" type="email" class="form-control @error('email') !border-red-500 @enderror"
-                               name="email" value="{{ old('email') }}" placeholder="you@store.com" autofocus>
-                        @error('email')
-                            <div class="block w-full mt-1 text-xs text-red-500">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <button class="btn btn-primary flex w-full" type="submit">{{ __('password.send-reset-link') }}</button>
-
-                    <div class="auth-footnote text-muted">
-                        <a href="{{ route('login') }}">{{ __('login.sign-in') }}</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Application JS -->
-@vite('resources/js/app.js')
-
-</body>
-</html>
+    <p class="mt-7 text-center text-sm text-body">
+        <a href="{{ route('login') }}" class="font-semibold text-accent hover:text-accent-hover">{{ __('login.sign-in') }}</a>
+    </p>
+@endsection

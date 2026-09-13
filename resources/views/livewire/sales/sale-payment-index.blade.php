@@ -18,6 +18,8 @@
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.amount') }}</span><span>{{ format_currency($payment->amount) }}</span></li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('sales.method') }}</span><span>{{ $payment->payment_method }}</span></li>
                         </ul>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                         <div class="btn-group">
                             @can('access_sale_payments')
                                 <a href="{{ route('sale-payments.edit', [$saleId, $payment->id]) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>

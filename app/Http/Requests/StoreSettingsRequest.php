@@ -24,6 +24,8 @@ class StoreSettingsRequest extends FormRequest
             'notification_email' => 'required|email|max:255',
             'company_address' => 'required|string|max:500',
             'company_tax_id' => 'nullable|string|max:255',
+            'fiscal_stamp_amount' => 'nullable|numeric|min:0',
+            'invoice_legal_mention' => 'nullable|string|max:1000',
             'default_currency_id' => 'required|numeric',
             'default_currency_position' => 'required|string|max:255',
             'footer_text' => 'nullable|string|max:255',

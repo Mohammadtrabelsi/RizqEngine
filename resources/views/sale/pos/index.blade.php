@@ -19,7 +19,7 @@
             <div class="col-12">
                 @include('utils.alerts')
             </div>
-            <div class="col-12 mb-4">
+            <div class="col-12 col-lg-8 mb-4">
                 <div class="card border-0 shadow-sm mb-3">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0"><i class="bi bi-search text-primary"></i> {{ __('general.search-product') }}</h5>
@@ -32,8 +32,10 @@
                 </div>
                 <livewire:pos.product-list :categories="$product_categories"/>
             </div>
-            <div class="col-12 mb-4">
-                <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+            <div class="col-12 col-lg-4 mb-4">
+                <div class="pos-checkout-sticky">
+                    <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+                </div>
             </div>
         </div>
     </div>

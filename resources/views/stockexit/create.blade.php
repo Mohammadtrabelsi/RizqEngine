@@ -19,12 +19,17 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="flex-auto p-2">
                         @include('utils.alerts')
                         <form action="{{ route('stock-exits.store') }}" method="POST">
                             @csrf
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('stockexit.create_exit') }} <i class="bi bi-check"></i>
+                                </button>
+                            </div>
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="mb-4">
@@ -122,11 +127,6 @@
                             <div class="mb-4">
                                 <label for="note">{{ __('stockexit.note') }}</label>
                                 <textarea name="note" id="note" rows="4" class="form-control">{{ old('note') }}</textarea>
-                            </div>
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('stockexit.create_exit') }} <i class="bi bi-check"></i>
-                                </button>
                             </div>
                         </form>
                     </div>

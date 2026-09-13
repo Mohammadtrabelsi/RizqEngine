@@ -2,8 +2,7 @@
 <div>
     <div class="container-fluid">
         <form wire:submit="save">
-            <div class="card">
-                <div class="flex-auto p-2">
+            <x-form-card :title="$batchId ? __('batches.update_batch') : __('batches.create_batch')" icon="bi-box-seam">
                     <div class="form-row">
                         <div class="col-lg-6">
                             <div class="mb-4">
@@ -63,14 +62,14 @@
                                 <textarea class="form-control" rows="3" wire:model="note"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-12 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">
-                                {{ $batchId ? __('batches.update_batch') : __('batches.create_batch') }} <i class="bi bi-check"></i>
-                            </button>
-                        </div>
                     </div>
-                </div>
-            </div>
+
+                    <x-slot:footer>
+                        <button type="submit" class="btn btn-primary">
+                            {{ $batchId ? __('batches.update_batch') : __('batches.create_batch') }} <i class="bi bi-check"></i>
+                        </button>
+                    </x-slot:footer>
+            </x-form-card>
         </form>
     </div>
 </div>

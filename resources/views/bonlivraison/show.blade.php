@@ -17,6 +17,7 @@
         <x-document-chain
             current="bon_livraison"
             :quotation="optional($bonLivraison->commande)->quotation ?? optional(optional($bonLivraison->commande)->bonCommande)->quotation"
+            :bon-commande="optional($bonLivraison->commande)->bonCommande"
             :commande="$bonLivraison->commande"
             :bon-livraison="$bonLivraison"
             :sale="$bonLivraison->sale" />

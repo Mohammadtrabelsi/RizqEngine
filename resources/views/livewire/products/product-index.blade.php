@@ -24,7 +24,7 @@
                 <i class="bi bi-lightning"></i> {{ __('app.actions') }}
             </h6>
             <div class="row align-items-center">
-                <div class="col-12 col-md-4 mb-3">
+                <div class="col-12 mb-3">
                     <a href="{{ route('products.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-circle"></i> {{ __('product.add_product') }}
                     </a>
@@ -33,9 +33,6 @@
                         <i class="bi bi-upload"></i> {{ __('nav.import_products') }}
                     </a>
                     @endcan
-                </div>
-                <div class="col-12 col-md-8 mb-3">
-                    <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">
                 </div>
             </div>
         </div>
@@ -66,6 +63,10 @@
         </div>
         <div class="flex-auto p-2">
             <div class="row align-items-end">
+                <div class="col-12 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('app.search') }}</label>
+                    <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }} products...">
+                </div>
                 <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
                     <select wire:model.live="categoryId" class="form-select" aria-label="Filter by category">
@@ -204,9 +205,9 @@
                                 </div>
                             @endif
                         </div>
-
-                        <!-- Action Buttons -->
-                        <div class="btn-group w-100 mt-auto" role="group">
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
+                        <div class="btn-group w-100" role="group">
                             @can('edit_products')
                                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline btn-sm" title="Edit">
                                     <i class="bi bi-pencil"></i>

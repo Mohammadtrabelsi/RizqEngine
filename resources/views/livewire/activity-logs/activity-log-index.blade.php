@@ -1,14 +1,49 @@
 <div>
     <div class="row">
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 mb-3">
             @can('delete_activity_logs')
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clearLogsModal">
                     Clear All Logs <i class="bi bi-trash"></i>
                 </button>
             @endcan
         </div>
-        <div class="col-12 col-md-6 mb-3">
-            <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
+    </div>
+
+    {{-- Filters container --}}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+            <h5 class="mb-0"><i class="bi bi-funnel text-primary"></i> {{ __('app.filters') }}</h5>
+        </div>
+        <div class="flex-auto p-2">
+            <div class="row align-items-end">
+                <div class="col-12 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('app.search') }}</label>
+                    <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('activitylog.event') }}</label>
+                    <select wire:model.live="event" class="form-select">
+                        <option value="">{{ __('app.all') }}</option>
+                        <option value="created">{{ __('activitylog.event_created') }}</option>
+                        <option value="updated">{{ __('activitylog.event_updated') }}</option>
+                        <option value="deleted">{{ __('activitylog.event_deleted') }}</option>
+                        <option value="restored">{{ __('activitylog.event_restored') }}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <button type="button" wire:click="resetFilters" class="btn btn-secondary w-100">
+                        <i class="bi bi-x-circle"></i> {{ __('app.reset') }}
+                    </button>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('reports.start_date') }}</label>
+                    <input type="date" wire:model.live="dateFrom" class="form-control">
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('reports.end_date') }}</label>
+                    <input type="date" wire:model.live="dateTo" class="form-control">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -37,6 +72,8 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between px-0"><span>User</span><span>{{ $activity->causer->name ?? 'System' }}</span></li>
                         </ul>
+                    </div>
+                    <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                         <div class="btn-group">
                             <a href="{{ route('activity-logs.show', $activity->id) }}" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
                             @can('delete_activity_logs')

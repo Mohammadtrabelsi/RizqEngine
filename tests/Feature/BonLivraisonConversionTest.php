@@ -68,6 +68,9 @@ class BonLivraisonConversionTest extends TestCase
         $this->assertStringStartsWith('BL-', $bonLivraison->reference);
         $this->assertSame(BonLivraison::STATUS_PENDING, $bonLivraison->status);
 
+        // A single full conversion ships the whole order.
+        $this->assertSame(Commande::SHIPPING_SHIPPED, $commande->fresh()->shipping_status);
+
         // Customer preserved.
         $this->assertSame($customer->id, $bonLivraison->customer_id);
         $this->assertSame($customer->customer_name, $bonLivraison->customer_name);
@@ -119,6 +122,98 @@ class BonLivraisonConversionTest extends TestCase
         app(BonLivraisonService::class)->markDelivered($bonLivraison);
 
         $this->assertSame(BonLivraison::STATUS_DELIVERED, $bonLivraison->fresh()->status);
+    }
+
+    /** @test */
+    public function it_ships_only_the_requested_quantities_and_tracks_the_remainder(): void
+    {
+        $customer = Customer::factory()->create();
+        $product = Product::factory()->create();
+        $commande = $this->makeConfirmedCommande($customer, $product);
+        $detail = $commande->commandeDetails->first();
+
+        // Ordered quantity is 4 — ship 1 now.
+        $bl = app(BonLivraisonService::class)->createFromCommande($commande, [$detail->id => 1]);
+
+        $line = $bl->bonLivraisonDetails->first();
+        $this->assertSame(1, $line->quantity);
+        $this->assertSame($detail->id, $line->commande_detail_id);
+
+        $commande->refresh();
+        $this->assertSame(1, $commande->deliveredQuantities()[$detail->id]);
+        $this->assertSame(3, $commande->remainingQuantities()[$detail->id]);
+        $this->assertTrue($commande->isPartiallyDelivered());
+        $this->assertFalse($commande->isFullyDelivered());
+        $this->assertSame(Commande::SHIPPING_PARTIALLY_SHIPPED, $commande->shipping_status);
+
+        // Line amounts are prorated (1 of 4 of sub_total 220_00 = 55_00).
+        $this->assertSame(55 * 100, $line->getRawOriginal('sub_total'));
+    }
+
+    /** @test */
+    public function successive_partial_shipments_reconcile_exactly_with_the_commande(): void
+    {
+        $customer = Customer::factory()->create();
+        $product = Product::factory()->create();
+        $commande = $this->makeConfirmedCommande($customer, $product);
+        $detail = $commande->commandeDetails->first();
+
+        $service = app(BonLivraisonService::class);
+        $service->createFromCommande($commande, [$detail->id => 1]);
+        $service->createFromCommande($commande->fresh(), [$detail->id => 3]);
+
+        $commande->refresh();
+        $this->assertTrue($commande->isFullyDelivered());
+        $this->assertSame(Commande::SHIPPING_SHIPPED, $commande->shipping_status);
+        $this->assertSame(2, BonLivraison::where('commande_id', $commande->id)->count());
+
+        // Quantities and every monetary column reconcile to the ordered totals.
+        $this->assertSame(4, (int) BonLivraison::where('commande_id', $commande->id)
+            ->join('bon_livraison_details', 'bon_livraisons.id', '=', 'bon_livraison_details.bon_livraison_id')
+            ->sum('bon_livraison_details.quantity'));
+
+        foreach (['tax_amount', 'discount_amount', 'shipping_amount', 'total_amount'] as $column) {
+            $this->assertSame(
+                (int) $commande->getRawOriginal($column),
+                (int) BonLivraison::where('commande_id', $commande->id)->sum($column),
+                "header {$column} reconciles"
+            );
+        }
+    }
+
+    /** @test */
+    public function it_rejects_shipping_more_than_the_remaining_quantity(): void
+    {
+        $customer = Customer::factory()->create();
+        $product = Product::factory()->create();
+        $commande = $this->makeConfirmedCommande($customer, $product);
+        $detail = $commande->commandeDetails->first();
+
+        $this->expectException(ConversionException::class);
+
+        app(BonLivraisonService::class)->createFromCommande($commande, [$detail->id => 5]);
+    }
+
+    /** @test */
+    public function the_convert_route_accepts_partial_quantities(): void
+    {
+        $customer = Customer::factory()->create();
+        $product = Product::factory()->create();
+        $commande = $this->makeConfirmedCommande($customer, $product);
+        $detail = $commande->commandeDetails->first();
+
+        $user = User::factory()->create();
+        $user->givePermissionTo('convert_commandes_to_bon_livraison');
+
+        $this->actingAs($user)
+            ->post(route('commandes.convert-bon-livraison', $commande), [
+                'quantities' => [$detail->id => 2],
+            ])
+            ->assertRedirect();
+
+        $bl = BonLivraison::where('commande_id', $commande->id)->firstOrFail();
+        $this->assertSame(2, $bl->bonLivraisonDetails->first()->quantity);
+        $this->assertSame(2, $commande->fresh()->remainingQuantities()[$detail->id]);
     }
 
     /** @test */

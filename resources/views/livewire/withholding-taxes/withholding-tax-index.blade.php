@@ -35,6 +35,8 @@
                                     @if($withholding->applicable_to_sales) {{ __('withholding.sales') }} @endif
                                 </span></li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 @can('edit_withholding_taxes')
                                 <a href="{{ route('withholding-taxes.edit', $withholding) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>

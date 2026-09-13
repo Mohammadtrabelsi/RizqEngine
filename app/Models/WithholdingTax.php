@@ -93,11 +93,20 @@ class WithholdingTax extends Model
     }
 
     /**
-     * Whether any document has already applied this withholding tax, in which
-     * case it must be deactivated rather than deleted to preserve history.
+     * @return HasMany<SaleWithholdingTax, $this>
+     */
+    public function saleLines()
+    {
+        return $this->hasMany(SaleWithholdingTax::class);
+    }
+
+    /**
+     * Whether any document (purchase or sale) has already applied this
+     * withholding tax, in which case it must be deactivated rather than deleted
+     * to preserve history.
      */
     public function isUsed(): bool
     {
-        return $this->purchaseLines()->exists();
+        return $this->purchaseLines()->exists() || $this->saleLines()->exists();
     }
 }

@@ -14,8 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * The name/code/rate/base are copied from the {@see WithholdingTax} so a later
  * edit of the master data never rewrites this historical line. Monetary
- * amounts follow the app-wide convention of being persisted in centimes
- * (× 100) and exposed as decimals through accessors.
+ * amounts are persisted in millimes (× 1000) to preserve the Tunisian dinar's
+ * three-decimal precision on RAS figures, and exposed as decimals through
+ * accessors.
  *
  * @property int $id
  * @property int $purchase_id
@@ -59,11 +60,11 @@ class PurchaseWithholdingTax extends Model
 
     public function getTaxableAmountAttribute($value): float
     {
-        return $value / 100;
+        return $value / 1000;
     }
 
     public function getAmountAttribute($value): float
     {
-        return $value / 100;
+        return $value / 1000;
     }
 }

@@ -37,6 +37,7 @@ return [
     'payments-report' => 'Rapport des paiements',
     'print-barcode' => 'Imprimer les codes-barres',
     'product-movement-report' => 'Rapport de mouvement des produits',
+    'vat-return-report' => 'Déclaration de TVA',
     'products' => 'Produits',
     'periodic-summary-report' => 'Bilan périodique',
     'profit-loss-report' => 'Rapport de pertes et profits',
@@ -67,4 +68,6 @@ return [
     'drivers' => 'Chauffeurs',
     'vehicles' => 'Véhicules',
     'user-management' => 'Gestion des utilisateurs',
+    'expense-by-vehicle-report' => 'Dépenses par véhicule',
+    'expense-by-driver-report' => 'Dépenses par chauffeur',
 ];

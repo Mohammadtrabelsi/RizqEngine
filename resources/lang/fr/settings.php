@@ -32,4 +32,6 @@ return [
     'purchase_tax_mode_hint' => 'Mode par défaut pour les documents d\'achat (achats, bons de commande fournisseur).',
     'sale_tax_mode' => 'Mode de taxe à la vente',
     'sale_tax_mode_hint' => 'Mode par défaut pour les documents de vente (devis, commandes, factures).',
+    'fiscal_stamp_amount' => 'Timbre fiscal',
+    'invoice_legal_mention' => 'Mentions légales de la facture',
 ];

@@ -17,4 +17,6 @@ return [
     'no_expenses_found' => 'No expenses found',
     'reference' => 'Reference',
     'update' => 'Update',
+    'driver' => 'Driver',
+    'vehicle' => 'Vehicle',
 ];

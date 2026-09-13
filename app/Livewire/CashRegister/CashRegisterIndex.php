@@ -20,6 +20,41 @@ class CashRegisterIndex extends Component
 
     public string $note = '';
 
+    public string $start_date = '';
+
+    public string $end_date = '';
+
+    public string $operation_type = 'all';
+
+    public function mount(): void
+    {
+        $this->start_date = now()->subYear()->toDateString();
+        $this->end_date = now()->toDateString();
+    }
+
+    public function updatedStartDate(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedEndDate(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedOperationType(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->start_date = now()->subYear()->toDateString();
+        $this->end_date = now()->toDateString();
+        $this->operation_type = 'all';
+        $this->resetPage();
+    }
+
     public function open(CashRegisterService $register): void
     {
         abort_if(Gate::denies('open_cash_register'), 403);
@@ -64,11 +99,17 @@ class CashRegisterIndex extends Component
 
         $current = $register->currentFor(auth()->user());
 
+        $type = in_array($this->operation_type, CashRegisterService::OPERATION_TYPES, true)
+            ? $this->operation_type
+            : 'all';
+
         return view('livewire.cash-register.cash-register-index', [
             'current' => $current,
             'expected' => $current ? $register->expectedCash($current) : 0,
             'cashSales' => $current ? $register->cashSales($current) : 0,
-            'sessions' => CashRegisterSession::with('user')->latest('opened_at')->paginate(10),
+            'sessions' => CashRegisterSession::with('user')->latest('opened_at')->paginate(10, ['*'], 'sessionsPage'),
+            'transactions' => $register->transactions($this->start_date, $this->end_date, $type, 15),
+            'totals' => $register->transactionsTotals($this->start_date, $this->end_date, $type),
         ])->layout('components.layouts.admin', ['title' => __('cash_register.cash_register')]);
     }
 }

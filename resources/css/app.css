@@ -67,8 +67,8 @@
 
     --radius-card: 16px;
     --radius-panel: 22px;
-    --radius-field: 12px;
-    --radius-ctl: 10px;
+    --radius-field: 2px;
+    --radius-ctl: 3px;
 
     --shadow-mock: 0 30px 70px -30px rgba(48, 40, 90, 0.35);
     --shadow-cta: 0 10px 26px -8px rgba(79, 57, 224, 0.6);
@@ -76,6 +76,64 @@
     --tracking-display: -0.035em;
     --tracking-num: -0.03em;
     --tracking-micro: 0.12em;
+}
+
+/* -------------------------------------------------------------------------
+ * Palette harmonisation — make legacy utility classes speak the redesign.
+ *
+ * Most content screens (the ~86 CRUD / list / form Livewire views) were
+ * authored with Tailwind's stock `slate` neutral ramp and `indigo` brand
+ * ramp, plus `rounded-xl` corners. The dashboard / landing / sign-in were
+ * rebuilt on the redesign tokens (ink / body / hairline / canvas / accent
+ * + the 16px card radius) shown in the reference design.
+ *
+ * Rather than rewrite hundreds of Blade files, we override the DEFAULT
+ * Tailwind ramps so every `bg-slate-50`, `border-slate-200`, `text-slate-900`,
+ * `text-indigo-700`, `rounded-xl` … already in the markup renders in the
+ * redesign palette. One source of truth; every screen inherits the look in
+ * the reference image. Pages built directly on the redesign tokens are
+ * unaffected (they never reference slate / indigo).
+ * ---------------------------------------------------------------------- */
+@theme {
+    /* Neutral ramp → warm indigo-ink surfaces, borders and text. */
+    --color-slate-50:  #f7f7fb;  /* canvas — card headers / footers / zebra */
+    --color-slate-100: #f2f2f8;  /* canvas-2 — hover / muted fills */
+    --color-slate-200: #e7e7ee;  /* hairline — default borders */
+    --color-slate-300: #dcdce6;  /* stronger hairline */
+    --color-slate-400: #b6b6c6;  /* disabled / placeholder ink */
+    --color-slate-500: #82829b;  /* muted text */
+    --color-slate-600: #6b6b85;  /* body text */
+    --color-slate-700: #4a4a63;  /* ink-3 */
+    --color-slate-800: #35354d;  /* ink-2 */
+    --color-slate-900: #26263a;  /* ink — headings / primary text */
+
+    /* Gray ramp aliased to the same neutral scale for stray gray-* usage. */
+    --color-gray-50:  #f7f7fb;
+    --color-gray-100: #f2f2f8;
+    --color-gray-200: #e7e7ee;
+    --color-gray-300: #dcdce6;
+    --color-gray-400: #b6b6c6;
+    --color-gray-500: #82829b;
+    --color-gray-600: #6b6b85;
+    --color-gray-700: #4a4a63;
+    --color-gray-800: #35354d;
+    --color-gray-900: #26263a;
+
+    /* Brand ramp → single-indigo accent from the design handoff. */
+    --color-indigo-50:  #f4f2fe;
+    --color-indigo-100: #eeecfd;  /* accent-light */
+    --color-indigo-200: #dedaf9;  /* accent-soft */
+    --color-indigo-300: #c9c2f5;
+    --color-indigo-400: #9d8def;
+    --color-indigo-500: #6a56e6;
+    --color-indigo-600: #4f39e0;  /* accent */
+    --color-indigo-700: #4229c9;  /* accent-hover */
+    --color-indigo-800: #3a24ad;
+    --color-indigo-900: #2f1d8a;
+
+    /* Corner radii align with the 16px card in the reference design. */
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
 }
 
 :root {
@@ -175,9 +233,9 @@
     --space-7: 1.75rem;
     --space-8: 2rem;
 
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 16px;
+    --radius-sm: 2px;
+    --radius-md: 3px;
+    --radius-lg: 5px;
 
     --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
     --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
@@ -1197,7 +1255,7 @@ h4, .h4 { font-size: 19px; }
     }
     .app-topnav .app-topnav-collapse.show .app-topnav-link {
         justify-content: flex-start;
-        border-radius: 10px;
+        border-radius: 5px;
         border-color: transparent;
         padding: 0.6rem 0.7rem;
         min-height: 44px;
@@ -1962,7 +2020,7 @@ hr { display: none; }
     color: #ffffff;
     width: 34px;
     height: 34px;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -2000,7 +2058,7 @@ hr { display: none; }
     align-items: center;
     gap: 0.6rem;
     padding: 0.4rem 0.6rem;
-    border-radius: 8px;
+    border-radius: 2px;
     font-size: 0.88rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
@@ -2016,7 +2074,7 @@ hr { display: none; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 7px;
+    border-radius: 3px;
     flex: 0 0 auto;
     transition: background 0.15s ease, color 0.15s ease;
 }
@@ -2114,7 +2172,7 @@ hr { display: none; }
 .app-sidebar-sublink {
     display: block;
     padding: 0.4rem 0.6rem;
-    border-radius: 7px;
+    border-radius: 3px;
     font-size: 0.83rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.65);
@@ -2140,7 +2198,7 @@ hr { display: none; }
 .app-sidebar-shift {
     margin: 0 0.75rem 0.9rem;
     padding: 0.85rem 0.9rem;
-    border-radius: 14px;
+    border-radius: 8px;
     background: var(--color-ink-2);
     flex: 0 0 auto;
 }
@@ -2356,7 +2414,7 @@ hr { display: none; }
 .language-switcher__toggle {
     display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
     background: transparent; border: 1px solid rgba(128,128,128,.35);
-    border-radius: 6px; padding: 6px 10px; color: inherit; line-height: 1; font: inherit;
+    border-radius: 3px; padding: 6px 10px; color: inherit; line-height: 1; font: inherit;
 }
 .language-switcher__toggle:hover { border-color: rgba(128,128,128,.6); }
 .language-switcher__globe { width: 16px; height: 16px; flex: 0 0 auto; }
@@ -2366,7 +2424,7 @@ hr { display: none; }
 .language-switcher__menu {
     position: absolute; right: 0; top: calc(100% + 6px); min-width: 160px; margin: 0;
     padding: 6px 0; list-style: none; background: #fff; color: #23282c;
-    border: 1px solid rgba(0,0,0,.12); border-radius: 8px;
+    border: 1px solid rgba(0,0,0,.12); border-radius: 3px;
     box-shadow: 0 6px 24px rgba(0,0,0,.18); z-index: 1050; display: none;
 }
 .language-switcher.is-open .language-switcher__menu { display: block; }
@@ -2449,6 +2507,10 @@ hr { display: none; }
 .pos-card { transition: all 0.3s ease; }
 
 .pos-stock-badge { left: 10px; top: 10px; }
+
+@media (min-width: 992px) {
+    .pos-checkout-sticky { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+}
 
 /* Content lists → roomier, in step with the design system (tokens above).
    Scoped to plain <ul>s: component lists that carry their own look —
@@ -2589,7 +2651,7 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
 }
 .app-sidebar-link {
     color: rgba(255, 255, 255, 0.72);
-    border-radius: 11px;
+    border-radius: 5px;
     padding: 0.5rem 0.65rem;
 }
 .app-sidebar-link i { color: rgba(255, 255, 255, 0.5); }
@@ -2604,7 +2666,7 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
 .app-sidebar-item.is-active > .app-sidebar-link {
     background: var(--aurora-grad);
     box-shadow: var(--aurora-glow);
-    border-radius: 11px;
+    border-radius: 5px;
 }
 .app-sidebar-item.is-active > .app-sidebar-link::before {
     content: "";
@@ -2623,7 +2685,7 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
     border: 1px solid rgba(124, 92, 255, 0.28);
 }
 .app-sidebar-sublist { border-inline-start-color: rgba(124, 92, 255, 0.28); }
-.app-sidebar-sublink { color: rgba(255, 255, 255, 0.58); border-radius: 9px; }
+.app-sidebar-sublink { color: rgba(255, 255, 255, 0.58); border-radius: 3px; }
 .app-sidebar-sublink:hover { background: rgba(255, 255, 255, 0.07); transform: none; color: #fff; }
 [dir="rtl"] .app-sidebar-sublink:hover { transform: none; }
 .app-sidebar-sublink.is-active {
@@ -2634,7 +2696,7 @@ ul:not(.app-topnav-list):not(.app-subnav-list):not(.dropdown-menu):not(.paginati
 .app-sidebar-shift {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--aurora-ring);
-    border-radius: 16px;
+    border-radius: 8px;
     position: relative;
     overflow: hidden;
 }
@@ -2660,7 +2722,7 @@ body.app-with-sidebar > div > header {
 body.app-with-sidebar > div > header a.bg-accent {
     background: var(--aurora-grad);
     box-shadow: var(--aurora-glow);
-    border-radius: 12px;
+    border-radius: 2px;
 }
 body.app-with-sidebar > div > header a.bg-accent:hover { filter: brightness(1.05); }
 /* Give the user avatar chip the gradient identity. */
@@ -2673,7 +2735,7 @@ body.app-with-sidebar > div > header .bg-ink {
  * DASHBOARD — elevated cards, gradient badges & bars
  * ---------------------------------------------------------------------- */
 .card {
-    border-radius: 18px;
+    border-radius: 3px;
     box-shadow: var(--aurora-card-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -2803,7 +2865,7 @@ body.app-with-sidebar > div > header .bg-ink {
     background: var(--aurora-grad) !important;
     border: 0 !important;
     box-shadow: var(--aurora-glow) !important;
-    border-radius: 12px;
+    border-radius: 2px;
     font-weight: 600;
     letter-spacing: 0.01em;
     transition: filter 0.2s ease, transform 0.15s ease;
@@ -2869,7 +2931,7 @@ body.app-with-sidebar > div > header .bg-ink {
     align-items: center;
     gap: 0.5rem;
     padding: 0.7rem 1.35rem;
-    border-radius: 12px;
+    border-radius: 2px;
     font-weight: 600;
     font-size: 0.92rem;
     color: #2c2953;

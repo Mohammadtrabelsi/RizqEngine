@@ -17,6 +17,15 @@ class ActivityLogIndex extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    #[Url(as: 'event')]
+    public string $event = '';
+
+    #[Url(as: 'from')]
+    public string $dateFrom = '';
+
+    #[Url(as: 'to')]
+    public string $dateTo = '';
+
     public function mount(): void
     {
         abort_if(Gate::denies('access_activity_logs'), 403);
@@ -24,6 +33,27 @@ class ActivityLogIndex extends Component
 
     public function updatingSearch(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatingEvent(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateFrom(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateTo(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset('search', 'event', 'dateFrom', 'dateTo');
         $this->resetPage();
     }
 
@@ -63,7 +93,7 @@ class ActivityLogIndex extends Component
     public function render(ActivityLogService $activities)
     {
         return view('livewire.activity-logs.activity-log-index', [
-            'activities' => $activities->paginate($this->search),
+            'activities' => $activities->paginate($this->search, event: $this->event, dateFrom: $this->dateFrom, dateTo: $this->dateTo),
         ]);
     }
 }

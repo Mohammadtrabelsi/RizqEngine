@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Driver;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
+use App\Models\Vehicle;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -19,7 +21,7 @@ class ExpenseService
     public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return Expense::query()
-            ->with('category')
+            ->with(['category', 'driver', 'vehicle'])
             ->when($search, function ($query) use ($search) {
                 $query->where('reference', 'like', '%'.$search.'%');
             })
@@ -38,6 +40,26 @@ class ExpenseService
     public function categories(): Collection
     {
         return ExpenseCategory::all();
+    }
+
+    /**
+     * All drivers, for populating the form select.
+     *
+     * @return Collection<int, Driver>
+     */
+    public function drivers(): Collection
+    {
+        return Driver::orderBy('name')->get();
+    }
+
+    /**
+     * All vehicles, for populating the form select.
+     *
+     * @return Collection<int, Vehicle>
+     */
+    public function vehicles(): Collection
+    {
+        return Vehicle::orderBy('registration')->get();
     }
 
     public function create(array $data): Expense

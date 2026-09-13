@@ -13,7 +13,7 @@
 @section('content')
     <div class="container-fluid">
         @if($sale->bonLivraison)
-            <x-document-chain current="sale" :quotation="optional(optional($sale->bonLivraison)->commande)->quotation ?? optional(optional(optional($sale->bonLivraison)->commande)->bonCommande)->quotation" :commande="optional($sale->bonLivraison)->commande" :bon-livraison="$sale->bonLivraison" :sale="$sale" />
+            <x-document-chain current="sale" :quotation="optional(optional($sale->bonLivraison)->commande)->quotation ?? optional(optional(optional($sale->bonLivraison)->commande)->bonCommande)->quotation" :bon-commande="optional(optional($sale->bonLivraison)->commande)->bonCommande" :commande="optional($sale->bonLivraison)->commande" :bon-livraison="$sale->bonLivraison" :sale="$sale" />
         @elseif($sale->commande)
             <x-document-chain current="sale" :quotation="optional(optional($sale->commande->bonCommande))->quotation ?? optional($sale->commande)->quotation" :bon-commande="optional($sale->commande)->bonCommande" :commande="$sale->commande" :sale="$sale" />
         @endif

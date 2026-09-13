@@ -32,4 +32,6 @@ return [
     'purchase_tax_mode_hint' => 'Default mode for purchase-side documents (purchases, supplier orders).',
     'sale_tax_mode' => 'Sale tax mode',
     'sale_tax_mode_hint' => 'Default mode for sale-side documents (quotes, orders, invoices).',
+    'fiscal_stamp_amount' => 'Fiscal stamp (timbre fiscal)',
+    'invoice_legal_mention' => 'Invoice legal mentions',
 ];

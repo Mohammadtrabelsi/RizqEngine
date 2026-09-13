@@ -8,19 +8,33 @@ use Milon\Barcode\Facades\DNS1DFacade;
 
 class ProductTable extends Component
 {
-    public $product;
+    /**
+     * Products queued for barcode printing.
+     *
+     * Each entry is keyed by the product id and holds:
+     *  - product:  the Product model
+     *  - quantity: how many labels to print for that product
+     */
+    public $items = [];
 
-    public $quantity;
+    /** Whether the product name is printed on each label. */
+    public bool $showName = true;
 
-    public $barcodes;
+    /** Whether the product price is printed on each label. */
+    public bool $showPrice = true;
+
+    /** Whether the product code is printed on each label. */
+    public bool $showCode = false;
+
+    /** Generated barcode labels ready to preview / export. */
+    public $labels = [];
 
     protected $listeners = ['productSelected'];
 
     public function mount()
     {
-        $this->product = '';
-        $this->quantity = 0;
-        $this->barcodes = [];
+        $this->items = [];
+        $this->labels = [];
     }
 
     public function render()
@@ -28,48 +42,119 @@ class ProductTable extends Component
         return view('livewire.barcode.product-table');
     }
 
+    /**
+     * Add a product picked from the search box to the queue.
+     */
     public function productSelected(Product $product)
     {
-        $this->product = $product;
-        $this->quantity = 1;
-        $this->barcodes = [];
+        // Avoid duplicates, just bump the quantity instead.
+        if (isset($this->items[$product->id])) {
+            $this->items[$product->id]['quantity']++;
+
+            return;
+        }
+
+        $this->items[$product->id] = [
+            'product' => $product,
+            'quantity' => 1,
+        ];
+
+        $this->labels = [];
     }
 
-    public function generateBarcodes(Product $product, $quantity)
+    /**
+     * Remove a product from the queue.
+     */
+    public function removeItem($productId)
     {
-        if ($quantity > 100) {
+        unset($this->items[$productId]);
+        $this->labels = [];
+    }
+
+    public function clearItems()
+    {
+        $this->items = [];
+        $this->labels = [];
+    }
+
+    /**
+     * Generate the barcode labels for every queued product.
+     */
+    public function generateBarcodes()
+    {
+        if (empty($this->items)) {
+            session()->flash('error', trans('product.no-products-found'));
+
+            return;
+        }
+
+        $total = collect($this->items)->sum('quantity');
+
+        if ($total > 100) {
             session()->flash('error', trans('product.maximum-barcode-limit'));
 
             return;
         }
 
-        if (! is_numeric($product->product_code)) {
-            session()->flash('error', trans('product.invalid-product-code'));
+        $this->labels = [];
 
-            return;
-        }
+        foreach ($this->items as $item) {
+            $product = $item['product'];
+            $quantity = max(1, (int) $item['quantity']);
 
-        $this->barcodes = [];
+            if (! is_numeric($product->product_code)) {
+                session()->flash('error', trans('product.invalid-product-code').': '.$product->product_name);
 
-        for ($i = 1; $i <= $quantity; $i++) {
-            $barcode = DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 60, 'black', false);
-            array_push($this->barcodes, $barcode);
+                return;
+            }
+
+            $svg = DNS1DFacade::getBarCodeSVG(
+                $product->product_code,
+                $product->product_barcode_symbology,
+                2,
+                60,
+                'black',
+                false
+            );
+
+            for ($i = 1; $i <= $quantity; $i++) {
+                $this->labels[] = [
+                    'svg' => $svg,
+                    'name' => $product->product_name,
+                    'code' => $product->product_code,
+                    'price' => $product->product_price,
+                ];
+            }
         }
     }
 
     public function getPdf()
     {
+        if (empty($this->labels)) {
+            session()->flash('error', trans('product.no-products-found'));
+
+            return;
+        }
+
         $pdf = \PDF::loadView('product.barcode.print', [
-            'barcodes' => $this->barcodes,
-            'price' => $this->product->product_price,
-            'name' => $this->product->product_name,
+            'labels' => $this->labels,
+            'showName' => $this->showName,
+            'showPrice' => $this->showPrice,
+            'showCode' => $this->showCode,
         ]);
 
-        return $pdf->stream('barcodes-'.$this->product->product_code.'.pdf');
+        return $pdf->stream('barcodes.pdf');
     }
 
-    public function updatedQuantity()
+    /**
+     * Reset the preview whenever a configuration option changes so the
+     * user regenerates with the new settings.
+     */
+    public function updated($property)
     {
-        $this->barcodes = [];
+        if (in_array($property, ['showName', 'showPrice', 'showCode'], true)
+            || str_starts_with($property, 'items.')) {
+            $this->labels = [];
+        }
     }
 }

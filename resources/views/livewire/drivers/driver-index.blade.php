@@ -30,6 +30,8 @@
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('drivers.phone') }}</span><span>{{ $driver->phone ?: '—' }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('drivers.license_number') }}</span><span>{{ $driver->license_number ?: '—' }}</span></li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 @can('edit_drivers')
                                     <a href="{{ route('drivers.edit', $driver) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>

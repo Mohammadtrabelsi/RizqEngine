@@ -1,10 +1,4 @@
 <div>
-    <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-            <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
-        </div>
-    </div>
-
     {{-- Filters container --}}
     <div class="card border-0 shadow-sm mb-4">
         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
@@ -12,6 +6,10 @@
         </div>
         <div class="flex-auto p-2">
             <div class="row align-items-end">
+                <div class="col-12 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('app.search') }}</label>
+                    <input type="text" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('app.search') }}">
+                </div>
                 <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('bonlivraison.status_label') }}</label>
                     <select wire:model.live="status" class="form-select">

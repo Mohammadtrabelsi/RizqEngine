@@ -3,16 +3,8 @@
 <div class="container-fluid">
     <form wire:submit="save">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="mb-4">
-                <button type="submit" class="btn btn-primary">
-                    {{ $customerId ? __('customer.update') : __('customer.create') }} <i class="bi bi-check"></i>
-                </button>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="flex-auto p-2">
+        <div class="col-12">
+            <x-form-card :title="$customerId ? __('customer.update') : __('customer.create')" icon="bi-person">
                     <div class="form-row">
                         <div class="col-lg-6">
                             <div class="mb-4">
@@ -149,8 +141,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+
+                <x-slot:footer>
+                    <button type="submit" class="btn btn-primary">
+                        {{ $customerId ? __('customer.update') : __('customer.create') }} <i class="bi bi-check"></i>
+                    </button>
+                </x-slot:footer>
+            </x-form-card>
         </div>
     </div>
     </form>

@@ -11,6 +11,11 @@
                 <i class="bi bi-plus-circle me-1"></i> {{ __('customer.new_sale') }}
             </a>
         @endcan
+        @can('edit_customers')
+            <a href="{{ route('customers.prices', $customer->id) }}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-tags me-1"></i> {{ __('customer.price_list') }}
+            </a>
+        @endcan
         @can('update_customers')
             <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-secondary">
                 <i class="bi bi-pencil me-1"></i> {{ __('customer.edit') }}

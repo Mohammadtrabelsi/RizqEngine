@@ -46,6 +46,8 @@ class SettingController extends Controller
             'notification_email' => $request->notification_email,
             'company_address' => $request->company_address,
             'company_tax_id' => $request->company_tax_id,
+            'fiscal_stamp_amount' => $request->fiscal_stamp_amount,
+            'invoice_legal_mention' => $request->invoice_legal_mention,
             'default_currency_id' => $request->default_currency_id,
             'default_currency_position' => $request->default_currency_position,
         ];

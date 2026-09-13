@@ -24,6 +24,8 @@
                         <div class="flex-auto p-2">
                             <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-info mb-2">{{ $category->expenses_count }} expenses</span>
                             <p class="text-muted">{{ $category->category_description }}</p>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 <a href="{{ route('expense-categories.edit', $category->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
                                 <button type="button" class="btn btn-danger btn-sm" wire:click="delete({{ $category->id }})" wire:confirm="{{ __('app.are_you_sure') }}"><i class="bi bi-trash"></i></button>

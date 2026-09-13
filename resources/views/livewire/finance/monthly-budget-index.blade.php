@@ -61,6 +61,8 @@
                                 <li class="list-group-item d-flex justify-content-between px-0"><span>{{ __('finance.total_outings') }}</span><span>{{ number_format($budget->totalOutings(), 2) }}</span></li>
                                 <li class="list-group-item d-flex justify-content-between px-0 fw-semibold"><span>{{ __('finance.remaining_balance') }}</span><span class="{{ $remaining < 0 ? 'text-danger' : 'text-success' }}">{{ number_format($remaining, 2) }}</span></li>
                             </ul>
+                        </div>
+                        <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 text-center">
                             <div class="btn-group">
                                 <a href="{{ route('monthly-budgets.show', $budget) }}" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
                                 <a href="{{ route('monthly-budgets.edit', $budget) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>

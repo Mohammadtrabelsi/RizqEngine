@@ -123,22 +123,7 @@
             </li>
             @endcanany
 
-            @can('access_quotations')
-            <li class="app-sidebar-item {{ $inQuotations ? 'is-active' : '' }}">
-                <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inQuotations ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inQuotations ? 'true' : 'false' }}">
-                    <span class="app-sidebar-link-group"><i class="bi bi-file-earmark-text"></i> <span>{{ __('nav.quotes') }}</span></span>
-                    <i class="bi bi-chevron-down app-sidebar-caret"></i>
-                </button>
-                <ul class="app-sidebar-sublist {{ $inQuotations ? 'is-open' : '' }}">
-                    <li><a class="app-sidebar-sublink {{ request()->routeIs('quotations.index') ? 'is-active' : '' }}" href="{{ route('quotations.index') }}">{{ __('menu.all-quotations') }}</a></li>
-                    @can('create_adjustments')
-                    <li><a class="app-sidebar-sublink {{ request()->routeIs('quotations.create') ? 'is-active' : '' }}" href="{{ route('quotations.create') }}">{{ __('menu.create-quotation') }}</a></li>
-                    @endcan
-                </ul>
-            </li>
-            @endcan
-
-            @canany(['access_bon_commandes', 'access_commandes', 'access_bon_livraisons'])
+            @canany(['access_bon_commandes', 'access_quotations', 'access_commandes', 'access_bon_livraisons'])
             <li class="app-sidebar-item {{ $inOrders ? 'is-active' : '' }}">
                 <button type="button" class="app-sidebar-link app-sidebar-toggle {{ $inOrders ? 'is-open' : '' }}" data-toggle="submenu" aria-expanded="{{ $inOrders ? 'true' : 'false' }}">
                     <span class="app-sidebar-link-group"><i class="bi bi-clipboard-check"></i> <span>{{ __('nav.orders') }}</span></span>
@@ -147,6 +132,12 @@
                 <ul class="app-sidebar-sublist {{ $inOrders ? 'is-open' : '' }}">
                     @can('access_bon_commandes')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('bon-commandes.*') ? 'is-active' : '' }}" href="{{ route('bon-commandes.index') }}">{{ __('menu.all-bon-commandes') }}</a></li>
+                    @endcan
+                    @can('access_quotations')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('quotations.index') ? 'is-active' : '' }}" href="{{ route('quotations.index') }}">{{ __('menu.all-quotations') }}</a></li>
+                    @can('create_adjustments')
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('quotations.create') ? 'is-active' : '' }}" href="{{ route('quotations.create') }}">{{ __('menu.create-quotation') }}</a></li>
+                    @endcan
                     @endcan
                     @can('access_commandes')
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('commandes.*') ? 'is-active' : '' }}" href="{{ route('commandes.index') }}">{{ __('menu.all-commandes') }}</a></li>
@@ -315,6 +306,9 @@
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('high-stock-report.index') ? 'is-active' : '' }}" href="{{ route('high-stock-report.index') }}">{{ __('menu.high-stock-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('stock-movement-report.index') ? 'is-active' : '' }}" href="{{ route('stock-movement-report.index') }}">{{ __('menu.stock-movement-report') }}</a></li>
                     <li><a class="app-sidebar-sublink {{ request()->routeIs('product-movement-report.index') ? 'is-active' : '' }}" href="{{ route('product-movement-report.index') }}">{{ __('menu.product-movement-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('vat-return-report.index') ? 'is-active' : '' }}" href="{{ route('vat-return-report.index') }}">{{ __('menu.vat-return-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('expense-by-vehicle-report.index') ? 'is-active' : '' }}" href="{{ route('expense-by-vehicle-report.index') }}">{{ __('menu.expense-by-vehicle-report') }}</a></li>
+                    <li><a class="app-sidebar-sublink {{ request()->routeIs('expense-by-driver-report.index') ? 'is-active' : '' }}" href="{{ route('expense-by-driver-report.index') }}">{{ __('menu.expense-by-driver-report') }}</a></li>
                 </ul>
             </li>
             @endcan

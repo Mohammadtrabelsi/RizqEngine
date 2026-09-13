@@ -17,6 +17,10 @@ class ExpenseForm extends Component
 
     public string $category_id = '';
 
+    public string $driver_id = '';
+
+    public string $vehicle_id = '';
+
     public string $amount = '';
 
     public string $details = '';
@@ -30,6 +34,8 @@ class ExpenseForm extends Component
             $this->reference = (string) $expense->reference;
             $this->date = (string) $expense->getAttributes()['date'];
             $this->category_id = (string) $expense->category_id;
+            $this->driver_id = (string) ($expense->driver_id ?? '');
+            $this->vehicle_id = (string) ($expense->vehicle_id ?? '');
             $this->amount = (string) $expense->amount;
             $this->details = (string) $expense->details;
         } else {
@@ -45,6 +51,8 @@ class ExpenseForm extends Component
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'category_id' => 'required',
+            'driver_id' => 'nullable|exists:drivers,id',
+            'vehicle_id' => 'nullable|exists:vehicles,id',
             'amount' => 'required|numeric|min:0|max:2147483647',
             'details' => 'nullable|string|max:1000',
         ];
@@ -61,6 +69,8 @@ class ExpenseForm extends Component
                 'date' => $this->date,
                 'reference' => $this->reference,
                 'category_id' => $this->category_id,
+                'driver_id' => $this->driver_id ?: null,
+                'vehicle_id' => $this->vehicle_id ?: null,
                 'amount' => $this->amount,
                 'details' => $this->details,
             ]);
@@ -72,6 +82,8 @@ class ExpenseForm extends Component
             $expenses->create([
                 'date' => $this->date,
                 'category_id' => $this->category_id,
+                'driver_id' => $this->driver_id ?: null,
+                'vehicle_id' => $this->vehicle_id ?: null,
                 'amount' => $this->amount,
                 'details' => $this->details,
             ]);
@@ -86,6 +98,8 @@ class ExpenseForm extends Component
     {
         return view('livewire.expenses.expense-form', [
             'categories' => $expenses->categories(),
+            'drivers' => $expenses->drivers(),
+            'vehicles' => $expenses->vehicles(),
         ]);
     }
 }

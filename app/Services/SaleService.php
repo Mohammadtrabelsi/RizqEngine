@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\SalePayment;
+use App\Models\SaleWithholdingTax;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,56 @@ class SaleService
         private readonly StockService $stock,
         private readonly PaymentStatusService $paymentStatus,
         private readonly CustomerCreditService $credit,
+        private readonly WithholdingTaxCalculator $withholdingCalculator,
     ) {}
+
+    /**
+     * Multiplier used to persist withholding amounts as integers in millimes
+     * (× 1000), preserving the Tunisian dinar's three-decimal precision.
+     */
+    private const WITHHOLDING_SCALE = 1000;
+
+    /**
+     * Compute the withholding (retenue à la source) breakdown for the sale cart
+     * from the selected withholding-tax ids and the document totals.
+     *
+     * @param  array<string, mixed>  $data
+     * @return array{lines: array<int, array<string, mixed>>, total: float, net_payable: float}
+     */
+    private function resolveWithholding(array $data, float $ttc, float $tva): array
+    {
+        $ht = $ttc - $tva;
+        $ids = (array) ($data['withholding_tax_ids'] ?? []);
+
+        $result = $this->withholdingCalculator->calculateForIds($ids, $ht, $tva, $ttc);
+
+        return [
+            'lines' => $result['lines'],
+            'total' => $result['total'],
+            'net_payable' => $result['net_payable'],
+        ];
+    }
+
+    /**
+     * Persist the withholding snapshot lines for a sale.
+     *
+     * @param  array<int, array<string, mixed>>  $lines
+     */
+    private function saveWithholdingLines(Sale $sale, array $lines): void
+    {
+        foreach ($lines as $line) {
+            SaleWithholdingTax::create([
+                'sale_id' => $sale->id,
+                'withholding_tax_id' => $line['withholding_tax_id'],
+                'name' => $line['name'],
+                'code' => $line['code'],
+                'rate' => $line['rate'],
+                'calculation_base' => $line['calculation_base'],
+                'taxable_amount' => (int) round($line['taxable_amount'] * self::WITHHOLDING_SCALE),
+                'amount' => (int) round($line['amount'] * self::WITHHOLDING_SCALE),
+            ]);
+        }
+    }
 
     /**
      * Paginate sales, optionally filtered by reference/customer name, status,
@@ -127,8 +177,18 @@ class SaleService
         return DB::transaction(function () use ($data) {
             $cart = Cart::instance('sale');
 
-            $dueAmount = $data['total_amount'] - $data['paid_amount'];
-            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $data['total_amount']);
+            // Retenue à la source is deducted after the TTC: the customer keeps
+            // the RAS and settles only the net (TTC − RAS), so the due balance
+            // tracks the net, not the gross. With no withholding selected the
+            // net equals the TTC and behaviour is unchanged for existing sales.
+            $withholding = $this->resolveWithholding(
+                $data,
+                (float) $data['total_amount'],
+                (float) $cart->tax(),
+            );
+
+            $dueAmount = $withholding['net_payable'] - $data['paid_amount'];
+            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $withholding['net_payable']);
 
             $sale = Sale::create([
                 'date' => $data['date'],
@@ -145,8 +205,11 @@ class SaleService
                 'payment_method' => $data['payment_method'],
                 'note' => $data['note'] ?? null,
                 'tax_amount' => (float) $cart->tax() * 100,
+                'withholding_amount' => (int) round($withholding['total'] * self::WITHHOLDING_SCALE),
                 'discount_amount' => (float) $cart->discount() * 100,
             ]);
+
+            $this->saveWithholdingLines($sale, $withholding['lines']);
 
             foreach ($cart->content() as $cart_item) {
                 $this->createSaleDetail($sale, $cart_item);
@@ -323,8 +386,18 @@ class SaleService
         return DB::transaction(function () use ($sale, $data) {
             $cart = Cart::instance('sale');
 
-            $dueAmount = $data['total_amount'] - $data['paid_amount'];
-            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $data['total_amount']);
+            $withholding = $this->resolveWithholding(
+                $data,
+                (float) $data['total_amount'],
+                (float) $cart->tax(),
+            );
+
+            $dueAmount = $withholding['net_payable'] - $data['paid_amount'];
+            $paymentStatus = $this->paymentStatus->resolve($dueAmount, $withholding['net_payable']);
+
+            // Replace the previous withholding snapshot with a freshly computed
+            // one so an edited document stays consistent with its taxes.
+            $sale->withholdingTaxes()->delete();
 
             foreach ($sale->saleDetails as $sale_detail) {
                 if ($sale->status == 'Shipped' || $sale->status == 'Completed') {
@@ -339,9 +412,10 @@ class SaleService
                 $sale_detail->delete();
             }
 
+            // The legal invoice number (reference) is immutable and is never
+            // taken from user input on update.
             $sale->update([
                 'date' => $data['date'],
-                'reference' => $data['reference'],
                 'customer_id' => $data['customer_id'],
                 'customer_name' => Customer::findOrFail($data['customer_id'])->customer_name,
                 'tax_percentage' => $data['tax_percentage'],
@@ -355,8 +429,11 @@ class SaleService
                 'payment_method' => $data['payment_method'],
                 'note' => $data['note'] ?? null,
                 'tax_amount' => (float) $cart->tax() * 100,
+                'withholding_amount' => (int) round($withholding['total'] * self::WITHHOLDING_SCALE),
                 'discount_amount' => (float) $cart->discount() * 100,
             ]);
+
+            $this->saveWithholdingLines($sale, $withholding['lines']);
 
             foreach ($cart->content() as $cart_item) {
                 $this->createSaleDetail($sale, $cart_item);

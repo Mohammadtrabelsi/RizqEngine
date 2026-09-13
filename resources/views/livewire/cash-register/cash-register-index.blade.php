@@ -62,6 +62,108 @@
             <div class="col-12 mb-4">
                 <div class="card border-0 shadow-sm">
                     <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
+                        <h5 class="mb-0"><i class="bi bi-journal-text text-primary"></i> {{ __('cash_register.operations') }}</h5>
+                    </div>
+                    <div class="flex-auto p-2">
+                        {{-- Filters --}}
+                        <div class="form-row align-items-end mb-3">
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <label>{{ __('cash_register.start_date') }}</label>
+                                <input type="date" class="form-control" wire:model.live="start_date" max="{{ $end_date }}">
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <label>{{ __('cash_register.end_date') }}</label>
+                                <input type="date" class="form-control" wire:model.live="end_date" min="{{ $start_date }}">
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <label>{{ __('cash_register.operation_type') }}</label>
+                                <select class="form-control" wire:model.live="operation_type">
+                                    <option value="all">{{ __('cash_register.all_operations') }}</option>
+                                    <option value="sale">{{ __('cash_register.selling') }}</option>
+                                    <option value="commande">{{ __('cash_register.ordering') }}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <label class="d-block">&nbsp;</label>
+                                <button type="button" class="btn btn-outline-secondary" wire:click="resetFilters">
+                                    <i class="bi bi-arrow-counterclockwise"></i> {{ __('cash_register.reset') }}
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Summary --}}
+                        <div class="row mb-3">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="flex-auto p-2">
+                                        <span class="text-muted d-block">{{ __('cash_register.total_selling') }}</span>
+                                        <span class="h5 mb-0 text-success">{{ number_format($totals['sale']['total'] / 100, 2) }}</span>
+                                        <small class="text-muted d-block">{{ __('cash_register.operations_count', ['count' => $totals['sale']['count']]) }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="flex-auto p-2">
+                                        <span class="text-muted d-block">{{ __('cash_register.total_ordering') }}</span>
+                                        <span class="h5 mb-0 text-primary">{{ number_format($totals['commande']['total'] / 100, 2) }}</span>
+                                        <small class="text-muted d-block">{{ __('cash_register.operations_count', ['count' => $totals['commande']['count']]) }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="flex-auto p-2">
+                                        <span class="text-muted d-block">{{ __('cash_register.grand_total') }}</span>
+                                        <span class="h5 mb-0">{{ number_format($totals['total'] / 100, 2) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Ledger --}}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('cash_register.date') }}</th>
+                                        <th>{{ __('cash_register.type') }}</th>
+                                        <th>{{ __('cash_register.reference') }}</th>
+                                        <th>{{ __('cash_register.customer') }}</th>
+                                        <th class="text-end">{{ __('cash_register.amount') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($transactions as $operation)
+                                        <tr wire:key="op-{{ $operation->type }}-{{ $operation->id }}">
+                                            <td>{{ \Illuminate\Support\Carbon::parse($operation->date)->format('Y-m-d') }}</td>
+                                            <td>
+                                                @if($operation->type === 'sale')
+                                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-success">{{ __('cash_register.selling') }}</span>
+                                                @else
+                                                    <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold leading-none text-center whitespace-nowrap align-baseline bg-primary">{{ __('cash_register.ordering') }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $operation->reference ?: '—' }}</td>
+                                            <td>{{ $operation->customer_name }}</td>
+                                            <td class="text-end">{{ number_format($operation->total_amount / 100, 2) }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted py-3">{{ __('cash_register.no_transactions') }}</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">{{ $transactions->links('pagination::bootstrap-5') }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 font-semibold text-slate-900 rounded-t-xl">
                         <h5 class="mb-0"><i class="bi bi-clock-history text-primary"></i> {{ __('cash_register.history') }}</h5>
                     </div>
                     <div class="flex-auto p-2">

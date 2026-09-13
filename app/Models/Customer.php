@@ -72,6 +72,34 @@ class Customer extends Model implements HasMedia
         return $this->hasMany(Sale::class, 'customer_id', 'id');
     }
 
+    /**
+     * The customer's negotiated per-product sale prices
+     * (the customer's "liste de prix").
+     *
+     * @return HasMany<CustomerProductPrice, $this>
+     */
+    public function productPrices(): HasMany
+    {
+        return $this->hasMany(CustomerProductPrice::class, 'customer_id', 'id');
+    }
+
+    /**
+     * The negotiated sale price for the given product, or null when the
+     * customer has no specific price and the product default should apply.
+     *
+     * Accepts either a {@see Product} or a raw product id.
+     */
+    public function priceFor(Product|int $product): ?int
+    {
+        $productId = $product instanceof Product ? $product->id : $product;
+
+        $price = $this->productPrices()
+            ->where('product_id', $productId)
+            ->value('price');
+
+        return $price === null ? null : (int) $price;
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images')

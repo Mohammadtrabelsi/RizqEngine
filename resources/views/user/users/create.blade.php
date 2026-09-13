@@ -21,23 +21,23 @@
         <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12">
                     @include('utils.alerts')
                     <div class="mb-4">
                         <button class="btn btn-primary">{{ __('users.create_user') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-12 col-lg-8 mb-4">
                     <div class="card">
                         <div class="flex-auto p-2">
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="mb-4">
                                         <label for="name">{{ __('users.name') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="name" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="mb-4">
                                         <label for="email">{{ __('users.email') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="email" name="email" required>
@@ -45,13 +45,13 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="mb-4">
                                         <label for="password">{{ __('users.password') }} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="password" name="password" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="mb-4">
                                         <label for="password_confirmation">{{ __('users.confirm_password') }} <span
                                                 class="text-danger">*</span></label>
@@ -60,31 +60,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-4">
-                                <label for="role">{{ __('users.role') }} <span class="text-danger">*</span></label>
-                                <select class="form-control" name="role" id="role" required>
-                                    <option value="" selected disabled>{{ __('users.select_role') }}</option>
-                                    @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
-                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="is_active">{{ __('users.status') }} <span class="text-danger">*</span></label>
-                                <select class="form-control" name="is_active" id="is_active" required>
-                                    <option value="" selected disabled>{{ __('users.select_status') }}</option>
-                                    <option value="1">{{ __('users.active') }}</option>
-                                    <option value="2">{{ __('users.deactivated') }}</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="col-12 col-lg-6">
+                                    <div class="mb-4">
+                                        <label for="role">{{ __('users.role') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="role" id="role" required>
+                                            <option value="" selected disabled>{{ __('users.select_role') }}</option>
+                                            @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
+                                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="mb-4 mb-0">
+                                        <label for="is_active">{{ __('users.status') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="is_active" id="is_active" required>
+                                            <option value="" selected disabled>{{ __('users.select_status') }}</option>
+                                            <option value="1">{{ __('users.active') }}</option>
+                                            <option value="2">{{ __('users.deactivated') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-12 col-lg-4 mb-4">
                     <div class="card">
                         <div class="flex-auto p-2">
-                            <div class="mb-4">
+                            <div class="mb-4 mb-0">
                                 <label for="image">{{ __('users.profile_image') }} <span class="text-danger">*</span></label>
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">
                             </div>

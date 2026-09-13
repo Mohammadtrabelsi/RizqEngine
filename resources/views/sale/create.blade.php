@@ -37,7 +37,8 @@
                                     <div class="from-group">
                                         <div class="mb-4">
                                             <label for="customer_id">{{ __('sales.customer') }} <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="customer_id" id="customer_id" required>
+                                            <select class="form-control" name="customer_id" id="customer_id" required
+                                                    onchange="window.Livewire && Livewire.dispatch('customerSelected', { customer_id: this.value })">
                                                 @foreach(\App\Models\Customer::all() as $customer)
                                                     <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
                                                 @endforeach
@@ -117,4 +118,13 @@
 
 @push('page_scripts')
     @include('includes.money-mask-js')
+    <script>
+        // Apply the pre-selected customer's price list as soon as the cart is ready.
+        document.addEventListener('livewire:init', () => {
+            const select = document.getElementById('customer_id');
+            if (select && select.value) {
+                Livewire.dispatch('customerSelected', { customer_id: select.value });
+            }
+        });
+    </script>
 @endpush
