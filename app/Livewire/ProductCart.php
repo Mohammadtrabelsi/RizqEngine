@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\CustomerProductPrice;
 use App\Models\Tax;
 use App\Services\CartPricingService;
 use App\Services\ProductCatalogService;
@@ -356,7 +357,7 @@ class ProductCart extends Component
             return null;
         }
 
-        $price = \App\Models\CustomerProductPrice::query()
+        $price = CustomerProductPrice::query()
             ->where('customer_id', $this->customer_id)
             ->where('product_id', $product_id)
             ->value('price');

@@ -104,8 +104,8 @@ class BonLivraisonService
      * full shipment therefore carries the Commande's amounts verbatim.
      *
      * @param  array<int, int>|null  $quantities  commande_detail id => quantity to
-     *                                             ship; null ships every remaining
-     *                                             quantity.
+     *                                            ship; null ships every remaining
+     *                                            quantity.
      *
      * @throws ConversionException when nothing remains to deliver or a requested
      *                             quantity exceeds what is still outstanding.

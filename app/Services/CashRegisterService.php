@@ -144,7 +144,7 @@ class CashRegisterService
      */
     public function transactions(?string $from = null, ?string $to = null, string $type = 'all', int $perPage = 15): LengthAwarePaginator
     {
-        $columns = "id, ? as type, date, reference, customer_name, total_amount, status";
+        $columns = 'id, ? as type, date, reference, customer_name, total_amount, status';
         $sales = $this->dateBounded('sales', $from, $to)->selectRaw($columns, ['sale']);
         $commandes = $this->dateBounded('commandes', $from, $to)->selectRaw($columns, ['commande']);
 

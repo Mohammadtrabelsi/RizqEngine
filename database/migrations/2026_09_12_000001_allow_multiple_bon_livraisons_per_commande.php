@@ -15,16 +15,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bon_livraisons', function (Blueprint $table) {
+            $table->dropForeign(['commande_id']);
             $table->dropUnique('bon_livraisons_commande_id_unique');
             $table->index('commande_id');
+            $table->foreign('commande_id')->references('id')->on('commandes')->nullOnDelete();
         });
     }
 
     public function down(): void
     {
         Schema::table('bon_livraisons', function (Blueprint $table) {
+            $table->dropForeign(['commande_id']);
             $table->dropIndex(['commande_id']);
             $table->unique('commande_id');
+            $table->foreign('commande_id')->references('id')->on('commandes')->nullOnDelete();
         });
     }
 };
