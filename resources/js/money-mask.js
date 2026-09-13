@@ -5,9 +5,12 @@
 //   data-money-allow-zero   to allow a zero value,
 //   data-money-prefill      to mask the value already present (edit screens).
 // A control with data-money-fill="<selector>" masks that target on click,
-// using its data-money-value as the amount (empty = just re-mask). Every form
-// that contains a masked input has those inputs un-masked to raw numbers on
-// submit so the server receives plain values.
+// using its data-money-value as the amount (empty = just re-mask). When
+// data-money-value-from="<selector>" is present the amount is read live from
+// that element at click time (its value for form fields, otherwise its text),
+// which keeps buttons in sync with a Livewire-rendered total. Every form that
+// contains a masked input has those inputs un-masked to raw numbers on submit
+// so the server receives plain values.
 document.addEventListener('DOMContentLoaded', function () {
     const $ = window.jQuery;
     const config = document.getElementById('money-mask-config');
@@ -41,7 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!target) {
                 return;
             }
-            const value = trigger.getAttribute('data-money-value');
+            let value = trigger.getAttribute('data-money-value');
+            const source = trigger.getAttribute('data-money-value-from');
+            if (source) {
+                const from = document.querySelector(source);
+                if (from) {
+                    value = 'value' in from ? from.value : from.textContent;
+                }
+            }
             if (value === null || value === '') {
                 $(target).maskMoney('mask');
             } else {

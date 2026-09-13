@@ -87,7 +87,7 @@
                                         <div class="input-group">
                                             <input id="paid_amount" type="text" class="form-control" name="paid_amount" data-money-mask data-money-allow-zero required>
                                             <div class="input-group-append">
-                                                <button id="getTotalAmount" class="btn btn-primary" type="button" data-money-fill="#paid_amount" data-money-value="{{ Cart::instance('purchase_return')->total() }}">
+                                                <button id="getTotalAmount" class="btn btn-primary" type="button" data-money-fill="#paid_amount" data-money-value-from="[name='total_amount']" data-money-value="{{ Cart::instance('purchase_return')->total() }}">
                                                     <i class="bi bi-check-square"></i>
                                                 </button>
                                             </div>
