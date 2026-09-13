@@ -67,7 +67,7 @@
 
     --radius-card: 16px;
     --radius-panel: 22px;
-    --radius-field: 12px;
+    --radius-field: 2px;
     --radius-ctl: 10px;
 
     --shadow-mock: 0 30px 70px -30px rgba(48, 40, 90, 0.35);
@@ -2722,7 +2722,7 @@ body.app-with-sidebar > div > header {
 body.app-with-sidebar > div > header a.bg-accent {
     background: var(--aurora-grad);
     box-shadow: var(--aurora-glow);
-    border-radius: 12px;
+    border-radius: 2px;
 }
 body.app-with-sidebar > div > header a.bg-accent:hover { filter: brightness(1.05); }
 /* Give the user avatar chip the gradient identity. */
@@ -2735,7 +2735,7 @@ body.app-with-sidebar > div > header .bg-ink {
  * DASHBOARD — elevated cards, gradient badges & bars
  * ---------------------------------------------------------------------- */
 .card {
-    border-radius: 18px;
+    border-radius: 3px;
     box-shadow: var(--aurora-card-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -2865,7 +2865,7 @@ body.app-with-sidebar > div > header .bg-ink {
     background: var(--aurora-grad) !important;
     border: 0 !important;
     box-shadow: var(--aurora-glow) !important;
-    border-radius: 12px;
+    border-radius: 2px;
     font-weight: 600;
     letter-spacing: 0.01em;
     transition: filter 0.2s ease, transform 0.15s ease;
@@ -2931,7 +2931,7 @@ body.app-with-sidebar > div > header .bg-ink {
     align-items: center;
     gap: 0.5rem;
     padding: 0.7rem 1.35rem;
-    border-radius: 12px;
+    border-radius: 2px;
     font-weight: 600;
     font-size: 0.92rem;
     color: #2c2953;

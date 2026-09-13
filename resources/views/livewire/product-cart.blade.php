@@ -83,8 +83,8 @@
         </div>
     </div>
 
-    <div class="row justify-content-md-end">
-        <div class="col-md-4">
+    <div class="row justify-content-md-end my-4">
+        <div class="col-md-12">
             <div class="card">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between">
