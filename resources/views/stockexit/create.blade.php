@@ -14,14 +14,9 @@
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <livewire:search-product/>
-            </div>
-        </div>
-
-        <div class="row mt-4">
-            <div class="col-12">
                 <div class="card">
                     <div class="flex-auto p-2">
+                        <livewire:search-product/>
                         @include('utils.alerts')
                         <form action="{{ route('stock-exits.store') }}" method="POST">
                             @csrf
