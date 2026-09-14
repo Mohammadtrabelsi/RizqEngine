@@ -1,6 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="90" viewBox="0 0 100 90" role="img" aria-label="RizqEngine">
-  <polygon points="50,5 27.5,47.5 72.5,47.5" fill="none" stroke="#9184d9" stroke-width="7" stroke-linejoin="round"/>
-  <polygon points="5,90 27.5,47.5 50,90" fill="none" stroke="#9184d9" stroke-width="7" stroke-linejoin="round"/>
-  <polygon points="95,90 72.5,47.5 50,90" fill="none" stroke="#9184d9" stroke-width="7" stroke-linejoin="round"/>
-  <polygon points="27.5,47.5 72.5,47.5 50,90" fill="#9184d9" stroke="#9184d9" stroke-width="7" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="RizqEngine">
+  <path fill="#2b3e57" fill-rule="evenodd" d="M 40.16 13.29 L 40.44 5.01 L 59.56 5.01 L 59.84 13.29 A 38.00 38.00 0 0 1 69.00 17.09 L 69.00 17.09 L 75.05 11.42 L 88.58 24.95 L 82.91 31.00 A 38.00 38.00 0 0 1 86.71 40.16 L 86.71 40.16 L 94.99 40.44 L 94.99 59.56 L 86.71 59.84 A 38.00 38.00 0 0 1 82.91 69.00 L 82.91 69.00 L 88.58 75.05 L 75.05 88.58 L 69.00 82.91 A 38.00 38.00 0 0 1 59.84 86.71 L 59.84 86.71 L 59.56 94.99 L 40.44 94.99 L 40.16 86.71 A 38.00 38.00 0 0 1 31.00 82.91 L 31.00 82.91 L 24.95 88.58 L 11.42 75.05 L 17.09 69.00 A 38.00 38.00 0 0 1 13.29 59.84 L 13.29 59.84 L 5.01 59.56 L 5.01 40.44 L 13.29 40.16 A 38.00 38.00 0 0 1 17.09 31.00 L 17.09 31.00 L 11.42 24.95 L 24.95 11.42 L 31.00 17.09 A 38.00 38.00 0 0 1 40.16 13.29 Z M 24.50 50.00 a 25.50 25.50 0 1 0 51.00 0 a 25.50 25.50 0 1 0 -51.00 0 Z"/>
+  <!-- R monogram: bowl + stem + two diverging legs -->
+  <g fill="#2b3e57">
+    <path d="M 40.5 33
+             L 40.5 55
+             L 46 55
+             L 46 47.5
+             L 51 47.5
+             C 57.5 47.5 61.5 44.2 61.5 40.2
+             C 61.5 36 57.5 33 51 33
+             Z
+             M 46 38
+             L 51 38
+             C 54 38 55.7 39 55.7 40.2
+             C 55.7 41.6 54 42.5 51 42.5
+             L 46 42.5
+             Z"/>
+    <!-- left leg -->
+    <path d="M 44.5 52 L 35 68 L 41.5 68 L 50 53.5 Z"/>
+    <!-- right leg -->
+    <path d="M 50 53.5 L 58.5 68 L 65 68 L 55.5 52 Z"/>
+    <!-- bottom pendant tab -->
+    <path d="M 46 64 L 54 64 L 52.5 71 L 47.5 71 Z"/>
+  </g>
 </svg>
