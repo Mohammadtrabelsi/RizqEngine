@@ -10,6 +10,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link rel="alternate icon" href="{{ asset('images/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
     <!-- Application CSS -->
     @vite('resources/css/app.css')
     <!-- Bootstrap Icons -->
