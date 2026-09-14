@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Tax;
 use Illuminate\Database\Seeder;
 
 class ProductDatabaseSeeder extends Seeder
@@ -12,8 +13,8 @@ class ProductDatabaseSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * Depends on categories and suppliers seeded by
-     * CategoryDatabaseSeeder and SupplierDatabaseSeeder.
+     * Depends on categories, suppliers and taxes seeded by
+     * CategoryDatabaseSeeder, SupplierDatabaseSeeder and TaxDatabaseSeeder.
      *
      * @return void
      */
@@ -21,6 +22,7 @@ class ProductDatabaseSeeder extends Seeder
     {
         $categories = Category::pluck('id', 'category_code');
         $suppliers = Supplier::pluck('id', 'supplier_email');
+        $taxes = Tax::pluck('id', 'name');
 
         $products = [
             [
@@ -31,6 +33,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 0.60,
                 'product_price' => 1.00,
                 'product_quantity' => 200,
+                'taxes' => ['TVA'],
             ],
             [
                 'product_code' => 'PRD-0002',
@@ -40,6 +43,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 1.20,
                 'product_price' => 2.20,
                 'product_quantity' => 120,
+                'taxes' => ['TVA'],
             ],
             [
                 'product_code' => 'PRD-0003',
@@ -49,6 +53,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 0.50,
                 'product_price' => 0.90,
                 'product_quantity' => 300,
+                'taxes' => ['TVA', 'Fodek'],
             ],
             [
                 'product_code' => 'PRD-0004',
@@ -58,6 +63,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 1.10,
                 'product_price' => 1.80,
                 'product_quantity' => 150,
+                'taxes' => ['TVA 7'],
             ],
             [
                 'product_code' => 'PRD-0005',
@@ -67,6 +73,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 0.70,
                 'product_price' => 1.30,
                 'product_quantity' => 180,
+                'taxes' => ['TVA 7'],
             ],
             [
                 'product_code' => 'PRD-0006',
@@ -76,6 +83,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 0.80,
                 'product_price' => 1.40,
                 'product_quantity' => 160,
+                'taxes' => ['TVA 13'],
             ],
             [
                 'product_code' => 'PRD-0007',
@@ -85,6 +93,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 6.00,
                 'product_price' => 9.50,
                 'product_quantity' => 90,
+                'taxes' => ['TVA 13'],
             ],
             [
                 'product_code' => 'PRD-0008',
@@ -94,6 +103,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 1.50,
                 'product_price' => 2.60,
                 'product_quantity' => 110,
+                'taxes' => ['TVA', 'Fodek'],
             ],
             [
                 'product_code' => 'PRD-0009',
@@ -103,6 +113,7 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 5.50,
                 'product_price' => 8.90,
                 'product_quantity' => 70,
+                'taxes' => ['TVA'],
             ],
             [
                 'product_code' => 'PRD-0010',
@@ -112,11 +123,24 @@ class ProductDatabaseSeeder extends Seeder
                 'product_cost' => 1.00,
                 'product_price' => 1.90,
                 'product_quantity' => 130,
+                'taxes' => ['TVA 0'],
             ],
         ];
 
         foreach ($products as $product) {
-            Product::firstOrCreate(
+            // Resolve the product's selected taxes to their IDs. Percentage
+            // taxes are compounded into product_order_tax the same way the
+            // product form does (via ProductService), so seeded orders exercise
+            // real tax behaviour: e.g. TVA 19% + Fodek 1% -> 20% effective.
+            $taxIds = collect($product['taxes'] ?? [])
+                ->map(fn (string $name) => $taxes[$name] ?? null)
+                ->filter()
+                ->values()
+                ->all();
+
+            $orderTax = (int) round(Tax::compoundPercentageRate($taxIds));
+
+            $model = Product::firstOrCreate(
                 ['product_code' => $product['product_code']],
                 [
                     'category_id' => $categories[$product['category_code']] ?? null,
@@ -129,12 +153,14 @@ class ProductDatabaseSeeder extends Seeder
                     'product_unit' => 'PC',
                     'product_stock_alert' => 10,
                     'product_stock_alert_max' => null,
-                    'product_order_tax' => 0,
+                    'product_order_tax' => $orderTax,
                     'product_tax_type' => 1,
                     'product_note' => null,
                     'expiry_date' => null,
                 ]
             );
+
+            $model->taxes()->sync($taxIds);
         }
     }
 }
