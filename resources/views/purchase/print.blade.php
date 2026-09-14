@@ -21,7 +21,7 @@
         /* Header */
         .invoice-header { width: 100%; margin-bottom: 24px; }
         .invoice-header td { vertical-align: top; }
-        .invoice-header .logo img { width: 170px; }
+        .invoice-header .logo img { max-height: 60px; max-width: 200px; vertical-align: middle; margin-right: 12px; }
         .invoice-header .doc-title {
             text-align: right;
             font-size: 26px;
@@ -29,6 +29,18 @@
             color: #1f2937;
             letter-spacing: 1px;
         }
+        .invoice-header .doc-type {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .doc-type-purchase { background: #e0e7ff; color: #4338ca; }
+        .doc-type-sale { background: #dcfce7; color: #15803d; }
         .invoice-header .doc-ref {
             text-align: right;
             font-size: 13px;
@@ -137,16 +149,43 @@
     </style>
 </head>
 <body>
+@php
+    $embedLogo = function (?string $path) {
+        if (! $path || ! is_file($path)) {
+            return null;
+        }
+        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $mime = $ext === 'svg' ? 'image/svg+xml' : ($ext === 'jpg' || $ext === 'jpeg' ? 'image/jpeg' : 'image/png');
+
+        return 'data:'.$mime.';base64,'.base64_encode(file_get_contents($path));
+    };
+
+    // White-label client logo, displayed before the application logo.
+    $clientLogoData = settings()->client_logo
+        ? $embedLogo(storage_path('app/public/'.settings()->client_logo))
+        : null;
+
+    // Application logo (configured site logo, else bundled default).
+    $appLogoData = ($p = settings()->site_logo ? storage_path('app/public/'.settings()->site_logo) : null)
+        ? $embedLogo($p)
+        : $embedLogo(public_path('images/logo-dark.png'));
+@endphp
 <div class="invoice-wrapper">
 
     {{-- Header --}}
     <table class="invoice-header">
         <tr>
             <td class="logo">
-                <img src="{{ public_path('images/logo-dark.png') }}" alt="{{ settings()->company_name }}">
+                @if($clientLogoData)
+                    <img src="{{ $clientLogoData }}" alt="Client logo">
+                @endif
+                @if($appLogoData)
+                    <img src="{{ $appLogoData }}" alt="{{ settings()->company_name }}">
+                @endif
             </td>
             <td>
                 <div class="doc-title">INVOICE</div>
+                <div class="doc-type doc-type-purchase">Purchase</div>
                 <div class="doc-ref">Reference: <strong>{{ $purchase->reference }}</strong></div>
                 <div class="doc-ref">Invoice No: <strong>INV/{{ $purchase->reference }}</strong></div>
             </td>
