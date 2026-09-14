@@ -61,17 +61,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="mb-4">
-                                            <label for="payment_method">{{ __('purchase-returns.payment_method') }} <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
-                                                <option value="Cash">{{ __('purchase-returns.cash') }}</option>
-                                                <option value="Credit Card">{{ __('purchase-returns.credit_card') }}</option>
-                                                <option value="Bank Transfer">{{ __('purchase-returns.bank_transfer') }}</option>
-                                                <option value="Cheque">{{ __('purchase-returns.cheque') }}</option>
-                                                <option value="Other">{{ __('purchase-returns.other') }}</option>
-                                            </select>
-                                        </div>
+                                    <div class="mb-4">
+                                        <label for="payment_method">{{ __('purchase-returns.payment_method') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="payment_method" id="payment_method" required>
+                                            <option value="Cash">{{ __('purchase-returns.cash') }}</option>
+                                            <option value="Credit Card">{{ __('purchase-returns.credit_card') }}</option>
+                                            <option value="Bank Transfer">{{ __('purchase-returns.bank_transfer') }}</option>
+                                            <option value="Cheque">{{ __('purchase-returns.cheque') }}</option>
+                                            <option value="Other">{{ __('purchase-returns.other') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

@@ -62,17 +62,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="mb-4">
-                                            <label for="payment_method">{{ __('purchase-returns.payment_method') }} <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
-                                                <option {{ $purchaseReturnPayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('purchase-returns.cash') }}</option>
-                                                <option {{ $purchaseReturnPayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('purchase-returns.credit_card') }}</option>
-                                                <option {{ $purchaseReturnPayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('purchase-returns.bank_transfer') }}</option>
-                                                <option {{ $purchaseReturnPayment->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">{{ __('purchase-returns.cheque') }}</option>
-                                                <option {{ $purchaseReturnPayment->payment_method == 'Other' ? 'selected' : '' }} value="Other">{{ __('purchase-returns.other') }}</option>
-                                            </select>
-                                        </div>
+                                    <div class="mb-4">
+                                        <label for="payment_method">{{ __('purchase-returns.payment_method') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="payment_method" id="payment_method" required>
+                                            <option {{ $purchaseReturnPayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('purchase-returns.cash') }}</option>
+                                            <option {{ $purchaseReturnPayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('purchase-returns.credit_card') }}</option>
+                                            <option {{ $purchaseReturnPayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('purchase-returns.bank_transfer') }}</option>
+                                            <option {{ $purchaseReturnPayment->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">{{ __('purchase-returns.cheque') }}</option>
+                                            <option {{ $purchaseReturnPayment->payment_method == 'Other' ? 'selected' : '' }} value="Other">{{ __('purchase-returns.other') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

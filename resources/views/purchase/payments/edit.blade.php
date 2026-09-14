@@ -62,17 +62,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="mb-4">
-                                            <label for="payment_method">{{ __('purchase.payment_method') }} <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
-                                                <option {{ $purchasePayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('purchase.cash') }}</option>
-                                                <option {{ $purchasePayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('purchase.credit_card') }}</option>
-                                                <option {{ $purchasePayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('purchase.bank_transfer') }}</option>
-                                                <option {{ $purchasePayment->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">{{ __('purchase.cheque') }}</option>
-                                                <option {{ $purchasePayment->payment_method == 'Other' ? 'selected' : '' }} value="Other">{{ __('purchase.other') }}</option>
-                                            </select>
-                                        </div>
+                                    <div class="mb-4">
+                                        <label for="payment_method">{{ __('purchase.payment_method') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="payment_method" id="payment_method" required>
+                                            <option {{ $purchasePayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('purchase.cash') }}</option>
+                                            <option {{ $purchasePayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('purchase.credit_card') }}</option>
+                                            <option {{ $purchasePayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('purchase.bank_transfer') }}</option>
+                                            <option {{ $purchasePayment->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">{{ __('purchase.cheque') }}</option>
+                                            <option {{ $purchasePayment->payment_method == 'Other' ? 'selected' : '' }} value="Other">{{ __('purchase.other') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
