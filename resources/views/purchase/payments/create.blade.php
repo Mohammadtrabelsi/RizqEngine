@@ -61,17 +61,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="mb-4">
-                                            <label for="payment_method">{{ __('purchase.payment_method') }} <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
-                                                <option value="Cash">{{ __('purchase.cash') }}</option>
-                                                <option value="Credit Card">{{ __('purchase.credit_card') }}</option>
-                                                <option value="Bank Transfer">{{ __('purchase.bank_transfer') }}</option>
-                                                <option value="Cheque">{{ __('purchase.cheque') }}</option>
-                                                <option value="Other">{{ __('purchase.other') }}</option>
-                                            </select>
-                                        </div>
+                                    <div class="mb-4">
+                                        <label for="payment_method">{{ __('purchase.payment_method') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="payment_method" id="payment_method" required>
+                                            <option value="Cash">{{ __('purchase.cash') }}</option>
+                                            <option value="Credit Card">{{ __('purchase.credit_card') }}</option>
+                                            <option value="Bank Transfer">{{ __('purchase.bank_transfer') }}</option>
+                                            <option value="Cheque">{{ __('purchase.cheque') }}</option>
+                                            <option value="Other">{{ __('purchase.other') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

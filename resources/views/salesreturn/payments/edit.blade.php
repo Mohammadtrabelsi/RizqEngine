@@ -62,17 +62,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="mb-4">
-                                            <label for="payment_method">{{ __('sales.payment_method') }} <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
-                                                <option {{ $saleReturnPayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('sales.cash') }}</option>
-                                                <option {{ $saleReturnPayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('sales.credit_card') }}</option>
-                                                <option {{ $saleReturnPayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('sales.bank_transfer') }}</option>
-                                                <option {{ $saleReturnPayment->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">{{ __('sales.cheque') }}</option>
-                                                <option {{ $saleReturnPayment->payment_method == 'Other' ? 'selected' : '' }} value="Other">{{ __('sales.other') }}</option>
-                                            </select>
-                                        </div>
+                                    <div class="mb-4">
+                                        <label for="payment_method">{{ __('sales.payment_method') }} <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="payment_method" id="payment_method" required>
+                                            <option {{ $saleReturnPayment->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">{{ __('sales.cash') }}</option>
+                                            <option {{ $saleReturnPayment->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">{{ __('sales.credit_card') }}</option>
+                                            <option {{ $saleReturnPayment->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">{{ __('sales.bank_transfer') }}</option>
+                                            <option {{ $saleReturnPayment->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">{{ __('sales.cheque') }}</option>
+                                            <option {{ $saleReturnPayment->payment_method == 'Other' ? 'selected' : '' }} value="Other">{{ __('sales.other') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

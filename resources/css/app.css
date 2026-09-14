@@ -339,6 +339,7 @@ h4, .h4 { font-size: 19px; }
     .form-label,
     :where(.card, form, .modal, .app-content) label:has(+ .form-control),
     :where(.card, form, .modal, .app-content) label:has(+ .form-select),
+    :where(.card, form, .modal, .app-content) label:has(+ .input-group),
     :where(.card, form, .modal, .app-content) label:has(+ textarea) {
         font-weight: 700;
     }
@@ -346,6 +347,7 @@ h4, .h4 { font-size: 19px; }
     /* Lay the wrapper (label + control) out as a single inline row. */
     :where(.card, form, .modal, .app-content) div:has(> label + .form-control),
     :where(.card, form, .modal, .app-content) div:has(> label + .form-select),
+    :where(.card, form, .modal, .app-content) div:has(> label + .input-group),
     :where(.card, form, .modal, .app-content) div:has(> label + textarea) {
         display: flex;
         flex-wrap: wrap;
@@ -355,6 +357,7 @@ h4, .h4 { font-size: 19px; }
 
     :where(.card, form, .modal, .app-content) div:has(> label + .form-control) > label,
     :where(.card, form, .modal, .app-content) div:has(> label + .form-select) > label,
+    :where(.card, form, .modal, .app-content) div:has(> label + .input-group) > label,
     :where(.card, form, .modal, .app-content) div:has(> label + textarea) > label {
         flex: 0 0 clamp(120px, 28%, 190px);
         margin-bottom: 0;
@@ -362,6 +365,7 @@ h4, .h4 { font-size: 19px; }
 
     :where(.card, form, .modal, .app-content) div:has(> label + .form-control) > .form-control,
     :where(.card, form, .modal, .app-content) div:has(> label + .form-select) > .form-select,
+    :where(.card, form, .modal, .app-content) div:has(> label + .input-group) > .input-group,
     :where(.card, form, .modal, .app-content) div:has(> label + textarea) > textarea {
         flex: 1 1 200px;
         width: auto;
@@ -371,6 +375,7 @@ h4, .h4 { font-size: 19px; }
     @media (max-width: 575.98px) {
         :where(.card, form, .modal, .app-content) div:has(> label + .form-control),
         :where(.card, form, .modal, .app-content) div:has(> label + .form-select),
+        :where(.card, form, .modal, .app-content) div:has(> label + .input-group),
         :where(.card, form, .modal, .app-content) div:has(> label + textarea) {
             flex-direction: column;
             align-items: stretch;
@@ -378,6 +383,7 @@ h4, .h4 { font-size: 19px; }
 
         :where(.card, form, .modal, .app-content) div:has(> label + .form-control) > label,
         :where(.card, form, .modal, .app-content) div:has(> label + .form-select) > label,
+        :where(.card, form, .modal, .app-content) div:has(> label + .input-group) > label,
         :where(.card, form, .modal, .app-content) div:has(> label + textarea) > label {
             flex-basis: auto;
         }
