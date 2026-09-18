@@ -33,6 +33,7 @@ class BonCommandeService
     public function paginate(?string $search = null, array $filters = [], int $perPage = 12): LengthAwarePaginator
     {
         return BonCommande::query()
+            ->with('quotation')
             ->when($search, function ($query) use ($search) {
                 $term = '%'.$search.'%';
                 $query->where('reference', 'like', $term)
