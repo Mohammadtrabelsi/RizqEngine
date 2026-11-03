@@ -2,18 +2,20 @@
 
 namespace App\Livewire\Imports;
 
+use App\Services\Spreadsheets\SpreadsheetReader;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 /**
- * Reusable full-page Livewire component for bulk-importing records from a CSV.
+ * Reusable full-page Livewire component for bulk-importing records from a CSV
+ * or Excel (.xlsx) file. Files are streamed through SpreadsheetReader
+ * (spatie/simple-excel), so both formats share one parsing path.
  *
- * The flow is two steps: the user uploads a CSV, the component parses and
+ * The flow is two steps: the user uploads a file, the component parses and
  * validates every row (showing a preview with per-row errors), then confirms
  * and only the valid rows are persisted inside a single transaction.
  *
@@ -24,8 +26,7 @@ abstract class CsvImport extends Component
 {
     use WithFileUploads;
 
-    /** Uploaded CSV file. */
-    #[Validate('required|file|mimes:csv,txt|max:5120')]
+    /** Uploaded CSV / XLSX file. */
     public $file;
 
     /**
@@ -41,6 +42,20 @@ abstract class CsvImport extends Component
     public function mount(): void
     {
         abort_if(Gate::denies($this->gate()), 403);
+    }
+
+    /**
+     * Upload validation: allowed types and size come from config/documents.php.
+     * "mimes" checks the detected content type, not just the file name.
+     *
+     * @return array<string, mixed>
+     */
+    protected function rules(): array
+    {
+        $extensions = implode(',', (array) config('documents.spreadsheets.import_extensions', ['csv', 'txt', 'xlsx']));
+        $maxKb = (int) config('documents.spreadsheets.import_max_kb', 5120);
+
+        return ['file' => "required|file|mimes:{$extensions}|max:{$maxKb}"];
     }
 
     /** The permission gate guarding this import. */
@@ -149,36 +164,33 @@ abstract class CsvImport extends Component
     }
 
     /**
-     * Parse the uploaded CSV, mapping and validating each data row.
+     * Parse the uploaded file, mapping and validating each data row.
      */
-    public function parse(): void
+    public function parse(SpreadsheetReader $reader): void
     {
         abort_if(Gate::denies($this->gate()), 403);
 
         $this->validate();
 
-        $handle = fopen($this->file->getRealPath(), 'r');
+        $path = $this->file->getRealPath();
+        $extension = $this->file->guessExtension() ?: $this->file->getClientOriginalExtension();
 
-        if ($handle === false) {
+        try {
+            $header = $reader->headers($path, (string) $extension);
+        } catch (\Throwable) {
             $this->addError('file', __('import.read_failed'));
 
             return;
         }
 
-        $header = fgetcsv($handle);
-
-        if ($header === false) {
-            fclose($handle);
+        if ($header === []) {
             $this->addError('file', __('import.empty_file'));
 
             return;
         }
 
-        $header = array_map(fn ($column) => strtolower(trim((string) $column)), $header);
-
         foreach ($this->requiredHeaders() as $required) {
             if (! in_array($required, $header, true)) {
-                fclose($handle);
                 $this->addError('file', __('import.missing_columns', [
                     'columns' => implode(', ', $this->requiredHeaders()),
                 ]));
@@ -189,24 +201,21 @@ abstract class CsvImport extends Component
 
         $this->prepareLookups();
 
-        $expected = $this->expectedColumns();
+        $expected = array_flip($this->expectedColumns());
+        $maxRows = (int) config('documents.spreadsheets.import_max_rows', 5000);
         $rows = [];
         $line = 1;
 
-        while (($data = fgetcsv($handle)) !== false) {
+        foreach ($reader->rows($path, (string) $extension) as $data) {
             $line++;
 
-            // Skip fully blank lines.
-            if (count(array_filter($data, fn ($v) => trim((string) $v) !== '')) === 0) {
-                continue;
+            if (count($rows) >= $maxRows) {
+                $this->addError('file', __('import.too_many_rows', ['max' => $maxRows]));
+
+                return;
             }
 
-            $raw = [];
-            foreach ($header as $index => $column) {
-                if (in_array($column, $expected, true)) {
-                    $raw[$column] = isset($data[$index]) ? trim((string) $data[$index]) : null;
-                }
-            }
+            $raw = array_intersect_key($data, $expected);
 
             $errors = [];
             $attributes = $this->mapRow($raw, $errors);
@@ -217,8 +226,6 @@ abstract class CsvImport extends Component
                 'errors' => $errors,
             ];
         }
-
-        fclose($handle);
 
         $this->rows = $rows;
         $this->parsed = true;

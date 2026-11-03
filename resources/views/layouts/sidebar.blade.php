@@ -284,7 +284,7 @@
             @endcanany
 
             {{-- INSIGHT --}}
-            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units', 'access_taxes'])
+            @canany(['access_reports', 'access_activity_logs', 'access_currencies', 'access_settings', 'access_units', 'access_taxes', 'access_system_monitoring'])
             <li class="app-sidebar-heading">{{ __('nav.group.insight') }}</li>
             @endcanany
             @can('access_reports')
@@ -343,6 +343,14 @@
             <li class="app-sidebar-item {{ request()->routeIs('activity-logs.*') ? 'is-active' : '' }}">
                 <a class="app-sidebar-link" href="{{ route('activity-logs.index') }}">
                     <i class="bi bi-clock-history"></i> <span>{{ __('menu.activity-logs') }}</span>
+                </a>
+            </li>
+            @endcan
+
+            @can('access_system_monitoring')
+            <li class="app-sidebar-item {{ request()->routeIs('system-status.*') ? 'is-active' : '' }}">
+                <a class="app-sidebar-link" href="{{ route('system-status.index') }}">
+                    <i class="bi bi-heart-pulse"></i> <span>{{ __('system.menu') }}</span>
                 </a>
             </li>
             @endcan

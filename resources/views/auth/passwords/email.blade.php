@@ -14,6 +14,7 @@
 
     <form method="post" action="{{ url('/password/email') }}" novalidate>
         @csrf
+        <x-honeypot />
 
         <label for="email" class="block text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{{ __('password.email') }}</label>
         <input id="email" type="email" name="email" value="{{ old('email') }}" autocomplete="username" autofocus

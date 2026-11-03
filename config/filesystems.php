@@ -35,6 +35,14 @@ return [
             'root' => storage_path('app'),
         ],
 
+        // Private destination for spatie/laravel-backup archives. Never
+        // symlinked into public/, so backups cannot be downloaded over HTTP.
+        'backups' => [
+            'driver' => 'local',
+            'root' => storage_path('app/backups'),
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -59,9 +59,15 @@
         "mohammadtrabelsi/laravel-translation-sync": "*",
         "realrashid/sweet-alert": "^7.0",
         "spatie/laravel-activitylog": "^5.0",
+        "spatie/laravel-backup": "^10.0",
+        "spatie/laravel-health": "^1.34",
+        "spatie/laravel-honeypot": "^4.6",
         "spatie/laravel-medialibrary": "^11.0",
         "spatie/laravel-permission": "^8.0",
+        "spatie/laravel-tags": "^4.10",
         "spatie/laravel-translatable": "^6.0",
+        "spatie/schema-org": "^4.0 || ^5.0",
+        "spatie/simple-excel": "^3.7",
         "yajra/laravel-datatables": "^13.0"
     },
     "require-dev": {

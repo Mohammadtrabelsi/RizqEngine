@@ -8,10 +8,10 @@ return [
     'drivers' => 'Importer des chauffeurs',
     'vehicles' => 'Importer des véhicules',
     'back' => 'Retour',
-    'intro' => 'Téléversez un fichier CSV pour créer des enregistrements en masse. La première ligne doit contenir les noms des colonnes. Les lignes sont validées avant tout enregistrement, et seules les lignes valides sont importées.',
+    'intro' => 'Téléversez un fichier CSV ou Excel (.xlsx) pour créer des enregistrements en masse. La première ligne doit contenir les noms des colonnes. Les lignes sont validées avant tout enregistrement, et seules les lignes valides sont importées.',
     'expected_columns' => 'Colonnes attendues',
     'download_example' => 'Télécharger un exemple CSV',
-    'csv_file' => 'Fichier CSV',
+    'csv_file' => 'Fichier CSV ou Excel (.xlsx)',
     'preview' => 'Aperçu',
     'loading' => 'Chargement',
     'valid_rows' => 'Lignes valides',
@@ -26,4 +26,5 @@ return [
     'read_failed' => 'Le fichier téléversé n\'a pas pu être lu.',
     'empty_file' => 'Le fichier téléversé est vide.',
     'missing_columns' => 'Il manque des colonnes obligatoires dans le fichier : :columns.',
+    'too_many_rows' => 'Le fichier contient trop de lignes. Divisez-le en fichiers de :max lignes maximum.',
 ];

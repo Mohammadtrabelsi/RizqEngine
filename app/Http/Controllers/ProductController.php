@@ -7,12 +7,16 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Tax;
 use App\Services\ProductService;
+use App\Services\Tags\ProductTagService;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
-    public function __construct(private readonly ProductService $products) {}
+    public function __construct(
+        private readonly ProductService $products,
+        private readonly ProductTagService $tags,
+    ) {}
 
     public function index()
     {
@@ -28,7 +32,9 @@ class ProductController extends Controller
 
         $productTaxes = Tax::where('apply_to', Tax::APPLY_TO_PRODUCT)->orderBy('order')->orderBy('name')->get();
 
-        return view('product.products.create', compact('productTaxes'));
+        $tagSuggestions = $this->tags->all()->pluck('name');
+
+        return view('product.products.create', compact('productTaxes', 'tagSuggestions'));
     }
 
     public function store(StoreProductRequest $request)
@@ -57,7 +63,10 @@ class ProductController extends Controller
         $productTaxes = Tax::where('apply_to', Tax::APPLY_TO_PRODUCT)->orderBy('order')->orderBy('name')->get();
         $selectedTaxIds = $product->taxes()->pluck('taxes.id')->all();
 
-        return view('product.products.edit', compact('product', 'productTaxes', 'selectedTaxIds'));
+        $productTags = $this->tags->asString($product);
+        $tagSuggestions = $this->tags->all()->pluck('name');
+
+        return view('product.products.edit', compact('product', 'productTaxes', 'selectedTaxIds', 'productTags', 'tagSuggestions'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)

@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\PurchaseReturn;
 use App\Models\SaleReturn;
 use App\Models\Tax;
+use App\Services\Tags\ProductTagService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Storage;
  */
 class ProductService
 {
+    public function __construct(private readonly ProductTagService $tags) {}
+
     /**
      * Create a product and attach any Dropzone-staged images.
      *
@@ -24,9 +27,14 @@ class ProductService
     public function create(array $attributes, array $documents = []): Product
     {
         $taxIds = $this->extractTaxIds($attributes);
+        $tags = $this->extractTags($attributes);
 
         $product = Product::create($attributes);
         $product->taxes()->sync($taxIds);
+
+        if ($tags !== null) {
+            $this->tags->sync($product, $tags);
+        }
 
         foreach ($documents as $file) {
             $product->addMedia(Storage::path('temp/dropzone/'.$file))->toMediaCollection('images');
@@ -46,9 +54,14 @@ class ProductService
     public function update(Product $product, array $attributes, ?array $documents = null): Product
     {
         $taxIds = $this->extractTaxIds($attributes);
+        $tags = $this->extractTags($attributes);
 
         $product->update($attributes);
         $product->taxes()->sync($taxIds);
+
+        if ($tags !== null) {
+            $this->tags->sync($product, $tags);
+        }
 
         if ($documents === null) {
             return $product;
@@ -74,6 +87,25 @@ class ProductService
     public function delete(Product $product): void
     {
         $product->delete();
+    }
+
+    /**
+     * Pull the submitted "product_tags" labels out of the attribute set (it is
+     * not a products column). Null means the field was not submitted, so the
+     * product's existing tags are left untouched.
+     *
+     * @param  array<string, mixed>  &$attributes
+     */
+    private function extractTags(array &$attributes): ?string
+    {
+        if (! array_key_exists('product_tags', $attributes)) {
+            return null;
+        }
+
+        $tags = (string) $attributes['product_tags'];
+        unset($attributes['product_tags']);
+
+        return $tags;
     }
 
     /**

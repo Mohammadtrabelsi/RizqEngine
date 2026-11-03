@@ -54,6 +54,7 @@
 
                 <form id="login" class="login-form d-flex flex-column gap-3" method="POST" action="{{ route('login') }}">
                     @csrf
+                    <x-honeypot />
 
                     <div class="login-form__heading mb-2">
                         <h2 class="login-form__title h3 font-weight-bold text-slate-900 mb-1">{{ __('login.sign-in') }}</h2>

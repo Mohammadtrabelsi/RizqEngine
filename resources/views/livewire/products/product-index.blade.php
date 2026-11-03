@@ -33,6 +33,14 @@
                         <i class="bi bi-upload"></i> {{ __('nav.import_products') }}
                     </a>
                     @endcan
+                    @can('export_products')
+                    <button type="button" wire:click="export('csv')" wire:loading.attr="disabled" wire:target="export" class="btn btn-outline">
+                        <i class="bi bi-filetype-csv"></i> {{ __('tags.export_csv') }}
+                    </button>
+                    <button type="button" wire:click="export('xlsx')" wire:loading.attr="disabled" wire:target="export" class="btn btn-outline">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> {{ __('tags.export_xlsx') }}
+                    </button>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -101,6 +109,17 @@
                         @endforeach
                     </select>
                 </div>
+                @if($this->tags->isNotEmpty())
+                <div class="col-12 col-lg-6 mb-3">
+                    <label class="form-label small text-muted mb-1">{{ __('tags.label') }}</label>
+                    <select wire:model.live="tag" class="form-select" aria-label="{{ __('tags.filter') }}">
+                        <option value="">{{ __('app.all') }}</option>
+                        @foreach($this->tags as $tagOption)
+                            <option value="{{ $tagOption->id }}">{{ $tagOption->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @endif
                 <div class="col-12 col-lg-6 mb-3">
                     <label class="form-label small text-muted mb-1">{{ __('product.min_price') }}</label>
                     <input type="number" min="0" step="0.01" wire:model.live.debounce.500ms="minPrice" class="form-control" placeholder="0">
@@ -156,6 +175,13 @@
                                 <p class="text-muted mb-0">
                                     <small><i class="bi bi-truck"></i> {{ $product->supplier->supplier_name }}</small>
                                 </p>
+                            @endif
+                            @if($product->tags->isNotEmpty())
+                                <div class="mt-1 d-flex flex-wrap gap-1">
+                                    @foreach($product->tags as $productTag)
+                                        <span class="inline-block rounded-md px-1.5 py-0.5 text-xs font-medium leading-none bg-indigo-50 text-indigo-700">#{{ $productTag->name }}</span>
+                                    @endforeach
+                                </div>
                             @endif
                         </div>
 

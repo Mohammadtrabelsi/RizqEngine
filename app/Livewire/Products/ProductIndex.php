@@ -5,7 +5,9 @@ namespace App\Livewire\Products;
 use App\Enums\StockStatus;
 use App\Services\CategoryService;
 use App\Services\ProductCatalogService;
+use App\Services\Spreadsheets\ProductExportService;
 use App\Services\SupplierService;
+use App\Services\Tags\ProductTagService;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -43,6 +45,10 @@ class ProductIndex extends Component
     /** Expiry filter ('' = all, 'expired', 'expiring_soon', 'not_expired'). */
     #[Url(as: 'expiry')]
     public string $expiry = '';
+
+    /** Selected tag filter ('' = all), a tag id. */
+    #[Url(as: 'tag')]
+    public string $tag = '';
 
     public function mount(): void
     {
@@ -84,12 +90,17 @@ class ProductIndex extends Component
         $this->resetPage();
     }
 
+    public function updatingTag(): void
+    {
+        $this->resetPage();
+    }
+
     /**
      * Reset every filter back to its default (all) value.
      */
     public function resetFilters(): void
     {
-        $this->reset(['search', 'stockStatus', 'categoryId', 'supplierId', 'minPrice', 'maxPrice', 'expiry']);
+        $this->reset(['search', 'stockStatus', 'categoryId', 'supplierId', 'minPrice', 'maxPrice', 'expiry', 'tag']);
         $this->resetPage();
     }
 
@@ -168,6 +179,44 @@ class ProductIndex extends Component
         return app(SupplierService::class)->ordered();
     }
 
+    /**
+     * Product tags available for the filter control.
+     */
+    public function getTagsProperty()
+    {
+        return app(ProductTagService::class)->all();
+    }
+
+    /**
+     * Download the currently filtered products as CSV or XLSX.
+     */
+    public function export(string $format, ProductExportService $exports)
+    {
+        abort_if(Gate::denies('export_products'), 403);
+        abort_unless(in_array($format, (array) config('documents.spreadsheets.export_formats'), true), 404);
+
+        return $exports->download($this->filters(), $format);
+    }
+
+    /**
+     * The active filters, in the shape ProductCatalogService expects.
+     *
+     * @return array<string, mixed>
+     */
+    private function filters(): array
+    {
+        return [
+            'search' => $this->search,
+            'stock_status' => StockStatus::tryFrom($this->stockStatus),
+            'category_id' => $this->categoryId,
+            'supplier_id' => $this->supplierId,
+            'min_price' => $this->minPrice,
+            'max_price' => $this->maxPrice,
+            'expiry' => $this->expiry,
+            'tag' => $this->tag,
+        ];
+    }
+
     public function delete(int $id, ProductCatalogService $products): void
     {
         abort_if(Gate::denies('delete_products'), 403);
@@ -180,15 +229,7 @@ class ProductIndex extends Component
     public function render(ProductCatalogService $products)
     {
         return view('livewire.products.product-index', [
-            'products' => $products->paginateIndex([
-                'search' => $this->search,
-                'stock_status' => StockStatus::tryFrom($this->stockStatus),
-                'category_id' => $this->categoryId,
-                'supplier_id' => $this->supplierId,
-                'min_price' => $this->minPrice,
-                'max_price' => $this->maxPrice,
-                'expiry' => $this->expiry,
-            ]),
+            'products' => $products->paginateIndex($this->filters()),
         ]);
     }
 }

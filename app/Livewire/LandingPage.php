@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\Seo\StructuredDataService;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -41,8 +42,10 @@ class LandingPage extends Component
         ];
     }
 
-    public function render()
+    public function render(StructuredDataService $structuredData)
     {
-        return view('livewire.landing-page')->layout('layouts.redesign');
+        return view('livewire.landing-page')->layout('layouts.redesign', [
+            'structuredData' => $structuredData->forLandingPage(),
+        ]);
     }
 }
