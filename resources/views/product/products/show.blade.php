@@ -54,6 +54,10 @@
                                     <label class="text-muted small"><i class="bi bi-truck"></i> Supplier</label>
                                     <span class="fw-bold">{{ optional($product->supplier)->supplier_name ?? '<span class="text-muted">N/A</span>' }}</span>
                                 </div>
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom mb-2">
+                                    <label class="text-muted small"><i class="bi bi-tags"></i> {{ __('tags.label') }}</label>
+                                    <span class="fw-bold small">{{ $product->tags->pluck('name')->implode(', ') ?: 'N/A' }}</span>
+                                </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <label class="text-muted small"><i class="bi bi-file-text"></i> Note</label>
                                     <span class="fw-bold small">{{ $product->product_note ?? 'N/A' }}</span>

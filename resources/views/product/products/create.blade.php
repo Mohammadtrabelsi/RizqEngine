@@ -205,6 +205,10 @@
                             </div>
 
                             <div class="mb-4">
+                                <x-tag-input :value="old('product_tags', '')" :suggestions="$tagSuggestions" />
+                            </div>
+
+                            <div class="mb-4">
                                 <label for="product_note">{{ __('product.note') }}</label>
                                 <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>
                             </div>

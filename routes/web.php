@@ -36,6 +36,7 @@ use App\Livewire\Suppliers\SupplierForm;
 use App\Livewire\Suppliers\SupplierImport;
 use App\Livewire\Suppliers\SupplierIndex;
 use App\Livewire\Suppliers\SupplierShow;
+use App\Livewire\System\SystemStatus;
 use App\Livewire\Taxes\TaxForm;
 use App\Livewire\Taxes\TaxIndex;
 use App\Livewire\Units\UnitForm;
@@ -48,16 +49,6 @@ use App\Livewire\Warehouses\WarehouseIndex;
 use App\Livewire\Warehouses\WarehouseStockDashboard;
 use App\Livewire\WithholdingTaxes\WithholdingTaxForm;
 use App\Livewire\WithholdingTaxes\WithholdingTaxIndex;
-use App\Models\Customer;
-use App\Models\Purchase;
-use App\Models\PurchaseReturn;
-use App\Models\Quotation;
-use App\Models\Sale;
-use App\Models\SaleReturn;
-use App\Models\Supplier;
-use App\Services\WithholdingCertificateService;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +63,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => '\\'], function () {
     Route::get('/', RedesignLandingPage::class)->name('welcome');
 });
+
+// Public health probe for uptime monitors: {"healthy": bool}, 200 / 503,
+// no details (see HealthController). Detailed status: /system-status.
+Route::get('/health', 'HealthController')->middleware('throttle:60,1')->name('health');
 
 Route::get('/language/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
@@ -286,33 +281,10 @@ Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     // Generate PDF
-    Route::get('/purchases/pdf/{id}', function ($id) {
-        $purchase = Purchase::findOrFail($id);
-        $supplier = Supplier::findOrFail($purchase->supplier_id);
-        $pdf = PDF::loadView('purchase.print', [
-            'purchase' => $purchase,
-            'supplier' => $supplier,
-        ])->setPaper('a4');
-
-        return $pdf->stream('purchase-'.$purchase->reference.'.pdf');
-    })->name('purchases.pdf');
-
+    Route::get('/purchases/pdf/{id}', 'DocumentPdfController@purchase')->whereNumber('id')->name('purchases.pdf');
     // Withholding-tax certificate (certificat de retenue à la source).
-    Route::get('/purchases/{id}/withholding-certificate', function ($id) {
-        abort_if(Gate::denies('show_purchases'), 403);
-
-        $purchase = Purchase::with('withholdingTaxes')->findOrFail($id);
-
-        abort_if($purchase->withholding_amount <= 0, 404);
-
-        $certificate = app(WithholdingCertificateService::class)->forPurchase($purchase);
-
-        $pdf = PDF::loadView('withholding.certificate', [
-            'certificate' => $certificate,
-        ])->setPaper('a4');
-
-        return $pdf->stream('withholding-certificate-'.$purchase->reference.'.pdf');
-    })->name('purchases.withholding-certificate');
+    Route::get('/purchases/{id}/withholding-certificate', 'DocumentPdfController@withholdingCertificate')->whereNumber('id')
+        ->name('purchases.withholding-certificate');
     // Sales
     Route::resource('purchases', 'PurchaseController');
     // Payments
@@ -328,16 +300,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     // Generate PDF
-    Route::get('/purchase-returns/pdf/{id}', function ($id) {
-        $purchaseReturn = PurchaseReturn::findOrFail($id);
-        $supplier = Supplier::findOrFail($purchaseReturn->supplier_id);
-        $pdf = PDF::loadView('purchasesreturn.print', [
-            'purchase_return' => $purchaseReturn,
-            'supplier' => $supplier,
-        ])->setPaper('a4');
-
-        return $pdf->stream('purchase-return-'.$purchaseReturn->reference.'.pdf');
-    })->name('purchase-returns.pdf');
+    Route::get('/purchase-returns/pdf/{id}', 'DocumentPdfController@purchaseReturn')->whereNumber('id')->name('purchase-returns.pdf');
     // Purchase Returns
     Route::resource('purchase-returns', 'PurchasesReturnController');
     // Payments
@@ -356,24 +319,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/app/pos', 'PosController@index')->name('app.pos.index');
     Route::post('/app/pos', 'PosController@store')->name('app.pos.store');
     // Generate PDF
-    Route::get('/sales/pdf/{id}', function ($id) {
-        $sale = Sale::findOrFail($id);
-        $customer = Customer::findOrFail($sale->customer_id);
-        $pdf = PDF::loadView('sale.print', [
-            'sale' => $sale,
-            'customer' => $customer,
-        ])->setPaper('a4');
-
-        return $pdf->stream('sale-'.$sale->reference.'.pdf');
-    })->name('sales.pdf');
-    Route::get('/sales/pos/pdf/{id}', function ($id) {
-        $sale = Sale::findOrFail($id);
-        $pdf = PDF::loadView('sale.print-pos', [
-            'sale' => $sale,
-        ])->setPaper('a7');
-
-        return $pdf->stream('sale-'.$sale->reference.'.pdf');
-    })->name('sales.pos.pdf');
+    Route::get('/sales/pdf/{id}', 'DocumentPdfController@sale')->whereNumber('id')->name('sales.pdf');
+    Route::get('/sales/pos/pdf/{id}', 'DocumentPdfController@posReceipt')->whereNumber('id')->name('sales.pos.pdf');
     // Sales
     Route::resource('sales', 'SaleController');
     // Payments
@@ -389,16 +336,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     // Generate PDF
-    Route::get('/sale-returns/pdf/{id}', function ($id) {
-        $saleReturn = SaleReturn::findOrFail($id);
-        $customer = Customer::findOrFail($saleReturn->customer_id);
-        $pdf = PDF::loadView('salesreturn.print', [
-            'sale_return' => $saleReturn,
-            'customer' => $customer,
-        ])->setPaper('a4');
-
-        return $pdf->stream('sale-return-'.$saleReturn->reference.'.pdf');
-    })->name('sale-returns.pdf');
+    Route::get('/sale-returns/pdf/{id}', 'DocumentPdfController@saleReturn')->whereNumber('id')->name('sale-returns.pdf');
     // Sale Returns
     Route::resource('sale-returns', 'SalesReturnController');
     // Payments
@@ -414,16 +352,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     // Generate PDF
-    Route::get('/quotations/pdf/{id}', function ($id) {
-        $quotation = Quotation::findOrFail($id);
-        $customer = Customer::findOrFail($quotation->customer_id);
-        $pdf = PDF::loadView('quotation.print', [
-            'quotation' => $quotation,
-            'customer' => $customer,
-        ])->setPaper('a4');
-
-        return $pdf->stream('quotation-'.$quotation->reference.'.pdf');
-    })->name('quotations.pdf');
+    Route::get('/quotations/pdf/{id}', 'DocumentPdfController@quotation')->whereNumber('id')->name('quotations.pdf');
     // Send Quotation Mail
     Route::get('/quotation/mail/{quotation}', 'SendQuotationEmailController')->name('quotation.email');
     // Sales Form Quotation
@@ -492,6 +421,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController')->except('show');
     // Roles
     Route::resource('roles', 'RolesController')->except('show');
+});
+
+Route::group(['middleware' => 'auth', 'namespace' => '\\'], function () {
+    // System status — health checks & backup status (access_system_monitoring).
+    Route::get('/system-status', SystemStatus::class)->name('system-status.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {

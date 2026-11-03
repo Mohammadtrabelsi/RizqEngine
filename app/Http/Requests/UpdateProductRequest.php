@@ -31,6 +31,7 @@ class UpdateProductRequest extends FormRequest
             'product_tax_type' => ['nullable', 'integer'],
             'product_taxes' => ['nullable', 'array'],
             'product_taxes.*' => ['integer', 'exists:taxes,id'],
+            'product_tags' => ['nullable', 'string', 'max:1000'],
             'product_note' => ['nullable', 'string', 'max:1000'],
             'expiry_date' => ['nullable', 'date'],
             'category_id' => ['required', 'integer'],

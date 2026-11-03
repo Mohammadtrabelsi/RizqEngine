@@ -31,6 +31,7 @@ class PermissionsTableSeeder extends Seeder
             'show_products',
             'edit_products',
             'delete_products',
+            'export_products',
             // Product Categories
             'access_product_categories',
             // Barcode Printing
@@ -180,6 +181,8 @@ class PermissionsTableSeeder extends Seeder
             // Activity Logs
             'access_activity_logs',
             'delete_activity_logs',
+            // System status (health checks & backups)
+            'access_system_monitoring',
         ];
 
         foreach ($permissions as $permission) {
@@ -206,7 +209,8 @@ class PermissionsTableSeeder extends Seeder
      *
      *   Owner   — full access to everything.
      *   Manager — day-to-day oversight; everything except the Settings
-     *             section (system settings, currencies, units) and audit purge.
+     *             section (system settings, currencies, units), audit purge
+     *             and system monitoring.
      *   Cashier — the till: dashboard, product lookup, sales, POS and returns.
      */
     protected function seedBusinessRoles(array $permissions): void
@@ -227,7 +231,7 @@ class PermissionsTableSeeder extends Seeder
         $manager = Role::firstOrCreate(['name' => 'Manager']);
         $manager->syncPermissions(array_values(array_diff(
             $permissions,
-            array_merge($settingsPermissions, ['delete_activity_logs'])
+            array_merge($settingsPermissions, ['delete_activity_logs', 'access_system_monitoring'])
         )));
 
         // Cashier: sales floor only.

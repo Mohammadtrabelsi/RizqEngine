@@ -8,10 +8,10 @@ return [
     'drivers' => 'Import drivers',
     'vehicles' => 'Import vehicles',
     'back' => 'Back',
-    'intro' => 'Upload a CSV file to bulk-create records. The first row must contain the column names. Rows are validated before anything is saved, and only valid rows are imported.',
+    'intro' => 'Upload a CSV or Excel (.xlsx) file to bulk-create records. The first row must contain the column names. Rows are validated before anything is saved, and only valid rows are imported.',
     'expected_columns' => 'Expected columns',
     'download_example' => 'Download example CSV',
-    'csv_file' => 'CSV file',
+    'csv_file' => 'CSV or Excel (.xlsx) file',
     'preview' => 'Preview',
     'loading' => 'Loading',
     'valid_rows' => 'Valid rows',
@@ -26,4 +26,5 @@ return [
     'read_failed' => 'The uploaded file could not be read.',
     'empty_file' => 'The uploaded file is empty.',
     'missing_columns' => 'The file is missing required columns: :columns.',
+    'too_many_rows' => 'The file has too many rows. Split it into files of at most :max rows.',
 ];

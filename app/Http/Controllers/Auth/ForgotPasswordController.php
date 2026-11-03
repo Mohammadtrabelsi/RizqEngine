@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
 class ForgotPasswordController extends Controller
 {
@@ -19,4 +20,10 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function __construct()
+    {
+        // Public, unauthenticated form: reject bot submissions (spatie/laravel-honeypot).
+        $this->middleware(ProtectAgainstSpam::class)->only('sendResetLinkEmail');
+    }
 }

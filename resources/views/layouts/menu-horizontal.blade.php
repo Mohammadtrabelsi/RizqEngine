@@ -104,6 +104,14 @@
                 </li>
                 @endcan
 
+                @can('access_system_monitoring')
+                <li class="app-topnav-item {{ request()->routeIs('system-status.*') ? 'is-active' : '' }}">
+                    <a class="app-topnav-link" href="{{ route('system-status.index') }}">
+                        <i class="bi bi-heart-pulse"></i> <span>{{ __('system.menu') }}</span>
+                    </a>
+                </li>
+                @endcan
+
                 @canany(['access_currencies', 'access_settings'])
                 <li class="app-topnav-item {{ request()->routeIs('currencies*') || request()->routeIs('units*') || request()->routeIs('settings*') ? 'is-active' : '' }}">
                     <a class="app-topnav-link" href="{{ auth()->user()->can('access_settings') ? route('settings.index') : (auth()->user()->can('access_units') ? route('units.index') : route('currencies.index')) }}">

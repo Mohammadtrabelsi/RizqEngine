@@ -2,6 +2,7 @@
 
 use App\Providers\AppServiceProvider;
 use App\Providers\EventServiceProvider;
+use App\Providers\HealthServiceProvider;
 use App\Providers\RouteServiceProvider;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\Snappy\Facades\SnappyImage;
@@ -267,6 +268,7 @@ return [
          */
         AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        HealthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         EventServiceProvider::class,
         RouteServiceProvider::class,

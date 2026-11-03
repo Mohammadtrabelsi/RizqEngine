@@ -230,3 +230,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- Tag suggestions (x-tag-input) -----------------------------------------
+// Clicking a suggested tag appends it to the comma-separated tag input,
+// skipping labels that are already present (case-insensitive).
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-tag-suggestion]');
+    if (!button) return;
+    const input = document.getElementById(button.dataset.tagTarget);
+    if (!input) return;
+    const label = button.dataset.tagSuggestion;
+    const current = input.value.split(/[,;،]/).map((t) => t.trim()).filter(Boolean);
+    if (!current.some((t) => t.toLowerCase() === label.toLowerCase())) {
+        current.push(label);
+    }
+    input.value = current.join(', ');
+});

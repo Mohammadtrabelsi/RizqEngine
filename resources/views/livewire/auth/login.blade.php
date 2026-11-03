@@ -30,6 +30,7 @@
             <p class="mb-8 text-[15px] text-body">{{ __('auth.sign_in_lead') }}</p>
 
             <form wire:submit="login" novalidate>
+                <x-honeypot livewire-model="extraFields" />
                 <label for="email" class="block text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{{ __('auth.email') }}</label>
                 <input id="email" type="email" autocomplete="username" wire:model.blur="email"
                        placeholder="you@store.com"

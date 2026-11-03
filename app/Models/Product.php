@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Tags\HasTags;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -42,7 +43,10 @@ use Spatie\Translatable\HasTranslations;
  */
 class Product extends Model implements HasMedia
 {
-    use HasDefaultTranslations, HasFactory, HasTranslations, InteractsWithMedia, RecordsActivity, TracksUserActions;
+    use HasDefaultTranslations, HasFactory, HasTags, HasTranslations, InteractsWithMedia, RecordsActivity, TracksUserActions;
+
+    /** Tag "type" used to scope product tags (spatie/laravel-tags). */
+    public const TAG_TYPE = 'product';
 
     protected $guarded = [];
 

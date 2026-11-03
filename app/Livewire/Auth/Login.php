@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Spatie\Honeypot\Http\Livewire\Concerns\HoneypotData;
+use Spatie\Honeypot\Http\Livewire\Concerns\UsesSpamProtection;
 
 class Login extends Component
 {
+    use UsesSpamProtection;
+
     #[Validate('required|email')]
     public string $email = '';
 
@@ -19,8 +23,17 @@ class Login extends Component
 
     public bool $remember = false;
 
+    /** Honeypot fields (spatie/laravel-honeypot) guarding the public sign-in form against bots. */
+    public HoneypotData $extraFields;
+
+    public function mount(): void
+    {
+        $this->extraFields = new HoneypotData;
+    }
+
     public function login()
     {
+        $this->protectAgainstSpam();
         $this->validate();
         $this->ensureIsNotRateLimited();
 

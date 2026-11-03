@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\StockStatus;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -63,9 +64,25 @@ class ProductCatalogService
      *     min_price?: string|null,
      *     max_price?: string|null,
      *     expiry?: string|null,
+     *     tag?: int|string|null,
      * }  $filters
      */
     public function paginateIndex(array $filters = [], int $perPage = 12): LengthAwarePaginator
+    {
+        return $this->indexQuery($filters)
+            ->with('tags')
+            ->paginate($perPage);
+    }
+
+    /**
+     * The filtered, newest-first product query behind the index screen. Shared
+     * by the paginated listing and the spreadsheet export so both always
+     * honour exactly the same filters.
+     *
+     * @param  array<string, mixed>  $filters  Same keys as paginateIndex(); "tag" is a tag id.
+     * @return Builder<Product>
+     */
+    public function indexQuery(array $filters = []): Builder
     {
         $search = $filters['search'] ?? '';
         $stockStatus = $filters['stock_status'] ?? null;
@@ -74,6 +91,7 @@ class ProductCatalogService
         $minPrice = $filters['min_price'] ?? '';
         $maxPrice = $filters['max_price'] ?? '';
         $expiry = $filters['expiry'] ?? '';
+        $tag = (string) ($filters['tag'] ?? '');
 
         return Product::query()
             ->with('category', 'supplier')
@@ -108,8 +126,8 @@ class ProductCatalogService
                         ->orWhereDate('expiry_date', '>', now()->toDateString());
                 });
             })
-            ->latest()
-            ->paginate($perPage);
+            ->when(is_numeric($tag), fn ($query) => $query->whereHas('tags', fn ($q) => $q->whereKey((int) $tag)))
+            ->latest();
     }
 
     /**

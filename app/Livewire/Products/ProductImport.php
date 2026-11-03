@@ -6,13 +6,15 @@ use App\Livewire\Imports\CsvImport;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Services\Tags\ProductTagService;
 use Illuminate\Support\Collection;
 
 /**
  * Bulk-import products from a CSV file.
  *
  * The `category` and `supplier` columns accept either a numeric id or the
- * record's name; every other column maps directly to a product attribute.
+ * record's name; the optional `tags` column takes comma-separated labels;
+ * every other column maps directly to a product attribute.
  */
 class ProductImport extends CsvImport
 {
@@ -49,6 +51,7 @@ class ProductImport extends CsvImport
             'expiry_date',
             'category',
             'supplier',
+            'tags',
         ];
     }
 
@@ -81,6 +84,8 @@ class ProductImport extends CsvImport
             'product_tax_type' => $this->toInt($raw['product_tax_type'] ?? null, 0),
             'product_note' => $raw['product_note'] ?? null,
             'expiry_date' => $this->normaliseDate($raw['expiry_date'] ?? null),
+            // Optional comma/semicolon-separated labels (spatie/laravel-tags).
+            'product_tags' => $raw['tags'] ?? null,
         ];
 
         // Duplicate product_code detection (existing products and within the file).
@@ -140,12 +145,20 @@ class ProductImport extends CsvImport
             'expiry_date' => ['nullable', 'date'],
             'category_id' => ['required', 'integer'],
             'supplier_id' => ['required', 'integer'],
+            'product_tags' => ['nullable', 'string', 'max:1000'],
         ];
     }
 
     protected function createRecord(array $attributes): void
     {
-        Product::create($attributes);
+        $tags = $attributes['product_tags'] ?? null;
+        unset($attributes['product_tags']);
+
+        $product = Product::create($attributes);
+
+        if ($tags !== null && $tags !== '') {
+            app(ProductTagService::class)->sync($product, $tags);
+        }
     }
 
     public function redirectRouteName(): string

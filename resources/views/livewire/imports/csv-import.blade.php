@@ -44,7 +44,7 @@
                         <div class="col-lg-8">
                             <div class="mb-4">
                                 <label for="file">{{ __('import.csv_file') }} <span class="text-danger">*</span></label>
-                                <input type="file" accept=".csv,text/csv" class="form-control @error('file') !border-red-500 @enderror" wire:model="file">
+                                <input type="file" accept=".csv,text/csv,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control @error('file') !border-red-500 @enderror" wire:model="file">
                                 @error('file') <span class="block w-full mt-1 text-xs text-red-500 d-block">{{ $message }}</span> @enderror
                             </div>
                         </div>

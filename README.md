@@ -13,7 +13,7 @@ RizqEngine is a web-based Point of Sale and inventory management system built wi
 - **Backend:** Laravel 13 (PHP 8.2+)
 - **Frontend:** Livewire 4, Tailwind CSS 4, Vite
 - **Database:** MySQL / MariaDB
-- **PDF Generation:** Laravel Snappy
+- **PDF Generation:** DomPDF (business documents) and Laravel Snappy (barcode labels)
 
 # Requirements
 
@@ -144,6 +144,53 @@ php artisan user:api-token user@example.com --revoke  # revoke
 Send it as a bearer token: `Authorization: Bearer <token>`. For multi-token,
 scoped, per-device access, migrating this guard to Laravel Sanctum is the
 recommended next step.
+
+## Backups
+
+Database and uploaded-file backups use `spatie/laravel-backup`. Archives go to
+the private `storage/app/backups` disk, which is never web-accessible. Verify
+the setup by hand first (this needs `mysqldump` and the PHP `zip` extension),
+then opt in to scheduling:
+
+```
+php artisan backup:run      # create a backup now
+php artisan backup:list     # list backups and their health
+php artisan backup:clean    # apply the retention policy (deletes old archives)
+```
+
+Set `BACKUP_SCHEDULE_ENABLED=true` to run clean, backup and monitor every
+night. Set `BACKUP_NOTIFICATION_EMAIL` to receive failure e-mails. Add an
+off-site disk to `BACKUP_DISKS` for disaster recovery. The restore procedure
+is in [docs/spatie-integration.md](docs/spatie-integration.md#restore).
+
+## Health monitoring
+
+`spatie/laravel-health` runs checks for the database, cache, storage and disk
+space, plus optional queue, schedule and backup checks, every minute through
+the scheduler.
+
+- `GET /health` returns only `{"healthy": true|false}` (200 / 503), for uptime monitors.
+- **System status** (`/system-status`) shows the detailed results and backup status. It requires the `access_system_monitoring` permission (Owner, Admin, Super Admin).
+- Set `HEALTH_TO_ADDRESS` to receive failure e-mails.
+
+```
+php artisan health:check
+```
+
+## Import, export, tags and PDFs
+
+- The import screens accept CSV and Excel (`.xlsx`) files. Rows are streamed, validated and previewed with per-row errors before anything is saved. The limits are `IMPORT_MAX_KB` and `IMPORT_MAX_ROWS`.
+- On the product list, **Export CSV / Excel** downloads the filtered products in the import template's columns. This requires the `export_products` permission.
+- Products can carry free-form **tags**:
+  - Type them, comma-separated, in the product form.
+  - Filter the product list by tag.
+  - Import and export them through a `tags` column.
+- Document PDFs (invoices, receipts, purchases, returns, quotations, withholding certificates) are rendered by `App\Services\Pdf\DocumentPdfService`. Each download checks the document's `show_*` permission.
+- The public sign-in and password-reset forms are protected by a honeypot (`HONEYPOT_ENABLED`).
+- The landing page publishes Schema.org JSON-LD: an Organization and a WebSite.
+
+Details, every environment variable and the reasons some Spatie packages were
+*not* installed are in [docs/spatie-integration.md](docs/spatie-integration.md).
 
 ## Password policy
 
