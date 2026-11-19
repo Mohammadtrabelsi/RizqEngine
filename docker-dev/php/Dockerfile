@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.5-fpm
 
 # Build args so the container runs as your host user (avoids root-owned files)
 ARG UID=1000
