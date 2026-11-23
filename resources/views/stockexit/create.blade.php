@@ -61,7 +61,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label for="kind">{{ __('stockexit.kind') }} <span class="text-danger">*</span></label>
-                                            <select name="kind" id="kind" class="form-control" onchange="document.getElementById('consignee-group').style.display = this.value === 'consignment' ? 'block' : 'none';">
+                                            <select name="kind" id="kind" class="form-control" x-on:change="document.getElementById('consignee-group').style.display = $el.value === 'consignment' ? 'block' : 'none';">
                                                 <option value="standard" @selected(old('kind', 'standard') === 'standard')>{{ __('stockexit.kind_standard') }}</option>
                                                 <option value="consignment" @selected(old('kind') === 'consignment')>{{ __('stockexit.kind_consignment') }}</option>
                                             </select>
